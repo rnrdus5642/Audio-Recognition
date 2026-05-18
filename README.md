@@ -1,0 +1,226 @@
+# Audio Recognition (Korean Phoneme Matching)
+
+VR 아동 음성 인식 시스템 프로토타입.
+
+발음이 부정확한 사용자(아동, 발달지연 포함)의 발화가 정답 단어와 음소(IPA) 수준에서 충분히 가까운지 판정합니다. STT가 아니라 음소 기반 부분 매칭으로 환각 문제와 마이크 잡음 문제를 모두 회피합니다.
+
+## 아키텍처
+
+```
+정답 단어 (텍스트)                       🎤 마이크 / WAV
+       ↓                                       ↓
+  g2pkk + jamo + IPA 매핑              wav2vec2 ASR (한글)
+       ↓                                       ↓
+   정답 IPA            ←─ 동일한 ─→     g2pkk + jamo + IPA 매핑
+       ↓                IPA 표기                ↓
+       └────────── 가중 부분 문자열 편집 거리 ──────┘
+                   + Confusion Matrix
+                   + 윈도우 길이 페널티
+                          ↓
+                   통과 / 재시도
+```
+
+핵심: **정답 측과 사용자 측이 동일한 g2pkk + 매핑 테이블**을 통과해서 IPA 표기 체계가 일치. 매칭이 신뢰 가능.
+
+- **웹 UI**: 단어를 즉석에서 g2p 돌려 매칭 (사전 빌드 불필요)
+- **CLI 도구**: `words.csv → targets.json` 사전 빌드 후 일괄 평가/녹음에 활용
+
+## 디렉토리 구조
+
+**언어별 코드는 모두 `<lang>/` 폴더로 격리**. 새 언어 추가 시 폴더 추가 + REGISTRY 한 줄 등록. 자세한 가이드: [docs/ADDING_A_LANGUAGE.md](docs/ADDING_A_LANGUAGE.md)
+
+```
+AudioProject/
+├── python/
+│   ├── build/                       # 빌드 타임 (G2P + targets.json 생성)
+│   │   ├── g2p/
+│   │   │   ├── __init__.py          # G2P_REGISTRY (언어 등록)
+│   │   │   ├── base.py              # BaseG2P 인터페이스 (공통)
+│   │   │   └── ko/                  # ── 한국어 ──
+│   │   │       ├── g2p.py           #    KoreanG2P
+│   │   │       └── jamo_ipa.py      #    자모↔IPA 매핑
+│   │   └── build_targets.py         # CSV → JSON (CLI 도구용)
+│   │
+│   ├── runtime/                     # 런타임 (인식 + 매칭)
+│   │   ├── audio.py                 # 16kHz mono 로딩 (공통)
+│   │   ├── matching/                # 가중 부분 문자열 편집 거리 (공통)
+│   │   │   ├── confusion_matrix.py
+│   │   │   └── matcher.py
+│   │   └── recognizer/
+│   │       ├── __init__.py          # RECOGNIZER_REGISTRY (언어 등록)
+│   │       ├── base.py              # BaseRecognizer 인터페이스 (공통)
+│   │       └── ko/                  # ── 한국어 ──
+│   │           └── asr.py           #    wav2vec2 + g2pkk
+│   │
+│   ├── tools/                       # 사용자 도구 (대부분 언어 무관)
+│   │   ├── web_test.py              # 🌐 웹 UI (권장)
+│   │   ├── _web_builder.py          #    정답 데이터 추출 헬퍼
+│   │   ├── record_live.py           # 💻 CLI 실시간 녹음
+│   │   ├── test_real_audio.py       # 📁 단일/일괄 파일 테스트
+│   │   ├── diagnose_audio.py        # 🔍 오디오 진단
+│   │   ├── generate_golden_audio.py # Edge-TTS 골든셋 생성
+│   │   └── evaluate.py              # 골든셋 정확도 평가
+│   │
+│   └── tests/
+│       ├── test_g2p_ko.py           # 언어별 (ko)
+│       ├── test_jamo_ipa_ko.py      # 언어별 (ko)
+│       └── test_matcher.py          # 공통
+│
+├── shared/                          # 데이터
+│   ├── words.csv                    # 정답 단어 (CLI 빌드 입력)
+│   ├── targets.json                 # 빌드 산출물 (CLI 도구용)
+│   ├── confusion_matrices/
+│   │   └── ko_child_v1.json         # 런타임 매칭의 핵심 자원
+│   └── models/                      # ONNX 모델 (Phase 3+)
+│
+├── docs/
+│   └── ADDING_A_LANGUAGE.md
+│
+└── unity/                           # Unity 프로젝트 (Phase 4+)
+```
+
+**언어 추가 시 변경**:
+- 신규: `python/build/g2p/<lang>/`, `python/runtime/recognizer/<lang>/`, `shared/confusion_matrices/<lang>_*.json`
+- 수정: `__init__.py` 2개에 2줄씩
+- **건드리지 않음**: 매칭 엔진, 도구, Unity 코드, 웹 UI
+
+## 셋업
+
+```powershell
+# 가상환경 생성 (Python 3.10~3.13 호환)
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
+
+# Phase 1 의존성 (빌드 + 테스트)
+pip install -r requirements.txt
+
+# Phase 2 의존성 (모델 + 웹 UI + 녹음 등)
+pip install -r requirements-phase2.txt
+pip install gradio sounddevice
+```
+
+> 64-bit conda 사용자는 `environment.yml`로도 가능 (참고 파일).
+
+## 사용법
+
+### 🌐 웹 UI (권장)
+
+```powershell
+python -m python.tools.web_test
+```
+브라우저 자동 오픈 (`http://127.0.0.1:7860`). 첫 인식 시 wav2vec2 모델(~1.2GB)이 로드되어 1~2분 걸립니다. 이후는 빠릅니다.
+
+두 개의 탭:
+
+**🎤 발음 테스트** — 단어 매칭
+- 모드 라디오: `직접 입력` (정답 단어를 즉석 타이핑) / `ASR 결과만 보기` (한글·IPA만 출력, 점수 없음)
+- 마이크 녹음 또는 파일 업로드
+- 결과: 통과/실패 배너, 오디오 통계, ASR 한글·IPA, 음소 정렬 시각화, 세션 기록
+- 💾 저장 버튼: `recordings/web_YYYYMMDD/`에 wav + 결과 JSON 보관
+
+**📝 정답 데이터 만들기** — 단어 → IPA 추출
+- 언어 선택 + 단어를 한 줄에 하나씩 입력 (`#` 주석 허용)
+- 🚀 추출 & 다운로드 클릭 → `[{text, language, phonemes}, ...]` 형식 JSON 파일
+
+### 💻 CLI 도구
+
+CLI 도구들은 `shared/targets.json` (사전 빌드된 IPA 카탈로그)을 기반으로 동작합니다.
+
+**1. 정답 단어 정의 후 빌드**
+`shared/words.csv` 편집:
+```csv
+segment_id,answer_id,text,language
+lesson_01_family,mom,엄마,ko
+lesson_03_food,apple,사과,ko
+```
+
+```powershell
+python -m python.build.build_targets   # → shared/targets.json
+```
+
+**2. 실시간 마이크 녹음**
+```powershell
+python -m python.tools.record_live --target 사과
+python -m python.tools.record_live --target 사과 --pick-device   # 마이크 선택
+python -m python.tools.record_live --queue-from-words            # words.csv 전체 순회
+```
+
+**3. WAV 파일 / 일괄 평가**
+```powershell
+python -m python.tools.test_real_audio my.wav --target 사과
+python -m python.tools.test_real_audio my.wav --probe            # ASR만
+python -m python.tools.test_real_audio my.wav --scan-all         # 전체 검색
+python -m python.tools.test_real_audio --manifest tests.csv      # 일괄
+```
+
+**4. 오디오 진단** (잡음? 잘렸나? ASR 한계?)
+```powershell
+python -m python.tools.diagnose_audio recordings/session_XXX/001_사과.wav
+```
+
+**5. 자동 평가 (TTS 골든셋)**
+```powershell
+python -m python.tools.generate_golden_audio   # 36개 클립 자동 생성
+python -m python.tools.evaluate                # 평가 + 캐시
+python -m python.tools.evaluate --refresh-cache  # 모델 재추론
+```
+
+## 매칭 알고리즘
+
+기본은 **부분 문자열(Substring) 매칭**:
+- 사용자 IPA에서 정답이 등장하는 가장 가까운 윈도우를 찾음
+- 윈도우 밖 잡음은 점수에 영향 없음
+- 마이크 백그라운드 잡음, 호흡, 키보드 소리 등이 음소로 잡혀도 정답 통과
+- 윈도우가 정답 길이의 **50% 미만**이면 페널티 (잡음만 있는 케이스 거절)
+
+`Confusion Matrix` ([shared/confusion_matrices/ko_child_v1.json](shared/confusion_matrices/ko_child_v1.json)):
+- 격음/평음/경음 자유 교체 (페널티 ~0.2)
+- /ㅅ/→/ㅌ/, /ㄹ/→/ㄷ/ 등 발달지연 미숙 패턴 (~0.3)
+- 종성 불파음 ↔ 동가 초성 (~0.15~0.2)
+- 모음 인접 (~0.3~0.5)
+- 종성 탈락 (del cost ~0.3)
+
+임계값 (자동, 음소 수 기반):
+- 1~2 음소: 0.85
+- 3 음소: 0.73
+- 4 음소: 0.70
+- 5~6 음소: 0.65
+- 7+ 음소: 0.60
+
+## 테스트
+
+```powershell
+pytest python/tests -v
+```
+
+- 매핑 테이블, 한국어 G2P 통합, 매처 + Confusion Matrix + Substring
+
+## Phase 진행
+
+- [x] **Phase 0**: 환경 셋업 (venv + g2pkk + jamo)
+- [x] **Phase 1**: 빌드 파이프라인 (G2P + targets.json)
+- [x] **Phase 2**: 한국어 ASR + 매처 (Substring + Confusion Matrix + 임계값)
+  - 골든셋 검증: Positives 69.4% / Negatives 거절율 79.2% (substring mode)
+  - 자세한 분석: [REPORT_PHASE2.md](REPORT_PHASE2.md)
+- [x] **Phase 2.5**: 사용자 도구 (웹 UI + CLI + 진단 + 일괄)
+- [ ] Phase 3: ONNX export + 양자화 (VR 배포 준비)
+- [ ] Phase 4: Unity 포팅 (C# 매처 + ONNX Runtime)
+- [ ] Phase 5: Fine-tune (필요 시, catastrophic ASR 회수)
+
+## 알려진 한계
+
+| 한계 | 원인 | 영향 |
+|---|---|---|
+| 짧은 1~2음절 단어 ASR 정확도 낮음 | wav2vec2 학습 데이터(KsponSpeech)가 다어절 위주 | 빵, 책, 가요 등에서 자주 빈 출력 |
+| 경음(ㄲ/ㄸ/ㅃ/ㅆ/ㅉ) 인식 약함 | 음향적으로 미세 | 토끼, 빵, 아빠 등 |
+| 활음 위주 단어 인식 약함 | ㅛ, ㅑ 같은 활음 손실 | 우유, 와요 등 |
+| TTS와 실제 아동 발화의 도메인 갭 | 학습 데이터에 아동 발화 없음 | 실제 아동 정확도는 본 평가보다 낮을 수 있음 |
+| 첫 인식 호출 시 1~2분 대기 | wav2vec2 모델이 lazy-load (~1.2GB) | 한 번 워밍업되면 이후 호출은 빠름 |
+
+해결책: Phase 5 fine-tuning (KsponSpeech IPA 라벨 또는 아동 발화 데이터)
+
+## 알려진 이슈
+
+- **eunjeon `pkg_resources` 경고**: `setuptools<70`에서 발생. 무해.
+- **Gradio 6.0 API**: `theme`은 `launch()` 인자로만 전달 가능.
+- **마이크 녹음 잘림**: `--trailing-ms 1000`으로 늘리거나 `record_live`의 기본값 조정.

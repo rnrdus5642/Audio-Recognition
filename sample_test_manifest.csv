@@ -1,0 +1,7 @@
+audio_path,target_text,target_segment_id
+python/tests/fixtures/audio/apple__f.wav,사과,lesson_03_food
+python/tests/fixtures/audio/apple__m.wav,사과,lesson_03_food
+python/tests/fixtures/audio/mom__f.wav,엄마,lesson_01_family
+python/tests/fixtures/audio/dad__f.wav,아빠,lesson_01_family
+python/tests/fixtures/audio/rabbit__f.wav,토끼,lesson_02_animals
+python/tests/fixtures/audio/bread__f.wav,빵,lesson_03_food

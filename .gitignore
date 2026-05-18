@@ -1,0 +1,58 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+
+# Environments
+.venv/
+venv/
+env/
+ENV/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+.claude/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Project artifacts
+shared/models/*.onnx
+shared/models/*.bin
+shared/models/*/
+!shared/models/.gitkeep
+python/tests/fixtures/audio/*.wav
+!python/tests/fixtures/audio/.gitkeep
+
+# Evaluation outputs (regenerable)
+python/tests/fixtures/recognizer_cache.json
+python/tests/fixtures/eval_results.json
+eval_run*.log
+
+# Real-audio test outputs (user-specific)
+test_results.json
+my_tests.csv
+recordings/
+
+# Build artifacts
+shared/targets.json
+*.log
+
+# Unity (placeholder)
+unity/Library/
+unity/Temp/
+unity/Logs/
+unity/UserSettings/
+unity/obj/
+unity/Build/
+unity/Builds/

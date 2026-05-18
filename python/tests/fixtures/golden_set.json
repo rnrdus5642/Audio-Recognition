@@ -1,0 +1,333 @@
+{
+  "description": "TTS-generated golden set for Phase 2 evaluation. Each case should be PASSED when matched against its own segment's answers, and REJECTED when matched against any other segment's answers.",
+  "voices": [
+    "ko-KR-SunHiNeural",
+    "ko-KR-InJoonNeural"
+  ],
+  "cases": [
+    {
+      "case_id": "mom_f",
+      "audio_path": "python/tests/fixtures/audio/mom__f.wav",
+      "target_segment_id": "lesson_01_family",
+      "target_answer_id": "mom",
+      "target_text": "엄마",
+      "voice": "ko-KR-SunHiNeural",
+      "kind": "positive"
+    },
+    {
+      "case_id": "mom_m",
+      "audio_path": "python/tests/fixtures/audio/mom__m.wav",
+      "target_segment_id": "lesson_01_family",
+      "target_answer_id": "mom",
+      "target_text": "엄마",
+      "voice": "ko-KR-InJoonNeural",
+      "kind": "positive"
+    },
+    {
+      "case_id": "dad_f",
+      "audio_path": "python/tests/fixtures/audio/dad__f.wav",
+      "target_segment_id": "lesson_01_family",
+      "target_answer_id": "dad",
+      "target_text": "아빠",
+      "voice": "ko-KR-SunHiNeural",
+      "kind": "positive"
+    },
+    {
+      "case_id": "dad_m",
+      "audio_path": "python/tests/fixtures/audio/dad__m.wav",
+      "target_segment_id": "lesson_01_family",
+      "target_answer_id": "dad",
+      "target_text": "아빠",
+      "voice": "ko-KR-InJoonNeural",
+      "kind": "positive"
+    },
+    {
+      "case_id": "grandma_f",
+      "audio_path": "python/tests/fixtures/audio/grandma__f.wav",
+      "target_segment_id": "lesson_01_family",
+      "target_answer_id": "grandma",
+      "target_text": "할머니",
+      "voice": "ko-KR-SunHiNeural",
+      "kind": "positive"
+    },
+    {
+      "case_id": "grandma_m",
+      "audio_path": "python/tests/fixtures/audio/grandma__m.wav",
+      "target_segment_id": "lesson_01_family",
+      "target_answer_id": "grandma",
+      "target_text": "할머니",
+      "voice": "ko-KR-InJoonNeural",
+      "kind": "positive"
+    },
+    {
+      "case_id": "grandpa_f",
+      "audio_path": "python/tests/fixtures/audio/grandpa__f.wav",
+      "target_segment_id": "lesson_01_family",
+      "target_answer_id": "grandpa",
+      "target_text": "할아버지",
+      "voice": "ko-KR-SunHiNeural",
+      "kind": "positive"
+    },
+    {
+      "case_id": "grandpa_m",
+      "audio_path": "python/tests/fixtures/audio/grandpa__m.wav",
+      "target_segment_id": "lesson_01_family",
+      "target_answer_id": "grandpa",
+      "target_text": "할아버지",
+      "voice": "ko-KR-InJoonNeural",
+      "kind": "positive"
+    },
+    {
+      "case_id": "puppy_f",
+      "audio_path": "python/tests/fixtures/audio/puppy__f.wav",
+      "target_segment_id": "lesson_02_animals",
+      "target_answer_id": "puppy",
+      "target_text": "강아지",
+      "voice": "ko-KR-SunHiNeural",
+      "kind": "positive"
+    },
+    {
+      "case_id": "puppy_m",
+      "audio_path": "python/tests/fixtures/audio/puppy__m.wav",
+      "target_segment_id": "lesson_02_animals",
+      "target_answer_id": "puppy",
+      "target_text": "강아지",
+      "voice": "ko-KR-InJoonNeural",
+      "kind": "positive"
+    },
+    {
+      "case_id": "cat_f",
+      "audio_path": "python/tests/fixtures/audio/cat__f.wav",
+      "target_segment_id": "lesson_02_animals",
+      "target_answer_id": "cat",
+      "target_text": "고양이",
+      "voice": "ko-KR-SunHiNeural",
+      "kind": "positive"
+    },
+    {
+      "case_id": "cat_m",
+      "audio_path": "python/tests/fixtures/audio/cat__m.wav",
+      "target_segment_id": "lesson_02_animals",
+      "target_answer_id": "cat",
+      "target_text": "고양이",
+      "voice": "ko-KR-InJoonNeural",
+      "kind": "positive"
+    },
+    {
+      "case_id": "rabbit_f",
+      "audio_path": "python/tests/fixtures/audio/rabbit__f.wav",
+      "target_segment_id": "lesson_02_animals",
+      "target_answer_id": "rabbit",
+      "target_text": "토끼",
+      "voice": "ko-KR-SunHiNeural",
+      "kind": "positive"
+    },
+    {
+      "case_id": "rabbit_m",
+      "audio_path": "python/tests/fixtures/audio/rabbit__m.wav",
+      "target_segment_id": "lesson_02_animals",
+      "target_answer_id": "rabbit",
+      "target_text": "토끼",
+      "voice": "ko-KR-InJoonNeural",
+      "kind": "positive"
+    },
+    {
+      "case_id": "butterfly_f",
+      "audio_path": "python/tests/fixtures/audio/butterfly__f.wav",
+      "target_segment_id": "lesson_02_animals",
+      "target_answer_id": "butterfly",
+      "target_text": "나비",
+      "voice": "ko-KR-SunHiNeural",
+      "kind": "positive"
+    },
+    {
+      "case_id": "butterfly_m",
+      "audio_path": "python/tests/fixtures/audio/butterfly__m.wav",
+      "target_segment_id": "lesson_02_animals",
+      "target_answer_id": "butterfly",
+      "target_text": "나비",
+      "voice": "ko-KR-InJoonNeural",
+      "kind": "positive"
+    },
+    {
+      "case_id": "apple_f",
+      "audio_path": "python/tests/fixtures/audio/apple__f.wav",
+      "target_segment_id": "lesson_03_food",
+      "target_answer_id": "apple",
+      "target_text": "사과",
+      "voice": "ko-KR-SunHiNeural",
+      "kind": "positive"
+    },
+    {
+      "case_id": "apple_m",
+      "audio_path": "python/tests/fixtures/audio/apple__m.wav",
+      "target_segment_id": "lesson_03_food",
+      "target_answer_id": "apple",
+      "target_text": "사과",
+      "voice": "ko-KR-InJoonNeural",
+      "kind": "positive"
+    },
+    {
+      "case_id": "banana_f",
+      "audio_path": "python/tests/fixtures/audio/banana__f.wav",
+      "target_segment_id": "lesson_03_food",
+      "target_answer_id": "banana",
+      "target_text": "바나나",
+      "voice": "ko-KR-SunHiNeural",
+      "kind": "positive"
+    },
+    {
+      "case_id": "banana_m",
+      "audio_path": "python/tests/fixtures/audio/banana__m.wav",
+      "target_segment_id": "lesson_03_food",
+      "target_answer_id": "banana",
+      "target_text": "바나나",
+      "voice": "ko-KR-InJoonNeural",
+      "kind": "positive"
+    },
+    {
+      "case_id": "milk_f",
+      "audio_path": "python/tests/fixtures/audio/milk__f.wav",
+      "target_segment_id": "lesson_03_food",
+      "target_answer_id": "milk",
+      "target_text": "우유",
+      "voice": "ko-KR-SunHiNeural",
+      "kind": "positive"
+    },
+    {
+      "case_id": "milk_m",
+      "audio_path": "python/tests/fixtures/audio/milk__m.wav",
+      "target_segment_id": "lesson_03_food",
+      "target_answer_id": "milk",
+      "target_text": "우유",
+      "voice": "ko-KR-InJoonNeural",
+      "kind": "positive"
+    },
+    {
+      "case_id": "bread_f",
+      "audio_path": "python/tests/fixtures/audio/bread__f.wav",
+      "target_segment_id": "lesson_03_food",
+      "target_answer_id": "bread",
+      "target_text": "빵",
+      "voice": "ko-KR-SunHiNeural",
+      "kind": "positive"
+    },
+    {
+      "case_id": "bread_m",
+      "audio_path": "python/tests/fixtures/audio/bread__m.wav",
+      "target_segment_id": "lesson_03_food",
+      "target_answer_id": "bread",
+      "target_text": "빵",
+      "voice": "ko-KR-InJoonNeural",
+      "kind": "positive"
+    },
+    {
+      "case_id": "go_f",
+      "audio_path": "python/tests/fixtures/audio/go__f.wav",
+      "target_segment_id": "lesson_04_actions",
+      "target_answer_id": "go",
+      "target_text": "가요",
+      "voice": "ko-KR-SunHiNeural",
+      "kind": "positive"
+    },
+    {
+      "case_id": "go_m",
+      "audio_path": "python/tests/fixtures/audio/go__m.wav",
+      "target_segment_id": "lesson_04_actions",
+      "target_answer_id": "go",
+      "target_text": "가요",
+      "voice": "ko-KR-InJoonNeural",
+      "kind": "positive"
+    },
+    {
+      "case_id": "come_f",
+      "audio_path": "python/tests/fixtures/audio/come__f.wav",
+      "target_segment_id": "lesson_04_actions",
+      "target_answer_id": "come",
+      "target_text": "와요",
+      "voice": "ko-KR-SunHiNeural",
+      "kind": "positive"
+    },
+    {
+      "case_id": "come_m",
+      "audio_path": "python/tests/fixtures/audio/come__m.wav",
+      "target_segment_id": "lesson_04_actions",
+      "target_answer_id": "come",
+      "target_text": "와요",
+      "voice": "ko-KR-InJoonNeural",
+      "kind": "positive"
+    },
+    {
+      "case_id": "eat_f",
+      "audio_path": "python/tests/fixtures/audio/eat__f.wav",
+      "target_segment_id": "lesson_04_actions",
+      "target_answer_id": "eat",
+      "target_text": "먹어요",
+      "voice": "ko-KR-SunHiNeural",
+      "kind": "positive"
+    },
+    {
+      "case_id": "eat_m",
+      "audio_path": "python/tests/fixtures/audio/eat__m.wav",
+      "target_segment_id": "lesson_04_actions",
+      "target_answer_id": "eat",
+      "target_text": "먹어요",
+      "voice": "ko-KR-InJoonNeural",
+      "kind": "positive"
+    },
+    {
+      "case_id": "school_f",
+      "audio_path": "python/tests/fixtures/audio/school__f.wav",
+      "target_segment_id": "lesson_05_school",
+      "target_answer_id": "school",
+      "target_text": "학교",
+      "voice": "ko-KR-SunHiNeural",
+      "kind": "positive"
+    },
+    {
+      "case_id": "school_m",
+      "audio_path": "python/tests/fixtures/audio/school__m.wav",
+      "target_segment_id": "lesson_05_school",
+      "target_answer_id": "school",
+      "target_text": "학교",
+      "voice": "ko-KR-InJoonNeural",
+      "kind": "positive"
+    },
+    {
+      "case_id": "friend_f",
+      "audio_path": "python/tests/fixtures/audio/friend__f.wav",
+      "target_segment_id": "lesson_05_school",
+      "target_answer_id": "friend",
+      "target_text": "친구",
+      "voice": "ko-KR-SunHiNeural",
+      "kind": "positive"
+    },
+    {
+      "case_id": "friend_m",
+      "audio_path": "python/tests/fixtures/audio/friend__m.wav",
+      "target_segment_id": "lesson_05_school",
+      "target_answer_id": "friend",
+      "target_text": "친구",
+      "voice": "ko-KR-InJoonNeural",
+      "kind": "positive"
+    },
+    {
+      "case_id": "book_f",
+      "audio_path": "python/tests/fixtures/audio/book__f.wav",
+      "target_segment_id": "lesson_05_school",
+      "target_answer_id": "book",
+      "target_text": "책",
+      "voice": "ko-KR-SunHiNeural",
+      "kind": "positive"
+    },
+    {
+      "case_id": "book_m",
+      "audio_path": "python/tests/fixtures/audio/book__m.wav",
+      "target_segment_id": "lesson_05_school",
+      "target_answer_id": "book",
+      "target_text": "책",
+      "voice": "ko-KR-InJoonNeural",
+      "kind": "positive"
+    }
+  ]
+}

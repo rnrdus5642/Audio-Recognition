@@ -1,0 +1,41 @@
+# Conda environment definition (64-bit Miniconda/Anaconda required).
+#
+# This project is currently being developed with venv + Python 3.13 because
+# the existing local Anaconda installation is 32-bit. This file is kept as a
+# reference for users who DO have 64-bit conda available.
+#
+# Usage (after installing 64-bit Miniconda):
+#   conda env create -f environment.yml
+#   conda activate audio-rec
+name: audio-rec
+channels:
+  - conda-forge
+dependencies:
+  - python=3.10
+  - pip
+  - numpy<2
+  - librosa
+  - soundfile
+  - ffmpeg
+  - pip:
+      # G2P (Phase 1)
+      - g2pkk==0.1.2          # mecab-free fork of g2pk
+      - eunjeon==0.4.0        # mecab wrapper required by g2pkk
+      - jamo==0.4.1
+      - "setuptools<70"      # eunjeon needs pkg_resources
+
+      # Tests / lint
+      - pytest>=8.0
+      - black==24.4.2
+      - ruff==0.5.5
+
+      # Phase 2: audio + phoneme recognition
+      - --extra-index-url https://download.pytorch.org/whl/cu121
+      - torch==2.3.1
+      - torchaudio==2.3.1
+      - transformers==4.42.4
+      - onnx==1.16.2
+      - onnxruntime-gpu==1.18.1
+      - allosaurus==1.0.2
+      - edge-tts==6.1.12
+      - pydantic>=2.7,<3

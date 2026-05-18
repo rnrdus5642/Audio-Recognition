@@ -1,0 +1,34 @@
+# Phase 2 dependencies (audio + phoneme recognition models)
+# Install AFTER Phase 1 deps:
+#   pip install -r requirements-phase2.txt
+#
+# Phase 2 brings in heavy ML libs; keep these out of Phase 1 to keep
+# the build pipeline lightweight.
+
+# Audio I/O and preprocessing
+numpy<2                  # transformers compat
+librosa
+soundfile
+
+# PyTorch (CPU build by default for Python 3.13).
+# For NVIDIA GPU users with CUDA drivers, replace these two lines with:
+#   pip install torch torchaudio --index-url https://download.pytorch.org/whl/cu126
+torch
+torchaudio
+
+# Phoneme recognition models
+transformers
+
+# Golden test audio generation
+edge-tts
+
+# NOTE: allosaurus (multilingual IPA recognizer) is currently disabled.
+# It depends on `editdistance` which lacks Python 3.13 wheels and fails
+# to build from source on Windows. Re-enable when wheels become available
+# or when migrating to Python 3.10 conda environment.
+# allosaurus==1.0.2
+
+# NOTE: onnx + onnxruntime are deferred to Phase 3 (ONNX export). Not
+# needed for the Python prototype evaluation.
+# onnx
+# onnxruntime

@@ -1,0 +1,14 @@
+# Phase 1 dependencies (build pipeline + G2P + tests)
+# Install:
+#   python -m venv .venv
+#   .venv\Scripts\Activate.ps1
+#   pip install -r requirements.txt
+
+# G2P (Korean)
+g2pkk==0.1.2          # mecab-free fork of g2pk (Windows-friendly)
+eunjeon==0.4.0        # mecab wrapper required by g2pkk
+jamo==0.4.1           # Hangul -> Jamo decomposition (currently unused at runtime, kept for parity)
+setuptools<70        # eunjeon depends on pkg_resources, removed in setuptools >=70
+
+# Test framework
+pytest>=8.0
