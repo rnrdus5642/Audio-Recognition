@@ -435,7 +435,11 @@ MonoBehaviour:
   HopSeconds: 0.5
   Consecutive: 3
   TimeoutSeconds: 30
+  MicrophoneDevice: 
   OnConfirmed:
+    m_PersistentCalls:
+      m_Calls: []
+  OnTimedOut:
     m_PersistentCalls:
       m_Calls: []
   OnFrameScored:

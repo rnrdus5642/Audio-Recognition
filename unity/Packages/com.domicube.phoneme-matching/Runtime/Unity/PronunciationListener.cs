@@ -47,8 +47,20 @@ namespace DomiCube.PhonemeMatching.Unity
         [Tooltip("이 시간이 지나면 스스로 멈춥니다 (0이면 무제한).")]
         public float TimeoutSeconds = 30f;
 
+        [Tooltip("마이크 이름. 비우면 OS 기본 장치입니다. VR에서는 헤드셋 "
+                 + "마이크를 지정해야 하는 경우가 많습니다 "
+                 + "(Microphone.devices 로 이름 확인).")]
+        public string MicrophoneDevice = "";
+
         [Header("Events")]
         public AnswerConfirmedEvent OnConfirmed = new AnswerConfirmedEvent();
+
+        /// <summary>
+        /// Nothing was confirmed before <see cref="TimeoutSeconds"/> ran
+        /// out. A lesson needs this to offer another try; without it the
+        /// only way to notice is polling <see cref="IsListening"/>.
+        /// </summary>
+        public UnityEvent OnTimedOut = new UnityEvent();
 
         /// <summary>(단어, 점수, 연속 횟수) - 디버그 UI용.</summary>
         public FrameScoredEvent OnFrameScored = new FrameScoredEvent();
@@ -136,7 +148,9 @@ namespace DomiCube.PhonemeMatching.Unity
             _streaming = new StreamingMatcher(
                 Matcher.ForStreaming(_matrix), candidates, Consecutive);
             _mic = new MicrophoneRollingBuffer(WindowSeconds);
-            _mic.Start();
+            _mic.Start(string.IsNullOrEmpty(MicrophoneDevice)
+                ? null
+                : MicrophoneDevice);
             _loop = StartCoroutine(ListenLoop());
         }
 
@@ -174,6 +188,10 @@ namespace DomiCube.PhonemeMatching.Unity
             var wait = new WaitForSeconds(HopSeconds);
             float started = Time.realtimeSinceStartup;
 
+            // Distinguishes "gave up" from "the recogniser threw", which
+            // both end the loop but mean different things to the caller.
+            bool timedOut = false;
+
             while (true)
             {
                 yield return wait;
@@ -182,6 +200,7 @@ namespace DomiCube.PhonemeMatching.Unity
                 {
                     if (TimedOut(started))
                     {
+                        timedOut = true;
                         break;
                     }
 
@@ -214,11 +233,17 @@ namespace DomiCube.PhonemeMatching.Unity
 
                 if (TimedOut(started))
                 {
+                    timedOut = true;
                     break;
                 }
             }
 
             StopListening();
+
+            if (timedOut)
+            {
+                OnTimedOut.Invoke();
+            }
         }
 
         private bool TimedOut(float started)

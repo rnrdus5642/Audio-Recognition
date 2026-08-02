@@ -24,16 +24,35 @@
 
 ## 설치
 
-`Packages/manifest.json`:
+`Packages/manifest.json` 에 한 줄. Sentis 와 Newtonsoft 는 패키지가 의존성으로
+선언하므로 UPM 이 알아서 끌어옵니다.
 
 ```json
 {
   "dependencies": {
-    "com.domicube.phoneme-matching": "file:../../path/to/com.domicube.phoneme-matching",
-    "com.unity.nuget.newtonsoft-json": "3.2.1"
+    "com.domicube.phoneme-matching": "https://github.com/rnrdus5642/Audio-Recognition.git?path=/unity/Packages/com.domicube.phoneme-matching#v0.1.0"
   }
 }
 ```
+
+`#v0.1.0` 을 빼면 항상 main 최신을 당겨옵니다. 로컬에서 고쳐가며 쓰려면
+`"file:../../path/to/com.domicube.phoneme-matching"` 도 됩니다.
+
+**Unity 6000.0 이상**이 필요합니다 (Sentis 2.6 요구사항).
+
+### 데이터와 모델은 따로 옵니다
+
+코드만 받아서는 동작하지 않습니다. 두 가지를 더 넣어야 합니다.
+
+1. **데이터** — Package Manager 에서 이 패키지의 샘플
+   `Korean data (ko_child_v1)` 을 임포트한 뒤, 세 JSON 을
+   `Assets/StreamingAssets/` 로 복사하세요.
+2. **음향 모델** — `wav2vec2_ko.onnx` (1.18GB) 는 용량 때문에 패키지에
+   없습니다. 저장소에서 `python -m python.tools.export_onnx` 로 만들어
+   `Assets/` 아래 두면 Sentis 가 임포트합니다.
+
+모델 없이 매칭 계층만 쓰는 것도 됩니다 — `IPhonemeRecognizer` 를 직접
+구현하면 Sentis 경로는 건드리지 않아도 됩니다.
 
 ## 사용법
 
@@ -93,11 +112,27 @@ hop으로 10초, 후보 4개면 100회이고, 프레임당 오검출률 1%도 �
 
 ## 음향 모델
 
-`IPhonemeRecognizer` 구현은 아직 없습니다(ONNX export는 별도 단계). 매칭 계층은 모델
-없이도 완성돼 있고, 실제 wav2vec2 출력을 고정한 픽스처로 테스트됩니다.
+`SentisPhonemeRecognizer` 가 wav2vec2 를 Sentis 로 돌립니다.
 
-구현할 때 주의: 출력 음소는 targets를 만든 것과 **같은 표기 체계**여야 합니다. 한국어는
-인식기의 한글 출력을 `JamoIpa.ToPhonemes()`에 통과시키면 됩니다.
+```csharp
+var vocab = PhonemeData.LoadCtcVocabulary(vocabJson);
+var recognizer = new SentisPhonemeRecognizer(modelAsset, vocab);
+recognizer.Warmup(2.5f);        // 로딩 중에 부를 것 (아래)
+listener.SetRecognizer(recognizer);
+```
+
+**첫 추론은 ~1.9초 걸립니다** — 셰이더 컴파일과 1.2GB 가중치 업로드입니다.
+`Warmup()` 을 로딩 화면에서 부르지 않으면 사용자의 첫 발화가 그 시간을
+기다립니다. 다 쓰면 `Dispose()` 로 워커를 놓아주세요.
+
+백엔드는 **GPUCompute 고정이고 CPU 폴백이 없습니다.** 2.5초 창 실측(유휴
+PC, RTX 5060 Ti): GPU 22~32ms, CPU 461~523ms. hop 예산이 500ms인데 CPU 는
+그걸 거의 다 쓰면서 코어 6개를 점유합니다. VRAM 은 가중치로 1.2GB 를
+씁니다.
+
+다른 모델을 쓰려면 `IPhonemeRecognizer` 를 구현하면 됩니다. 주의: 출력 음소는
+targets 를 만든 것과 **같은 표기 체계**여야 합니다. 한국어는 인식기의 한글
+출력을 `JamoIpa.ToPhonemes()` 에 통과시키면 됩니다.
 
 ## 테스트
 
@@ -114,4 +149,13 @@ Unity Test Runner로도 같은 파일이 돕니다(NUnit).
 
 ```bash
 python -m python.tools.export_parity_vectors
+```
+
+`Tests/Runtime/ctc_vectors.json` 도 같은 목적입니다 — CTC 디코더가 파이썬
+`batch_decode` 와 같은 글자를 내는지 43케이스로 확인합니다. 36개는 실제 ONNX
+가 골든 클립에 대해 뱉은 토큰 id 라, 반복·blank 같은 까다로운 패턴이 실제
+모델 출력에서 나옵니다. 모델이나 어휘를 바꿨다면:
+
+```bash
+python -m python.tools.export_ctc_vocab
 ```

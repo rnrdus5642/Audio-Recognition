@@ -2,11 +2,19 @@
   "name": "com.domicube.phoneme-matching",
   "version": "0.1.0",
   "displayName": "Phoneme Matching",
-  "description": "발음이 부정확한 사용자(아동·발달지연 포함)의 발화가 정답 단어와 음소(IPA) 수준에서 충분히 가까운지 판정합니다. STT가 아니라 음소 부분 매칭이라 환각과 마이크 잡음을 함께 회피합니다. 온디바이스 전용 - 서버가 필요 없습니다.\n\n음향 모델은 IPhonemeRecognizer 뒤에 있어 매칭 계층만 먼저 쓸 수 있습니다.",
-  "unity": "2022.3",
+  "description": "발음이 부정확한 사용자(아동·발달지연 포함)의 발화가 정답 단어와 음소(IPA) 수준에서 충분히 가까운지 판정합니다. STT가 아니라 음소 부분 매칭이라 환각과 마이크 잡음을 함께 회피합니다. 온디바이스 전용 - 서버가 필요 없습니다.\n\n음향 모델은 Sentis 로 도는 wav2vec2 이고, IPhonemeRecognizer 뒤에 있어 다른 모델로 갈아끼울 수 있습니다.",
+  "unity": "6000.0",
   "dependencies": {
-    "com.unity.nuget.newtonsoft-json": "3.2.1"
+    "com.unity.nuget.newtonsoft-json": "3.2.1",
+    "com.unity.ai.inference": "2.6.1"
   },
+  "samples": [
+    {
+      "displayName": "Korean data (ko_child_v1)",
+      "description": "confusion matrix · targets · CTC 어휘. StreamingAssets 로 복사해서 쓰세요. 정답 단어를 바꾸려면 파이썬 빌드 파이프라인으로 targets.json 을 다시 만드세요.",
+      "path": "Samples~/KoreanData"
+    }
+  ],
   "keywords": [
     "speech",
     "phoneme",

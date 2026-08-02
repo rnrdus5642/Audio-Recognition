@@ -45,6 +45,12 @@ public sealed class PronunciationDemo : MonoBehaviour
             Debug.Log($"[Demo] {_status}");
         });
 
+        _listener.OnTimedOut.AddListener(() =>
+        {
+            _status = "못 알아들었어요 — Space를 눌러 다시";
+            Debug.Log("[Demo] 타임아웃");
+        });
+
         _listener.OnFrameScored.AddListener((word, score, streak) =>
         {
             _lastFrame =

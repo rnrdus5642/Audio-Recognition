@@ -313,7 +313,7 @@ dotnet test csharp/PhonemeMatching.Tests    # C# 포팅 (20개, Unity 불필요)
   - Sentis 2.6.1 임포트 성공 (동적 축 인식, 미지원 연산자 0종)
   - `CtcDecoder` + `SentisPhonemeRecognizer` — 골든 클립 4개를 Unity에서
     통과시켜 파이썬과 **한글·IPA 완전 일치**, 클립당 26~51ms
-  - 데모 씬에서 마이크→Sentis→매처 루프 실측 확인
+  - 데모 씬에서 실제 마이크 발화로 확정 배너까지 확인 (성인 명료 발화)
 - [ ] Phase 5: 실제 아동 녹음으로 재튜닝 ← **다음**
 - [ ] Phase 6: Fine-tune (필요 시, catastrophic ASR 회수)
 
