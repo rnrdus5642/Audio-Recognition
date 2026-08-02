@@ -48,7 +48,7 @@ recordings/
 shared/targets.json
 *.log
 
-# Unity (placeholder)
+# Unity
 unity/Library/
 unity/Temp/
 unity/Logs/
@@ -56,3 +56,8 @@ unity/UserSettings/
 unity/obj/
 unity/Build/
 unity/Builds/
+
+# .NET (패키지 테스트를 Unity 없이 돌리기 위한 프로젝트)
+bin/
+obj/
+*.user

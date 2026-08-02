@@ -1,0 +1,41 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--
+    Runs the package's tests without launching the Unity Editor, so the
+    port can be iterated in seconds. There is no second copy of the
+    source: both the Runtime code and the tests are globbed straight out
+    of the UPM package, and the tests use NUnit so the same files also
+    run under the Unity Test Runner.
+
+        dotnet test csharp/PhonemeMatching.Tests
+  -->
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <!-- Unity 2022.3 compiles C# 9; pin it so syntax that would not
+         build in the editor fails here first. -->
+    <LangVersion>9.0</LangVersion>
+    <Nullable>disable</Nullable>
+    <IsPackable>false</IsPackable>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <RootNamespace>DomiCube.PhonemeMatching.Tests</RootNamespace>
+    <AssemblyName>DomiCube.PhonemeMatching.Tests</AssemblyName>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <PackageRoot>$(MSBuildThisFileDirectory)..\..\unity\Packages\com.domicube.phoneme-matching\</PackageRoot>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="$(PackageRoot)Runtime\**\*.cs" />
+    <Compile Include="$(PackageRoot)Tests\Runtime\**\*.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="NUnit" Version="4.2.2" />
+    <PackageReference Include="NUnit3TestAdapter" Version="4.6.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.11.1" />
+  </ItemGroup>
+
+</Project>
