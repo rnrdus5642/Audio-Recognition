@@ -43,6 +43,8 @@ class ConfusionMatrix:
         default_substitution: float,
         default_deletion: float,
         default_insertion: float,
+        skip_cost: float,
+        streaming_profile: dict[str, float],
     ) -> None:
         self.matrix_id = matrix_id
         self.language = language
@@ -53,6 +55,14 @@ class ConfusionMatrix:
         self.default_substitution = default_substitution
         self.default_deletion = default_deletion
         self.default_insertion = default_insertion
+        # Per-phoneme cost of skipping user output outside the matched
+        # window (substring mode only). Must stay well below
+        # default_insertion so surrounding noise is still cheap.
+        self.skip_cost = skip_cost
+        # Scoring overrides for continuous listening; see
+        # `Matcher.for_streaming`. Batch and streaming genuinely need
+        # different values - a single setting fails one or the other.
+        self.streaming_profile = streaming_profile
 
     # ------------------------------------------------------------------
     # Loading
@@ -96,6 +106,11 @@ class ConfusionMatrix:
             ),
             default_deletion=float(data.get("default_deletion", 0.6)),
             default_insertion=float(data.get("default_insertion", 0.6)),
+            skip_cost=float(data.get("skip_cost", 0.1)),
+            streaming_profile={
+                k: float(v)
+                for k, v in clean(data.get("streaming_profile", {})).items()
+            },
         )
 
     # ------------------------------------------------------------------

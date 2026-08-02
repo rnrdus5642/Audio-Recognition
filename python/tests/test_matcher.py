@@ -111,8 +111,11 @@ class TestSimilarityScore:
 
 
 class TestSubstringEditDistance:
-    """Substring matching: target must appear inside user; surrounding
-    noise is free."""
+    """Substring matching: target must appear inside user.
+
+    These exercise the primitive at its default `skip_cost=0.0`, where
+    surrounding noise is free. The policy layer (`Matcher`) supplies a
+    positive skip cost - see `TestSubstringSkipCost`."""
 
     def test_exact_match_zero_distance(
         self, matrix: ConfusionMatrix
@@ -182,6 +185,45 @@ class TestSubstringEditDistance:
         assert ops == []
 
 
+class TestSubstringSkipCost:
+    """A positive skip_cost charges for user phonemes outside the window."""
+
+    def test_skipped_phonemes_are_charged(
+        self, matrix: ConfusionMatrix
+    ) -> None:
+        # 2 phonemes of noise before 사과, 1 after
+        user = ["n", "n", "s", "a", "k", "w", "a", "m"]
+        target = ["s", "a", "k", "w", "a"]
+        d, ws, we, _ = substring_edit_distance(
+            user, target, matrix, skip_cost=0.15
+        )
+        assert (ws, we) == (2, 7)
+        assert d == pytest.approx(3 * 0.15)
+
+    def test_cheaper_to_skip_than_to_align(
+        self, matrix: ConfusionMatrix
+    ) -> None:
+        """skip_cost must stay below ins_cost, otherwise the DP would
+        rather absorb noise into the window than skip it."""
+        user = ["n", "s", "a", "k", "w", "a"]
+        target = ["s", "a", "k", "w", "a"]
+        _, ws, we, _ = substring_edit_distance(
+            user, target, matrix, skip_cost=matrix.skip_cost
+        )
+        assert matrix.skip_cost < matrix.default_insertion
+        assert (ws, we) == (1, 6)  # noise skipped, not absorbed
+
+    def test_zero_skip_cost_reproduces_free_skipping(
+        self, matrix: ConfusionMatrix
+    ) -> None:
+        user = ["n", "n", "s", "a", "k", "w", "a"]
+        target = ["s", "a", "k", "w", "a"]
+        d, _, _, _ = substring_edit_distance(
+            user, target, matrix, skip_cost=0.0
+        )
+        assert d == 0.0
+
+
 class TestMatcherSubstringMode:
     """Matcher in default substring mode should accept noisy ASR
     output (extra phonemes) without losing the match."""
@@ -204,8 +246,9 @@ class TestMatcherSubstringMode:
         assert result.target_id == "apple"
         # Window should cover the real 사과 part
         assert (result.window_start, result.window_end) == (0, 5)
-        assert result.score == pytest.approx(1.0)
+        # Noise is charged (skip_cost) but must stay cheap enough to pass
         assert result.passed is True
+        assert result.score > 0.9
 
     def test_exact_mode_still_available(
         self, matrix: ConfusionMatrix
@@ -227,7 +270,86 @@ class TestMatcherSubstringMode:
         assert result.score < 1.0
 
 
-class TestMatcher:
+class TestSubstringFalseAccept:
+    """Regression: an unrelated utterance must not pass just by being long.
+
+    With free skipping, only the best-matching window is scored and every
+    other phoneme is discarded, so the score is monotonically
+    non-decreasing in len(user): appending speech only ever adds candidate
+    windows. A long enough utterance then clears any threshold, which no
+    amount of threshold tuning can fix.
+
+    Measured before the fix: "안녕하세요 오늘 날씨가 좋네요" scored 0.720
+    against 사과 (threshold 0.65) - the window [s͈, i, k, a] came from
+    "날씨가".
+    """
+
+    @pytest.fixture
+    def catalog(self) -> list[dict]:
+        """A few answers spanning different segments."""
+        return [
+            {"id": "apple", "text": "사과",
+             "phonemes": ["s", "a", "k", "w", "a"], "threshold": 0.65},
+            {"id": "mom", "text": "엄마",
+             "phonemes": ["ʌ", "m", "m", "a"], "threshold": 0.70},
+            {"id": "come", "text": "와요",
+             "phonemes": ["w", "a", "j", "o"], "threshold": 0.70},
+            {"id": "go", "text": "가요",
+             "phonemes": ["k", "a", "j", "o"], "threshold": 0.70},
+        ]
+
+    # (label, IPA) for utterances containing none of the target words.
+    UNRELATED = [
+        ("오늘 뭐하지",
+         ["o", "n", "ɯ", "l", "m", "w", "ʌ", "h", "a", "tɕ", "i"]),
+        ("안녕하세요 반가워요",
+         ["a", "n", "n", "j", "ʌ", "ŋ", "h", "a", "s", "e", "j", "o",
+          "p", "a", "n", "g", "a", "w", "ʌ", "j", "o"]),
+        ("안녕하세요 오늘 날씨가 좋네요",
+         ["a", "n", "n", "j", "ʌ", "ŋ", "h", "a", "s", "e", "j", "o",
+          "o", "n", "ɯ", "l", "ɾ", "a", "l", "s͈", "i", "k", "a",
+          "tɕ", "o", "n", "n", "e", "j", "o"]),
+    ]
+
+    @pytest.mark.parametrize("label,user", UNRELATED)
+    def test_unrelated_utterance_is_rejected(
+        self,
+        matrix: ConfusionMatrix,
+        catalog: list[dict],
+        label: str,
+        user: list[str],
+    ) -> None:
+        result = Matcher(matrix).best_match(user, catalog)
+        assert not result.passed, (
+            f"{label!r} ({len(user)} phonemes) falsely accepted as "
+            f"{result.target_text!r} with score {result.score:.3f}"
+        )
+
+    def test_score_does_not_grow_without_bound_with_length(
+        self,
+        matrix: ConfusionMatrix,
+        catalog: list[dict],
+    ) -> None:
+        """Appending unrelated speech must not keep pushing the score up.
+
+        This is the structural property behind the bug: with skip_cost=0
+        the score is non-decreasing in len(user), so the check below
+        fails for every candidate skip cost of zero.
+        """
+        _, long_user = self.UNRELATED[-1]
+        matcher = Matcher(matrix)
+        target = catalog[0]["phonemes"]
+
+        scores = [
+            matcher.score_against(long_user[:n], target)[1]
+            for n in range(1, len(long_user) + 1)
+        ]
+        assert min(scores) < max(scores), "score never varied - check setup"
+        # Extending the utterance must be able to *lower* the score.
+        assert any(
+            later < earlier
+            for earlier, later in zip(scores, scores[1:])
+        ), "score is monotonically non-decreasing in utterance length"
     @pytest.fixture
     def candidates(self) -> list[dict]:
         # Mimics two answers in a single segment

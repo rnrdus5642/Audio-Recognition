@@ -38,13 +38,23 @@ def substring_edit_distance(
     user: list[str],
     target: list[str],
     matrix: ConfusionMatrix,
+    skip_cost: float = 0.0,
 ) -> tuple[float, int, int, list[tuple[str, str, str]]]:
     """Find the best substring of `user` that matches `target`.
 
-    Unlike full edit distance, this lets `user` carry arbitrary noise
-    before and/or after the actual target word - any prefix/suffix is
-    skipped for free. Crucial when the ASR captures background noise
-    or coughs as extra phonemes around the real utterance.
+    Unlike full edit distance, this lets `user` carry noise before and/or
+    after the actual target word: any prefix/suffix is skipped at
+    `skip_cost` per phoneme. Crucial when the ASR captures background
+    noise or coughs as extra phonemes around the real utterance.
+
+    `skip_cost=0.0` (the default) makes skipping free - the textbook
+    semi-global alignment. Note that free skipping makes the score
+    monotonically non-decreasing in `len(user)`: appending phonemes only
+    ever adds candidate windows, so a long enough utterance clears any
+    threshold. Callers that score real user speech should pass a small
+    positive `skip_cost` (see `Matcher`); it must stay well below
+    `matrix.ins_cost` so genuine surrounding noise is still cheaper to
+    skip than to align.
 
     Returns:
         (distance, window_start, window_end, ops)
@@ -57,9 +67,10 @@ def substring_edit_distance(
           [(user_phoneme | "", target_phoneme | "", op)] with
           op in {"match", "sub", "ins", "del"}
 
-    Algorithm: standard DP, but `dp[0][j] = 0` for all j (matching
-    an empty target prefix is free at any starting position in user),
-    and we minimise `dp[m][j]` over j (free to stop anywhere in user).
+    Algorithm: standard DP, but `dp[0][j] = j * skip_cost` (starting the
+    window at any position in user costs only the skipped prefix), and we
+    minimise `dp[m][j] + (n - j) * skip_cost` over j (stopping anywhere,
+    paying for the skipped suffix).
     """
     n, m = len(user), len(target)
 
@@ -75,9 +86,9 @@ def substring_edit_distance(
         [None] * (n + 1) for _ in range(m + 1)
     ]
 
-    # Free start: target prefix of length 0 has cost 0 at any user position
+    # Window start: an empty target prefix costs only the user prefix skipped
     for j in range(n + 1):
-        dp[0][j] = 0.0
+        dp[0][j] = j * skip_cost
 
     # Target prefix vs empty user prefix: must delete every target phoneme
     for i in range(1, m + 1):
@@ -108,12 +119,13 @@ def substring_edit_distance(
             dp[i][j] = best_val
             parent[i][j] = best_par
 
-    # Find the best ending position (free end)
+    # Find the best ending position, paying for the skipped user suffix
     best_j = 0
-    best_dist = dp[m][0]
+    best_dist = dp[m][0] + n * skip_cost
     for j in range(1, n + 1):
-        if dp[m][j] < best_dist:
-            best_dist = dp[m][j]
+        total = dp[m][j] + (n - j) * skip_cost
+        if total < best_dist:
+            best_dist = total
             best_j = j
 
     # Backtrack from (m, best_j) until we reach i=0; that j is the start
@@ -249,27 +261,96 @@ class Matcher:
 
     * `mode="substring"` (default): the target must appear as a
       best-matching window inside the user phoneme sequence. Prefix and
-      suffix of the user output (typically ASR noise) are skipped for
-      free. Use when the recogniser tends to include incidental
-      phonemes from coughs, background, breath, etc.
+      suffix of the user output (typically ASR noise) are skipped at
+      `skip_cost` per phoneme - cheap enough to tolerate incidental
+      phonemes from coughs, background and breath, but not free, so a
+      long unrelated utterance cannot clear the threshold just by
+      offering the matcher more windows to choose from.
 
     * `mode="exact"`: full sequence-vs-sequence weighted Levenshtein
       with a length-mismatch penalty. Use when you trust the user
       sequence to contain exactly the target word with no surrounding
       noise.
+
+    `skip_cost` defaults to the matrix's own value; pass an explicit
+    number to override it (used when tuning against the golden set).
+
+    `coverage` is the window-coverage threshold (see `score_against`) and
+    `context_mult`, when set, keeps only the most recent
+    `context_mult * len(target) + 3` user phonemes before scoring. Both
+    exist because continuous listening needs stricter settings than
+    batch scoring - use `Matcher.for_streaming` rather than passing them
+    by hand.
     """
+
+    #: Extra phonemes kept beyond `context_mult * len(target)`, so that a
+    #: target sitting at the very end of the window is not clipped.
+    CONTEXT_PAD = 3
 
     def __init__(
         self,
         matrix: ConfusionMatrix,
         mode: str = "substring",
+        skip_cost: float | None = None,
+        coverage: float = 0.5,
+        context_mult: float | None = None,
     ) -> None:
         if mode not in ("substring", "exact"):
             raise ValueError(
                 f"mode must be 'substring' or 'exact', got {mode!r}"
             )
+        if not 0.0 < coverage <= 1.0:
+            raise ValueError(f"coverage must be in (0, 1], got {coverage!r}")
         self.matrix = matrix
         self.mode = mode
+        self.skip_cost = (
+            matrix.skip_cost if skip_cost is None else float(skip_cost)
+        )
+        self.coverage = float(coverage)
+        self.context_mult = (
+            None if context_mult is None else float(context_mult)
+        )
+
+    @classmethod
+    def for_streaming(cls, matrix: ConfusionMatrix) -> "Matcher":
+        """Matcher tuned for continuous listening.
+
+        Reads `streaming_profile` from the matrix. Batch scoring keeps a
+        lenient window-coverage threshold so a partly-recognised word
+        (아빠 -> "앞") still passes; that leniency lets fragments of
+        other words clear the bar when the user is talking freely, so
+        streaming raises it and bounds how much context is scored.
+        """
+        p = matrix.streaming_profile
+        return cls(
+            matrix,
+            skip_cost=p.get("skip_cost", matrix.skip_cost),
+            coverage=p.get("coverage", 0.5),
+            context_mult=p.get("context_mult") or None,
+        )
+
+    def context_slice(
+        self,
+        user: list[str],
+        target: list[str],
+    ) -> tuple[list[str], int]:
+        """The part of `user` that is actually scored, and how much was cut.
+
+        Returns `(scored, dropped)` where `scored` is the trailing slice
+        kept under `context_mult` and `dropped` is the number of leading
+        phonemes discarded. With no context limit nothing is dropped.
+
+        The limit is coupled to how long a confirmation takes. A target
+        only scores while it sits inside this slice, so if the slice
+        holds less speech than `consecutive * hop` seconds, a user who
+        keeps talking can never accumulate the streak - the answer slides
+        out of context before it is confirmed. Korean runs about 10
+        phonemes/second, so budget accordingly when tuning.
+        """
+        if self.context_mult is None or not target:
+            return list(user), 0
+        keep = int(self.context_mult * len(target)) + self.CONTEXT_PAD
+        return list(user[-keep:]), max(0, len(user) - keep)
 
     def score_against(
         self,
@@ -280,9 +361,19 @@ class Matcher:
         for a single target.
         """
         if self.mode == "substring":
+            # Bound how far back we look. Without this, every extra
+            # second of speech adds candidate windows and the best of
+            # them drifts upward regardless of what was actually said.
+            # Window indices must stay relative to the caller's list even
+            # though we score a truncated copy, otherwise anything that
+            # slices `user_phonemes` with them points at the wrong
+            # phonemes.
+            user, offset = self.context_slice(user, target)
+
             d, ws, we, ops = substring_edit_distance(
-                user, target, self.matrix
+                user, target, self.matrix, self.skip_cost
             )
+            ws, we = ws + offset, we + offset
             base = max(0.0, 1.0 - d / max(len(target), 1))
 
             # Window-coverage penalty.
@@ -294,14 +385,14 @@ class Matcher:
             # tolerate 종성 탈락. The penalty kicks in only when the
             # matched window is meaningfully shorter than the target:
             #
-            #   window_ratio >= 0.5 -> no penalty (legit partial drop
-            #                                       like 종성 탈락)
-            #   window_ratio == 0   -> mult 0    (nothing matched)
+            #   window_ratio >= coverage -> no penalty (legit partial
+            #                               drop like 종성 탈락)
+            #   window_ratio == 0        -> mult 0 (nothing matched)
             #   linear interpolation in between
             target_len = len(target)
             window_len = we - ws
-            if target_len > 0 and window_len < 0.5 * target_len:
-                mult = (window_len / target_len) / 0.5
+            if target_len > 0 and window_len < self.coverage * target_len:
+                mult = (window_len / target_len) / self.coverage
                 base *= mult
 
             s = max(0.0, min(1.0, base))
