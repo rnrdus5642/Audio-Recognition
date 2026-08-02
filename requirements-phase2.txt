@@ -6,7 +6,11 @@
 # the build pipeline lightweight.
 
 # Audio I/O and preprocessing
-numpy<2                  # transformers compat
+# 상한은 numba가 정한다 (librosa -> numba -> "NumPy 2.4 or less").
+# 예전 주석은 numpy<2 였지만 Python 3.13용 1.x 휠이 없어 소스 빌드로
+# 넘어가고 컴파일러가 없으면 실패한다. 실측: 2.5를 넣으면 librosa import
+# 자체가 깨진다.
+numpy>=2.0,<2.5
 librosa
 soundfile
 
@@ -28,7 +32,8 @@ edge-tts
 # or when migrating to Python 3.10 conda environment.
 # allosaurus==1.0.2
 
-# NOTE: onnx + onnxruntime are deferred to Phase 3 (ONNX export). Not
-# needed for the Python prototype evaluation.
-# onnx
-# onnxruntime
+# ONNX export + verification. The Unity package runs inference through
+# Sentis, so these are only needed to produce the model and to check that
+# the exported graph still reproduces the PyTorch outputs.
+onnx
+onnxruntime

@@ -61,7 +61,9 @@ AudioProject/
 │   │   ├── test_streaming.py        # 🔁 연속 청취 시뮬레이션
 │   │   ├── diagnose_audio.py        # 🔍 오디오 진단
 │   │   ├── generate_golden_audio.py # Edge-TTS 골든셋 생성
-│   │   └── evaluate.py              # 골든셋 정확도 평가
+│   │   ├── evaluate.py              # 골든셋 정확도 평가
+│   │   ├── export_parity_vectors.py # C# 대조용 기준 벡터 생성
+│   │   └── export_onnx.py           # ONNX export + Sentis 호환성 검증
 │   │
 │   └── tests/
 │       ├── test_g2p_ko.py           # 언어별 (ko)
@@ -79,7 +81,16 @@ AudioProject/
 ├── docs/
 │   └── ADDING_A_LANGUAGE.md
 │
-└── unity/                           # Unity 프로젝트 (Phase 4+)
+├── unity/                           # Unity 6000.3 / URP
+│   ├── Assets/
+│   │   ├── Scripts/PronunciationDemo.cs
+│   │   └── StreamingAssets/         # matrix + targets JSON (앱 동봉)
+│   └── Packages/com.domicube.phoneme-matching/   # UPM 패키지 (임베디드)
+│       ├── Runtime/                 # 코어 (엔진 참조 없음)
+│       │   └── Unity/               # 마이크·리스너 (별도 asmdef)
+│       └── Tests/Runtime/           # 파이썬 대조 벡터
+│
+└── csharp/PhonemeMatching.Tests/    # Unity 없이 dotnet test
 ```
 
 **언어 추가 시 변경**:
@@ -230,7 +241,7 @@ for t, window in rolling_windows(audio, window_s=2.5, hop_s=0.4):
 |---|---|---|
 | `skip_cost` | 0.15 | 0.05 |
 | 윈도우 커버리지 | 0.5 | 0.8 |
-| 문맥 제한 | 없음 | 최근 `2×정답음소수+3` |
+| 문맥 제한 | 없음 | 최근 `4×정답음소수+3` |
 | 연속 확인 | 없음 | 3회 |
 
 **설정을 하나로 통일할 수 없습니다.** 배치 설정을 스트리밍에 쓰면 정답 검출이
@@ -268,10 +279,14 @@ for t, window in rolling_windows(audio, window_s=2.5, hop_s=0.4):
 ## 테스트
 
 ```powershell
-pytest python/tests -v
+pytest python/tests -v                      # 파이썬 (83개)
+dotnet test csharp/PhonemeMatching.Tests    # C# 포팅 (14개, Unity 불필요)
 ```
 
-- 매핑 테이블, 한국어 G2P 통합, 매처 + Confusion Matrix + Substring
+- 파이썬: 매핑 테이블, 한국어 G2P, 매처 + Confusion Matrix + Substring,
+  연속 청취 (실제 ASR 프레임 픽스처)
+- C#: 파이썬이 생성한 기준 벡터 340개와 대조. 매처나 matrix를 고쳤으면
+  `python -m python.tools.export_parity_vectors`로 벡터를 다시 만들 것
 
 ## Phase 진행
 
@@ -281,9 +296,39 @@ pytest python/tests -v
   - 골든셋 검증: Positives 69.4% / Negatives 거절율 91.7% (substring, `skip_cost` 0.15)
   - 자세한 분석: [REPORT_PHASE2.md](REPORT_PHASE2.md)
 - [x] **Phase 2.5**: 사용자 도구 (웹 UI + CLI + 진단 + 일괄)
-- [ ] Phase 3: ONNX export + 양자화 (VR 배포 준비)
-- [ ] Phase 4: Unity 포팅 (C# 매처 + ONNX Runtime)
-- [ ] Phase 5: Fine-tune (필요 시, catastrophic ASR 회수)
+- [x] **Phase 3**: Unity 패키지 — C# 매칭 엔진 + 파이썬 대조 테스트
+  - [unity/Packages/com.domicube.phoneme-matching/](unity/Packages/com.domicube.phoneme-matching/)
+  - 매처·스트리밍·자모/IPA 포팅 완료, 기준 벡터 340개 일치
+  - 마이크 캡처 + 리스닝 루프 + stub recognizer까지 연결
+- [x] **Phase 3.5**: ONNX export 검증 (`python -m python.tools.export_onnx`)
+  - Sentis 미지원 연산자 0종, opset 18 (지원 범위 7~25)
+  - PyTorch와 골든셋 36/36 동일한 한글·IPA 출력
+- [ ] **Phase 4**: Sentis `IPhonemeRecognizer` 구현 ← **다음**
+- [ ] Phase 5: 실제 아동 녹음으로 재튜닝
+- [ ] Phase 6: Fine-tune (필요 시, catastrophic ASR 회수)
+
+### 배포 전제가 바뀌었습니다
+
+**온디바이스 VR이 아니라 PC 테더링**입니다. 그래서:
+
+- **양자화가 불필요**해졌습니다. Phase 3의 원래 목표("기기에 욱여넣기")가 사라졌고,
+  오히려 정확도 우선으로 모델을 고를 수 있습니다
+- 실측 CPU 추론이 프레임당 142~259ms(hop 예산 500ms의 절반)라 **GPU 없이 충분**합니다.
+  다만 이 수치는 유휴 PC 기준이고, VR 렌더링과의 CPU 경합은 아직 미측정입니다
+- 파이썬은 **빌드 타임 도구로만** 남습니다. 앱에는 파이썬도 서버도 들어가지 않습니다
+
+### 다음 작업 (Phase 4)
+
+1. `shared/models/wav2vec2_ko.onnx` 생성 (`export_onnx.py`, gitignore 대상 1.27GB)
+2. Sentis(`com.unity.ai.inference`)로 임포트 — 연산자는 검증됐지만 임포트 자체는 미확인
+3. `IPhonemeRecognizer` 구현: 오디오 → logits → argmax → CTC 디코딩 → 한글 →
+   `JamoIpa.ToPhonemes()`. **1205개 음절 어휘**를 Unity 쪽으로 옮겨야 함
+   (`Wav2Vec2Processor`의 vocab.json)
+4. `PronunciationDemo`의 stub을 교체하고 실제 발음 판정 확인
+5. VR 씬에서 CPU 경합 측정
+
+**미해결 마찰**: ONNX가 1.27GB라 Sentis 임포트가 느리고 Git LFS가 필요합니다.
+FP16(≈635MB)이나 더 작은 모델을 검토할 여지가 있습니다.
 
 ## 알려진 한계
 
