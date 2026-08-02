@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.IO;
 using DomiCube.PhonemeMatching.Korean;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
@@ -67,31 +66,7 @@ namespace DomiCube.PhonemeMatching.Tests
         /// </summary>
         private static string ReadRepoFile(string relative)
         {
-            var starts = new[]
-            {
-                AppContext.BaseDirectory,
-                Directory.GetCurrentDirectory()
-            };
-
-            foreach (var start in starts)
-            {
-                var dir = new DirectoryInfo(start);
-                while (dir != null)
-                {
-                    var candidate = Path.Combine(
-                        dir.FullName, relative.Replace('/', Path.DirectorySeparatorChar));
-                    if (File.Exists(candidate))
-                    {
-                        return File.ReadAllText(candidate);
-                    }
-
-                    dir = dir.Parent;
-                }
-            }
-
-            throw new FileNotFoundException(
-                $"could not locate '{relative}' above {starts[0]} or "
-                + $"{starts[1]}");
+            return RepoFiles.Read(relative);
         }
 
         private static List<string> Strings(JToken token)

@@ -63,7 +63,8 @@ AudioProject/
 │   │   ├── generate_golden_audio.py # Edge-TTS 골든셋 생성
 │   │   ├── evaluate.py              # 골든셋 정확도 평가
 │   │   ├── export_parity_vectors.py # C# 대조용 기준 벡터 생성
-│   │   └── export_onnx.py           # ONNX export + Sentis 호환성 검증
+│   │   ├── export_onnx.py           # ONNX export + Sentis 호환성 검증
+│   │   └── export_ctc_vocab.py      # CTC 어휘 + 디코드 대조 벡터
 │   │
 │   └── tests/
 │       ├── test_g2p_ko.py           # 언어별 (ko)
@@ -81,13 +82,15 @@ AudioProject/
 ├── docs/
 │   └── ADDING_A_LANGUAGE.md
 │
-├── unity/                           # Unity 6000.3 / URP
+├── unity/                           # Unity 6000.3 / URP / Sentis 2.6
 │   ├── Assets/
+│   │   ├── Models/wav2vec2_ko.onnx  # gitignore (1.18GB, export_onnx.py)
 │   │   ├── Scripts/PronunciationDemo.cs
-│   │   └── StreamingAssets/         # matrix + targets JSON (앱 동봉)
+│   │   └── StreamingAssets/         # matrix + targets + vocab JSON (앱 동봉)
 │   └── Packages/com.domicube.phoneme-matching/   # UPM 패키지 (임베디드)
 │       ├── Runtime/                 # 코어 (엔진 참조 없음)
-│       │   └── Unity/               # 마이크·리스너 (별도 asmdef)
+│       │   ├── CtcDecoder.cs        #   greedy CTC (파이썬 batch_decode 대응)
+│       │   └── Unity/               #   마이크·리스너·Sentis (별도 asmdef)
 │       └── Tests/Runtime/           # 파이썬 대조 벡터
 │
 └── csharp/PhonemeMatching.Tests/    # Unity 없이 dotnet test
@@ -280,13 +283,16 @@ for t, window in rolling_windows(audio, window_s=2.5, hop_s=0.4):
 
 ```powershell
 pytest python/tests -v                      # 파이썬 (83개)
-dotnet test csharp/PhonemeMatching.Tests    # C# 포팅 (14개, Unity 불필요)
+dotnet test csharp/PhonemeMatching.Tests    # C# 포팅 (20개, Unity 불필요)
 ```
 
 - 파이썬: 매핑 테이블, 한국어 G2P, 매처 + Confusion Matrix + Substring,
   연속 청취 (실제 ASR 프레임 픽스처)
 - C#: 파이썬이 생성한 기준 벡터 340개와 대조. 매처나 matrix를 고쳤으면
   `python -m python.tools.export_parity_vectors`로 벡터를 다시 만들 것
+- C# CTC 디코더: 파이썬 `batch_decode`와 43케이스 대조(36개는 실제 ONNX가
+  골든 클립에 대해 내놓은 토큰 id). 모델이나 어휘를 바꿨으면
+  `python -m python.tools.export_ctc_vocab`로 다시 만들 것
 
 ## Phase 진행
 
@@ -303,8 +309,12 @@ dotnet test csharp/PhonemeMatching.Tests    # C# 포팅 (14개, Unity 불필요)
 - [x] **Phase 3.5**: ONNX export 검증 (`python -m python.tools.export_onnx`)
   - Sentis 미지원 연산자 0종, opset 18 (지원 범위 7~25)
   - PyTorch와 골든셋 36/36 동일한 한글·IPA 출력
-- [ ] **Phase 4**: Sentis `IPhonemeRecognizer` 구현 ← **다음**
-- [ ] Phase 5: 실제 아동 녹음으로 재튜닝
+- [x] **Phase 4**: Sentis `IPhonemeRecognizer` 구현
+  - Sentis 2.6.1 임포트 성공 (동적 축 인식, 미지원 연산자 0종)
+  - `CtcDecoder` + `SentisPhonemeRecognizer` — 골든 클립 4개를 Unity에서
+    통과시켜 파이썬과 **한글·IPA 완전 일치**, 클립당 26~51ms
+  - 데모 씬에서 마이크→Sentis→매처 루프 실측 확인
+- [ ] Phase 5: 실제 아동 녹음으로 재튜닝 ← **다음**
 - [ ] Phase 6: Fine-tune (필요 시, catastrophic ASR 회수)
 
 ### 배포 전제가 바뀌었습니다
@@ -313,22 +323,51 @@ dotnet test csharp/PhonemeMatching.Tests    # C# 포팅 (14개, Unity 불필요)
 
 - **양자화가 불필요**해졌습니다. Phase 3의 원래 목표("기기에 욱여넣기")가 사라졌고,
   오히려 정확도 우선으로 모델을 고를 수 있습니다
-- 실측 CPU 추론이 프레임당 142~259ms(hop 예산 500ms의 절반)라 **GPU 없이 충분**합니다.
-  다만 이 수치는 유휴 PC 기준이고, VR 렌더링과의 CPU 경합은 아직 미측정입니다
+- **Sentis 백엔드는 GPUCompute 단일이고 CPU 폴백은 두지 않습니다.**
+  아래 실측 참고. CPU 폴백이 필요한 수준의 PC는 어차피 PCVR을 못 돌립니다
 - 파이썬은 **빌드 타임 도구로만** 남습니다. 앱에는 파이썬도 서버도 들어가지 않습니다
 
-### 다음 작업 (Phase 4)
+#### 백엔드 실측 (2.5초 창, 유휴 PC, RTX 5060 Ti / Ryzen 7 7800X3D)
 
-1. `shared/models/wav2vec2_ko.onnx` 생성 (`export_onnx.py`, gitignore 대상 1.27GB)
-2. Sentis(`com.unity.ai.inference`)로 임포트 — 연산자는 검증됐지만 임포트 자체는 미확인
-3. `IPhonemeRecognizer` 구현: 오디오 → logits → argmax → CTC 디코딩 → 한글 →
-   `JamoIpa.ToPhonemes()`. **1205개 음절 어휘**를 Unity 쪽으로 옮겨야 함
-   (`Wav2Vec2Processor`의 vocab.json)
-4. `PronunciationDemo`의 stub을 교체하고 실제 발음 판정 확인
-5. VR 씬에서 CPU 경합 측정
+| 실행 환경 | 프레임당 | 비고 |
+|---|---|---|
+| Sentis `GPUCompute` | **22~32ms** | 첫 추론 1931ms (셰이더 컴파일 + 1.2GB 업로드) |
+| Sentis `CPU` | 461~523ms | hop 예산 500ms를 거의 소진. 코어 6개 점유 |
+| PyTorch CPU (파이썬) | ~240ms | 참고용 |
+| ONNX Runtime CPU (파이썬) | ~258ms | 같은 .onnx 파일 |
 
-**미해결 마찰**: ONNX가 1.27GB라 Sentis 임포트가 느리고 Git LFS가 필요합니다.
-FP16(≈635MB)이나 더 작은 모델을 검토할 여지가 있습니다.
+Sentis CPU가 느린 건 그래프 융합 부재도, 에디터 오버헤드(Burst 안전검사)도,
+스레드 부족도 아니었습니다 — 셋 다 측정으로 배제했습니다. 코어를 6개 쓰면서
+ORT보다 코어-시간을 2.7배 쓰는, **커널 효율 차이**입니다.
+
+주의사항 두 가지:
+- **VRAM 1.2GB**를 가중치가 차지합니다. 렌더링과 공유하므로 4GB 카드는 빠듯합니다
+- **첫 추론 1.9초**는 모든 PC에서 발생합니다. 로딩 중에 `Warmup()`을 부르지
+  않으면 아이의 첫 발화에서 멈춥니다
+- 아직 미측정: VR 렌더링과 같은 GPU를 쓸 때의 경합. 25ms를 한 번에 던지면
+  90fps(프레임 11ms)에서 끊길 수 있어, 필요하면 `ScheduleIterable`로
+  레이어를 여러 프레임에 나눠야 합니다
+
+### Unity 셋업 (모델은 저장소에 없습니다)
+
+```powershell
+python -m python.tools.export_onnx        # shared/models/wav2vec2_ko.onnx (1.18GB)
+copy shared\models\wav2vec2_ko.onnx unity\Assets\Models\
+python -m python.tools.export_ctc_vocab   # StreamingAssets 어휘 + 대조 벡터
+```
+
+임포트 후 씬의 `Pronunciation Demo` 오브젝트에서 `Model` 필드에
+`Assets/Models/wav2vec2_ko.onnx`를 넣고 Play. 비워두면 stub으로 동작하며
+배너에 어느 쪽이 도는지 표시됩니다.
+
+### 다음 작업 (Phase 5)
+
+1. **실제 아동 녹음 확보** — 지금까지의 모든 튜닝값은 TTS 성인 발화 기준입니다
+2. 확보한 녹음으로 confusion matrix·임계값 재튜닝
+3. VR 씬에서 GPU 경합 측정, 필요하면 `ScheduleIterable`로 프레임 분할
+
+**미해결 마찰**: ONNX가 1.18GB라 Sentis 임포트가 느리고 Git LFS가 필요합니다.
+FP16(≈600MB)이나 더 작은 모델을 검토할 여지가 있습니다.
 
 ## 알려진 한계
 

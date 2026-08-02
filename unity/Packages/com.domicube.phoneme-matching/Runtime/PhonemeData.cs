@@ -191,5 +191,48 @@ namespace DomiCube.PhonemeMatching
 
             return catalog;
         }
+
+        /// <summary>
+        /// Reads the CTC token table exported alongside the ONNX model.
+        /// </summary>
+        public static CtcVocabulary LoadCtcVocabulary(string json)
+        {
+            if (string.IsNullOrEmpty(json))
+            {
+                throw new ArgumentException("vocab json is empty", nameof(json));
+            }
+
+            var root = JObject.Parse(json);
+            var tokens = new List<string>();
+            if (root["tokens"] is JArray array)
+            {
+                foreach (var t in array)
+                {
+                    tokens.Add((string)t);
+                }
+            }
+
+            // The exporter records the model's output width separately.
+            // If it disagrees with the table, ids no longer line up with
+            // logits and every decode would be silently wrong.
+            var declared = (int?)root["vocab_size"];
+            if (declared.HasValue && declared.Value != tokens.Count)
+            {
+                throw new ArgumentException(
+                    $"vocab_size is {declared.Value} but {tokens.Count} "
+                    + "tokens are listed");
+            }
+
+            return new CtcVocabulary
+            {
+                Tokens = tokens.ToArray(),
+                BlankId = (int?)root["blank_id"] ?? -1,
+                UnkId = (int?)root["unk_id"] ?? -1,
+                WordDelimiterId = (int?)root["word_delimiter_id"] ?? -1,
+                Normalize = (bool?)root["normalize"] ?? true,
+                NormalizeEpsilon = (float?)root["normalize_epsilon"] ?? 1e-7f,
+                SamplingRate = (int?)root["sampling_rate"] ?? 16000
+            };
+        }
     }
 }
