@@ -1,0 +1,16 @@
+{
+    "name": "DomiCube.PhonemeMatching.Unity",
+    "rootNamespace": "DomiCube.PhonemeMatching.Unity",
+    "references": [
+        "DomiCube.PhonemeMatching"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
