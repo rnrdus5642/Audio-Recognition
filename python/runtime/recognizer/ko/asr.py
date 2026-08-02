@@ -117,10 +117,16 @@ class KoreanASRRecognizer(BaseRecognizer):
         return self._sanitize(text)
 
     def recognize(self, audio_16k_mono: np.ndarray) -> list[str]:
+        return self.recognize_with_text(audio_16k_mono)[1]
+
+    def recognize_with_text(
+        self, audio_16k_mono: np.ndarray
+    ) -> tuple[str, list[str]]:
+        """Hangul + IPA from one acoustic pass (see `BaseRecognizer`)."""
         hangul = self.transcribe_hangul(audio_16k_mono)
         if not hangul.strip():
-            return []
-        return self._g2p.to_ipa(hangul)
+            return hangul, []
+        return hangul, self._g2p.to_ipa(hangul)
 
     # ------------------------------------------------------------------
     # Internal helpers

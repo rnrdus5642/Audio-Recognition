@@ -42,3 +42,18 @@ class BaseRecognizer(ABC):
             List of IPA phoneme strings. Empty list if no speech detected.
         """
         raise NotImplementedError
+
+    def recognize_with_text(
+        self, audio_16k_mono: np.ndarray
+    ) -> tuple[str, list[str]]:
+        """Return `(raw transcript, IPA)` from a single inference pass.
+
+        Callers that want to display the recogniser's raw text next to the
+        phonemes should use this instead of calling the transcription and
+        `recognize` separately - for models that transcribe first and then
+        apply G2P, doing both runs the acoustic model twice, which matters
+        when scoring every frame of a live stream.
+
+        The default implementation has no separate transcript to offer.
+        """
+        return "", self.recognize(audio_16k_mono)

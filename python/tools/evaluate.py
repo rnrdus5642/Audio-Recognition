@@ -177,8 +177,9 @@ def evaluate(
         if ipa is None:
             t_rec = time.time()
             audio = load_audio_16k_mono(audio_path)
-            hangul = recognizer.transcribe_hangul(audio)
-            ipa = recognizer.recognize(audio) if hangul else []
+            # One acoustic pass for both outputs - calling
+            # transcribe_hangul() and then recognize() runs the model twice.
+            hangul, ipa = recognizer.recognize_with_text(audio)
             cache.put(rel_path, ipa, hangul or "")
             rec_dt = time.time() - t_rec
             if verbose:
