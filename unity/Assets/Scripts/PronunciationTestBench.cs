@@ -52,12 +52,25 @@ public sealed class PronunciationTestBench : MonoBehaviour
     private readonly List<string> _history = new List<string>();
     private Vector2 _scroll;
 
+    /// <summary>
+    /// Flat backdrop. IMGUI draws straight over the camera, and a
+    /// skybox behind small grey text is unreadable.
+    /// </summary>
+    private Texture2D _backdrop;
+
     private struct Row
     {
         public string Text;
         public double Score;
         public double Threshold;
         public bool Passed;
+    }
+
+    private void Awake()
+    {
+        _backdrop = new Texture2D(1, 1) { hideFlags = HideFlags.HideAndDontSave };
+        _backdrop.SetPixel(0, 0, new Color(0.16f, 0.16f, 0.17f));
+        _backdrop.Apply();
     }
 
     private IEnumerator Start()
@@ -89,6 +102,12 @@ public sealed class PronunciationTestBench : MonoBehaviour
         {
             _recognizer.Dispose();
             _recognizer = null;
+        }
+
+        if (_backdrop != null)
+        {
+            Destroy(_backdrop);
+            _backdrop = null;
         }
     }
 
@@ -260,6 +279,10 @@ public sealed class PronunciationTestBench : MonoBehaviour
     private void OnGUI()
     {
         const int pad = 12;
+
+        GUI.DrawTexture(
+            new Rect(0, 0, Screen.width, Screen.height), _backdrop);
+
         var label = new GUIStyle(GUI.skin.label) { fontSize = 14 };
         var small = new GUIStyle(GUI.skin.label) { fontSize = 12 };
         var head = new GUIStyle(GUI.skin.label)
