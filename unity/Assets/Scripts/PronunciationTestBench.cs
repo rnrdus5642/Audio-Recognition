@@ -427,18 +427,25 @@ public sealed class PronunciationTestBench : MonoBehaviour
             }
 
             Microphone.GetDeviceCaps(devices[i], out int min, out int max);
-            // 0/0 means the driver imposes no limit.
-            string caps = min == 0 && max == 0
-                ? "16 kHz 가능"
-                : (min <= 16000 && 16000 <= max
-                    ? $"16 kHz 가능 ({min}~{max} Hz)"
-                    : $"16 kHz 불가 ({min}~{max} Hz) — 리샘플링됨");
-            GUILayout.Label("   " + caps, small);
+            // 0/0 means the driver imposes no limit. What the device
+            // advertises and what Unity hands back are not the same
+            // thing - the Oculus headset mic reports 48 kHz only and
+            // still returns a 16 kHz clip - so report the claim here and
+            // the fact below, without predicting one from the other.
+            GUILayout.Label(
+                min == 0 && max == 0
+                    ? "   장치 보고: 제한 없음"
+                    : $"   장치 보고: {min}~{max} Hz",
+                small);
         }
 
         if (_deviceRate > 0)
         {
-            GUILayout.Label($"   실제 개방: {_deviceRate} Hz", small);
+            GUILayout.Label(
+                _deviceRate == MicrophoneRollingBuffer.TargetSampleRate
+                    ? $"   실제 개방: {_deviceRate} Hz"
+                    : $"   실제 개방: {_deviceRate} Hz → 16 kHz 리샘플링",
+                small);
         }
     }
 
