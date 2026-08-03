@@ -19,8 +19,17 @@ namespace DomiCube.PhonemeMatching.Unity
     {
         public const int TargetSampleRate = 16000;
 
-        private readonly int _deviceSampleRate;
+        private readonly int _requestedSampleRate;
         private readonly int _clipSeconds;
+
+        /// <summary>
+        /// What the device actually opened at, which is not always what
+        /// we asked for: a microphone that cannot do 16 kHz is opened at
+        /// its own rate instead. Resampling with the requested rate then
+        /// shifts the audio in time and the recogniser returns nonsense -
+        /// silently, since the samples still look like speech.
+        /// </summary>
+        private int _deviceSampleRate;
         private AudioClip _clip;
         private string _device;
         private int _lastReadPosition;
@@ -48,6 +57,7 @@ namespace DomiCube.PhonemeMatching.Unity
             }
 
             WindowSeconds = windowSeconds;
+            _requestedSampleRate = deviceSampleRate;
             _deviceSampleRate = deviceSampleRate;
             _clipSeconds = clipSeconds;
             _window = new float[Mathf.CeilToInt(
@@ -67,11 +77,27 @@ namespace DomiCube.PhonemeMatching.Unity
 
             _device = device ?? Microphone.devices[0];
             _clip = Microphone.Start(
-                _device, true, _clipSeconds, _deviceSampleRate);
+                _device, true, _clipSeconds, _requestedSampleRate);
+
+            if (_clip == null)
+            {
+                throw new InvalidOperationException(
+                    $"microphone '{_device}' could not be opened");
+            }
+
+            // Trust the clip over the request, so a device that refused
+            // 16 kHz is resampled from the rate it really gave us.
+            _deviceSampleRate = _clip.frequency > 0
+                ? _clip.frequency
+                : _requestedSampleRate;
+
             _lastReadPosition = 0;
             _filled = 0;
             Elapsed = 0f;
         }
+
+        /// <summary>The rate the device opened at (see Start).</summary>
+        public int DeviceSampleRate => _deviceSampleRate;
 
         public void Stop()
         {

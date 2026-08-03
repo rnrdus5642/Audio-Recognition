@@ -58,6 +58,7 @@ public sealed class PronunciationTestBench : MonoBehaviour
     private List<Answer> _candidates = new List<Answer>();
     private string _scoredIpa = string.Empty;
     private string _profileLine = string.Empty;
+    private int _deviceRate;
     private Vector2 _scroll;
 
     /// <summary>One scoring event, as the frame table shows it.</summary>
@@ -157,7 +158,21 @@ public sealed class PronunciationTestBench : MonoBehaviour
             ? Microphone.devices[_deviceIndex % Microphone.devices.Length]
             : null;
         var mic = new MicrophoneRollingBuffer(WindowSeconds);
-        mic.Start(device);
+        try
+        {
+            mic.Start(device);
+        }
+        catch (System.Exception e)
+        {
+            // Another app holding the device is the usual cause, and it
+            // would otherwise look like a silent room.
+            _status = $"마이크를 열 수 없습니다: {e.Message}";
+            _listening = false;
+            mic.Dispose();
+            yield break;
+        }
+
+        _deviceRate = mic.DeviceSampleRate;
 
         var wait = new WaitForSeconds(HopSeconds);
         float started = Time.realtimeSinceStartup;
@@ -349,15 +364,9 @@ public sealed class PronunciationTestBench : MonoBehaviour
         GUI.enabled = !_listening;
         _targetInput = GUILayout.TextArea(_targetInput, GUILayout.Height(70));
 
-        GUILayout.Space(6);
-        var devices = Microphone.devices;
-        GUILayout.Label(devices.Length == 0
-            ? "마이크 없음"
-            : $"마이크: {devices[_deviceIndex % devices.Length]}", small);
-        if (devices.Length > 1 && GUILayout.Button("마이크 바꾸기"))
-        {
-            _deviceIndex = (_deviceIndex + 1) % devices.Length;
-        }
+        GUILayout.Space(8);
+        GUILayout.Label("마이크", small);
+        DrawDeviceList(small);
 
         GUI.enabled = _ready;
         GUILayout.Space(10);
@@ -387,6 +396,50 @@ public sealed class PronunciationTestBench : MonoBehaviour
         GUILayout.Label("스트리밍 프로파일", head);
         GUILayout.Label(_profileLine, small);
         GUILayout.EndArea();
+    }
+
+    /// <summary>
+    /// Every connected microphone, one row each, always visible - a VR
+    /// machine typically has several and the headset one is rarely the
+    /// system default.
+    /// </summary>
+    private void DrawDeviceList(GUIStyle small)
+    {
+        var devices = Microphone.devices;
+        if (devices.Length == 0)
+        {
+            GUILayout.Label("연결된 마이크가 없습니다", small);
+            return;
+        }
+
+        if (_deviceIndex >= devices.Length)
+        {
+            _deviceIndex = 0;
+        }
+
+        for (int i = 0; i < devices.Length; i++)
+        {
+            bool selected = i == _deviceIndex;
+            if (GUILayout.Toggle(selected, devices[i], GUI.skin.button)
+                && !selected)
+            {
+                _deviceIndex = i;
+            }
+
+            Microphone.GetDeviceCaps(devices[i], out int min, out int max);
+            // 0/0 means the driver imposes no limit.
+            string caps = min == 0 && max == 0
+                ? "16 kHz 가능"
+                : (min <= 16000 && 16000 <= max
+                    ? $"16 kHz 가능 ({min}~{max} Hz)"
+                    : $"16 kHz 불가 ({min}~{max} Hz) — 리샘플링됨");
+            GUILayout.Label("   " + caps, small);
+        }
+
+        if (_deviceRate > 0)
+        {
+            GUILayout.Label($"   실제 개방: {_deviceRate} Hz", small);
+        }
     }
 
     private void DrawResults(
