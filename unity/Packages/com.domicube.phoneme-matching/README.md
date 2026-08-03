@@ -30,12 +30,12 @@
 ```json
 {
   "dependencies": {
-    "com.domicube.phoneme-matching": "https://github.com/rnrdus5642/Audio-Recognition.git?path=/unity/Packages/com.domicube.phoneme-matching#v0.1.0"
+    "com.domicube.phoneme-matching": "https://github.com/rnrdus5642/Audio-Recognition.git?path=/unity/Packages/com.domicube.phoneme-matching#v0.1.1"
   }
 }
 ```
 
-`#v0.1.0` 을 빼면 항상 main 최신을 당겨옵니다. 로컬에서 고쳐가며 쓰려면
+`#v0.1.1` 을 빼면 항상 main 최신을 당겨옵니다. 로컬에서 고쳐가며 쓰려면
 `"file:../../path/to/com.domicube.phoneme-matching"` 도 됩니다.
 
 **Unity 6000.0 이상**이 필요합니다 (Sentis 2.6 요구사항).
