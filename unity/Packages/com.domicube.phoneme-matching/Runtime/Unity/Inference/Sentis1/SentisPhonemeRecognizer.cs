@@ -1,31 +1,35 @@
 #if UNITY_5_3_OR_NEWER
 using System;
 using System.Collections.Generic;
-using Unity.InferenceEngine;
+using Unity.Sentis;
 using UnityEngine;
 
 namespace DomiCube.PhonemeMatching.Unity
 {
     /// <summary>
-    /// wav2vec2 CTC through Sentis: audio -> logits -> greedy decode ->
-    /// Hangul -> IPA. The Unity counterpart of
-    /// python/runtime/recognizer/ko/asr.py.
+    /// wav2vec2 CTC through Sentis 1.x: audio -> logits -> greedy decode
+    /// -> Hangul -> IPA.
     ///
-    /// Backend is GPUCompute and there is deliberately no CPU fallback.
-    /// Measured on this graph with a 2.5 s window: GPU 22-32 ms, CPU
-    /// 460 ms against a 500 ms hop budget - and the CPU path saturates
-    /// six cores doing it, which is what actually breaks VR. A machine
-    /// too weak for compute shaders cannot run PCVR either.
+    /// Same class name and same behaviour as the Sentis 2.x version next
+    /// door; only one of the two ever compiles, decided by which package
+    /// the project has. That way calling code is identical on Unity 2022
+    /// and Unity 6, and only the `using` for ModelAsset differs.
     ///
-    /// The first inference pays ~1.9 s for shader compilation and for
-    /// moving 1.2 GB of weights to the GPU. Call <see cref="Warmup"/>
-    /// while the scene is loading; otherwise the child's first word is
-    /// the thing that waits.
+    /// Sentis 1.2 is the newest build that runs on Unity 2022, and it
+    /// cannot execute a graph with a dynamic time axis - every input
+    /// length dies in the same Reshape. Export the model with the axis
+    /// pinned to the window length:
+    ///
+    ///     python -m python.tools.export_onnx --static-samples 40000
+    ///
+    /// Measured on 2022.3 with that graph: 30 ms per 2.5 s window on
+    /// GPUCompute, 390 ms on CPU, phoneme ids identical to Python across
+    /// all 124 frames of the golden clips.
     /// </summary>
     public sealed class SentisPhonemeRecognizer : IPhonemeRecognizer, IDisposable
     {
         private readonly CtcVocabulary _vocab;
-        private readonly Worker _worker;
+        private readonly IWorker _worker;
         private float[] _normalized = new float[0];
         private bool _disposed;
 
@@ -42,14 +46,15 @@ namespace DomiCube.PhonemeMatching.Unity
             }
 
             _vocab = vocab ?? throw new ArgumentNullException(nameof(vocab));
-            _worker = new Worker(
-                ModelLoader.Load(modelAsset), BackendType.GPUCompute);
+            _worker = WorkerFactory.CreateWorker(
+                BackendType.GPUCompute, ModelLoader.Load(modelAsset));
         }
 
         /// <summary>
-        /// Run one throwaway inference so the cost of compiling shaders
-        /// and uploading weights lands here instead of mid-lesson.
-        /// Pass the same window length the session will use.
+        /// Run one throwaway inference so shader compilation and the
+        /// weight upload land here instead of mid-lesson. Pass the same
+        /// window length the session will use - with a static graph, any
+        /// other length throws.
         /// </summary>
         public void Warmup(float windowSeconds = 2.5f)
         {
@@ -91,42 +96,52 @@ namespace DomiCube.PhonemeMatching.Unity
 
             var input = Prepare(audio);
 
-            // Sentis schedules the whole graph and the readback blocks
-            // until it finishes, so this costs a frame's worth of main
-            // thread. At ~25 ms that is tolerable at a 0.5 s hop; if VR
-            // frame pacing suffers, split it with ScheduleIterable.
-            using (var tensor = new Tensor<float>(
+            using (var tensor = new TensorFloat(
                        new TensorShape(1, input.Length), input))
             {
-                _worker.Schedule(tensor);
-                var output = _worker.PeekOutput() as Tensor<float>;
+                try
+                {
+                    _worker.Execute(tensor);
+                }
+                catch (Exception e)
+                {
+                    // Nearly always the window and the graph disagreeing
+                    // about length, and the engine's own message says
+                    // only "reshaped length does not match".
+                    throw new InvalidOperationException(
+                        $"inference failed on {input.Length} samples "
+                        + $"({input.Length / (float)_vocab.SamplingRate:F2}s). "
+                        + "A statically exported graph accepts exactly the "
+                        + "length it was exported with - re-export with "
+                        + "--static-samples matching the window.", e);
+                }
+
+                var output = _worker.PeekOutput() as TensorFloat;
                 if (output == null)
                 {
                     throw new InvalidOperationException(
                         "model produced no float output");
                 }
 
-                using (var cpu = output.ReadbackAndClone())
+                output.MakeReadable();
+                shape = (output.shape[1], output.shape[2]);
+                if (shape.classes != _vocab.Size)
                 {
-                    shape = (cpu.shape[1], cpu.shape[2]);
-                    if (shape.classes != _vocab.Size)
-                    {
-                        throw new InvalidOperationException(
-                            $"model emits {shape.classes} classes but the "
-                            + $"vocabulary has {_vocab.Size}. Regenerate it "
-                            + "with python -m python.tools.export_ctc_vocab");
-                    }
-
-                    logits = cpu.DownloadToArray();
+                    throw new InvalidOperationException(
+                        $"model emits {shape.classes} classes but the "
+                        + $"vocabulary has {_vocab.Size}. Regenerate it with "
+                        + "python -m python.tools.export_ctc_vocab");
                 }
+
+                logits = output.ToReadOnlyArray();
             }
         }
 
         /// <summary>
         /// Zero mean, unit variance - what
-        /// <c>Wav2Vec2FeatureExtractor</c> does before inference. Skipping
-        /// it does not fail loudly; the model simply returns worse
-        /// phonemes, which would read as a matching problem.
+        /// <c>Wav2Vec2FeatureExtractor</c> does before inference.
+        /// Skipping it does not fail loudly; the model simply returns
+        /// worse phonemes, which would read as a matching problem.
         ///
         /// The caller's array is left alone: it belongs to the rolling
         /// microphone buffer, which reuses it.

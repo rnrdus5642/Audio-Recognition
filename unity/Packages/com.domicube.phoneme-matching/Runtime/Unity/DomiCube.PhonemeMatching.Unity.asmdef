@@ -2,8 +2,7 @@
     "name": "DomiCube.PhonemeMatching.Unity",
     "rootNamespace": "DomiCube.PhonemeMatching.Unity",
     "references": [
-        "DomiCube.PhonemeMatching",
-        "Unity.InferenceEngine"
+        "DomiCube.PhonemeMatching"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

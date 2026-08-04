@@ -11,8 +11,16 @@ go wrong and both are silent:
 This checks both against the golden set before any Unity work depends on
 the answer.
 
+The time axis is pinned to the listening window (40000 samples = 2.5 s)
+by default. A dynamic axis costs a Shape -> Div -> Reshape chain that
+computes convolution output lengths at run time, and Sentis 1.2 - the
+newest build that runs on Unity 2022 - cannot execute it: every input
+length dies in the same Reshape. Pinning folds that chain into
+constants. Nothing is lost, because the window is a fixed length anyway.
+
 Usage:
     python -m python.tools.export_onnx
+    python -m python.tools.export_onnx --static-samples 0   # 동적 축
     python -m python.tools.export_onnx --opset 15 --limit 8
 """
 
@@ -61,7 +69,12 @@ SENTIS_UNSUPPORTED = {
 }
 
 
-def export(model_name: str, out_path: Path, opset: int) -> None:
+def export(
+    model_name: str,
+    out_path: Path,
+    opset: int,
+    static_samples: int | None = None,
+) -> None:
     import torch
     from transformers import Wav2Vec2ForCTC
 
@@ -71,18 +84,38 @@ def export(model_name: str, out_path: Path, opset: int) -> None:
 
     # Two seconds of silence is enough to capture the graph; the time
     # axis is marked dynamic so any length works at runtime.
-    dummy = torch.zeros(1, 32000, dtype=torch.float32)
+    #
+    # `static_samples` pins the time axis instead, because a dynamic one
+    # is not free: the graph then carries a Shape -> Div -> Reshape chain
+    # that computes the convolution output length at run time, and an
+    # engine has to reproduce that arithmetic. Sentis 1.2 (the newest
+    # build that runs on Unity 2022) does not - every input length fails
+    # the same Reshape. Pinning the axis folds that chain into constants.
+    # The listening window is a fixed 2.5 s anyway, so nothing is lost
+    # except the ability to score a differently-sized clip.
+    dummy = torch.zeros(1, static_samples or 32000, dtype=torch.float32)
 
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    print(f"Exporting to {out_path} (opset {opset}) ...")
+    print(f"Exporting to {out_path} (opset {opset})"
+          f"{f', static {static_samples} samples' if static_samples else ''}"
+          " ...")
     t0 = time.time()
 
     # The TorchScript tracer dies inside transformers 5.x mask building
     # (masking_utils.sdpa_mask indexes a shape that is scalar under
     # tracing), so take the dynamo path first and only fall back if it
     # is unavailable.
-    batch = torch.export.Dim("batch", min=1, max=8)
-    samples = torch.export.Dim("samples", min=4000, max=480000)
+    if static_samples:
+        dynamic_shapes = None
+        dynamic_axes = None
+    else:
+        batch = torch.export.Dim("batch", min=1, max=8)
+        samples = torch.export.Dim("samples", min=4000, max=480000)
+        dynamic_shapes = {"input_values": {0: batch, 1: samples}}
+        dynamic_axes = {
+            "input_values": {0: "batch", 1: "samples"},
+            "logits": {0: "batch", 1: "frames"},
+        }
 
     with torch.no_grad():
         try:
@@ -92,7 +125,7 @@ def export(model_name: str, out_path: Path, opset: int) -> None:
                 str(out_path),
                 input_names=["input_values"],
                 output_names=["logits"],
-                dynamic_shapes={"input_values": {0: batch, 1: samples}},
+                dynamic_shapes=dynamic_shapes,
                 opset_version=opset,
                 dynamo=True,
                 external_data=False,
@@ -106,10 +139,7 @@ def export(model_name: str, out_path: Path, opset: int) -> None:
                 str(out_path),
                 input_names=["input_values"],
                 output_names=["logits"],
-                dynamic_axes={
-                    "input_values": {0: "batch", 1: "samples"},
-                    "logits": {0: "batch", 1: "frames"},
-                },
+                dynamic_axes=dynamic_axes,
                 opset_version=opset,
                 do_constant_folding=True,
                 dynamo=False,
@@ -144,7 +174,28 @@ def inspect_ops(out_path: Path) -> list[str]:
     return blocked
 
 
-def verify(model_name: str, out_path: Path, limit: int) -> bool:
+def _fit_length(values, samples: int):
+    """Pad with silence or trim so the clip matches a static graph.
+
+    Only the comparison needs this. At run time the window is always
+    exactly this long, so nothing is padded in the app.
+    """
+    import torch
+
+    have = values.shape[1]
+    if have == samples:
+        return values
+    if have > samples:
+        return values[:, :samples]
+    return torch.nn.functional.pad(values, (0, samples - have))
+
+
+def verify(
+    model_name: str,
+    out_path: Path,
+    limit: int,
+    static_samples: int | None = None,
+) -> bool:
     """Compare ONNX and PyTorch phoneme output on real golden clips."""
     import onnxruntime as ort
     import torch
@@ -180,6 +231,8 @@ def verify(model_name: str, out_path: Path, limit: int) -> bool:
         inputs = processor(
             audio, sampling_rate=16000, return_tensors="pt", padding=True)
         values = inputs.input_values
+        if static_samples:
+            values = _fit_length(values, static_samples)
 
         t0 = time.time()
         with torch.no_grad():
@@ -225,16 +278,22 @@ def main() -> int:
                    help="대조에 쓸 골든 클립 수")
     p.add_argument("--skip-export", action="store_true",
                    help="이미 있는 ONNX로 검증만")
+    p.add_argument("--static-samples", type=int, default=40000,
+                   help="시간 축을 이 길이로 고정 (기본 40000 = 2.5초 창). "
+                        "0 을 주면 동적 축으로 뽑지만 Sentis 1.2 에서 "
+                        "실행되지 않는다")
     args = p.parse_args()
+    if args.static_samples == 0:
+        args.static_samples = None
 
     if not args.skip_export:
-        export(args.model, args.output, args.opset)
+        export(args.model, args.output, args.opset, args.static_samples)
     elif not args.output.exists():
         print(f"ERROR: {args.output} 없음", file=sys.stderr)
         return 1
 
     blocked = inspect_ops(args.output)
-    ok = verify(args.model, args.output, args.limit)
+    ok = verify(args.model, args.output, args.limit, args.static_samples)
 
     print()
     print("=" * 62)

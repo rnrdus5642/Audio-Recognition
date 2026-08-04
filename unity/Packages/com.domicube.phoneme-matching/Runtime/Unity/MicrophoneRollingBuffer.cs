@@ -153,11 +153,18 @@ namespace DomiCube.PhonemeMatching.Unity
         /// <summary>
         /// The trailing window as 16 kHz mono. The array is freshly
         /// allocated so callers may hold on to it.
+        ///
+        /// Always <see cref="WindowSeconds"/> long. Before the buffer has
+        /// filled, the missing head is silence rather than a shorter
+        /// array: a statically exported model accepts exactly one length,
+        /// so a short first frame would throw instead of scoring, and the
+        /// silence is what the microphone would have captured anyway.
         /// </summary>
         public float[] Snapshot()
         {
-            var copy = new float[_filled];
-            Array.Copy(_window, _window.Length - _filled, copy, 0, _filled);
+            var copy = new float[_window.Length];
+            Array.Copy(_window, _window.Length - _filled,
+                copy, _window.Length - _filled, _filled);
             return copy;
         }
 

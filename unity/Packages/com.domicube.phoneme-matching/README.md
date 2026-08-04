@@ -27,18 +27,43 @@
 `Packages/manifest.json` 에 한 줄. Sentis 와 Newtonsoft 는 패키지가 의존성으로
 선언하므로 UPM 이 알아서 끌어옵니다.
 
+**Unity 2022.3 과 Unity 6 을 모두 지원합니다.** 패키지 줄은 동일하고,
+추론 엔진 한 줄만 에디터에 맞춰 고릅니다.
+
+Unity 2022.3:
+
 ```json
 {
   "dependencies": {
-    "com.domicube.phoneme-matching": "https://github.com/rnrdus5642/Audio-Recognition.git?path=/unity/Packages/com.domicube.phoneme-matching#v0.1.1"
+    "com.domicube.phoneme-matching": "https://github.com/rnrdus5642/Audio-Recognition.git?path=/unity/Packages/com.domicube.phoneme-matching#v0.2.0",
+    "com.unity.sentis": "1.2.0-exp.2"
   }
 }
 ```
 
-`#v0.1.1` 을 빼면 항상 main 최신을 당겨옵니다. 로컬에서 고쳐가며 쓰려면
-`"file:../../path/to/com.domicube.phoneme-matching"` 도 됩니다.
+Unity 6:
 
-**Unity 6000.0 이상**이 필요합니다 (Sentis 2.6 요구사항).
+```json
+{
+  "dependencies": {
+    "com.domicube.phoneme-matching": "https://github.com/rnrdus5642/Audio-Recognition.git?path=/unity/Packages/com.domicube.phoneme-matching#v0.2.0",
+    "com.unity.ai.inference": "2.6.1"
+  }
+}
+```
+
+엔진을 패키지 의존성에 넣지 않은 이유는 UPM 이 "A 또는 B" 를 표현하지
+못하기 때문입니다. 2.x 를 박으면 2022 에서 설치가 실패하고, 1.2 를 박으면
+Unity 6 사용자가 중단된 실험 패키지를 강제로 받게 됩니다.
+
+설치된 엔진에 맞는 인식기만 컴파일됩니다 (asmdef 의 `versionDefines` +
+`defineConstraints`). 클래스 이름은 양쪽 다
+`SentisPhonemeRecognizer` 라서 호출 코드는 동일하고, `ModelAsset` 을
+선언할 때의 `using` 만 다릅니다 - 2022 는 `Unity.Sentis`, Unity 6 은
+`Unity.InferenceEngine`.
+
+`#v0.2.0` 을 빼면 항상 main 최신을 당겨옵니다. 로컬에서 고쳐가며 쓰려면
+`"file:../../path/to/com.domicube.phoneme-matching"` 도 됩니다.
 
 ### 데이터와 모델은 따로 옵니다
 
@@ -47,9 +72,28 @@
 1. **데이터** — Package Manager 에서 이 패키지의 샘플
    `Korean data (ko_child_v1)` 을 임포트한 뒤, 세 JSON 을
    `Assets/StreamingAssets/` 로 복사하세요.
-2. **음향 모델** — `wav2vec2_ko.onnx` (1.18GB) 는 용량 때문에 패키지에
-   없습니다. 저장소에서 `python -m python.tools.export_onnx` 로 만들어
-   `Assets/` 아래 두면 Sentis 가 임포트합니다.
+2. **음향 모델** — 1.18GB 라 패키지에 없습니다. 저장소에서 만드세요:
+
+```powershell
+python -m python.tools.export_onnx
+```
+
+`shared/models/wav2vec2_ko.onnx` 가 나옵니다. `Assets/` 아래 두면 Sentis
+가 임포트합니다.
+
+**모델은 정확히 40000 샘플(2.5 초)만 받습니다.** 시간 축이 고정으로
+export 되기 때문입니다 - Sentis 1.2 는 동적 축 그래프를 실행하지 못하고
+(임포트는 되지만 어떤 길이를 줘도 같은 Reshape 에서 죽습니다), 축을
+고정하면 그 계산이 상수로 접혀 사라집니다. Unity 6 은 동적도 실행하지만
+파일 하나로 양쪽을 덮으려고 고정으로 통일했습니다. 부수 효과로 런타임
+shape 계산이 사라져 프레임당 30ms → 20ms 로 빨라집니다.
+
+`PronunciationListener.WindowSeconds` 를 바꾸면 모델도 그 길이로 다시
+뽑아야 합니다:
+
+```powershell
+python -m python.tools.export_onnx --static-samples 48000   # 3.0초 창
+```
 
 모델 없이 매칭 계층만 쓰는 것도 됩니다 — `IPhonemeRecognizer` 를 직접
 구현하면 Sentis 경로는 건드리지 않아도 됩니다.

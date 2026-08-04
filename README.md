@@ -360,6 +360,23 @@ python -m python.tools.export_ctc_vocab   # StreamingAssets 어휘 + 대조 벡�
 `Assets/Models/wav2vec2_ko.onnx`를 넣고 Play. 비워두면 stub으로 동작하며
 배너에 어느 쪽이 도는지 표시됩니다.
 
+### Unity 2022 와 Unity 6 을 모두 지원합니다
+
+패키지는 두 엔진용 인식기를 모두 담고 있고, 설치된 쪽만 컴파일됩니다
+(asmdef `versionDefines` + `defineConstraints`). 소비하는 프로젝트는
+manifest 에 엔진 한 줄만 자기 에디터에 맞춰 넣습니다 — 2022 는
+`com.unity.sentis: 1.2.0-exp.2`, Unity 6 은 `com.unity.ai.inference: 2.6.1`.
+
+**모델은 시간 축을 40000 샘플(2.5초 창)로 고정해서 export 합니다.**
+Sentis 1.2 는 동적 축 그래프를 실행하지 못합니다 — 임포트는 되지만 어떤
+입력 길이를 줘도 같은 Reshape 에서 죽고, 임포터 최적화를 꺼도 같습니다.
+축을 고정하면 그 계산이 상수로 접혀 사라집니다. Unity 6 은 동적도
+실행하지만 파일 하나로 양쪽을 덮으려고 통일했고, 부수 효과로 프레임당
+30ms → 20ms 로 빨라졌습니다.
+
+Unity 2022.3 + Sentis 1.2 실측: 골든 클립 4개 × 124프레임 토큰 id가
+파이썬과 전부 일치, GPU 30ms / CPU 390ms.
+
 ### 다음 작업 (Phase 5)
 
 1. **실제 아동 녹음 확보** — 지금까지의 모든 튜닝값은 TTS 성인 발화 기준입니다
