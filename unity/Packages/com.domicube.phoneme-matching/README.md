@@ -255,7 +255,7 @@ void OnFrame(short[] pcm)
 
 ```csharp
 frame.Confirmed        // true 면 확정 - 이 순간 세션 종료
-frame.Streak           // 연속 몇 번째 (기본 3 이면 확정)
+frame.Streak           // 연속 몇 번째 (기본 2 면 확정)
 frame.Best.TargetText  // 지금 가장 유력한 단어
 frame.Best.Score       // 0~1
 frame.Best.Passed      // 이번 창이 임계값을 넘었는지
@@ -269,6 +269,276 @@ frame.Text             // 인식된 한글
 **청크를 따로 인식해 이어붙이지 마세요.** wav2vec2는 문맥 모델이라 짧은 조각에서
 무너집니다 — 4.4초 발화에서 0.5초 청크는 43음소가 31음소로 줄고 단어가 깨졌습니다.
 매 프레임 **최근 창 전체를 재인식**해야 합니다. 위 방법들은 모두 그렇게 합니다.
+
+### 오답 신호는 없습니다
+
+물어본 단어만 채점하므로, 아이가 딴말을 하면 **확정이 안 될 뿐**입니다.
+"틀렸다"는 판정은 시간으로 앱이 정합니다.
+
+```csharp
+if (Time.time - _asked > 10f) { 다시해볼까(); judge.End(); }
+```
+
+방법 1 은 이 타이머가 들어 있어 `OnTimedOut` 으로 옵니다.
+
+---
+
+## 통째로 붙여 쓰는 예제
+
+### 방법 1 — 패키지가 마이크를 연다
+
+```csharp
+using System.IO;
+using DomiCube.PhonemeMatching;
+using DomiCube.PhonemeMatching.Unity;
+using UnityEngine;
+using Unity.Sentis;                  // Unity 6 이면 Unity.InferenceEngine
+
+[RequireComponent(typeof(PronunciationListener))]
+public sealed class Lesson : MonoBehaviour
+{
+    public ModelAsset Model;         // Assets 아래 .onnx 를 인스펙터에서
+    public string[] Words = { "사과", "엄마", "토끼" };
+
+    PronunciationListener _listener;
+    SentisPhonemeRecognizer _recognizer;
+    int _index;
+
+    void Awake()
+    {
+        var vocabPath = Path.Combine(
+            Application.streamingAssetsPath, "wav2vec2_ko_vocab.json");
+        var vocab = PhonemeData.LoadCtcVocabulary(File.ReadAllText(vocabPath));
+
+        _recognizer = new SentisPhonemeRecognizer(Model, vocab);
+
+        _listener = GetComponent<PronunciationListener>();
+        _listener.SetRecognizer(_recognizer);
+        _listener.MicrophoneDevice = "";          // 비우면 OS 기본 장치
+        _listener.TimeoutSeconds = 15f;
+
+        _listener.OnConfirmed.AddListener((word, score) =>
+        {
+            Debug.Log($"정답 {word} {score:F2}");
+            _index++;
+            Invoke(nameof(Ask), 1f);
+        });
+
+        _listener.OnTimedOut.AddListener(() => Debug.Log("다시 해볼까?"));
+
+        _listener.OnFrameScored.AddListener((word, score, streak) =>
+            Debug.Log($"{word} {score:F2} ({streak}/{_listener.Consecutive})"));
+    }
+
+    System.Collections.IEnumerator Start()
+    {
+        yield return null;                  // 배너 한 프레임 그리고
+        _recognizer.Warmup(_listener.WindowSeconds);   // ~2초 멈춤
+        Ask();
+    }
+
+    public void Ask()
+    {
+        if (_index >= Words.Length) return;
+        _listener.TargetText = Words[_index];
+        _listener.Listen();                 // 마이크 켜짐
+    }
+
+    public void Stop() => _listener.StopListening();   // 언제든 끄기
+
+    void OnDestroy() => _recognizer?.Dispose();
+}
+```
+
+`PronunciationListener` 는 마이크·타이밍·타임아웃만 맡고, 판정은 아래
+`PronunciationSession` 에 그대로 위임합니다. 두 방법의 채점 결과는 같습니다.
+
+### 방법 2~4 — 앱이 오디오를 준다
+
+```csharp
+using System.IO;
+using DomiCube.PhonemeMatching;
+using DomiCube.PhonemeMatching.Unity;
+using UnityEngine;
+using Unity.Sentis;                  // Unity 6 이면 Unity.InferenceEngine
+
+public sealed class Lesson : MonoBehaviour
+{
+    public ModelAsset Model;
+    public string[] Words = { "사과", "엄마", "토끼" };
+
+    AudioWindowBuffer _buffer;
+    PronunciationSession _judge;
+    SentisPhonemeRecognizer _recognizer;
+    Coroutine _loop;
+    int _index;
+
+    void Awake()
+    {
+        string Read(string f) => File.ReadAllText(
+            Path.Combine(Application.streamingAssetsPath, f));
+
+        var matrix  = PhonemeData.LoadMatrix(Read("ko_child_v1.json"));
+        var catalog = PhonemeData.LoadTargets(Read("targets.json"));
+        var vocab   = PhonemeData.LoadCtcVocabulary(Read("wav2vec2_ko_vocab.json"));
+
+        _recognizer = new SentisPhonemeRecognizer(Model, vocab);
+        _buffer = new AudioWindowBuffer(2.5f);
+        _judge  = new PronunciationSession(
+            matrix, catalog, _recognizer, buffer: _buffer);
+    }
+
+    System.Collections.IEnumerator Start()
+    {
+        yield return null;
+        _recognizer.Warmup(2.5f);
+        Ask();
+    }
+
+    // ── 앱의 오디오를 여기로 부으세요 (오디오 스레드에서 불러도 안전) ──
+    void OnAudioFilterRead(float[] data, int channels)
+    {
+        _buffer.AppendInterleaved(data, channels, AudioSettings.outputSampleRate);
+    }
+
+    public void Ask()
+    {
+        if (_index >= Words.Length) return;
+        _judge.Begin(Words[_index]);        // 창을 비우고 시작
+        _loop = StartCoroutine(Score());
+    }
+
+    System.Collections.IEnumerator Score()
+    {
+        var wait = new WaitForSeconds(0.5f);
+        float started = Time.time;
+
+        while (_judge.IsActive)
+        {
+            yield return wait;
+
+            var frame = _judge.Push();      // 20~30ms, 메인 스레드
+
+            if (frame.Confirmed)
+            {
+                Debug.Log($"정답 {frame.Best.TargetText} {frame.Best.Score:F2}");
+                _index++;
+                Invoke(nameof(Ask), 1f);
+                yield break;
+            }
+
+            if (Time.time - started > 15f)  // 오답 판정은 앱 몫
+            {
+                Debug.Log("다시 해볼까?");
+                _judge.End();
+            }
+        }
+    }
+
+    public void Stop()
+    {
+        _judge.End();
+        if (_loop != null) StopCoroutine(_loop);
+    }
+
+    void OnDestroy() => _recognizer?.Dispose();
+}
+```
+
+오디오 출처가 `OnAudioFilterRead` 가 아니라면 그 줄만 바꾸세요 (방법 2·4 참고).
+
+---
+
+## API 요약
+
+### `PronunciationSession` — 판정 (엔진·마이크 무관)
+
+| 멤버 | 설명 |
+|---|---|
+| `new PronunciationSession(matrix, catalog, recognizer, consecutive = 2, buffer = null)` | 앱 수명 내내 하나 만들어 재사용 |
+| `Begin(string word)` | 문제 시작. 그 단어만 채점 |
+| `Begin(IReadOnlyList<string> words)` | 여러 정답 중 아무거나 |
+| `Push(float[] window)` | 창 하나 채점 → `FrameScore` |
+| `Push()` | 생성자에 넘긴 버퍼에서 가져와 채점 |
+| `End()` | 중단 |
+| `IsActive` | `Begin` 과 확정/`End` 사이 |
+| `TargetText`, `Candidates` | 지금 묻고 있는 것 |
+
+`Begin` 은 `buffer` 를 넘겼다면 그것도 비웁니다 — 직전 답이 다음 문제에
+섞이지 않도록.
+
+### `FrameScore` — `Push` 의 반환값
+
+| 필드 | 설명 |
+|---|---|
+| `Confirmed` | 확정됨 (세션 종료) |
+| `Streak` | 연속 횟수 |
+| `Text` | 인식된 한글 (`""` 면 무음) |
+| `Phonemes` | 인식된 IPA |
+| `Best.TargetText` / `Best.Score` / `Best.Passed` | 단어·점수·이번 창 통과 여부 |
+| `Best.Alignment` | `(사용자음소, 정답음소, 연산)` 목록 |
+| `Best.WindowStart` / `WindowEnd` | 사용자 음소 중 실제로 매칭된 구간 |
+
+### `AudioWindowBuffer` — 롤링 창 (마이크 안 엶)
+
+| 멤버 | 설명 |
+|---|---|
+| `new AudioWindowBuffer(2.5f)` | 창 길이 = 모델이 받는 길이 |
+| `Append(float[] mono, int rate)` | 모노 샘플 추가. 리샘플링 자동 |
+| `AppendInterleaved(float[] data, int channels, int rate)` | 인터리브 다채널 |
+| `Snapshot()` | 항상 40000개 (모자라면 앞을 무음으로) |
+| `Reset()` | 비우기 |
+| `IsFull` | 실제 오디오로 창이 다 찼는지 |
+
+`Append` 는 오디오 스레드에서 불러도 안전합니다. `Snapshot`/`Push` 는
+메인 스레드에서 부르세요.
+
+### `PronunciationListener` — 마이크까지 맡기는 컴포넌트
+
+| 멤버 | 설명 |
+|---|---|
+| `SetRecognizer(IPhonemeRecognizer)` | `Listen` 전에 한 번 |
+| `Listen()` / `StopListening()` | 마이크 켜기·끄기 |
+| `IsListening`, `Session` | 상태, 내부 판정 객체 |
+| `TargetText` | 물어볼 단어 |
+| `MicrophoneDevice` | 비우면 OS 기본 |
+| `WindowSeconds` `HopSeconds` `Consecutive` `TimeoutSeconds` | 2.5 / 0.5 / 2 / 30 |
+| `OnConfirmed(word, score)` | 확정 |
+| `OnTimedOut()` | 시간 초과 |
+| `OnFrameScored(word, score, streak)` | 매 프레임 (진행 표시용) |
+
+### `SentisPhonemeRecognizer` — 음향 모델
+
+| 멤버 | 설명 |
+|---|---|
+| `new SentisPhonemeRecognizer(modelAsset, vocab)` | GPU 백엔드 고정 |
+| `Warmup(float windowSeconds)` | 로딩 화면에서. 첫 추론 ~2초 |
+| `Recognize` / `RecognizeWithText` | 오디오 → IPA (직접 부를 일은 드묾) |
+| `Dispose()` | 워커 해제 |
+
+### `PhonemeData` — JSON 로더
+
+| 멤버 | 설명 |
+|---|---|
+| `LoadMatrix(json)` | confusion matrix |
+| `LoadTargets(json)` | `targets.json` → `TargetCatalog` |
+| `LoadCtcVocabulary(json)` | CTC 어휘 |
+
+`TargetCatalog.Find(idOrText)` 로 단어가 등록돼 있는지 미리 확인할 수
+있습니다 (없으면 `Begin` 이 예외를 던집니다).
+
+---
+
+## 자주 걸리는 것
+
+| 증상 | 원인 |
+|---|---|
+| `'포도' is not in targets.json` | `words.csv` 에 추가 후 **정답 데이터 다시 만들기** 를 안 누름 |
+| 첫 발화에서 2초 멈춤 | `Warmup()` 을 로딩 중에 안 부름 |
+| 계속 무음, 점수 0 | 마이크 장치가 엉뚱하거나 Windows 개인정보 설정에서 차단 |
+| `inference failed on N samples` | 창 길이와 모델 길이 불일치. `--static-samples` 로 다시 export |
+| 말했는데 확정 안 됨 | 발화 후 **1초는 더** 들어야 함 (연속 2회 × hop 0.5초) |
+| 점수가 이상하게 낮음 | 앱이 넘기는 샘플레이트를 잘못 알려줌 (`Append` 의 두 번째 인자) |
 
 ## 배치와 스트리밍은 설정이 다릅니다
 
