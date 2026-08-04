@@ -168,6 +168,7 @@ listener.StopListening();   // 끄기 (확정·타임아웃에도 자동으로 �
 ```
 
 ```csharp
+// 한 번 만들어 계속 씁니다. Begin ~ End 한 번이 문제 하나입니다.
 var buffer  = new AudioWindowBuffer(2.5f);
 var session = new PronunciationSession(matrix, catalog, recognizer,
                                        buffer: buffer);

@@ -22,7 +22,11 @@ namespace DomiCube.PhonemeMatching
     }
 
     /// <summary>
-    /// One question: audio in, confirmation out.
+    /// Audio in, confirmation out.
+    ///
+    /// Build one and keep it - the object lives as long as the lesson
+    /// does, and each <see cref="Begin(string)"/> to <see cref="End"/>
+    /// is one question.
     ///
     /// Owns no microphone and no coroutine, so the application decides
     /// when judging happens and where the audio comes from - its own
