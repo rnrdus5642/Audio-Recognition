@@ -2,7 +2,12 @@
     "name": "DomiCube.PhonemeMatching.Editor",
     "rootNamespace": "DomiCube.PhonemeMatching.Editor",
     "references": [
-        "DomiCube.PhonemeMatching"
+        "DomiCube.PhonemeMatching",
+        "DomiCube.PhonemeMatching.Unity",
+        "DomiCube.PhonemeMatching.Sentis1",
+        "DomiCube.PhonemeMatching.Sentis2",
+        "Unity.Sentis",
+        "Unity.InferenceEngine"
     ],
     "includePlatforms": [
         "Editor"
@@ -13,6 +18,17 @@
     "precompiledReferences": [],
     "autoReferenced": true,
     "defineConstraints": [],
-    "versionDefines": [],
+    "versionDefines": [
+        {
+            "name": "com.unity.sentis",
+            "expression": "[1.0.0,2.0.0)",
+            "define": "DOMICUBE_SENTIS_1"
+        },
+        {
+            "name": "com.unity.ai.inference",
+            "expression": "2.0.0",
+            "define": "DOMICUBE_INFERENCE_ENGINE"
+        }
+    ],
     "noEngineReferences": false
 }

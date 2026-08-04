@@ -113,7 +113,18 @@ namespace DomiCube.PhonemeMatching.Unity
                 Microphone.End(_device);
             }
 
-            UnityEngine.Object.Destroy(_clip);
+            // Destroy is play-mode only, and this class is also driven
+            // from editor tooling where it logs an error and leaks the
+            // clip instead.
+            if (Application.isPlaying)
+            {
+                UnityEngine.Object.Destroy(_clip);
+            }
+            else
+            {
+                UnityEngine.Object.DestroyImmediate(_clip);
+            }
+
             _clip = null;
         }
 
