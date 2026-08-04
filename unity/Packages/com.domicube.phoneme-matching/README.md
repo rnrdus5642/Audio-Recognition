@@ -35,7 +35,7 @@ Unity 2022.3:
 ```json
 {
   "dependencies": {
-    "com.domicube.phoneme-matching": "https://github.com/rnrdus5642/Audio-Recognition.git?path=/unity/Packages/com.domicube.phoneme-matching#v0.3.0",
+    "com.domicube.phoneme-matching": "https://github.com/rnrdus5642/Audio-Recognition.git?path=/unity/Packages/com.domicube.phoneme-matching#v0.3.1",
     "com.unity.sentis": "1.2.0-exp.2"
   }
 }
@@ -46,7 +46,7 @@ Unity 6:
 ```json
 {
   "dependencies": {
-    "com.domicube.phoneme-matching": "https://github.com/rnrdus5642/Audio-Recognition.git?path=/unity/Packages/com.domicube.phoneme-matching#v0.3.0",
+    "com.domicube.phoneme-matching": "https://github.com/rnrdus5642/Audio-Recognition.git?path=/unity/Packages/com.domicube.phoneme-matching#v0.3.1",
     "com.unity.ai.inference": "2.6.1"
   }
 }
@@ -62,7 +62,7 @@ Unity 6 사용자가 중단된 실험 패키지를 강제로 받게 됩니다.
 선언할 때의 `using` 만 다릅니다 - 2022 는 `Unity.Sentis`, Unity 6 은
 `Unity.InferenceEngine`.
 
-`#v0.3.0` 을 빼면 항상 main 최신을 당겨옵니다. 로컬에서 고쳐가며 쓰려면
+`#v0.3.1` 을 빼면 항상 main 최신을 당겨옵니다. 로컬에서 고쳐가며 쓰려면
 `"file:../../path/to/com.domicube.phoneme-matching"` 도 됩니다.
 
 ### 데이터와 모델은 따로 옵니다
