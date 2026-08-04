@@ -40,6 +40,13 @@ namespace DomiCube.PhonemeMatching
         /// Frames the same answer must win before committing. Must be
         /// reachable given the matcher's context limit - see
         /// <see cref="Matcher.ContextSlice"/>.
+        ///
+        /// 2 by default. Swept over rolling sessions built from all 36
+        /// golden clips: 1 and 2 both detect 18/36, but 2 false-accepts
+        /// 16/612 against 19/612; 3 drops to 15/36 detections to save
+        /// another 6. Losing a child who did say the word is the worse
+        /// failure, so 2. Measured on adult TTS - child speech scores
+        /// less steadily and may want a longer streak.
         /// </summary>
         public int Consecutive { get; }
 
@@ -48,7 +55,7 @@ namespace DomiCube.PhonemeMatching
 
         public StreamingMatcher(
             Matcher matcher, IReadOnlyList<Answer> candidates,
-            int consecutive = 3)
+            int consecutive = 2)
         {
             if (matcher == null)
             {

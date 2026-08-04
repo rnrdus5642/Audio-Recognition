@@ -8,8 +8,8 @@ to.
 
 Edge-TTS produces clean adult speech. This is sufficient for PoC
 sanity-checking the pipeline (does our pipeline correctly accept a
-clean utterance of the target word? does it correctly reject the same
-clean utterance when given a *different* segment's targets?). Real
+clean utterance of the target word? does it correctly reject it when a
+*different* word was asked for?). Real
 child / developmental-delay speech is out of scope for the golden set
 and will be added during real-user testing.
 
@@ -92,7 +92,6 @@ async def _run_all(rows: list[dict], out_dir: Path) -> list[dict]:
     cases: list[dict] = []
 
     for row in rows:
-        seg_id = row["segment_id"]
         ans_id = row["answer_id"]
         text = row["text"]
 
@@ -110,7 +109,6 @@ async def _run_all(rows: list[dict], out_dir: Path) -> list[dict]:
                 {
                     "case_id": f"{ans_id}_{voice_tag}",
                     "audio_path": f"python/tests/fixtures/audio/{fname}",
-                    "target_segment_id": seg_id,
                     "target_answer_id": ans_id,
                     "target_text": text,
                     "voice": voice_name,
@@ -125,9 +123,8 @@ def _write_golden_set(cases: list[dict], path: Path) -> None:
     payload = {
         "description": (
             "TTS-generated golden set for Phase 2 evaluation. Each case "
-            "should be PASSED when matched against its own segment's "
-            "answers, and REJECTED when matched against any other "
-            "segment's answers."
+            "should be PASSED when scored against the word it says, and "
+            "REJECTED when scored against any other word."
         ),
         "voices": [v[0] for v in VOICES],
         "cases": cases,

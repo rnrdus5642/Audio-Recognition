@@ -19,43 +19,27 @@ namespace DomiCube.PhonemeMatching
         public double Threshold = 0.6;
     }
 
-    /// <summary>A group of answers that compete with each other.</summary>
-    public sealed class Segment
-    {
-        public string Id;
-        public string Language = "ko";
-        public List<Answer> Answers = new List<Answer>();
-    }
-
     /// <summary>
     /// Parsed targets.json. The runtime never runs G2P: the phoneme
     /// sequences here were produced offline with the full phonological
     /// rule set, which is why device code only needs the jamo tables.
+    ///
+    /// A flat list. Words used to be grouped into segments that competed
+    /// with each other; measured on the golden set it changed neither
+    /// positives nor negative rejection, so the grouping is gone and a
+    /// question is scored against the word that was asked for.
     /// </summary>
     public sealed class TargetCatalog
     {
         public string Version;
         public string ConfusionMatrixId;
-        public List<Segment> Segments = new List<Segment>();
+        public List<Answer> Answers = new List<Answer>();
 
-        public Segment FindSegment(string segmentId)
+        /// <summary>Look a word up by id or by text; null if absent.</summary>
+        public Answer Find(string answerIdOrText)
         {
-            return Segments.Find(s => s.Id == segmentId);
-        }
-
-        /// <summary>The answers competing alongside the given word.</summary>
-        public List<Answer> SegmentOf(string answerIdOrText)
-        {
-            foreach (var seg in Segments)
-            {
-                if (seg.Answers.Exists(
-                        a => a.Id == answerIdOrText || a.Text == answerIdOrText))
-                {
-                    return seg.Answers;
-                }
-            }
-
-            return null;
+            return Answers.Find(
+                a => a.Id == answerIdOrText || a.Text == answerIdOrText);
         }
     }
 
@@ -152,41 +136,31 @@ namespace DomiCube.PhonemeMatching
                 ConfusionMatrixId = (string)root["confusion_matrix_id"]
             };
 
-            if (root["segments"] is JArray segments)
+            if (!(root["answers"] is JArray answers))
             {
-                foreach (var s in segments)
+                throw new ArgumentException(
+                    "targets.json has no 'answers' list. Rebuild it with "
+                    + "python -m python.build.build_targets");
+            }
+
+            foreach (var a in answers)
+            {
+                var answer = new Answer
                 {
-                    var seg = new Segment
+                    Id = (string)a["id"],
+                    Text = (string)a["text"],
+                    Threshold = (double?)a["threshold"] ?? 0.6
+                };
+
+                if (a["phonemes"] is JArray phonemes)
+                {
+                    foreach (var p in phonemes)
                     {
-                        Id = (string)s["id"],
-                        Language = (string)s["language"] ?? "ko"
-                    };
-
-                    if (s["answers"] is JArray answers)
-                    {
-                        foreach (var a in answers)
-                        {
-                            var answer = new Answer
-                            {
-                                Id = (string)a["id"],
-                                Text = (string)a["text"],
-                                Threshold = (double?)a["threshold"] ?? 0.6
-                            };
-
-                            if (a["phonemes"] is JArray phonemes)
-                            {
-                                foreach (var p in phonemes)
-                                {
-                                    answer.Phonemes.Add((string)p);
-                                }
-                            }
-
-                            seg.Answers.Add(answer);
-                        }
+                        answer.Phonemes.Add((string)p);
                     }
-
-                    catalog.Segments.Add(seg);
                 }
+
+                catalog.Answers.Add(answer);
             }
 
             return catalog;

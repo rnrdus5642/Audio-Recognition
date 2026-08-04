@@ -6,7 +6,7 @@ soon as one answer wins `--consecutive` frames in a row.
 
 Usage:
     python -m python.tools.test_streaming my.wav --target 사과
-    python -m python.tools.test_streaming my.wav --segment lesson_03_food
+    python -m python.tools.test_streaming my.wav          # 전체 단어 후보
     python -m python.tools.test_streaming my.wav --target 사과 --verbose
 """
 
@@ -33,29 +33,21 @@ MATRIX_PATH = (
 )
 
 
-def pick_candidates(targets: dict, target: str | None, segment: str | None):
-    """Answers to listen for: one word, one segment, or everything."""
-    segs = targets["segments"]
-    if segment:
-        for s in segs:
-            if s["id"] == segment:
-                return s["answers"]
-        raise SystemExit(f"segment not found: {segment}")
+def pick_candidates(targets: dict, target: str | None):
+    """Answers to listen for: the asked word, or everything."""
+    answers = targets["answers"]
     if target:
-        for s in segs:
-            for a in s["answers"]:
-                if target in (a["text"], a["id"]):
-                    # The whole segment competes, as it will in the app.
-                    return s["answers"]
+        for a in answers:
+            if target in (a["text"], a["id"]):
+                return [a]
         raise SystemExit(f"target not found in targets.json: {target}")
-    return [a for s in segs for a in s["answers"]]
+    return answers
 
 
 def main() -> int:
     p = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     p.add_argument("audio", type=Path)
-    p.add_argument("--target", help="정답 단어 (해당 세그먼트 전체가 후보)")
-    p.add_argument("--segment", help="세그먼트 id 전체를 후보로")
+    p.add_argument("--target", help="정답 단어 (없으면 전체 단어가 후보)")
     p.add_argument("--window", type=float, default=2.5,
                    help="ASR에 넣는 오디오 창 (초)")
     p.add_argument("--hop", type=float, default=0.4,
@@ -71,7 +63,7 @@ def main() -> int:
 
     targets = json.loads(TARGETS_PATH.read_text(encoding="utf-8"))
     matrix = ConfusionMatrix.from_json(MATRIX_PATH)
-    cands = pick_candidates(targets, args.target, args.segment)
+    cands = pick_candidates(targets, args.target)
 
     matcher = Matcher.for_streaming(matrix)
     sm = StreamingMatcher(matcher, cands, consecutive=args.consecutive)

@@ -23,7 +23,7 @@ namespace DomiCube.PhonemeMatching.Editor
     /// Needs the three JSON files in StreamingAssets and an imported
     /// .onnx model; see the package README.
     ///
-    /// Tools > Phoneme Matching > Pronunciation Test
+    /// Tools > Phoneme Matching > 발음 테스트 (마이크)
     /// </summary>
     public sealed class PronunciationTestWindow : EditorWindow
     {
@@ -46,10 +46,10 @@ namespace DomiCube.PhonemeMatching.Editor
         private double _started;
 #endif
 
-        [MenuItem("Tools/Phoneme Matching/Pronunciation Test", false, 10)]
+        [MenuItem("Tools/Phoneme Matching/발음 테스트 (마이크)", false, 10)]
         public static void Open()
         {
-            GetWindow<PronunciationTestWindow>("Pronunciation Test").minSize =
+            GetWindow<PronunciationTestWindow>("발음 테스트").minSize =
                 new Vector2(420, 420);
         }
 

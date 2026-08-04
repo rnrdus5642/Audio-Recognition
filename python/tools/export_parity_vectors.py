@@ -91,10 +91,8 @@ def build(matrix_path: Path, targets_path: Path, frames_path: Path) -> dict:
     targets = json.loads(targets_path.read_text(encoding="utf-8"))
     frames = json.loads(frames_path.read_text(encoding="utf-8"))
 
-    answers = [a for s in targets["segments"] for a in s["answers"]]
+    answers = targets["answers"]
     by_text = {a["text"]: a for a in answers}
-    seg_of = {a["text"]: s["answers"]
-              for s in targets["segments"] for a in s["answers"]}
 
     # --- score_against: real ASR output vs real targets, plus edge cases ---
     score_cases: list[tuple[list[str], list[str]]] = []
@@ -115,26 +113,31 @@ def build(matrix_path: Path, targets_path: Path, frames_path: Path) -> dict:
         (["a"], ["h", "a", "ɾ", "a", "p", "ʌ", "tɕ", "i"]),
     ]
 
-    # --- best_match over each segment ---
+    # --- best_match: the asked word, and a multi-answer question ---
+    #
+    # A question normally has one accepted word, so most cases carry a
+    # single candidate. Several answers still have to behave, for
+    # questions that take a synonym, so every case is also run against
+    # the whole catalogue - the widest list the port will ever see.
     best_cases = []
     for case in frames["cases"]:
-        cands = seg_of[case["target_text"]]
-        for fr in case["frames"][:4]:
-            for name, m in (("batch", batch), ("streaming", stream)):
-                r = m.best_match(fr["ipa"], cands)
-                best_cases.append({
-                    "profile": name,
-                    "user": fr["ipa"],
-                    "candidate_ids": [c["id"] for c in cands],
-                    "target_id": r.target_id,
-                    "score": round(r.score, 9),
-                    "passed": r.passed,
-                })
+        for cands in ([by_text[case["target_text"]]], answers):
+            for fr in case["frames"][:4]:
+                for name, m in (("batch", batch), ("streaming", stream)):
+                    r = m.best_match(fr["ipa"], cands)
+                    best_cases.append({
+                        "profile": name,
+                        "user": fr["ipa"],
+                        "candidate_ids": [c["id"] for c in cands],
+                        "target_id": r.target_id,
+                        "score": round(r.score, 9),
+                        "passed": r.passed,
+                    })
 
     # --- StreamingMatcher over whole sessions ---
     streaming_cases = []
     for case in frames["cases"]:
-        cands = seg_of[case["target_text"]]
+        cands = [by_text[case["target_text"]]]
         for consecutive in (1, 3):
             sm = StreamingMatcher(
                 Matcher.for_streaming(matrix), cands, consecutive=consecutive

@@ -189,12 +189,15 @@ RECOGNIZER_REGISTRY = {
 `shared/words.csv`에 영어 행 추가:
 
 ```csv
-segment_id,answer_id,text,language
-lesson_en_food,apple,apple,en
-lesson_en_food,banana,banana,en
-lesson_en_family,mom,mom,en
+answer_id,text,language
+apple_en,apple,en
+banana_en,banana,en
+mom_en,mom,en
 ...
 ```
+
+`answer_id`는 언어를 통틀어 유일해야 합니다 — 한국어 `apple`(사과)과
+영어 `apple`이 부딪히므로 접미사를 붙이세요.
 
 ## 5단계: 빌드 + 검증
 

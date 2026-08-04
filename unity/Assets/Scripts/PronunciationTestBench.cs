@@ -41,7 +41,7 @@ public sealed class PronunciationTestBench : MonoBehaviour
     public float HopSeconds = 0.5f;
 
     [Tooltip("확정에 필요한 연속 프레임 수")]
-    [Range(1, 6)] public int Consecutive = 3;
+    [Range(1, 6)] public int Consecutive = 2;
 
     private ConfusionMatrix _matrix;
     private TargetCatalog _catalog;
@@ -309,16 +309,7 @@ public sealed class PronunciationTestBench : MonoBehaviour
 
     private Answer FindAnswer(string text)
     {
-        foreach (var seg in _catalog.Segments)
-        {
-            var hit = seg.Answers.Find(a => a.Text == text || a.Id == text);
-            if (hit != null)
-            {
-                return hit;
-            }
-        }
-
-        return null;
+        return _catalog.Find(text);
     }
 
     // ------------------------------------------------------------------

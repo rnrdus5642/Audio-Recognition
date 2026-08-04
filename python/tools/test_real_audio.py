@@ -284,19 +284,22 @@ class AudioTester:
         self._recognizers: dict[str, object] = {}
         self._custom_model_name = model_name  # only used for Korean today
 
-        # Build segment / answer indexes (language-aware)
-        self._segments_by_id = {s["id"]: s for s in self.targets["segments"]}
+        # Answer indexes (language-aware). targets.json is a flat list:
+        # a question scores the word it asked for, so there is no group
+        # for the caller to know about.
+        self._answers_by_id = {a["id"]: a for a in self.targets["answers"]}
         self._answer_index: dict[str, tuple[str, dict]] = {}
-        for seg in self.targets["segments"]:
-            for a in seg["answers"]:
-                self._answer_index[a["text"]] = (seg["id"], a)
-                self._answer_index[a["id"]] = (seg["id"], a)
+        for a in self.targets["answers"]:
+            self._answer_index[a["text"]] = (a["id"], a)
+            self._answer_index[a["id"]] = (a["id"], a)
 
     # ----- language-aware accessors -----
 
     def available_target_languages(self) -> list[str]:
         """Languages that have at least one entry in targets.json."""
-        return sorted({s["language"] for s in self.targets["segments"]})
+        return sorted(
+            {a.get("language", "ko") for a in self.targets["answers"]}
+        )
 
     def _matrix_for(self, language: str) -> ConfusionMatrix:
         if language in self._matrices:
@@ -483,8 +486,8 @@ class AudioTester:
             target_seg_id, _ = self._answer_index[target_text]
 
         # Determine the language to use for recognition + matching
-        if target_seg_id and target_seg_id in self._segments_by_id:
-            inferred_lang = self._segments_by_id[target_seg_id].get(
+        if target_seg_id and target_seg_id in self._answers_by_id:
+            inferred_lang = self._answers_by_id[target_seg_id].get(
                 "language", language
             )
         else:
@@ -499,12 +502,12 @@ class AudioTester:
         if custom_cand is not None:
             candidates = [custom_cand]
         elif scan_all:
-            # Scan only segments in the matching language to avoid
+            # Scan only words in the matching language to avoid
             # cross-language IPA comparison noise.
-            candidates = []
-            for seg in self.targets["segments"]:
-                if seg.get("language", "ko") == inferred_lang:
-                    candidates.extend(seg["answers"])
+            candidates = [
+                a for a in self.targets["answers"]
+                if a.get("language", "ko") == inferred_lang
+            ]
         else:
             if target_seg_id is None:
                 # No target, no scan: just probe (caller wanted ASR only)
@@ -516,29 +519,29 @@ class AudioTester:
                     segment_id=None,
                     target_text=target_text,
                 )
-            seg = self._segments_by_id.get(target_seg_id)
-            if seg is None:
+            answer = self._answers_by_id.get(target_seg_id)
+            if answer is None:
                 raise ValueError(
-                    f"Segment '{target_seg_id}' not found in targets.json"
+                    f"'{target_seg_id}' not found in targets.json"
                 )
-            candidates = seg["answers"]
+            candidates = [answer]
 
         rows = self._score_against(ipa, candidates, language=inferred_lang)
 
-        # Cross-segment risk check (within the same language only)
+        # Would a different word have accepted this too? Same language
+        # only, to avoid comparing IPA across inventories.
         cross_best: Optional[CandidateScore] = None
         if target_seg_id is not None and not scan_all and not custom_target:
-            for seg in self.targets["segments"]:
-                if seg["id"] == target_seg_id:
-                    continue
-                if seg.get("language", "ko") != inferred_lang:
-                    continue
-                others = self._score_against(
-                    ipa, seg["answers"], language=inferred_lang
-                )
-                for o in others:
-                    if cross_best is None or o.score > cross_best.score:
-                        cross_best = o
+            others = [
+                a for a in self.targets["answers"]
+                if a["id"] != target_seg_id
+                and a.get("language", "ko") == inferred_lang
+            ]
+            for o in self._score_against(
+                ipa, others, language=inferred_lang
+            ):
+                if cross_best is None or o.score > cross_best.score:
+                    cross_best = o
             if cross_best is not None:
                 cross_best.is_best = False
 
@@ -590,34 +593,29 @@ class AudioTester:
         if custom_cand is not None:
             candidates = [custom_cand]
         elif scan_all:
-            candidates = []
-            for seg in self.targets["segments"]:
-                candidates.extend(seg["answers"])
+            candidates = list(self.targets["answers"])
         else:
             if target_seg_id is None:
+                raise ValueError("No target to look up.")
+            answer = self._answers_by_id.get(target_seg_id)
+            if answer is None:
                 raise ValueError(
-                    "No segment specified and no target to look up."
+                    f"'{target_seg_id}' not found in targets.json"
                 )
-            seg = self._segments_by_id.get(target_seg_id)
-            if seg is None:
-                raise ValueError(
-                    f"Segment '{target_seg_id}' not found in targets.json"
-                )
-            candidates = seg["answers"]
+            candidates = [answer]
 
         rows = self._score_against(ipa, candidates)
 
-        # Cross-segment risk check (only when matching within a single segment)
+        # Would a different word have accepted this too?
         cross_best: Optional[CandidateScore] = None
         if target_seg_id is not None and not scan_all and not custom_target:
-            for seg in self.targets["segments"]:
-                if seg["id"] == target_seg_id:
-                    continue
-                others = self._score_against(ipa, seg["answers"])
-                for o in others:
-                    if cross_best is None or o.score > cross_best.score:
-                        cross_best = o
-            # The cross_best should NOT be marked as the in-segment best
+            others = [
+                a for a in self.targets["answers"]
+                if a["id"] != target_seg_id
+            ]
+            for o in self._score_against(ipa, others):
+                if cross_best is None or o.score > cross_best.score:
+                    cross_best = o
             if cross_best is not None:
                 cross_best.is_best = False
 

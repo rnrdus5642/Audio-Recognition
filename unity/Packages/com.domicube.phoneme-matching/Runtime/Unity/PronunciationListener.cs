@@ -42,7 +42,7 @@ namespace DomiCube.PhonemeMatching.Unity
         [Range(0.2f, 1f)] public float HopSeconds = 0.5f;
 
         [Tooltip("확정에 필요한 연속 프레임 수. 1이면 무관한 발화도 통과합니다.")]
-        [Range(1, 6)] public int Consecutive = 3;
+        [Range(1, 6)] public int Consecutive = 2;
 
         [Tooltip("이 시간이 지나면 스스로 멈춥니다 (0이면 무제한).")]
         public float TimeoutSeconds = 30f;

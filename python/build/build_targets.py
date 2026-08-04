@@ -1,8 +1,16 @@
 """Build targets.json from words.csv.
 
-Reads the authoring file (segment_id, answer_id, text, language) and
-produces a runtime-ready JSON containing IPA phoneme sequences and
-per-word thresholds.
+Reads the authoring file (answer_id, text, language) and produces a
+runtime-ready JSON containing IPA phoneme sequences and per-word
+thresholds.
+
+The output is a flat list of answers. Words used to be grouped into
+segments that competed with each other, on the theory that "which of
+these did the child say" is a safer question than "did they say this
+one". Measured on the golden set, it made no difference at all -
+positives 69.4% and negative rejection 91.7% either way - because the
+per-word threshold is what actually decides. The grouping only forced
+the application to know which other words were in play, so it is gone.
 
 This script runs OFFLINE only - no model, no audio. The runtime never
 calls G2P; it just loads the resulting targets.json.
@@ -21,6 +29,7 @@ from __future__ import annotations
 
 import argparse
 import csv
+import io
 import json
 import sys
 from collections import defaultdict
@@ -47,7 +56,6 @@ DEFAULT_OUTPUT = PROJECT_ROOT / "shared" / "targets.json"
 
 
 class WordRow(NamedTuple):
-    segment_id: str
     answer_id: str
     text: str
     language: str
@@ -92,13 +100,28 @@ def auto_threshold(n_phonemes: int) -> float:
 def read_words_csv(path: Path) -> list[WordRow]:
     """Read and validate words.csv.
 
-    Required columns: segment_id, answer_id, text, language.
+    Required columns: answer_id, text, language.
+
+    The file is UTF-8 with a BOM, which is what makes Excel on a Korean
+    Windows open it as UTF-8 rather than CP949 and show 엄마 instead of
+    ?꾨쭏. Excel keeps the BOM when it saves, but other editors may not,
+    so a CP949 file is read rather than rejected.
     """
-    required = {"segment_id", "answer_id", "text", "language"}
+    required = {"answer_id", "text", "language"}
     rows: list[WordRow] = []
     seen_answer_ids: set[str] = set()
 
-    with path.open("r", encoding="utf-8-sig", newline="") as f:
+    try:
+        text = path.read_text(encoding="utf-8-sig")
+    except UnicodeDecodeError:
+        text = path.read_text(encoding="cp949")
+        print(
+            f"WARNING: {path.name} is not UTF-8; read as CP949. Save it as "
+            "UTF-8 (with BOM) to keep Excel and this tool agreeing.",
+            file=sys.stderr,
+        )
+
+    with io.StringIO(text, newline="") as f:
         reader = csv.DictReader(f)
         missing = required - set(reader.fieldnames or [])
         if missing:
@@ -122,7 +145,6 @@ def read_words_csv(path: Path) -> list[WordRow]:
             seen_answer_ids.add(row["answer_id"])
             rows.append(
                 WordRow(
-                    segment_id=row["segment_id"],
                     answer_id=row["answer_id"],
                     text=row["text"],
                     language=row["language"],
@@ -135,38 +157,27 @@ def read_words_csv(path: Path) -> list[WordRow]:
 
 
 # ---------------------------------------------------------------------------
-# Validation: cross-segment phoneme collision detection
+# Validation: phoneme collision detection
 # ---------------------------------------------------------------------------
 
 
-def find_collisions(
-    answers: list[dict],
-) -> list[tuple[str, str, str, str]]:
-    """Find pairs of answers in DIFFERENT segments with identical phoneme
-    sequences. Same-segment duplicates are not flagged (they're effectively
-    aliases for the same accepted answer).
+def find_collisions(answers: list[dict]) -> list[tuple[str, str]]:
+    """Find pairs of answers that come out as the same phoneme sequence.
 
-    Returns list of (segment_a, answer_a, segment_b, answer_b) tuples.
+    Nothing downstream can tell them apart, so asking for one and hearing
+    the other is indistinguishable from success.
+
+    Returns list of (answer_a, answer_b) tuples.
     """
     by_phonemes: dict[tuple[str, ...], list[dict]] = defaultdict(list)
     for a in answers:
         by_phonemes[tuple(a["phonemes"])].append(a)
 
-    collisions: list[tuple[str, str, str, str]] = []
+    collisions: list[tuple[str, str]] = []
     for group in by_phonemes.values():
-        if len(group) < 2:
-            continue
         for i, a in enumerate(group):
-            for b in group[i + 1 :]:
-                if a["_segment_id"] != b["_segment_id"]:
-                    collisions.append(
-                        (
-                            a["_segment_id"],
-                            a["id"],
-                            b["_segment_id"],
-                            b["id"],
-                        )
-                    )
+            for b in group[i + 1:]:
+                collisions.append((a["id"], b["id"]))
     return collisions
 
 
@@ -180,9 +191,6 @@ def build_answer_entries(
     apply_rules: bool = True,
 ) -> list[dict]:
     """Run each row through its language's G2P and return enriched dicts.
-
-    The result still carries an internal '_segment_id' key used for
-    grouping; this is removed before emitting JSON.
 
     With `apply_rules=False` the phonological rules are skipped and the
     text is mapped jamo by jamo - the same path the device runtime takes
@@ -210,40 +218,13 @@ def build_answer_entries(
             {
                 "id": row.answer_id,
                 "text": row.text,
+                "language": row.language,
                 "phonemes": phonemes,
                 "min_phonemes": len(phonemes),
                 "threshold": round(auto_threshold(len(phonemes)), 4),
-                "_segment_id": row.segment_id,
-                "_language": row.language,
             }
         )
     return out
-
-
-def group_into_segments(answers: list[dict]) -> list[dict]:
-    """Group answer entries by segment, preserving input order."""
-    segments: dict[str, dict] = {}
-    order: list[str] = []
-    for a in answers:
-        seg_id = a["_segment_id"]
-        lang = a["_language"]
-        if seg_id not in segments:
-            order.append(seg_id)
-            segments[seg_id] = {
-                "id": seg_id,
-                "language": lang,
-                "answers": [],
-            }
-        elif segments[seg_id]["language"] != lang:
-            raise ValueError(
-                f"Segment '{seg_id}' has mixed languages: "
-                f"'{segments[seg_id]['language']}' vs '{lang}'. "
-                "Split into separate segments."
-            )
-        # Strip internal fields before emitting
-        clean = {k: v for k, v in a.items() if not k.startswith("_")}
-        segments[seg_id]["answers"].append(clean)
-    return [segments[s] for s in order]
 
 
 def build(
@@ -257,26 +238,24 @@ def build(
     rows = read_words_csv(input_path)
     answers = build_answer_entries(rows, apply_rules=apply_rules)
 
-    # Validation: cross-segment phoneme collisions
     collisions = find_collisions(answers)
     if collisions:
-        msg = "Cross-segment phoneme collisions (potential confusion):"
-        for sa, aa, sb, ab in collisions:
-            msg += f"\n  - [{sa}/{aa}] == [{sb}/{ab}]"
+        msg = "Answers with identical phonemes (indistinguishable):"
+        for a, b in collisions:
+            msg += f"\n  - {a} == {b}"
         if strict:
             raise ValueError(msg)
         print(f"WARNING: {msg}", file=sys.stderr)
 
-    segments = group_into_segments(answers)
     languages = sorted({row.language for row in rows})
 
     targets = {
-        "version": "1.0.0",
+        "version": "2.0.0",
         "phoneme_set": "ipa",
         "languages": languages,
         "confusion_matrix_id": matrix_id,
         "build_date": date.today().isoformat(),
-        "segments": segments,
+        "answers": answers,
     }
 
     output_path.parent.mkdir(parents=True, exist_ok=True)
@@ -333,11 +312,9 @@ def main() -> int:
         apply_rules=not args.no_rules,
     )
 
-    n_segments = len(targets["segments"])
-    n_answers = sum(len(s["answers"]) for s in targets["segments"])
     print(
         f"OK: built {args.output} "
-        f"({n_segments} segments, {n_answers} answers, "
+        f"({len(targets['answers'])} answers, "
         f"languages={targets['languages']})"
     )
     return 0

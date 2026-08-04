@@ -1,272 +1,260 @@
 {
-  "version": "1.0.0",
+  "version": "2.0.0",
   "phoneme_set": "ipa",
   "languages": [
     "ko"
   ],
   "confusion_matrix_id": "ko_child_v1",
   "build_date": "2026-08-04",
-  "segments": [
+  "answers": [
     {
-      "id": "lesson_01_family",
+      "id": "mom",
+      "text": "엄마",
       "language": "ko",
-      "answers": [
-        {
-          "id": "mom",
-          "text": "엄마",
-          "phonemes": [
-            "ʌ",
-            "m",
-            "m",
-            "a"
-          ],
-          "min_phonemes": 4,
-          "threshold": 0.7
-        },
-        {
-          "id": "dad",
-          "text": "아빠",
-          "phonemes": [
-            "a",
-            "p͈",
-            "a"
-          ],
-          "min_phonemes": 3,
-          "threshold": 0.73
-        },
-        {
-          "id": "grandma",
-          "text": "할머니",
-          "phonemes": [
-            "h",
-            "a",
-            "l",
-            "m",
-            "ʌ",
-            "n",
-            "i"
-          ],
-          "min_phonemes": 7,
-          "threshold": 0.6
-        },
-        {
-          "id": "grandpa",
-          "text": "할아버지",
-          "phonemes": [
-            "h",
-            "a",
-            "ɾ",
-            "a",
-            "p",
-            "ʌ",
-            "tɕ",
-            "i"
-          ],
-          "min_phonemes": 8,
-          "threshold": 0.6
-        }
-      ]
+      "phonemes": [
+        "ʌ",
+        "m",
+        "m",
+        "a"
+      ],
+      "min_phonemes": 4,
+      "threshold": 0.7
     },
     {
-      "id": "lesson_02_animals",
+      "id": "dad",
+      "text": "아빠",
       "language": "ko",
-      "answers": [
-        {
-          "id": "puppy",
-          "text": "강아지",
-          "phonemes": [
-            "k",
-            "a",
-            "ŋ",
-            "a",
-            "tɕ",
-            "i"
-          ],
-          "min_phonemes": 6,
-          "threshold": 0.65
-        },
-        {
-          "id": "cat",
-          "text": "고양이",
-          "phonemes": [
-            "k",
-            "o",
-            "j",
-            "a",
-            "ŋ",
-            "i"
-          ],
-          "min_phonemes": 6,
-          "threshold": 0.65
-        },
-        {
-          "id": "rabbit",
-          "text": "토끼",
-          "phonemes": [
-            "tʰ",
-            "o",
-            "k͈",
-            "i"
-          ],
-          "min_phonemes": 4,
-          "threshold": 0.7
-        },
-        {
-          "id": "butterfly",
-          "text": "나비",
-          "phonemes": [
-            "n",
-            "a",
-            "p",
-            "i"
-          ],
-          "min_phonemes": 4,
-          "threshold": 0.7
-        }
-      ]
+      "phonemes": [
+        "a",
+        "p͈",
+        "a"
+      ],
+      "min_phonemes": 3,
+      "threshold": 0.73
     },
     {
-      "id": "lesson_03_food",
+      "id": "grandma",
+      "text": "할머니",
       "language": "ko",
-      "answers": [
-        {
-          "id": "apple",
-          "text": "사과",
-          "phonemes": [
-            "s",
-            "a",
-            "k",
-            "w",
-            "a"
-          ],
-          "min_phonemes": 5,
-          "threshold": 0.65
-        },
-        {
-          "id": "banana",
-          "text": "바나나",
-          "phonemes": [
-            "p",
-            "a",
-            "n",
-            "a",
-            "n",
-            "a"
-          ],
-          "min_phonemes": 6,
-          "threshold": 0.65
-        },
-        {
-          "id": "milk",
-          "text": "우유",
-          "phonemes": [
-            "u",
-            "j",
-            "u"
-          ],
-          "min_phonemes": 3,
-          "threshold": 0.73
-        },
-        {
-          "id": "bread",
-          "text": "빵",
-          "phonemes": [
-            "p͈",
-            "a",
-            "ŋ"
-          ],
-          "min_phonemes": 3,
-          "threshold": 0.73
-        }
-      ]
+      "phonemes": [
+        "h",
+        "a",
+        "l",
+        "m",
+        "ʌ",
+        "n",
+        "i"
+      ],
+      "min_phonemes": 7,
+      "threshold": 0.6
     },
     {
-      "id": "lesson_04_actions",
+      "id": "grandpa",
+      "text": "할아버지",
       "language": "ko",
-      "answers": [
-        {
-          "id": "go",
-          "text": "가요",
-          "phonemes": [
-            "k",
-            "a",
-            "j",
-            "o"
-          ],
-          "min_phonemes": 4,
-          "threshold": 0.7
-        },
-        {
-          "id": "come",
-          "text": "와요",
-          "phonemes": [
-            "w",
-            "a",
-            "j",
-            "o"
-          ],
-          "min_phonemes": 4,
-          "threshold": 0.7
-        },
-        {
-          "id": "eat",
-          "text": "먹어요",
-          "phonemes": [
-            "m",
-            "ʌ",
-            "k",
-            "ʌ",
-            "j",
-            "o"
-          ],
-          "min_phonemes": 6,
-          "threshold": 0.65
-        }
-      ]
+      "phonemes": [
+        "h",
+        "a",
+        "ɾ",
+        "a",
+        "p",
+        "ʌ",
+        "tɕ",
+        "i"
+      ],
+      "min_phonemes": 8,
+      "threshold": 0.6
     },
     {
-      "id": "lesson_05_school",
+      "id": "puppy",
+      "text": "강아지",
       "language": "ko",
-      "answers": [
-        {
-          "id": "school",
-          "text": "학교",
-          "phonemes": [
-            "h",
-            "a",
-            "k̚",
-            "k͈",
-            "j",
-            "o"
-          ],
-          "min_phonemes": 6,
-          "threshold": 0.65
-        },
-        {
-          "id": "friend",
-          "text": "친구",
-          "phonemes": [
-            "tɕʰ",
-            "i",
-            "n",
-            "k",
-            "u"
-          ],
-          "min_phonemes": 5,
-          "threshold": 0.65
-        },
-        {
-          "id": "book",
-          "text": "책",
-          "phonemes": [
-            "tɕʰ",
-            "ɛ",
-            "k̚"
-          ],
-          "min_phonemes": 3,
-          "threshold": 0.73
-        }
-      ]
+      "phonemes": [
+        "k",
+        "a",
+        "ŋ",
+        "a",
+        "tɕ",
+        "i"
+      ],
+      "min_phonemes": 6,
+      "threshold": 0.65
+    },
+    {
+      "id": "cat",
+      "text": "고양이",
+      "language": "ko",
+      "phonemes": [
+        "k",
+        "o",
+        "j",
+        "a",
+        "ŋ",
+        "i"
+      ],
+      "min_phonemes": 6,
+      "threshold": 0.65
+    },
+    {
+      "id": "rabbit",
+      "text": "토끼",
+      "language": "ko",
+      "phonemes": [
+        "tʰ",
+        "o",
+        "k͈",
+        "i"
+      ],
+      "min_phonemes": 4,
+      "threshold": 0.7
+    },
+    {
+      "id": "butterfly",
+      "text": "나비",
+      "language": "ko",
+      "phonemes": [
+        "n",
+        "a",
+        "p",
+        "i"
+      ],
+      "min_phonemes": 4,
+      "threshold": 0.7
+    },
+    {
+      "id": "apple",
+      "text": "사과",
+      "language": "ko",
+      "phonemes": [
+        "s",
+        "a",
+        "k",
+        "w",
+        "a"
+      ],
+      "min_phonemes": 5,
+      "threshold": 0.65
+    },
+    {
+      "id": "banana",
+      "text": "바나나",
+      "language": "ko",
+      "phonemes": [
+        "p",
+        "a",
+        "n",
+        "a",
+        "n",
+        "a"
+      ],
+      "min_phonemes": 6,
+      "threshold": 0.65
+    },
+    {
+      "id": "milk",
+      "text": "우유",
+      "language": "ko",
+      "phonemes": [
+        "u",
+        "j",
+        "u"
+      ],
+      "min_phonemes": 3,
+      "threshold": 0.73
+    },
+    {
+      "id": "bread",
+      "text": "빵",
+      "language": "ko",
+      "phonemes": [
+        "p͈",
+        "a",
+        "ŋ"
+      ],
+      "min_phonemes": 3,
+      "threshold": 0.73
+    },
+    {
+      "id": "go",
+      "text": "가요",
+      "language": "ko",
+      "phonemes": [
+        "k",
+        "a",
+        "j",
+        "o"
+      ],
+      "min_phonemes": 4,
+      "threshold": 0.7
+    },
+    {
+      "id": "come",
+      "text": "와요",
+      "language": "ko",
+      "phonemes": [
+        "w",
+        "a",
+        "j",
+        "o"
+      ],
+      "min_phonemes": 4,
+      "threshold": 0.7
+    },
+    {
+      "id": "eat",
+      "text": "먹어요",
+      "language": "ko",
+      "phonemes": [
+        "m",
+        "ʌ",
+        "k",
+        "ʌ",
+        "j",
+        "o"
+      ],
+      "min_phonemes": 6,
+      "threshold": 0.65
+    },
+    {
+      "id": "school",
+      "text": "학교",
+      "language": "ko",
+      "phonemes": [
+        "h",
+        "a",
+        "k̚",
+        "k͈",
+        "j",
+        "o"
+      ],
+      "min_phonemes": 6,
+      "threshold": 0.65
+    },
+    {
+      "id": "friend",
+      "text": "친구",
+      "language": "ko",
+      "phonemes": [
+        "tɕʰ",
+        "i",
+        "n",
+        "k",
+        "u"
+      ],
+      "min_phonemes": 5,
+      "threshold": 0.65
+    },
+    {
+      "id": "book",
+      "text": "책",
+      "language": "ko",
+      "phonemes": [
+        "tɕʰ",
+        "ɛ",
+        "k̚"
+      ],
+      "min_phonemes": 3,
+      "threshold": 0.73
     }
   ]
 }

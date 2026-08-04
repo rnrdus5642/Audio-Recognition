@@ -24,46 +24,43 @@
 
 ## 설치
 
-`Packages/manifest.json` 에 한 줄. Sentis 와 Newtonsoft 는 패키지가 의존성으로
-선언하므로 UPM 이 알아서 끌어옵니다.
+**Unity 2022.3 과 Unity 6 을 모두 지원합니다.**
 
-**Unity 2022.3 과 Unity 6 을 모두 지원합니다.** 패키지 줄은 동일하고,
-추론 엔진 한 줄만 에디터에 맞춰 고릅니다.
+### 1. 패키지
 
-Unity 2022.3:
+`Window > Package Manager` > `+` > **Add package from git URL…**
 
-```json
-{
-  "dependencies": {
-    "com.domicube.phoneme-matching": "https://github.com/rnrdus5642/Audio-Recognition.git?path=/unity/Packages/com.domicube.phoneme-matching#v0.3.1",
-    "com.unity.sentis": "1.2.0-exp.2"
-  }
-}
+```
+https://github.com/rnrdus5642/Audio-Recognition.git?path=/unity/Packages/com.domicube.phoneme-matching
 ```
 
-Unity 6:
+`manifest.json` 에 직접 적어도 같습니다:
 
 ```json
-{
-  "dependencies": {
-    "com.domicube.phoneme-matching": "https://github.com/rnrdus5642/Audio-Recognition.git?path=/unity/Packages/com.domicube.phoneme-matching#v0.3.1",
-    "com.unity.ai.inference": "2.6.1"
-  }
-}
+"com.domicube.phoneme-matching": "https://github.com/rnrdus5642/Audio-Recognition.git?path=/unity/Packages/com.domicube.phoneme-matching"
 ```
 
-엔진을 패키지 의존성에 넣지 않은 이유는 UPM 이 "A 또는 B" 를 표현하지
-못하기 때문입니다. 2.x 를 박으면 2022 에서 설치가 실패하고, 1.2 를 박으면
-Unity 6 사용자가 중단된 실험 패키지를 강제로 받게 됩니다.
+항상 main 최신을 받습니다. 특정 버전에 고정하려면 뒤에 `#v0.3.2` 처럼
+태그를 붙이세요. 로컬에서 고쳐가며 쓰려면
+`"file:../../path/to/com.domicube.phoneme-matching"` 도 됩니다.
+
+### 2. 추론 엔진
+
+`Tools > Phoneme Matching > 추론 엔진 설치`
+
+에디터 버전을 보고 알맞은 것을 받습니다 - 2022.3 은
+`com.unity.sentis 1.2.0-exp.2`, Unity 6 은
+`com.unity.ai.inference 2.6.1`.
+
+패키지가 이것을 의존성으로 선언하지 못하는 이유는 UPM 이 "A 또는 B" 를
+표현할 수 없기 때문입니다. 2.x 를 박으면 2022 에서 설치가 실패하고, 1.2 를
+박으면 Unity 6 사용자가 중단된 실험 패키지를 강제로 받게 됩니다.
 
 설치된 엔진에 맞는 인식기만 컴파일됩니다 (asmdef 의 `versionDefines` +
 `defineConstraints`). 클래스 이름은 양쪽 다
 `SentisPhonemeRecognizer` 라서 호출 코드는 동일하고, `ModelAsset` 을
 선언할 때의 `using` 만 다릅니다 - 2022 는 `Unity.Sentis`, Unity 6 은
 `Unity.InferenceEngine`.
-
-`#v0.3.1` 을 빼면 항상 main 최신을 당겨옵니다. 로컬에서 고쳐가며 쓰려면
-`"file:../../path/to/com.domicube.phoneme-matching"` 도 됩니다.
 
 ### 데이터와 모델은 따로 옵니다
 
@@ -174,8 +171,8 @@ var session = new PronunciationSession(matrix, catalog, recognizer,
                                        buffer: buffer);
 
 // 문제 낼 때 — 창을 비우고 시작합니다
-session.Begin("사과");                      // 같은 세그먼트가 경쟁
-// session.Begin(new[] { "사과", "빵" });   // 지정한 것만 경쟁
+session.Begin("사과");                      // 이 단어만 채점
+// session.Begin(new[] { "사과", "능금" }); // 둘 중 아무거나 정답
 
 // 0.5초마다
 var frame = session.Push();
@@ -280,7 +277,7 @@ frame.Text             // 인식된 한글
 | `skip_cost` | 0.15 | 0.05 |
 | 윈도우 커버리지 | 0.5 | 0.8 |
 | 문맥 제한 | 없음 | 최근 `4×정답음소수+3` |
-| 연속 확인 | 없음 | 3회 |
+| 연속 확인 | 없음 | 2회 |
 
 **하나로 통일할 수 없습니다.** 배치 설정을 스트리밍에 쓰면 정답 4개 중 3개를 놓치고,
 스트리밍 설정을 배치에 쓰면 positives가 69.4%→47.2%로 무너집니다. 배치는 커버리지가
@@ -289,17 +286,30 @@ frame.Text             // 인식된 한글
 
 ### 연속 확인이 필요한 이유
 
-스트리밍은 프레임마다 채점하므로 기회가 `프레임 수 × 후보 수`만큼 생깁니다. 0.4초
-hop으로 10초, 후보 4개면 100회이고, 프레임당 오검출률 1%도 세션 단위로는 63%가 됩니다.
-같은 단어로 연속 N회를 요구하면 이게 무너집니다 — 우연한 일치는 다음 프레임에 다른
-후보로 옮겨가지만, 진짜 발화는 롤링 창에 남아 계속 이깁니다.
+스트리밍은 프레임마다 채점하므로 우연히 한 번 넘길 기회가 계속 생깁니다. 같은 답을
+연속 N회 요구하면 그게 무너집니다 — 우연한 일치는 다음 프레임에 사라지지만, 진짜
+발화는 롤링 창에 남아 계속 이깁니다.
+
+골든 클립 36개로 스트리밍 세션을 만들어 스윕한 결과입니다(0.5초 hop, 각 세션에서
+자기 단어와 나머지 17단어를 모두 시도).
+
+| 연속 | 검출 | 오발동 | 확정까지 |
+|---|---|---|---|
+| 1회 | 18/36 | 19/612 | 1.5초 |
+| **2회** | **18/36** | **16/612** | **2.1초** |
+| 3회 | 15/36 | 10/612 | 2.5초 |
+
+2회는 1회보다 무조건 낫고(검출 같고 오발동만 줄어듦), 3회는 오발동 1%p를 얻는 대신
+검출 8%p를 잃습니다. 제대로 말했는데 못 알아듣는 쪽이 더 나쁘므로 기본값은 2입니다.
+성인 TTS 기준이라, 아이 발화로는 다시 재봐야 합니다.
 
 ### 문맥 제한은 연속 횟수와 묶여 있습니다
 
 정답은 문맥 창 **안에 있는 동안만** 점수를 얻습니다. 창이 `연속횟수 × hop`초보다 짧으면
 말을 계속하는 사용자는 확정이 산술적으로 불가능합니다. 한국어는 약 10음소/초라
-`context_mult 2.0`(사과 기준 13음소 ≈ 1.3초 ≈ 2.6프레임)으로는 연속 3회를 못 채웠고,
-4.0(≈2.3초 ≈ 4.6프레임)으로 해결했습니다. 값을 바꿀 땐 이 관계를 먼저 확인하세요.
+`context_mult 2.0`(사과 기준 13음소 ≈ 1.3초 ≈ 2.6프레임)으로는 연속 확인을 못 채웠고,
+4.0(≈2.3초 ≈ 4.6프레임)으로 해결했습니다. 연속 횟수를 올릴 땐 이 관계를 먼저
+확인하세요.
 
 ## 음향 모델
 

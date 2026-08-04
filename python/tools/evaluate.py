@@ -128,8 +128,8 @@ def load_targets(path: Path) -> dict:
     return json.loads(path.read_text(encoding="utf-8"))
 
 
-def segments_by_id(targets: dict) -> dict[str, dict]:
-    return {seg["id"]: seg for seg in targets["segments"]}
+def answers_by_id(targets: dict) -> dict[str, dict]:
+    return {a["id"]: a for a in targets["answers"]}
 
 
 # ---------------------------------------------------------------------------
@@ -148,7 +148,7 @@ def evaluate(
     verbose: bool,
 ) -> dict:
     matcher = Matcher(matrix)
-    by_seg = segments_by_id(targets)
+    by_answer = answers_by_id(targets)
     per_case: list[dict] = []
 
     n_pos = 0
@@ -189,37 +189,35 @@ def evaluate(
                     f"hangul={hangul!r}  ipa={ipa}"
                 )
 
-        own_seg_id = case["target_segment_id"]
         own_ans_id = case["target_answer_id"]
-        own_seg = by_seg[own_seg_id]
+        own = by_answer[own_ans_id]
 
-        # Positive: match against own segment
-        result = matcher.best_match(ipa or [], own_seg["answers"])
-        is_correct_answer = result.target_id == own_ans_id
-        pos_pass = result.passed and is_correct_answer
+        # Positive: the word that was asked for, scored on its own.
+        # Nothing competes: a lesson asks for one word and the caller
+        # should not have to know which others exist.
+        result = matcher.best_match(ipa or [], [own])
+        pos_pass = result.passed
         n_pos += 1
         if pos_pass:
             n_pos_pass += 1
         pos_scores.append(result.score)
 
-        if not pos_pass and result.target_id is not None:
-            # Track confusion - what did the matcher pick instead?
-            confusion_pairs[(own_ans_id, result.target_id)] += 1
-
-        # Negatives: each OTHER segment
+        # Negatives: every OTHER word. A false accept here means the
+        # child said one thing and a different question would have
+        # accepted it.
         neg_results = []
-        for seg_id, seg in by_seg.items():
-            if seg_id == own_seg_id:
+        for ans_id, answer in by_answer.items():
+            if ans_id == own_ans_id:
                 continue
-            neg = matcher.best_match(ipa or [], seg["answers"])
+            neg = matcher.best_match(ipa or [], [answer])
             n_neg += 1
             if neg.passed:
                 n_neg_pass += 1
+                confusion_pairs[(own_ans_id, ans_id)] += 1
             neg_scores.append(neg.score)
             neg_results.append(
                 {
-                    "segment_id": seg_id,
-                    "best_answer_id": neg.target_id,
+                    "answer_id": ans_id,
                     "score": round(neg.score, 4),
                     "passed": neg.passed,
                 }
@@ -228,18 +226,14 @@ def evaluate(
         per_case.append(
             {
                 "case_id": case["case_id"],
-                "target_segment_id": own_seg_id,
                 "target_answer_id": own_ans_id,
                 "target_text": case["target_text"],
                 "voice": case["voice"],
                 "hangul": hangul,
                 "user_ipa": ipa,
                 "positive": {
-                    "best_answer_id": result.target_id,
                     "score": round(result.score, 4),
-                    "passed": result.passed,
-                    "correct_answer": is_correct_answer,
-                    "overall_pass": pos_pass,
+                    "passed": pos_pass,
                 },
                 "negatives_summary": {
                     "total": len(neg_results),
@@ -321,7 +315,7 @@ def _print_summary(s: dict) -> None:
         "[higher = matcher separates target vs non-target better]"
     )
     if s["top_confusions"]:
-        print("\nTop positive-side confusions (expected -> got):")
+        print("\nFalse accepts (spoken -> also accepted as):")
         for c in s["top_confusions"]:
             print(f"  {c['expected']:<10} -> {c['got']:<10} x{c['count']}")
     print("=" * 72)

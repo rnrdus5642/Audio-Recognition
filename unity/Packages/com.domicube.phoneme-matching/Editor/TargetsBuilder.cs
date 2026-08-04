@@ -30,7 +30,7 @@ namespace DomiCube.PhonemeMatching.Editor
         private const string RepoKey = "DomiCube.PhonemeMatching.RepoPath";
         private const string StreamingTargets = "Assets/StreamingAssets/targets.json";
 
-        [MenuItem("Tools/Phoneme Matching/Rebuild targets from words.csv", false, 0)]
+        [MenuItem("Tools/Phoneme Matching/정답 데이터 다시 만들기", false, 0)]
         public static void Rebuild()
         {
             string repo = FindRepository();
@@ -38,7 +38,7 @@ namespace DomiCube.PhonemeMatching.Editor
             {
                 Debug.LogError(
                     "[PhonemeMatching] 저장소를 찾지 못했습니다. "
-                    + "Tools > Phoneme Matching > Set repository path… 에서 "
+                    + "Tools > Phoneme Matching > 저장소 경로 지정… 에서 "
                     + "Audio-Recognition 폴더를 지정하세요.");
                 return;
             }
@@ -79,18 +79,12 @@ namespace DomiCube.PhonemeMatching.Editor
             // Read it back the way the runtime will, so a malformed file
             // is caught here rather than in front of a child.
             var catalog = PhonemeData.LoadTargets(File.ReadAllText(StreamingTargets));
-            int words = 0;
-            foreach (var segment in catalog.Segments)
-            {
-                words += segment.Answers.Count;
-            }
-
             Debug.Log(
                 $"[PhonemeMatching] {StreamingTargets} 갱신 완료 - "
-                + $"{catalog.Segments.Count}개 세그먼트, {words}개 단어");
+                + $"{catalog.Answers.Count}개 단어");
         }
 
-        [MenuItem("Tools/Phoneme Matching/Open words.csv", false, 1)]
+        [MenuItem("Tools/Phoneme Matching/단어 목록 열기 (words.csv)", false, 1)]
         public static void OpenWords()
         {
             string repo = FindRepository();
@@ -104,7 +98,7 @@ namespace DomiCube.PhonemeMatching.Editor
                 Path.Combine(repo, "shared", "words.csv"));
         }
 
-        [MenuItem("Tools/Phoneme Matching/Set repository path…", false, 20)]
+        [MenuItem("Tools/Phoneme Matching/저장소 경로 지정…", false, 40)]
         public static void SetRepository()
         {
             string picked = EditorUtility.OpenFolderPanel(

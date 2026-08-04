@@ -69,7 +69,7 @@ namespace DomiCube.PhonemeMatching
             ConfusionMatrix matrix,
             TargetCatalog catalog,
             IPhonemeRecognizer recognizer,
-            int consecutive = 3,
+            int consecutive = 2,
             AudioWindowBuffer buffer = null)
         {
             _buffer = buffer;
@@ -92,45 +92,23 @@ namespace DomiCube.PhonemeMatching
         /// <summary>The word being asked for, or null.</summary>
         public string TargetText { get; private set; }
 
-        /// <summary>
-        /// The answers competing this session - the whole segment the
-        /// target belongs to, as it will be in the lesson.
-        /// </summary>
+        /// <summary>The answers that count as correct this question.</summary>
         public IReadOnlyList<Answer> Candidates => _candidates;
 
         /// <summary>
-        /// Start judging <paramref name="targetText"/>, with the rest of
-        /// its segment competing - the same field of answers the lesson
-        /// presents. Pass null or empty to accept anything in the
-        /// catalogue.
-        ///
-        /// Competing candidates are not decoration: a word only wins if
-        /// it beats the others, which is what stops a fragment of 바나나
-        /// from passing as 빵.
+        /// Start judging <paramref name="targetText"/>. Only that word is
+        /// scored: it passes when its own score clears its own threshold
+        /// for <see cref="Consecutive"/> windows running.
         /// </summary>
         public void Begin(string targetText)
         {
-            _candidates = ResolveCandidates(targetText);
-            if (_candidates == null || _candidates.Count == 0)
-            {
-                throw new ArgumentException(
-                    $"'{targetText}' is not in targets.json. Build it with "
-                    + "python -m python.build.build_targets",
-                    nameof(targetText));
-            }
-
-            TargetText = targetText;
-            StartSession();
+            Begin(new[] { targetText });
         }
 
         /// <summary>
-        /// Start judging with exactly these words competing, ignoring how
-        /// targets.json groups them. Use when the lesson decides the
-        /// field itself - a review round mixing words from several
-        /// segments, for instance.
-        ///
-        /// Any of them counts as correct; which one won is in
-        /// <see cref="FrameScore.Best"/>.
+        /// Start judging with several acceptable answers - synonyms, or a
+        /// question that takes any of a set. Any of them confirms, and
+        /// <see cref="FrameScore.Best"/> says which.
         /// </summary>
         public void Begin(IReadOnlyList<string> targetWords)
         {
@@ -242,35 +220,9 @@ namespace DomiCube.PhonemeMatching
             return Push(_buffer.Snapshot());
         }
 
-        private List<Answer> ResolveCandidates(string targetText)
-        {
-            if (string.IsNullOrEmpty(targetText))
-            {
-                var all = new List<Answer>();
-                foreach (var segment in _catalog.Segments)
-                {
-                    all.AddRange(segment.Answers);
-                }
-
-                return all;
-            }
-
-            return _catalog.SegmentOf(targetText);
-        }
-
         private Answer FindAnswer(string text)
         {
-            foreach (var segment in _catalog.Segments)
-            {
-                var hit = segment.Answers.Find(
-                    a => a.Text == text || a.Id == text);
-                if (hit != null)
-                {
-                    return hit;
-                }
-            }
-
-            return null;
+            return _catalog.Find(text);
         }
     }
 }

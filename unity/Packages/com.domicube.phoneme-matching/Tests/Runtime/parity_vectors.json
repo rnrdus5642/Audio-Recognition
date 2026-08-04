@@ -6463,10 +6463,7 @@
       "profile": "batch",
       "user": [],
       "candidate_ids": [
-        "apple",
-        "banana",
-        "milk",
-        "bread"
+        "apple"
       ],
       "target_id": "apple",
       "score": 0.0,
@@ -6476,10 +6473,7 @@
       "profile": "streaming",
       "user": [],
       "candidate_ids": [
-        "apple",
-        "banana",
-        "milk",
-        "bread"
+        "apple"
       ],
       "target_id": "apple",
       "score": 0.0,
@@ -6493,13 +6487,10 @@
         "e"
       ],
       "candidate_ids": [
-        "apple",
-        "banana",
-        "milk",
-        "bread"
+        "apple"
       ],
-      "target_id": "milk",
-      "score": 0.266666667,
+      "target_id": "apple",
+      "score": 0.176,
       "passed": false
     },
     {
@@ -6510,13 +6501,10 @@
         "e"
       ],
       "candidate_ids": [
-        "apple",
-        "banana",
-        "milk",
-        "bread"
+        "apple"
       ],
-      "target_id": "milk",
-      "score": 0.194444444,
+      "target_id": "apple",
+      "score": 0.12,
       "passed": false
     },
     {
@@ -6538,10 +6526,7 @@
         "a"
       ],
       "candidate_ids": [
-        "apple",
-        "banana",
-        "milk",
-        "bread"
+        "apple"
       ],
       "target_id": "apple",
       "score": 0.43,
@@ -6566,13 +6551,10 @@
         "a"
       ],
       "candidate_ids": [
-        "apple",
-        "banana",
-        "milk",
-        "bread"
+        "apple"
       ],
-      "target_id": "banana",
-      "score": 0.491666667,
+      "target_id": "apple",
+      "score": 0.4875,
       "passed": false
     },
     {
@@ -6599,10 +6581,7 @@
         "e"
       ],
       "candidate_ids": [
-        "apple",
-        "banana",
-        "milk",
-        "bread"
+        "apple"
       ],
       "target_id": "apple",
       "score": 0.28,
@@ -6632,12 +6611,9 @@
         "e"
       ],
       "candidate_ids": [
-        "apple",
-        "banana",
-        "milk",
-        "bread"
+        "apple"
       ],
-      "target_id": "banana",
+      "target_id": "apple",
       "score": 0.45,
       "passed": false
     },
@@ -6645,10 +6621,301 @@
       "profile": "batch",
       "user": [],
       "candidate_ids": [
+        "mom",
+        "dad",
+        "grandma",
+        "grandpa",
+        "puppy",
+        "cat",
+        "rabbit",
+        "butterfly",
         "apple",
         "banana",
         "milk",
-        "bread"
+        "bread",
+        "go",
+        "come",
+        "eat",
+        "school",
+        "friend",
+        "book"
+      ],
+      "target_id": "mom",
+      "score": 0.0,
+      "passed": false
+    },
+    {
+      "profile": "streaming",
+      "user": [],
+      "candidate_ids": [
+        "mom",
+        "dad",
+        "grandma",
+        "grandpa",
+        "puppy",
+        "cat",
+        "rabbit",
+        "butterfly",
+        "apple",
+        "banana",
+        "milk",
+        "bread",
+        "go",
+        "come",
+        "eat",
+        "school",
+        "friend",
+        "book"
+      ],
+      "target_id": "mom",
+      "score": 0.0,
+      "passed": false
+    },
+    {
+      "profile": "batch",
+      "user": [
+        "i",
+        "t",
+        "e"
+      ],
+      "candidate_ids": [
+        "mom",
+        "dad",
+        "grandma",
+        "grandpa",
+        "puppy",
+        "cat",
+        "rabbit",
+        "butterfly",
+        "apple",
+        "banana",
+        "milk",
+        "bread",
+        "go",
+        "come",
+        "eat",
+        "school",
+        "friend",
+        "book"
+      ],
+      "target_id": "rabbit",
+      "score": 0.4875,
+      "passed": false
+    },
+    {
+      "profile": "streaming",
+      "user": [
+        "i",
+        "t",
+        "e"
+      ],
+      "candidate_ids": [
+        "mom",
+        "dad",
+        "grandma",
+        "grandpa",
+        "puppy",
+        "cat",
+        "rabbit",
+        "butterfly",
+        "apple",
+        "banana",
+        "milk",
+        "bread",
+        "go",
+        "come",
+        "eat",
+        "school",
+        "friend",
+        "book"
+      ],
+      "target_id": "book",
+      "score": 0.263888889,
+      "passed": false
+    },
+    {
+      "profile": "batch",
+      "user": [
+        "k",
+        "ɯ",
+        "m",
+        "i",
+        "k",
+        "ʌ",
+        "n",
+        "k",
+        "w",
+        "a",
+        "i",
+        "l",
+        "t",
+        "a"
+      ],
+      "candidate_ids": [
+        "mom",
+        "dad",
+        "grandma",
+        "grandpa",
+        "puppy",
+        "cat",
+        "rabbit",
+        "butterfly",
+        "apple",
+        "banana",
+        "milk",
+        "bread",
+        "go",
+        "come",
+        "eat",
+        "school",
+        "friend",
+        "book"
+      ],
+      "target_id": "cat",
+      "score": 0.5,
+      "passed": false
+    },
+    {
+      "profile": "streaming",
+      "user": [
+        "k",
+        "ɯ",
+        "m",
+        "i",
+        "k",
+        "ʌ",
+        "n",
+        "k",
+        "w",
+        "a",
+        "i",
+        "l",
+        "t",
+        "a"
+      ],
+      "candidate_ids": [
+        "mom",
+        "dad",
+        "grandma",
+        "grandpa",
+        "puppy",
+        "cat",
+        "rabbit",
+        "butterfly",
+        "apple",
+        "banana",
+        "milk",
+        "bread",
+        "go",
+        "come",
+        "eat",
+        "school",
+        "friend",
+        "book"
+      ],
+      "target_id": "come",
+      "score": 0.59765625,
+      "passed": false
+    },
+    {
+      "profile": "batch",
+      "user": [
+        "k",
+        "ɯ",
+        "m",
+        "i",
+        "k",
+        "ʌ",
+        "n",
+        "k",
+        "w",
+        "a",
+        "i",
+        "l",
+        "k",
+        "a",
+        "tʰ",
+        "ɯ",
+        "n",
+        "t",
+        "e"
+      ],
+      "candidate_ids": [
+        "mom",
+        "dad",
+        "grandma",
+        "grandpa",
+        "puppy",
+        "cat",
+        "rabbit",
+        "butterfly",
+        "apple",
+        "banana",
+        "milk",
+        "bread",
+        "go",
+        "come",
+        "eat",
+        "school",
+        "friend",
+        "book"
+      ],
+      "target_id": "cat",
+      "score": 0.375,
+      "passed": false
+    },
+    {
+      "profile": "streaming",
+      "user": [
+        "k",
+        "ɯ",
+        "m",
+        "i",
+        "k",
+        "ʌ",
+        "n",
+        "k",
+        "w",
+        "a",
+        "i",
+        "l",
+        "k",
+        "a",
+        "tʰ",
+        "ɯ",
+        "n",
+        "t",
+        "e"
+      ],
+      "candidate_ids": [
+        "mom",
+        "dad",
+        "grandma",
+        "grandpa",
+        "puppy",
+        "cat",
+        "rabbit",
+        "butterfly",
+        "apple",
+        "banana",
+        "milk",
+        "bread",
+        "go",
+        "come",
+        "eat",
+        "school",
+        "friend",
+        "book"
+      ],
+      "target_id": "friend",
+      "score": 0.55,
+      "passed": false
+    },
+    {
+      "profile": "batch",
+      "user": [],
+      "candidate_ids": [
+        "apple"
       ],
       "target_id": "apple",
       "score": 0.0,
@@ -6658,10 +6925,7 @@
       "profile": "streaming",
       "user": [],
       "candidate_ids": [
-        "apple",
-        "banana",
-        "milk",
-        "bread"
+        "apple"
       ],
       "target_id": "apple",
       "score": 0.0,
@@ -6680,10 +6944,7 @@
         "ŋ"
       ],
       "candidate_ids": [
-        "apple",
-        "banana",
-        "milk",
-        "bread"
+        "apple"
       ],
       "target_id": "apple",
       "score": 0.91,
@@ -6702,10 +6963,7 @@
         "ŋ"
       ],
       "candidate_ids": [
-        "apple",
-        "banana",
-        "milk",
-        "bread"
+        "apple"
       ],
       "target_id": "apple",
       "score": 0.97,
@@ -6724,10 +6982,7 @@
         "ŋ"
       ],
       "candidate_ids": [
-        "apple",
-        "banana",
-        "milk",
-        "bread"
+        "apple"
       ],
       "target_id": "apple",
       "score": 0.91,
@@ -6746,10 +7001,7 @@
         "ŋ"
       ],
       "candidate_ids": [
-        "apple",
-        "banana",
-        "milk",
-        "bread"
+        "apple"
       ],
       "target_id": "apple",
       "score": 0.97,
@@ -6765,10 +7017,7 @@
         "a"
       ],
       "candidate_ids": [
-        "apple",
-        "banana",
-        "milk",
-        "bread"
+        "apple"
       ],
       "target_id": "apple",
       "score": 1.0,
@@ -6784,10 +7033,7 @@
         "a"
       ],
       "candidate_ids": [
-        "apple",
-        "banana",
-        "milk",
-        "bread"
+        "apple"
       ],
       "target_id": "apple",
       "score": 1.0,
@@ -6797,9 +7043,271 @@
       "profile": "batch",
       "user": [],
       "candidate_ids": [
+        "mom",
+        "dad",
+        "grandma",
+        "grandpa",
+        "puppy",
+        "cat",
+        "rabbit",
+        "butterfly",
+        "apple",
+        "banana",
+        "milk",
+        "bread",
+        "go",
+        "come",
+        "eat",
         "school",
         "friend",
         "book"
+      ],
+      "target_id": "mom",
+      "score": 0.0,
+      "passed": false
+    },
+    {
+      "profile": "streaming",
+      "user": [],
+      "candidate_ids": [
+        "mom",
+        "dad",
+        "grandma",
+        "grandpa",
+        "puppy",
+        "cat",
+        "rabbit",
+        "butterfly",
+        "apple",
+        "banana",
+        "milk",
+        "bread",
+        "go",
+        "come",
+        "eat",
+        "school",
+        "friend",
+        "book"
+      ],
+      "target_id": "mom",
+      "score": 0.0,
+      "passed": false
+    },
+    {
+      "profile": "batch",
+      "user": [
+        "s",
+        "a",
+        "k",
+        "w",
+        "a",
+        "j",
+        "o",
+        "ŋ"
+      ],
+      "candidate_ids": [
+        "mom",
+        "dad",
+        "grandma",
+        "grandpa",
+        "puppy",
+        "cat",
+        "rabbit",
+        "butterfly",
+        "apple",
+        "banana",
+        "milk",
+        "bread",
+        "go",
+        "come",
+        "eat",
+        "school",
+        "friend",
+        "book"
+      ],
+      "target_id": "apple",
+      "score": 0.91,
+      "passed": true
+    },
+    {
+      "profile": "streaming",
+      "user": [
+        "s",
+        "a",
+        "k",
+        "w",
+        "a",
+        "j",
+        "o",
+        "ŋ"
+      ],
+      "candidate_ids": [
+        "mom",
+        "dad",
+        "grandma",
+        "grandpa",
+        "puppy",
+        "cat",
+        "rabbit",
+        "butterfly",
+        "apple",
+        "banana",
+        "milk",
+        "bread",
+        "go",
+        "come",
+        "eat",
+        "school",
+        "friend",
+        "book"
+      ],
+      "target_id": "apple",
+      "score": 0.97,
+      "passed": true
+    },
+    {
+      "profile": "batch",
+      "user": [
+        "s",
+        "a",
+        "k",
+        "w",
+        "a",
+        "j",
+        "o",
+        "ŋ"
+      ],
+      "candidate_ids": [
+        "mom",
+        "dad",
+        "grandma",
+        "grandpa",
+        "puppy",
+        "cat",
+        "rabbit",
+        "butterfly",
+        "apple",
+        "banana",
+        "milk",
+        "bread",
+        "go",
+        "come",
+        "eat",
+        "school",
+        "friend",
+        "book"
+      ],
+      "target_id": "apple",
+      "score": 0.91,
+      "passed": true
+    },
+    {
+      "profile": "streaming",
+      "user": [
+        "s",
+        "a",
+        "k",
+        "w",
+        "a",
+        "j",
+        "o",
+        "ŋ"
+      ],
+      "candidate_ids": [
+        "mom",
+        "dad",
+        "grandma",
+        "grandpa",
+        "puppy",
+        "cat",
+        "rabbit",
+        "butterfly",
+        "apple",
+        "banana",
+        "milk",
+        "bread",
+        "go",
+        "come",
+        "eat",
+        "school",
+        "friend",
+        "book"
+      ],
+      "target_id": "apple",
+      "score": 0.97,
+      "passed": true
+    },
+    {
+      "profile": "batch",
+      "user": [
+        "s",
+        "a",
+        "k",
+        "w",
+        "a"
+      ],
+      "candidate_ids": [
+        "mom",
+        "dad",
+        "grandma",
+        "grandpa",
+        "puppy",
+        "cat",
+        "rabbit",
+        "butterfly",
+        "apple",
+        "banana",
+        "milk",
+        "bread",
+        "go",
+        "come",
+        "eat",
+        "school",
+        "friend",
+        "book"
+      ],
+      "target_id": "apple",
+      "score": 1.0,
+      "passed": true
+    },
+    {
+      "profile": "streaming",
+      "user": [
+        "s",
+        "a",
+        "k",
+        "w",
+        "a"
+      ],
+      "candidate_ids": [
+        "mom",
+        "dad",
+        "grandma",
+        "grandpa",
+        "puppy",
+        "cat",
+        "rabbit",
+        "butterfly",
+        "apple",
+        "banana",
+        "milk",
+        "bread",
+        "go",
+        "come",
+        "eat",
+        "school",
+        "friend",
+        "book"
+      ],
+      "target_id": "apple",
+      "score": 1.0,
+      "passed": true
+    },
+    {
+      "profile": "batch",
+      "user": [],
+      "candidate_ids": [
+        "school"
       ],
       "target_id": "school",
       "score": 0.0,
@@ -6809,9 +7317,7 @@
       "profile": "streaming",
       "user": [],
       "candidate_ids": [
-        "school",
-        "friend",
-        "book"
+        "school"
       ],
       "target_id": "school",
       "score": 0.0,
@@ -6830,12 +7336,10 @@
         "p̚"
       ],
       "candidate_ids": [
-        "school",
-        "friend",
-        "book"
+        "school"
       ],
-      "target_id": "friend",
-      "score": 0.53,
+      "target_id": "school",
+      "score": 0.508333333,
       "passed": false
     },
     {
@@ -6851,12 +7355,10 @@
         "p̚"
       ],
       "candidate_ids": [
-        "school",
-        "friend",
-        "book"
+        "school"
       ],
-      "target_id": "friend",
-      "score": 0.4725,
+      "target_id": "school",
+      "score": 0.25,
       "passed": false
     },
     {
@@ -6875,12 +7377,10 @@
         "i"
       ],
       "candidate_ids": [
-        "school",
-        "friend",
-        "book"
+        "school"
       ],
-      "target_id": "friend",
-      "score": 0.44,
+      "target_id": "school",
+      "score": 0.433333333,
       "passed": false
     },
     {
@@ -6899,12 +7399,10 @@
         "i"
       ],
       "candidate_ids": [
-        "school",
-        "friend",
-        "book"
+        "school"
       ],
-      "target_id": "friend",
-      "score": 0.45,
+      "target_id": "school",
+      "score": 0.239583333,
       "passed": false
     },
     {
@@ -6927,9 +7425,7 @@
         "i"
       ],
       "candidate_ids": [
-        "school",
-        "friend",
-        "book"
+        "school"
       ],
       "target_id": "school",
       "score": 0.333333333,
@@ -6955,12 +7451,10 @@
         "i"
       ],
       "candidate_ids": [
-        "school",
-        "friend",
-        "book"
+        "school"
       ],
-      "target_id": "friend",
-      "score": 0.42,
+      "target_id": "school",
+      "score": 0.225694444,
       "passed": false
     },
     {
@@ -6970,7 +7464,21 @@
         "mom",
         "dad",
         "grandma",
-        "grandpa"
+        "grandpa",
+        "puppy",
+        "cat",
+        "rabbit",
+        "butterfly",
+        "apple",
+        "banana",
+        "milk",
+        "bread",
+        "go",
+        "come",
+        "eat",
+        "school",
+        "friend",
+        "book"
       ],
       "target_id": "mom",
       "score": 0.0,
@@ -6983,7 +7491,461 @@
         "mom",
         "dad",
         "grandma",
-        "grandpa"
+        "grandpa",
+        "puppy",
+        "cat",
+        "rabbit",
+        "butterfly",
+        "apple",
+        "banana",
+        "milk",
+        "bread",
+        "go",
+        "come",
+        "eat",
+        "school",
+        "friend",
+        "book"
+      ],
+      "target_id": "mom",
+      "score": 0.0,
+      "passed": false
+    },
+    {
+      "profile": "batch",
+      "user": [
+        "j",
+        "ʌ",
+        "k",
+        "i",
+        "k",
+        "a",
+        "ʌ",
+        "p̚"
+      ],
+      "candidate_ids": [
+        "mom",
+        "dad",
+        "grandma",
+        "grandpa",
+        "puppy",
+        "cat",
+        "rabbit",
+        "butterfly",
+        "apple",
+        "banana",
+        "milk",
+        "bread",
+        "go",
+        "come",
+        "eat",
+        "school",
+        "friend",
+        "book"
+      ],
+      "target_id": "go",
+      "score": 0.6125,
+      "passed": false
+    },
+    {
+      "profile": "streaming",
+      "user": [
+        "j",
+        "ʌ",
+        "k",
+        "i",
+        "k",
+        "a",
+        "ʌ",
+        "p̚"
+      ],
+      "candidate_ids": [
+        "mom",
+        "dad",
+        "grandma",
+        "grandpa",
+        "puppy",
+        "cat",
+        "rabbit",
+        "butterfly",
+        "apple",
+        "banana",
+        "milk",
+        "bread",
+        "go",
+        "come",
+        "eat",
+        "school",
+        "friend",
+        "book"
+      ],
+      "target_id": "go",
+      "score": 0.69140625,
+      "passed": false
+    },
+    {
+      "profile": "batch",
+      "user": [
+        "j",
+        "ʌ",
+        "k",
+        "i",
+        "k",
+        "a",
+        "ʌ",
+        "t",
+        "i",
+        "tɕ",
+        "i"
+      ],
+      "candidate_ids": [
+        "mom",
+        "dad",
+        "grandma",
+        "grandpa",
+        "puppy",
+        "cat",
+        "rabbit",
+        "butterfly",
+        "apple",
+        "banana",
+        "milk",
+        "bread",
+        "go",
+        "come",
+        "eat",
+        "school",
+        "friend",
+        "book"
+      ],
+      "target_id": "puppy",
+      "score": 0.6,
+      "passed": false
+    },
+    {
+      "profile": "streaming",
+      "user": [
+        "j",
+        "ʌ",
+        "k",
+        "i",
+        "k",
+        "a",
+        "ʌ",
+        "t",
+        "i",
+        "tɕ",
+        "i"
+      ],
+      "candidate_ids": [
+        "mom",
+        "dad",
+        "grandma",
+        "grandpa",
+        "puppy",
+        "cat",
+        "rabbit",
+        "butterfly",
+        "apple",
+        "banana",
+        "milk",
+        "bread",
+        "go",
+        "come",
+        "eat",
+        "school",
+        "friend",
+        "book"
+      ],
+      "target_id": "puppy",
+      "score": 0.7,
+      "passed": true
+    },
+    {
+      "profile": "batch",
+      "user": [
+        "j",
+        "ʌ",
+        "k",
+        "i",
+        "k",
+        "a",
+        "ʌ",
+        "t",
+        "i",
+        "tɕ",
+        "i",
+        "j",
+        "ʌ",
+        "k",
+        "i"
+      ],
+      "candidate_ids": [
+        "mom",
+        "dad",
+        "grandma",
+        "grandpa",
+        "puppy",
+        "cat",
+        "rabbit",
+        "butterfly",
+        "apple",
+        "banana",
+        "milk",
+        "bread",
+        "go",
+        "come",
+        "eat",
+        "school",
+        "friend",
+        "book"
+      ],
+      "target_id": "puppy",
+      "score": 0.5,
+      "passed": false
+    },
+    {
+      "profile": "streaming",
+      "user": [
+        "j",
+        "ʌ",
+        "k",
+        "i",
+        "k",
+        "a",
+        "ʌ",
+        "t",
+        "i",
+        "tɕ",
+        "i",
+        "j",
+        "ʌ",
+        "k",
+        "i"
+      ],
+      "candidate_ids": [
+        "mom",
+        "dad",
+        "grandma",
+        "grandpa",
+        "puppy",
+        "cat",
+        "rabbit",
+        "butterfly",
+        "apple",
+        "banana",
+        "milk",
+        "bread",
+        "go",
+        "come",
+        "eat",
+        "school",
+        "friend",
+        "book"
+      ],
+      "target_id": "puppy",
+      "score": 0.666666667,
+      "passed": true
+    },
+    {
+      "profile": "batch",
+      "user": [],
+      "candidate_ids": [
+        "mom"
+      ],
+      "target_id": "mom",
+      "score": 0.0,
+      "passed": false
+    },
+    {
+      "profile": "streaming",
+      "user": [],
+      "candidate_ids": [
+        "mom"
+      ],
+      "target_id": "mom",
+      "score": 0.0,
+      "passed": false
+    },
+    {
+      "profile": "batch",
+      "user": [
+        "i",
+        "s",
+        "a",
+        "ɾ",
+        "a",
+        "m"
+      ],
+      "candidate_ids": [
+        "mom"
+      ],
+      "target_id": "mom",
+      "score": 0.5625,
+      "passed": false
+    },
+    {
+      "profile": "streaming",
+      "user": [
+        "i",
+        "s",
+        "a",
+        "ɾ",
+        "a",
+        "m"
+      ],
+      "candidate_ids": [
+        "mom"
+      ],
+      "target_id": "mom",
+      "score": 0.59765625,
+      "passed": false
+    },
+    {
+      "profile": "batch",
+      "user": [
+        "i",
+        "s",
+        "a",
+        "ɾ",
+        "a",
+        "m",
+        "n",
+        "u",
+        "k",
+        "u"
+      ],
+      "candidate_ids": [
+        "mom"
+      ],
+      "target_id": "mom",
+      "score": 0.4125,
+      "passed": false
+    },
+    {
+      "profile": "streaming",
+      "user": [
+        "i",
+        "s",
+        "a",
+        "ɾ",
+        "a",
+        "m",
+        "n",
+        "u",
+        "k",
+        "u"
+      ],
+      "candidate_ids": [
+        "mom"
+      ],
+      "target_id": "mom",
+      "score": 0.55078125,
+      "passed": false
+    },
+    {
+      "profile": "batch",
+      "user": [
+        "i",
+        "s",
+        "a",
+        "ɾ",
+        "a",
+        "m",
+        "n",
+        "u",
+        "k",
+        "u",
+        "k",
+        "a",
+        "n",
+        "a",
+        "o",
+        "n"
+      ],
+      "candidate_ids": [
+        "mom"
+      ],
+      "target_id": "mom",
+      "score": 0.1875,
+      "passed": false
+    },
+    {
+      "profile": "streaming",
+      "user": [
+        "i",
+        "s",
+        "a",
+        "ɾ",
+        "a",
+        "m",
+        "n",
+        "u",
+        "k",
+        "u",
+        "k",
+        "a",
+        "n",
+        "a",
+        "o",
+        "n"
+      ],
+      "candidate_ids": [
+        "mom"
+      ],
+      "target_id": "mom",
+      "score": 0.48046875,
+      "passed": false
+    },
+    {
+      "profile": "batch",
+      "user": [],
+      "candidate_ids": [
+        "mom",
+        "dad",
+        "grandma",
+        "grandpa",
+        "puppy",
+        "cat",
+        "rabbit",
+        "butterfly",
+        "apple",
+        "banana",
+        "milk",
+        "bread",
+        "go",
+        "come",
+        "eat",
+        "school",
+        "friend",
+        "book"
+      ],
+      "target_id": "mom",
+      "score": 0.0,
+      "passed": false
+    },
+    {
+      "profile": "streaming",
+      "user": [],
+      "candidate_ids": [
+        "mom",
+        "dad",
+        "grandma",
+        "grandpa",
+        "puppy",
+        "cat",
+        "rabbit",
+        "butterfly",
+        "apple",
+        "banana",
+        "milk",
+        "bread",
+        "go",
+        "come",
+        "eat",
+        "school",
+        "friend",
+        "book"
       ],
       "target_id": "mom",
       "score": 0.0,
@@ -7003,10 +7965,24 @@
         "mom",
         "dad",
         "grandma",
-        "grandpa"
+        "grandpa",
+        "puppy",
+        "cat",
+        "rabbit",
+        "butterfly",
+        "apple",
+        "banana",
+        "milk",
+        "bread",
+        "go",
+        "come",
+        "eat",
+        "school",
+        "friend",
+        "book"
       ],
-      "target_id": "grandma",
-      "score": 0.635714286,
+      "target_id": "apple",
+      "score": 0.7,
       "passed": true
     },
     {
@@ -7023,11 +7999,25 @@
         "mom",
         "dad",
         "grandma",
-        "grandpa"
+        "grandpa",
+        "puppy",
+        "cat",
+        "rabbit",
+        "butterfly",
+        "apple",
+        "banana",
+        "milk",
+        "bread",
+        "go",
+        "come",
+        "eat",
+        "school",
+        "friend",
+        "book"
       ],
-      "target_id": "dad",
-      "score": 0.683333333,
-      "passed": false
+      "target_id": "apple",
+      "score": 0.74,
+      "passed": true
     },
     {
       "profile": "batch",
@@ -7047,7 +8037,21 @@
         "mom",
         "dad",
         "grandma",
-        "grandpa"
+        "grandpa",
+        "puppy",
+        "cat",
+        "rabbit",
+        "butterfly",
+        "apple",
+        "banana",
+        "milk",
+        "bread",
+        "go",
+        "come",
+        "eat",
+        "school",
+        "friend",
+        "book"
       ],
       "target_id": "grandma",
       "score": 0.585714286,
@@ -7071,11 +8075,25 @@
         "mom",
         "dad",
         "grandma",
-        "grandpa"
+        "grandpa",
+        "puppy",
+        "cat",
+        "rabbit",
+        "butterfly",
+        "apple",
+        "banana",
+        "milk",
+        "bread",
+        "go",
+        "come",
+        "eat",
+        "school",
+        "friend",
+        "book"
       ],
-      "target_id": "dad",
-      "score": 0.616666667,
-      "passed": false
+      "target_id": "apple",
+      "score": 0.7,
+      "passed": true
     },
     {
       "profile": "batch",
@@ -7101,7 +8119,21 @@
         "mom",
         "dad",
         "grandma",
-        "grandpa"
+        "grandpa",
+        "puppy",
+        "cat",
+        "rabbit",
+        "butterfly",
+        "apple",
+        "banana",
+        "milk",
+        "bread",
+        "go",
+        "come",
+        "eat",
+        "school",
+        "friend",
+        "book"
       ],
       "target_id": "grandma",
       "score": 0.457142857,
@@ -7131,7 +8163,481 @@
         "mom",
         "dad",
         "grandma",
-        "grandpa"
+        "grandpa",
+        "puppy",
+        "cat",
+        "rabbit",
+        "butterfly",
+        "apple",
+        "banana",
+        "milk",
+        "bread",
+        "go",
+        "come",
+        "eat",
+        "school",
+        "friend",
+        "book"
+      ],
+      "target_id": "apple",
+      "score": 0.64,
+      "passed": false
+    },
+    {
+      "profile": "batch",
+      "user": [],
+      "candidate_ids": [
+        "apple"
+      ],
+      "target_id": "apple",
+      "score": 0.0,
+      "passed": false
+    },
+    {
+      "profile": "streaming",
+      "user": [],
+      "candidate_ids": [
+        "apple"
+      ],
+      "target_id": "apple",
+      "score": 0.0,
+      "passed": false
+    },
+    {
+      "profile": "batch",
+      "user": [
+        "n",
+        "u",
+        "n",
+        "i"
+      ],
+      "candidate_ids": [
+        "apple"
+      ],
+      "target_id": "apple",
+      "score": 0.148,
+      "passed": false
+    },
+    {
+      "profile": "streaming",
+      "user": [
+        "n",
+        "u",
+        "n",
+        "i"
+      ],
+      "candidate_ids": [
+        "apple"
+      ],
+      "target_id": "apple",
+      "score": 0.1075,
+      "passed": false
+    },
+    {
+      "profile": "batch",
+      "user": [
+        "ɯ",
+        "ŋ",
+        "tɕ",
+        "i",
+        "ŋ",
+        "m",
+        "ʌ",
+        "l",
+        "k͈",
+        "a",
+        "h",
+        "ɛ",
+        "t̚",
+        "t͈",
+        "a"
+      ],
+      "candidate_ids": [
+        "apple"
+      ],
+      "target_id": "apple",
+      "score": 0.2,
+      "passed": false
+    },
+    {
+      "profile": "streaming",
+      "user": [
+        "ɯ",
+        "ŋ",
+        "tɕ",
+        "i",
+        "ŋ",
+        "m",
+        "ʌ",
+        "l",
+        "k͈",
+        "a",
+        "h",
+        "ɛ",
+        "t̚",
+        "t͈",
+        "a"
+      ],
+      "candidate_ids": [
+        "apple"
+      ],
+      "target_id": "apple",
+      "score": 0.255,
+      "passed": false
+    },
+    {
+      "profile": "batch",
+      "user": [
+        "ɯ",
+        "ŋ",
+        "tɕ",
+        "i",
+        "k̚",
+        "k͈",
+        "o",
+        "m",
+        "ʌ",
+        "l",
+        "k͈",
+        "a",
+        "tɕ",
+        "a",
+        "l",
+        "p",
+        "o",
+        "t",
+        "a"
+      ],
+      "candidate_ids": [
+        "apple"
+      ],
+      "target_id": "apple",
+      "score": 0.16,
+      "passed": false
+    },
+    {
+      "profile": "streaming",
+      "user": [
+        "ɯ",
+        "ŋ",
+        "tɕ",
+        "i",
+        "k̚",
+        "k͈",
+        "o",
+        "m",
+        "ʌ",
+        "l",
+        "k͈",
+        "a",
+        "tɕ",
+        "a",
+        "l",
+        "p",
+        "o",
+        "t",
+        "a"
+      ],
+      "candidate_ids": [
+        "apple"
+      ],
+      "target_id": "apple",
+      "score": 0.36,
+      "passed": false
+    },
+    {
+      "profile": "batch",
+      "user": [],
+      "candidate_ids": [
+        "mom",
+        "dad",
+        "grandma",
+        "grandpa",
+        "puppy",
+        "cat",
+        "rabbit",
+        "butterfly",
+        "apple",
+        "banana",
+        "milk",
+        "bread",
+        "go",
+        "come",
+        "eat",
+        "school",
+        "friend",
+        "book"
+      ],
+      "target_id": "mom",
+      "score": 0.0,
+      "passed": false
+    },
+    {
+      "profile": "streaming",
+      "user": [],
+      "candidate_ids": [
+        "mom",
+        "dad",
+        "grandma",
+        "grandpa",
+        "puppy",
+        "cat",
+        "rabbit",
+        "butterfly",
+        "apple",
+        "banana",
+        "milk",
+        "bread",
+        "go",
+        "come",
+        "eat",
+        "school",
+        "friend",
+        "book"
+      ],
+      "target_id": "mom",
+      "score": 0.0,
+      "passed": false
+    },
+    {
+      "profile": "batch",
+      "user": [
+        "n",
+        "u",
+        "n",
+        "i"
+      ],
+      "candidate_ids": [
+        "mom",
+        "dad",
+        "grandma",
+        "grandpa",
+        "puppy",
+        "cat",
+        "rabbit",
+        "butterfly",
+        "apple",
+        "banana",
+        "milk",
+        "bread",
+        "go",
+        "come",
+        "eat",
+        "school",
+        "friend",
+        "book"
+      ],
+      "target_id": "butterfly",
+      "score": 0.65,
+      "passed": false
+    },
+    {
+      "profile": "streaming",
+      "user": [
+        "n",
+        "u",
+        "n",
+        "i"
+      ],
+      "candidate_ids": [
+        "mom",
+        "dad",
+        "grandma",
+        "grandpa",
+        "puppy",
+        "cat",
+        "rabbit",
+        "butterfly",
+        "apple",
+        "banana",
+        "milk",
+        "bread",
+        "go",
+        "come",
+        "eat",
+        "school",
+        "friend",
+        "book"
+      ],
+      "target_id": "rabbit",
+      "score": 0.52734375,
+      "passed": false
+    },
+    {
+      "profile": "batch",
+      "user": [
+        "ɯ",
+        "ŋ",
+        "tɕ",
+        "i",
+        "ŋ",
+        "m",
+        "ʌ",
+        "l",
+        "k͈",
+        "a",
+        "h",
+        "ɛ",
+        "t̚",
+        "t͈",
+        "a"
+      ],
+      "candidate_ids": [
+        "mom",
+        "dad",
+        "grandma",
+        "grandpa",
+        "puppy",
+        "cat",
+        "rabbit",
+        "butterfly",
+        "apple",
+        "banana",
+        "milk",
+        "bread",
+        "go",
+        "come",
+        "eat",
+        "school",
+        "friend",
+        "book"
+      ],
+      "target_id": "puppy",
+      "score": 0.4,
+      "passed": false
+    },
+    {
+      "profile": "streaming",
+      "user": [
+        "ɯ",
+        "ŋ",
+        "tɕ",
+        "i",
+        "ŋ",
+        "m",
+        "ʌ",
+        "l",
+        "k͈",
+        "a",
+        "h",
+        "ɛ",
+        "t̚",
+        "t͈",
+        "a"
+      ],
+      "candidate_ids": [
+        "mom",
+        "dad",
+        "grandma",
+        "grandpa",
+        "puppy",
+        "cat",
+        "rabbit",
+        "butterfly",
+        "apple",
+        "banana",
+        "milk",
+        "bread",
+        "go",
+        "come",
+        "eat",
+        "school",
+        "friend",
+        "book"
+      ],
+      "target_id": "mom",
+      "score": 0.575,
+      "passed": false
+    },
+    {
+      "profile": "batch",
+      "user": [
+        "ɯ",
+        "ŋ",
+        "tɕ",
+        "i",
+        "k̚",
+        "k͈",
+        "o",
+        "m",
+        "ʌ",
+        "l",
+        "k͈",
+        "a",
+        "tɕ",
+        "a",
+        "l",
+        "p",
+        "o",
+        "t",
+        "a"
+      ],
+      "candidate_ids": [
+        "mom",
+        "dad",
+        "grandma",
+        "grandpa",
+        "puppy",
+        "cat",
+        "rabbit",
+        "butterfly",
+        "apple",
+        "banana",
+        "milk",
+        "bread",
+        "go",
+        "come",
+        "eat",
+        "school",
+        "friend",
+        "book"
+      ],
+      "target_id": "grandpa",
+      "score": 0.38125,
+      "passed": false
+    },
+    {
+      "profile": "streaming",
+      "user": [
+        "ɯ",
+        "ŋ",
+        "tɕ",
+        "i",
+        "k̚",
+        "k͈",
+        "o",
+        "m",
+        "ʌ",
+        "l",
+        "k͈",
+        "a",
+        "tɕ",
+        "a",
+        "l",
+        "p",
+        "o",
+        "t",
+        "a"
+      ],
+      "candidate_ids": [
+        "mom",
+        "dad",
+        "grandma",
+        "grandpa",
+        "puppy",
+        "cat",
+        "rabbit",
+        "butterfly",
+        "apple",
+        "banana",
+        "milk",
+        "bread",
+        "go",
+        "come",
+        "eat",
+        "school",
+        "friend",
+        "book"
       ],
       "target_id": "dad",
       "score": 0.533333333,
@@ -7141,10 +8647,7 @@
       "profile": "batch",
       "user": [],
       "candidate_ids": [
-        "apple",
-        "banana",
-        "milk",
-        "bread"
+        "apple"
       ],
       "target_id": "apple",
       "score": 0.0,
@@ -7154,196 +8657,7 @@
       "profile": "streaming",
       "user": [],
       "candidate_ids": [
-        "apple",
-        "banana",
-        "milk",
-        "bread"
-      ],
-      "target_id": "apple",
-      "score": 0.0,
-      "passed": false
-    },
-    {
-      "profile": "batch",
-      "user": [
-        "n",
-        "u",
-        "n",
-        "i"
-      ],
-      "candidate_ids": [
-        "apple",
-        "banana",
-        "milk",
-        "bread"
-      ],
-      "target_id": "banana",
-      "score": 0.575,
-      "passed": false
-    },
-    {
-      "profile": "streaming",
-      "user": [
-        "n",
-        "u",
-        "n",
-        "i"
-      ],
-      "candidate_ids": [
-        "apple",
-        "banana",
-        "milk",
-        "bread"
-      ],
-      "target_id": "banana",
-      "score": 0.369791667,
-      "passed": false
-    },
-    {
-      "profile": "batch",
-      "user": [
-        "ɯ",
-        "ŋ",
-        "tɕ",
-        "i",
-        "ŋ",
-        "m",
-        "ʌ",
-        "l",
-        "k͈",
-        "a",
-        "h",
-        "ɛ",
-        "t̚",
-        "t͈",
-        "a"
-      ],
-      "candidate_ids": [
-        "apple",
-        "banana",
-        "milk",
-        "bread"
-      ],
-      "target_id": "banana",
-      "score": 0.308333333,
-      "passed": false
-    },
-    {
-      "profile": "streaming",
-      "user": [
-        "ɯ",
-        "ŋ",
-        "tɕ",
-        "i",
-        "ŋ",
-        "m",
-        "ʌ",
-        "l",
-        "k͈",
-        "a",
-        "h",
-        "ɛ",
-        "t̚",
-        "t͈",
-        "a"
-      ],
-      "candidate_ids": [
-        "apple",
-        "banana",
-        "milk",
-        "bread"
-      ],
-      "target_id": "banana",
-      "score": 0.409722222,
-      "passed": false
-    },
-    {
-      "profile": "batch",
-      "user": [
-        "ɯ",
-        "ŋ",
-        "tɕ",
-        "i",
-        "k̚",
-        "k͈",
-        "o",
-        "m",
-        "ʌ",
-        "l",
-        "k͈",
-        "a",
-        "tɕ",
-        "a",
-        "l",
-        "p",
-        "o",
-        "t",
-        "a"
-      ],
-      "candidate_ids": [
-        "apple",
-        "banana",
-        "milk",
-        "bread"
-      ],
-      "target_id": "banana",
-      "score": 0.275,
-      "passed": false
-    },
-    {
-      "profile": "streaming",
-      "user": [
-        "ɯ",
-        "ŋ",
-        "tɕ",
-        "i",
-        "k̚",
-        "k͈",
-        "o",
-        "m",
-        "ʌ",
-        "l",
-        "k͈",
-        "a",
-        "tɕ",
-        "a",
-        "l",
-        "p",
-        "o",
-        "t",
-        "a"
-      ],
-      "candidate_ids": [
-        "apple",
-        "banana",
-        "milk",
-        "bread"
-      ],
-      "target_id": "banana",
-      "score": 0.4375,
-      "passed": false
-    },
-    {
-      "profile": "batch",
-      "user": [],
-      "candidate_ids": [
-        "apple",
-        "banana",
-        "milk",
-        "bread"
-      ],
-      "target_id": "apple",
-      "score": 0.0,
-      "passed": false
-    },
-    {
-      "profile": "streaming",
-      "user": [],
-      "candidate_ids": [
-        "apple",
-        "banana",
-        "milk",
-        "bread"
+        "apple"
       ],
       "target_id": "apple",
       "score": 0.0,
@@ -7358,13 +8672,10 @@
         "n"
       ],
       "candidate_ids": [
-        "apple",
-        "banana",
-        "milk",
-        "bread"
+        "apple"
       ],
-      "target_id": "bread",
-      "score": 0.433333333,
+      "target_id": "apple",
+      "score": 0.432,
       "passed": false
     },
     {
@@ -7376,10 +8687,7 @@
         "n"
       ],
       "candidate_ids": [
-        "apple",
-        "banana",
-        "milk",
-        "bread"
+        "apple"
       ],
       "target_id": "apple",
       "score": 0.29,
@@ -7404,10 +8712,7 @@
         "n"
       ],
       "candidate_ids": [
-        "apple",
-        "banana",
-        "milk",
-        "bread"
+        "apple"
       ],
       "target_id": "apple",
       "score": 0.43,
@@ -7432,13 +8737,10 @@
         "n"
       ],
       "candidate_ids": [
-        "apple",
-        "banana",
-        "milk",
-        "bread"
+        "apple"
       ],
-      "target_id": "banana",
-      "score": 0.491666667,
+      "target_id": "apple",
+      "score": 0.4875,
       "passed": false
     },
     {
@@ -7463,10 +8765,7 @@
         "i"
       ],
       "candidate_ids": [
-        "apple",
-        "banana",
-        "milk",
-        "bread"
+        "apple"
       ],
       "target_id": "apple",
       "score": 0.34,
@@ -7494,22 +8793,309 @@
         "i"
       ],
       "candidate_ids": [
+        "apple"
+      ],
+      "target_id": "apple",
+      "score": 0.465,
+      "passed": false
+    },
+    {
+      "profile": "batch",
+      "user": [],
+      "candidate_ids": [
+        "mom",
+        "dad",
+        "grandma",
+        "grandpa",
+        "puppy",
+        "cat",
+        "rabbit",
+        "butterfly",
         "apple",
         "banana",
         "milk",
-        "bread"
+        "bread",
+        "go",
+        "come",
+        "eat",
+        "school",
+        "friend",
+        "book"
       ],
-      "target_id": "banana",
-      "score": 0.466666667,
+      "target_id": "mom",
+      "score": 0.0,
+      "passed": false
+    },
+    {
+      "profile": "streaming",
+      "user": [],
+      "candidate_ids": [
+        "mom",
+        "dad",
+        "grandma",
+        "grandpa",
+        "puppy",
+        "cat",
+        "rabbit",
+        "butterfly",
+        "apple",
+        "banana",
+        "milk",
+        "bread",
+        "go",
+        "come",
+        "eat",
+        "school",
+        "friend",
+        "book"
+      ],
+      "target_id": "mom",
+      "score": 0.0,
+      "passed": false
+    },
+    {
+      "profile": "batch",
+      "user": [
+        "i",
+        "k",
+        "ʌ",
+        "n"
+      ],
+      "candidate_ids": [
+        "mom",
+        "dad",
+        "grandma",
+        "grandpa",
+        "puppy",
+        "cat",
+        "rabbit",
+        "butterfly",
+        "apple",
+        "banana",
+        "milk",
+        "bread",
+        "go",
+        "come",
+        "eat",
+        "school",
+        "friend",
+        "book"
+      ],
+      "target_id": "go",
+      "score": 0.575,
+      "passed": false
+    },
+    {
+      "profile": "streaming",
+      "user": [
+        "i",
+        "k",
+        "ʌ",
+        "n"
+      ],
+      "candidate_ids": [
+        "mom",
+        "dad",
+        "grandma",
+        "grandpa",
+        "puppy",
+        "cat",
+        "rabbit",
+        "butterfly",
+        "apple",
+        "banana",
+        "milk",
+        "bread",
+        "go",
+        "come",
+        "eat",
+        "school",
+        "friend",
+        "book"
+      ],
+      "target_id": "go",
+      "score": 0.390625,
+      "passed": false
+    },
+    {
+      "profile": "batch",
+      "user": [
+        "i",
+        "k",
+        "ʌ",
+        "n",
+        "k",
+        "w",
+        "a",
+        "i",
+        "l",
+        "k",
+        "a",
+        "tʰ",
+        "ɯ",
+        "n"
+      ],
+      "candidate_ids": [
+        "mom",
+        "dad",
+        "grandma",
+        "grandpa",
+        "puppy",
+        "cat",
+        "rabbit",
+        "butterfly",
+        "apple",
+        "banana",
+        "milk",
+        "bread",
+        "go",
+        "come",
+        "eat",
+        "school",
+        "friend",
+        "book"
+      ],
+      "target_id": "cat",
+      "score": 0.5,
+      "passed": false
+    },
+    {
+      "profile": "streaming",
+      "user": [
+        "i",
+        "k",
+        "ʌ",
+        "n",
+        "k",
+        "w",
+        "a",
+        "i",
+        "l",
+        "k",
+        "a",
+        "tʰ",
+        "ɯ",
+        "n"
+      ],
+      "candidate_ids": [
+        "mom",
+        "dad",
+        "grandma",
+        "grandpa",
+        "puppy",
+        "cat",
+        "rabbit",
+        "butterfly",
+        "apple",
+        "banana",
+        "milk",
+        "bread",
+        "go",
+        "come",
+        "eat",
+        "school",
+        "friend",
+        "book"
+      ],
+      "target_id": "friend",
+      "score": 0.6,
+      "passed": false
+    },
+    {
+      "profile": "batch",
+      "user": [
+        "i",
+        "k",
+        "ʌ",
+        "n",
+        "k",
+        "w",
+        "a",
+        "i",
+        "l",
+        "k",
+        "a",
+        "tʰ",
+        "ɯ",
+        "n",
+        "t",
+        "e",
+        "i"
+      ],
+      "candidate_ids": [
+        "mom",
+        "dad",
+        "grandma",
+        "grandpa",
+        "puppy",
+        "cat",
+        "rabbit",
+        "butterfly",
+        "apple",
+        "banana",
+        "milk",
+        "bread",
+        "go",
+        "come",
+        "eat",
+        "school",
+        "friend",
+        "book"
+      ],
+      "target_id": "cat",
+      "score": 0.425,
+      "passed": false
+    },
+    {
+      "profile": "streaming",
+      "user": [
+        "i",
+        "k",
+        "ʌ",
+        "n",
+        "k",
+        "w",
+        "a",
+        "i",
+        "l",
+        "k",
+        "a",
+        "tʰ",
+        "ɯ",
+        "n",
+        "t",
+        "e",
+        "i"
+      ],
+      "candidate_ids": [
+        "mom",
+        "dad",
+        "grandma",
+        "grandpa",
+        "puppy",
+        "cat",
+        "rabbit",
+        "butterfly",
+        "apple",
+        "banana",
+        "milk",
+        "bread",
+        "go",
+        "come",
+        "eat",
+        "school",
+        "friend",
+        "book"
+      ],
+      "target_id": "friend",
+      "score": 0.57,
       "passed": false
     },
     {
       "profile": "batch",
       "user": [],
       "candidate_ids": [
-        "school",
-        "friend",
-        "book"
+        "school"
       ],
       "target_id": "school",
       "score": 0.0,
@@ -7519,9 +9105,7 @@
       "profile": "streaming",
       "user": [],
       "candidate_ids": [
-        "school",
-        "friend",
-        "book"
+        "school"
       ],
       "target_id": "school",
       "score": 0.0,
@@ -7539,12 +9123,10 @@
         "ʌ"
       ],
       "candidate_ids": [
-        "school",
-        "friend",
-        "book"
+        "school"
       ],
-      "target_id": "friend",
-      "score": 0.56,
+      "target_id": "school",
+      "score": 0.533333333,
       "passed": false
     },
     {
@@ -7559,12 +9141,10 @@
         "ʌ"
       ],
       "candidate_ids": [
-        "school",
-        "friend",
-        "book"
+        "school"
       ],
-      "target_id": "friend",
-      "score": 0.48,
+      "target_id": "school",
+      "score": 0.253472222,
       "passed": false
     },
     {
@@ -7582,12 +9162,10 @@
         "i"
       ],
       "candidate_ids": [
-        "school",
-        "friend",
-        "book"
+        "school"
       ],
-      "target_id": "friend",
-      "score": 0.47,
+      "target_id": "school",
+      "score": 0.458333333,
       "passed": false
     },
     {
@@ -7605,12 +9183,10 @@
         "i"
       ],
       "candidate_ids": [
-        "school",
-        "friend",
-        "book"
+        "school"
       ],
-      "target_id": "friend",
-      "score": 0.4575,
+      "target_id": "school",
+      "score": 0.243055556,
       "passed": false
     },
     {
@@ -7639,9 +9215,7 @@
         "a"
       ],
       "candidate_ids": [
-        "school",
-        "friend",
-        "book"
+        "school"
       ],
       "target_id": "school",
       "score": 0.191666667,
@@ -7673,12 +9247,10 @@
         "a"
       ],
       "candidate_ids": [
-        "school",
-        "friend",
-        "book"
+        "school"
       ],
-      "target_id": "book",
-      "score": 0.375,
+      "target_id": "school",
+      "score": 0.204861111,
       "passed": false
     },
     {
@@ -7688,7 +9260,21 @@
         "mom",
         "dad",
         "grandma",
-        "grandpa"
+        "grandpa",
+        "puppy",
+        "cat",
+        "rabbit",
+        "butterfly",
+        "apple",
+        "banana",
+        "milk",
+        "bread",
+        "go",
+        "come",
+        "eat",
+        "school",
+        "friend",
+        "book"
       ],
       "target_id": "mom",
       "score": 0.0,
@@ -7701,7 +9287,489 @@
         "mom",
         "dad",
         "grandma",
-        "grandpa"
+        "grandpa",
+        "puppy",
+        "cat",
+        "rabbit",
+        "butterfly",
+        "apple",
+        "banana",
+        "milk",
+        "bread",
+        "go",
+        "come",
+        "eat",
+        "school",
+        "friend",
+        "book"
+      ],
+      "target_id": "mom",
+      "score": 0.0,
+      "passed": false
+    },
+    {
+      "profile": "batch",
+      "user": [
+        "j",
+        "ʌ",
+        "k",
+        "i",
+        "k",
+        "a",
+        "ʌ"
+      ],
+      "candidate_ids": [
+        "mom",
+        "dad",
+        "grandma",
+        "grandpa",
+        "puppy",
+        "cat",
+        "rabbit",
+        "butterfly",
+        "apple",
+        "banana",
+        "milk",
+        "bread",
+        "go",
+        "come",
+        "eat",
+        "school",
+        "friend",
+        "book"
+      ],
+      "target_id": "go",
+      "score": 0.65,
+      "passed": false
+    },
+    {
+      "profile": "streaming",
+      "user": [
+        "j",
+        "ʌ",
+        "k",
+        "i",
+        "k",
+        "a",
+        "ʌ"
+      ],
+      "candidate_ids": [
+        "mom",
+        "dad",
+        "grandma",
+        "grandpa",
+        "puppy",
+        "cat",
+        "rabbit",
+        "butterfly",
+        "apple",
+        "banana",
+        "milk",
+        "bread",
+        "go",
+        "come",
+        "eat",
+        "school",
+        "friend",
+        "book"
+      ],
+      "target_id": "go",
+      "score": 0.703125,
+      "passed": true
+    },
+    {
+      "profile": "batch",
+      "user": [
+        "j",
+        "ʌ",
+        "k",
+        "i",
+        "k",
+        "a",
+        "ʌ",
+        "t",
+        "i",
+        "i"
+      ],
+      "candidate_ids": [
+        "mom",
+        "dad",
+        "grandma",
+        "grandpa",
+        "puppy",
+        "cat",
+        "rabbit",
+        "butterfly",
+        "apple",
+        "banana",
+        "milk",
+        "bread",
+        "go",
+        "come",
+        "eat",
+        "school",
+        "friend",
+        "book"
+      ],
+      "target_id": "puppy",
+      "score": 0.625,
+      "passed": false
+    },
+    {
+      "profile": "streaming",
+      "user": [
+        "j",
+        "ʌ",
+        "k",
+        "i",
+        "k",
+        "a",
+        "ʌ",
+        "t",
+        "i",
+        "i"
+      ],
+      "candidate_ids": [
+        "mom",
+        "dad",
+        "grandma",
+        "grandpa",
+        "puppy",
+        "cat",
+        "rabbit",
+        "butterfly",
+        "apple",
+        "banana",
+        "milk",
+        "bread",
+        "go",
+        "come",
+        "eat",
+        "school",
+        "friend",
+        "book"
+      ],
+      "target_id": "puppy",
+      "score": 0.708333333,
+      "passed": true
+    },
+    {
+      "profile": "batch",
+      "user": [
+        "j",
+        "ʌ",
+        "k",
+        "i",
+        "k",
+        "a",
+        "ʌ",
+        "t",
+        "i",
+        "i",
+        "tɕ",
+        "a",
+        "l",
+        "m",
+        "o",
+        "ɾ",
+        "ɯ",
+        "n",
+        "i",
+        "t",
+        "a"
+      ],
+      "candidate_ids": [
+        "mom",
+        "dad",
+        "grandma",
+        "grandpa",
+        "puppy",
+        "cat",
+        "rabbit",
+        "butterfly",
+        "apple",
+        "banana",
+        "milk",
+        "bread",
+        "go",
+        "come",
+        "eat",
+        "school",
+        "friend",
+        "book"
+      ],
+      "target_id": "grandma",
+      "score": 0.435714286,
+      "passed": false
+    },
+    {
+      "profile": "streaming",
+      "user": [
+        "j",
+        "ʌ",
+        "k",
+        "i",
+        "k",
+        "a",
+        "ʌ",
+        "t",
+        "i",
+        "i",
+        "tɕ",
+        "a",
+        "l",
+        "m",
+        "o",
+        "ɾ",
+        "ɯ",
+        "n",
+        "i",
+        "t",
+        "a"
+      ],
+      "candidate_ids": [
+        "mom",
+        "dad",
+        "grandma",
+        "grandpa",
+        "puppy",
+        "cat",
+        "rabbit",
+        "butterfly",
+        "apple",
+        "banana",
+        "milk",
+        "bread",
+        "go",
+        "come",
+        "eat",
+        "school",
+        "friend",
+        "book"
+      ],
+      "target_id": "grandma",
+      "score": 0.65,
+      "passed": true
+    },
+    {
+      "profile": "batch",
+      "user": [],
+      "candidate_ids": [
+        "mom"
+      ],
+      "target_id": "mom",
+      "score": 0.0,
+      "passed": false
+    },
+    {
+      "profile": "streaming",
+      "user": [],
+      "candidate_ids": [
+        "mom"
+      ],
+      "target_id": "mom",
+      "score": 0.0,
+      "passed": false
+    },
+    {
+      "profile": "batch",
+      "user": [
+        "i",
+        "s",
+        "a",
+        "ɾ",
+        "a",
+        "m"
+      ],
+      "candidate_ids": [
+        "mom"
+      ],
+      "target_id": "mom",
+      "score": 0.5625,
+      "passed": false
+    },
+    {
+      "profile": "streaming",
+      "user": [
+        "i",
+        "s",
+        "a",
+        "ɾ",
+        "a",
+        "m"
+      ],
+      "candidate_ids": [
+        "mom"
+      ],
+      "target_id": "mom",
+      "score": 0.59765625,
+      "passed": false
+    },
+    {
+      "profile": "batch",
+      "user": [
+        "i",
+        "s",
+        "a",
+        "ɾ",
+        "a",
+        "m",
+        "n",
+        "u",
+        "tɕ",
+        "i",
+        "n",
+        "ɯ",
+        "n",
+        "t",
+        "a"
+      ],
+      "candidate_ids": [
+        "mom"
+      ],
+      "target_id": "mom",
+      "score": 0.225,
+      "passed": false
+    },
+    {
+      "profile": "streaming",
+      "user": [
+        "i",
+        "s",
+        "a",
+        "ɾ",
+        "a",
+        "m",
+        "n",
+        "u",
+        "tɕ",
+        "i",
+        "n",
+        "ɯ",
+        "n",
+        "t",
+        "a"
+      ],
+      "candidate_ids": [
+        "mom"
+      ],
+      "target_id": "mom",
+      "score": 0.4921875,
+      "passed": false
+    },
+    {
+      "profile": "batch",
+      "user": [
+        "i",
+        "s",
+        "a",
+        "ɾ",
+        "a",
+        "m",
+        "n",
+        "u",
+        "ɯ",
+        "tɕ",
+        "i",
+        "tɕ",
+        "a",
+        "l",
+        "m",
+        "o",
+        "s",
+        "ɯ",
+        "p̚",
+        "t͈",
+        "a"
+      ],
+      "candidate_ids": [
+        "mom"
+      ],
+      "target_id": "mom",
+      "score": 0.05,
+      "passed": false
+    },
+    {
+      "profile": "streaming",
+      "user": [
+        "i",
+        "s",
+        "a",
+        "ɾ",
+        "a",
+        "m",
+        "n",
+        "u",
+        "ɯ",
+        "tɕ",
+        "i",
+        "tɕ",
+        "a",
+        "l",
+        "m",
+        "o",
+        "s",
+        "ɯ",
+        "p̚",
+        "t͈",
+        "a"
+      ],
+      "candidate_ids": [
+        "mom"
+      ],
+      "target_id": "mom",
+      "score": 0.5,
+      "passed": false
+    },
+    {
+      "profile": "batch",
+      "user": [],
+      "candidate_ids": [
+        "mom",
+        "dad",
+        "grandma",
+        "grandpa",
+        "puppy",
+        "cat",
+        "rabbit",
+        "butterfly",
+        "apple",
+        "banana",
+        "milk",
+        "bread",
+        "go",
+        "come",
+        "eat",
+        "school",
+        "friend",
+        "book"
+      ],
+      "target_id": "mom",
+      "score": 0.0,
+      "passed": false
+    },
+    {
+      "profile": "streaming",
+      "user": [],
+      "candidate_ids": [
+        "mom",
+        "dad",
+        "grandma",
+        "grandpa",
+        "puppy",
+        "cat",
+        "rabbit",
+        "butterfly",
+        "apple",
+        "banana",
+        "milk",
+        "bread",
+        "go",
+        "come",
+        "eat",
+        "school",
+        "friend",
+        "book"
       ],
       "target_id": "mom",
       "score": 0.0,
@@ -7721,10 +9789,24 @@
         "mom",
         "dad",
         "grandma",
-        "grandpa"
+        "grandpa",
+        "puppy",
+        "cat",
+        "rabbit",
+        "butterfly",
+        "apple",
+        "banana",
+        "milk",
+        "bread",
+        "go",
+        "come",
+        "eat",
+        "school",
+        "friend",
+        "book"
       ],
-      "target_id": "grandma",
-      "score": 0.635714286,
+      "target_id": "apple",
+      "score": 0.7,
       "passed": true
     },
     {
@@ -7741,11 +9823,25 @@
         "mom",
         "dad",
         "grandma",
-        "grandpa"
+        "grandpa",
+        "puppy",
+        "cat",
+        "rabbit",
+        "butterfly",
+        "apple",
+        "banana",
+        "milk",
+        "bread",
+        "go",
+        "come",
+        "eat",
+        "school",
+        "friend",
+        "book"
       ],
-      "target_id": "dad",
-      "score": 0.683333333,
-      "passed": false
+      "target_id": "apple",
+      "score": 0.74,
+      "passed": true
     },
     {
       "profile": "batch",
@@ -7770,7 +9866,21 @@
         "mom",
         "dad",
         "grandma",
-        "grandpa"
+        "grandpa",
+        "puppy",
+        "cat",
+        "rabbit",
+        "butterfly",
+        "apple",
+        "banana",
+        "milk",
+        "bread",
+        "go",
+        "come",
+        "eat",
+        "school",
+        "friend",
+        "book"
       ],
       "target_id": "grandpa",
       "score": 0.5625,
@@ -7799,10 +9909,24 @@
         "mom",
         "dad",
         "grandma",
-        "grandpa"
+        "grandpa",
+        "puppy",
+        "cat",
+        "rabbit",
+        "butterfly",
+        "apple",
+        "banana",
+        "milk",
+        "bread",
+        "go",
+        "come",
+        "eat",
+        "school",
+        "friend",
+        "book"
       ],
-      "target_id": "grandpa",
-      "score": 0.6375,
+      "target_id": "apple",
+      "score": 0.65,
       "passed": true
     },
     {
@@ -7834,7 +9958,21 @@
         "mom",
         "dad",
         "grandma",
-        "grandpa"
+        "grandpa",
+        "puppy",
+        "cat",
+        "rabbit",
+        "butterfly",
+        "apple",
+        "banana",
+        "milk",
+        "bread",
+        "go",
+        "come",
+        "eat",
+        "school",
+        "friend",
+        "book"
       ],
       "target_id": "grandpa",
       "score": 0.43125,
@@ -7869,10 +10007,24 @@
         "mom",
         "dad",
         "grandma",
-        "grandpa"
+        "grandpa",
+        "puppy",
+        "cat",
+        "rabbit",
+        "butterfly",
+        "apple",
+        "banana",
+        "milk",
+        "bread",
+        "go",
+        "come",
+        "eat",
+        "school",
+        "friend",
+        "book"
       ],
-      "target_id": "grandpa",
-      "score": 0.56875,
+      "target_id": "apple",
+      "score": 0.59,
       "passed": false
     },
     {
@@ -7883,13 +10035,10 @@
         "n"
       ],
       "candidate_ids": [
-        "apple",
-        "banana",
-        "milk",
-        "bread"
+        "apple"
       ],
-      "target_id": "banana",
-      "score": 0.6,
+      "target_id": "apple",
+      "score": 0.16,
       "passed": false
     },
     {
@@ -7900,13 +10049,10 @@
         "n"
       ],
       "candidate_ids": [
-        "apple",
-        "banana",
-        "milk",
-        "bread"
+        "apple"
       ],
-      "target_id": "banana",
-      "score": 0.375,
+      "target_id": "apple",
+      "score": 0.11,
       "passed": false
     },
     {
@@ -7928,10 +10074,7 @@
         "a"
       ],
       "candidate_ids": [
-        "apple",
-        "banana",
-        "milk",
-        "bread"
+        "apple"
       ],
       "target_id": "apple",
       "score": 0.208,
@@ -7956,10 +10099,7 @@
         "a"
       ],
       "candidate_ids": [
-        "apple",
-        "banana",
-        "milk",
-        "bread"
+        "apple"
       ],
       "target_id": "apple",
       "score": 0.25,
@@ -7993,10 +10133,7 @@
         "a"
       ],
       "candidate_ids": [
-        "apple",
-        "banana",
-        "milk",
-        "bread"
+        "apple"
       ],
       "target_id": "apple",
       "score": 0.46,
@@ -8030,10 +10167,7 @@
         "a"
       ],
       "candidate_ids": [
-        "apple",
-        "banana",
-        "milk",
-        "bread"
+        "apple"
       ],
       "target_id": "apple",
       "score": 0.82,
@@ -8072,10 +10206,7 @@
         "a"
       ],
       "candidate_ids": [
-        "apple",
-        "banana",
-        "milk",
-        "bread"
+        "apple"
       ],
       "target_id": "apple",
       "score": 0.31,
@@ -8114,10 +10245,367 @@
         "a"
       ],
       "candidate_ids": [
+        "apple"
+      ],
+      "target_id": "apple",
+      "score": 0.82,
+      "passed": true
+    },
+    {
+      "profile": "batch",
+      "user": [
+        "n",
+        "u",
+        "n"
+      ],
+      "candidate_ids": [
+        "mom",
+        "dad",
+        "grandma",
+        "grandpa",
+        "puppy",
+        "cat",
+        "rabbit",
+        "butterfly",
         "apple",
         "banana",
         "milk",
-        "bread"
+        "bread",
+        "go",
+        "come",
+        "eat",
+        "school",
+        "friend",
+        "book"
+      ],
+      "target_id": "banana",
+      "score": 0.6,
+      "passed": false
+    },
+    {
+      "profile": "streaming",
+      "user": [
+        "n",
+        "u",
+        "n"
+      ],
+      "candidate_ids": [
+        "mom",
+        "dad",
+        "grandma",
+        "grandpa",
+        "puppy",
+        "cat",
+        "rabbit",
+        "butterfly",
+        "apple",
+        "banana",
+        "milk",
+        "bread",
+        "go",
+        "come",
+        "eat",
+        "school",
+        "friend",
+        "book"
+      ],
+      "target_id": "banana",
+      "score": 0.375,
+      "passed": false
+    },
+    {
+      "profile": "batch",
+      "user": [
+        "ɯ",
+        "n",
+        "n",
+        "i",
+        "k̚",
+        "k͈",
+        "e",
+        "m",
+        "w",
+        "ʌ",
+        "tɕ",
+        "i",
+        "t",
+        "a"
+      ],
+      "candidate_ids": [
+        "mom",
+        "dad",
+        "grandma",
+        "grandpa",
+        "puppy",
+        "cat",
+        "rabbit",
+        "butterfly",
+        "apple",
+        "banana",
+        "milk",
+        "bread",
+        "go",
+        "come",
+        "eat",
+        "school",
+        "friend",
+        "book"
+      ],
+      "target_id": "grandpa",
+      "score": 0.46875,
+      "passed": false
+    },
+    {
+      "profile": "streaming",
+      "user": [
+        "ɯ",
+        "n",
+        "n",
+        "i",
+        "k̚",
+        "k͈",
+        "e",
+        "m",
+        "w",
+        "ʌ",
+        "tɕ",
+        "i",
+        "t",
+        "a"
+      ],
+      "candidate_ids": [
+        "mom",
+        "dad",
+        "grandma",
+        "grandpa",
+        "puppy",
+        "cat",
+        "rabbit",
+        "butterfly",
+        "apple",
+        "banana",
+        "milk",
+        "bread",
+        "go",
+        "come",
+        "eat",
+        "school",
+        "friend",
+        "book"
+      ],
+      "target_id": "puppy",
+      "score": 0.369791667,
+      "passed": false
+    },
+    {
+      "profile": "batch",
+      "user": [
+        "ɯ",
+        "l",
+        "ɾ",
+        "i",
+        "k̚",
+        "k͈",
+        "e",
+        "m",
+        "ʌ",
+        "tɕ",
+        "i",
+        "h",
+        "a",
+        "n",
+        "s",
+        "a",
+        "k",
+        "w",
+        "a",
+        "i",
+        "t̚",
+        "t͈",
+        "a"
+      ],
+      "candidate_ids": [
+        "mom",
+        "dad",
+        "grandma",
+        "grandpa",
+        "puppy",
+        "cat",
+        "rabbit",
+        "butterfly",
+        "apple",
+        "banana",
+        "milk",
+        "bread",
+        "go",
+        "come",
+        "eat",
+        "school",
+        "friend",
+        "book"
+      ],
+      "target_id": "apple",
+      "score": 0.46,
+      "passed": false
+    },
+    {
+      "profile": "streaming",
+      "user": [
+        "ɯ",
+        "l",
+        "ɾ",
+        "i",
+        "k̚",
+        "k͈",
+        "e",
+        "m",
+        "ʌ",
+        "tɕ",
+        "i",
+        "h",
+        "a",
+        "n",
+        "s",
+        "a",
+        "k",
+        "w",
+        "a",
+        "i",
+        "t̚",
+        "t͈",
+        "a"
+      ],
+      "candidate_ids": [
+        "mom",
+        "dad",
+        "grandma",
+        "grandpa",
+        "puppy",
+        "cat",
+        "rabbit",
+        "butterfly",
+        "apple",
+        "banana",
+        "milk",
+        "bread",
+        "go",
+        "come",
+        "eat",
+        "school",
+        "friend",
+        "book"
+      ],
+      "target_id": "apple",
+      "score": 0.82,
+      "passed": true
+    },
+    {
+      "profile": "batch",
+      "user": [
+        "ɯ",
+        "n",
+        "m",
+        "i",
+        "k",
+        "e",
+        "m",
+        "w",
+        "ʌ",
+        "tɕ",
+        "i",
+        "j",
+        "a",
+        "s",
+        "a",
+        "k",
+        "w",
+        "a",
+        "i",
+        "n",
+        "k",
+        "a",
+        "a",
+        "n",
+        "i",
+        "n",
+        "k",
+        "a"
+      ],
+      "candidate_ids": [
+        "mom",
+        "dad",
+        "grandma",
+        "grandpa",
+        "puppy",
+        "cat",
+        "rabbit",
+        "butterfly",
+        "apple",
+        "banana",
+        "milk",
+        "bread",
+        "go",
+        "come",
+        "eat",
+        "school",
+        "friend",
+        "book"
+      ],
+      "target_id": "apple",
+      "score": 0.31,
+      "passed": false
+    },
+    {
+      "profile": "streaming",
+      "user": [
+        "ɯ",
+        "n",
+        "m",
+        "i",
+        "k",
+        "e",
+        "m",
+        "w",
+        "ʌ",
+        "tɕ",
+        "i",
+        "j",
+        "a",
+        "s",
+        "a",
+        "k",
+        "w",
+        "a",
+        "i",
+        "n",
+        "k",
+        "a",
+        "a",
+        "n",
+        "i",
+        "n",
+        "k",
+        "a"
+      ],
+      "candidate_ids": [
+        "mom",
+        "dad",
+        "grandma",
+        "grandpa",
+        "puppy",
+        "cat",
+        "rabbit",
+        "butterfly",
+        "apple",
+        "banana",
+        "milk",
+        "bread",
+        "go",
+        "come",
+        "eat",
+        "school",
+        "friend",
+        "book"
       ],
       "target_id": "apple",
       "score": 0.82,
@@ -8129,10 +10617,7 @@
       "case_id": "apple_ok",
       "consecutive": 1,
       "candidate_ids": [
-        "apple",
-        "banana",
-        "milk",
-        "bread"
+        "apple"
       ],
       "frames": [
         [],
@@ -8407,10 +10892,7 @@
       "case_id": "apple_ok",
       "consecutive": 3,
       "candidate_ids": [
-        "apple",
-        "banana",
-        "milk",
-        "bread"
+        "apple"
       ],
       "frames": [
         [],
@@ -8685,10 +11167,7 @@
       "case_id": "apple_ok2",
       "consecutive": 1,
       "candidate_ids": [
-        "apple",
-        "banana",
-        "milk",
-        "bread"
+        "apple"
       ],
       "frames": [
         [],
@@ -8741,10 +11220,7 @@
       "case_id": "apple_ok2",
       "consecutive": 3,
       "candidate_ids": [
-        "apple",
-        "banana",
-        "milk",
-        "bread"
+        "apple"
       ],
       "frames": [
         [],
@@ -8797,9 +11273,7 @@
       "case_id": "school_ok",
       "consecutive": 1,
       "candidate_ids": [
-        "school",
-        "friend",
-        "book"
+        "school"
       ],
       "frames": [
         [],
@@ -8959,9 +11433,7 @@
       "case_id": "school_ok",
       "consecutive": 3,
       "candidate_ids": [
-        "school",
-        "friend",
-        "book"
+        "school"
       ],
       "frames": [
         [],
@@ -9121,10 +11593,7 @@
       "case_id": "mom_ok",
       "consecutive": 1,
       "candidate_ids": [
-        "mom",
-        "dad",
-        "grandma",
-        "grandpa"
+        "mom"
       ],
       "frames": [
         [],
@@ -9241,10 +11710,7 @@
       "case_id": "mom_ok",
       "consecutive": 3,
       "candidate_ids": [
-        "mom",
-        "dad",
-        "grandma",
-        "grandpa"
+        "mom"
       ],
       "frames": [
         [],
@@ -9361,10 +11827,7 @@
       "case_id": "apple_no",
       "consecutive": 1,
       "candidate_ids": [
-        "apple",
-        "banana",
-        "milk",
-        "bread"
+        "apple"
       ],
       "frames": [
         [],
@@ -9519,10 +11982,7 @@
       "case_id": "apple_no",
       "consecutive": 3,
       "candidate_ids": [
-        "apple",
-        "banana",
-        "milk",
-        "bread"
+        "apple"
       ],
       "frames": [
         [],
@@ -9677,10 +12137,7 @@
       "case_id": "apple_no2",
       "consecutive": 1,
       "candidate_ids": [
-        "apple",
-        "banana",
-        "milk",
-        "bread"
+        "apple"
       ],
       "frames": [
         [],
@@ -9897,10 +12354,7 @@
       "case_id": "apple_no2",
       "consecutive": 3,
       "candidate_ids": [
-        "apple",
-        "banana",
-        "milk",
-        "bread"
+        "apple"
       ],
       "frames": [
         [],
@@ -10117,9 +12571,7 @@
       "case_id": "school_no",
       "consecutive": 1,
       "candidate_ids": [
-        "school",
-        "friend",
-        "book"
+        "school"
       ],
       "frames": [
         [],
@@ -10427,9 +12879,7 @@
       "case_id": "school_no",
       "consecutive": 3,
       "candidate_ids": [
-        "school",
-        "friend",
-        "book"
+        "school"
       ],
       "frames": [
         [],
@@ -10737,10 +13187,7 @@
       "case_id": "mom_no",
       "consecutive": 1,
       "candidate_ids": [
-        "mom",
-        "dad",
-        "grandma",
-        "grandpa"
+        "mom"
       ],
       "frames": [
         [],
@@ -10947,26 +13394,23 @@
       "streaks": [
         0,
         0,
-        1,
         0,
-        1,
-        2,
         0,
-        1,
-        2,
+        0,
+        0,
+        0,
+        0,
+        0,
         0
       ],
-      "fired_at_frame": 2,
-      "fired_target_id": "grandpa"
+      "fired_at_frame": null,
+      "fired_target_id": null
     },
     {
       "case_id": "mom_no",
       "consecutive": 3,
       "candidate_ids": [
-        "mom",
-        "dad",
-        "grandma",
-        "grandpa"
+        "mom"
       ],
       "frames": [
         [],
@@ -11173,13 +13617,13 @@
       "streaks": [
         0,
         0,
-        1,
         0,
-        1,
-        2,
         0,
-        1,
-        2,
+        0,
+        0,
+        0,
+        0,
+        0,
         0
       ],
       "fired_at_frame": null,
@@ -11189,10 +13633,7 @@
       "case_id": "once_mid",
       "consecutive": 1,
       "candidate_ids": [
-        "apple",
-        "banana",
-        "milk",
-        "bread"
+        "apple"
       ],
       "frames": [
         [
@@ -11641,10 +14082,7 @@
       "case_id": "once_mid",
       "consecutive": 3,
       "candidate_ids": [
-        "apple",
-        "banana",
-        "milk",
-        "bread"
+        "apple"
       ],
       "frames": [
         [

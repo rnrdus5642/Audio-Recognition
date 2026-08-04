@@ -53,15 +53,16 @@ def frames() -> dict:
 
 @pytest.fixture(scope="module")
 def answers_by_text() -> dict[str, list[dict]]:
-    """Text -> the answers of the segment it belongs to (co-candidates)."""
+    """Text -> the candidate list for a question asking that word.
+
+    One entry: a question asks for one word and scores that word. Words
+    used to compete inside a segment, which measured identically and
+    forced callers to know what else was on screen.
+    """
     targets = json.loads(
         (PROJECT_ROOT / "shared" / "targets.json").read_text(encoding="utf-8")
     )
-    return {
-        a["text"]: seg["answers"]
-        for seg in targets["segments"]
-        for a in seg["answers"]
-    }
+    return {a["text"]: [a] for a in targets["answers"]}
 
 
 def run_case(case: dict, matrix: ConfusionMatrix, candidates: list[dict],
@@ -132,13 +133,22 @@ class TestStreamingFalseAccept:
                 leaks.append(f"{case['id']}: {picked!r} at {t}s")
         assert not leaks, "; ".join(leaks)
 
-    def test_confirmation_is_what_prevents_the_leaks(
+    def test_single_frame_scoring_no_longer_leaks_here(
         self, frames, matrix, answers_by_text
     ) -> None:
-        """Without the streak requirement the same fixtures leak.
+        """The streak is no longer what stops these fixtures leaking.
 
-        Guards the mechanism itself: if someone drops `consecutive` back
-        to 1 the suite should say why that is not allowed.
+        It was, when a question scored a whole segment: a chance
+        alignment could crown some other word, and requiring the same
+        winner several frames running threw that out. Scoring only the
+        asked word removed that path, and on these fixtures
+        `consecutive=1` now false-accepts nothing while `consecutive=3`
+        costs one of five detections.
+
+        Five recordings is not enough to drop the streak - a frame-level
+        error rate still compounds over a long session - but the evidence
+        that justified 3 is gone, so revisit it with real child
+        recordings rather than assuming.
         """
         leaks = [
             case["id"]
@@ -148,10 +158,9 @@ class TestStreamingFalseAccept:
                 consecutive=1,
             )[0] is not None
         ]
-        assert leaks, (
-            "expected single-frame scoring to false-accept; if this now "
-            "passes the fixtures or scoring changed - re-tune "
-            "`consecutive` rather than deleting this test"
+        assert not leaks, (
+            f"single-frame scoring false-accepted {leaks}; the streak is "
+            "load-bearing again and this test should say so"
         )
 
     def test_needs_trailing_audio_to_confirm(

@@ -169,10 +169,13 @@ CLI 도구들은 `shared/targets.json` (사전 빌드된 IPA 카탈로그)을 �
 **1. 정답 단어 정의 후 빌드**
 `shared/words.csv` 편집:
 ```csv
-segment_id,answer_id,text,language
-lesson_01_family,mom,엄마,ko
-lesson_03_food,apple,사과,ko
+answer_id,text,language
+mom,엄마,ko
+apple,사과,ko
 ```
+
+Unity에서는 `Tools → Phoneme Matching → 정답 데이터 다시 만들기` 버튼이
+이 빌드를 대신 돌리고 `StreamingAssets`까지 복사합니다.
 
 ```powershell
 python -m python.build.build_targets   # → shared/targets.json
@@ -197,7 +200,7 @@ python -m python.tools.test_real_audio --manifest tests.csv      # 일괄
 ```powershell
 python -m python.tools.test_streaming my.wav --target 사과
 python -m python.tools.test_streaming my.wav --target 사과 --verbose  # 프레임별
-python -m python.tools.test_streaming my.wav --segment lesson_03_food
+python -m python.tools.test_streaming my.wav                      # 전체 단어 후보
 ```
 
 **4. 오디오 진단** (잡음? 잘렸나? ASR 한계?)
@@ -233,8 +236,8 @@ VR 흐름은 마이크를 열어두고 정답이 인식되면 즉시 다음으�
 (`Matcher.for_streaming` + [StreamingMatcher](python/runtime/matching/streaming.py)).
 
 ```python
-sm = StreamingMatcher(Matcher.for_streaming(matrix), answers, consecutive=3)
-for t, window in rolling_windows(audio, window_s=2.5, hop_s=0.4):
+sm = StreamingMatcher(Matcher.for_streaming(matrix), [asked_word])
+for t, window in rolling_windows(audio, window_s=2.5, hop_s=0.5):
     hit = sm.push(recognizer.recognize(window))
     if hit:
         break   # 녹음 중단, 다음 문제로
@@ -245,7 +248,7 @@ for t, window in rolling_windows(audio, window_s=2.5, hop_s=0.4):
 | `skip_cost` | 0.15 | 0.05 |
 | 윈도우 커버리지 | 0.5 | 0.8 |
 | 문맥 제한 | 없음 | 최근 `4×정답음소수+3` |
-| 연속 확인 | 없음 | 3회 |
+| 연속 확인 | 없음 | 2회 |
 
 **설정을 하나로 통일할 수 없습니다.** 배치 설정을 스트리밍에 쓰면 정답 검출이
 1/4로 떨어지고, 스트리밍 설정을 배치에 쓰면 positives가 69.4%→47.2%로
@@ -256,12 +259,33 @@ for t, window in rolling_windows(audio, window_s=2.5, hop_s=0.4):
 - **음소를 이어붙이지 말 것.** 청크를 독립 인식해 합치면 wav2vec2가 문맥을
   잃어 뭉개진다(4.4초 발화에서 0.5초 청크는 43음소 → 31음소, 단어 파손).
   매 프레임 **최근 창을 통째로 재인식**해야 한다.
-- **연속 확인이 핵심.** 0.4초 hop으로 10초, 후보 4개면 채점 시도가 100회다.
-  프레임당 오검출률 1%도 세션 단위로는 63%가 된다. 우연한 일치는 다음
-  프레임에 다른 단어로 옮겨가지만 진짜 발화는 창에 남아 연속으로 이긴다.
+- **연속 확인은 여전히 값어치가 있다.** 골든 클립 36개로 스트리밍 세션을
+  만들어 스윕한 결과다(0.5초 hop, 각 세션에서 자기 단어와 나머지 17단어를
+  모두 시도).
 
-대가는 **지연 `연속횟수 × hop`**(기본 1.2초)이고, 정답 직후 오디오가 끊기면
+  | 연속 | 검출 | 오발동 | 확정까지 |
+  |---|---|---|---|
+  | 1회 | 18/36 | 19/612 | 1.5초 |
+  | **2회** | **18/36** | **16/612** | **2.1초** |
+  | 3회 | 15/36 | 10/612 | 2.5초 |
+
+  2회는 1회보다 무조건 낫다(검출 같고 오발동만 줄어듦). 3회로 올리면
+  오발동 1%p를 얻는 대신 검출 8%p를 잃는데, "제대로 말했는데 못 알아듣는"
+  쪽이 더 나쁘므로 **기본값은 2회**다.
+
+  단 이건 성인 TTS 기준이다. 아이 발화는 프레임별 점수가 더 흔들려서 긴
+  연속이 다시 유리해질 수 있으니, 실제 녹음이 생기면 다시 재야 한다.
+
+대가는 **지연 `연속횟수 × hop`**(기본 1.0초)이고, 정답 직후 오디오가 끊기면
 확정되지 않으므로 발화 후 그만큼 더 들어야 합니다.
+
+### 경쟁 단어는 없앴습니다
+
+한때는 정답이 같은 세그먼트의 다른 단어들과 겨뤄서 이겨야 통과했습니다.
+골든셋으로 재보니 **정확도가 완전히 동일**했고(positives 69.4%, negatives
+거절율도 같음), 실제로 걸러내는 건 단어별 임계값과 `skip_cost`였습니다.
+경쟁은 앱이 "화면에 어떤 단어들이 떠 있는지"를 알아야 하게 만들 뿐이라
+제거했습니다. 지금은 **물어본 단어만 채점**합니다.
 회귀 테스트: [test_streaming.py](python/tests/test_streaming.py)
 
 `Confusion Matrix` ([shared/confusion_matrices/ko_child_v1.json](shared/confusion_matrices/ko_child_v1.json)):
@@ -299,7 +323,7 @@ dotnet test csharp/PhonemeMatching.Tests    # C# 포팅 (20개, Unity 불필요)
 - [x] **Phase 0**: 환경 셋업 (venv + g2pkk + jamo)
 - [x] **Phase 1**: 빌드 파이프라인 (G2P + targets.json)
 - [x] **Phase 2**: 한국어 ASR + 매처 (Substring + Confusion Matrix + 임계값)
-  - 골든셋 검증: Positives 69.4% / Negatives 거절율 91.7% (substring, `skip_cost` 0.15)
+  - 골든셋 검증: Positives 69.4% / Negatives 거절율 95.8% (다른 단어 17개 대조)
   - 자세한 분석: [REPORT_PHASE2.md](REPORT_PHASE2.md)
 - [x] **Phase 2.5**: 사용자 도구 (웹 UI + CLI + 진단 + 일괄)
 - [x] **Phase 3**: Unity 패키지 — C# 매칭 엔진 + 파이썬 대조 테스트

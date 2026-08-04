@@ -53,13 +53,32 @@ class StreamingMatcher:
             if hit:
                 ...   # stop recording, move on
                 break
+
+    `consecutive` defaults to 2. Swept over rolling sessions built from
+    all 36 golden clips (0.5 s hop), asking each clip's own word and
+    every other word in turn:
+
+        streak   detected      false accepts   confirmed after
+          1      18/36 (50%)   19/612 (3.1%)   1.5 s
+          2      18/36 (50%)   16/612 (2.6%)   2.1 s
+          3      15/36 (42%)   10/612 (1.6%)   2.5 s
+          4      15/36 (42%)    9/612 (1.5%)   3.0 s
+
+    2 dominates 1 outright - same detections, fewer false accepts. Going
+    to 3 buys 1 percentage point of false accepts and costs 8 points of
+    detection, which is the wrong trade for a child who did say the word
+    (see REPORT_PHASE2: false reject is the worse failure here).
+
+    Adult TTS, though. Child speech scores less steadily frame to frame,
+    which is exactly the condition a streak defends against, so re-run
+    the sweep on real recordings before trusting 2 in the field.
     """
 
     def __init__(
         self,
         matcher: Matcher,
         candidates: list[dict],
-        consecutive: int = 3,
+        consecutive: int = 2,
     ) -> None:
         if consecutive < 1:
             raise ValueError(

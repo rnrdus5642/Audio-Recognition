@@ -456,13 +456,12 @@ def _audio_stats_html(stats: dict) -> str:
 def build_target_catalog(
     tester: AudioTester,
 ) -> list[tuple[str, str, str, str]]:
-    """Return [(label, segment_id, target_text, language)] for the dropdown."""
+    """Return [(label, answer_id, target_text, language)] for the dropdown."""
     out = []
-    for seg in tester.targets["segments"]:
-        lang = seg.get("language", "ko")
-        for ans in seg["answers"]:
-            label = f"{ans['text']}  ·  {ans['id']}  ·  [{seg['id']}]"
-            out.append((label, seg["id"], ans["text"], lang))
+    for ans in tester.targets["answers"]:
+        lang = ans.get("language", "ko")
+        label = f"{ans['text']}  ·  {ans['id']}"
+        out.append((label, ans["id"], ans["text"], lang))
     return out
 
 
