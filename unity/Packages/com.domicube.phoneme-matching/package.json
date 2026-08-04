@@ -12,6 +12,11 @@
       "displayName": "Korean data (ko_child_v1)",
       "description": "confusion matrix · targets · CTC 어휘. StreamingAssets 로 복사해서 쓰세요. 정답 단어를 바꾸려면 파이썬 빌드 파이프라인으로 targets.json 을 다시 만드세요.",
       "path": "Samples~/KoreanData"
+    },
+    {
+      "displayName": "Lesson example (방법 1)",
+      "description": "패키지가 마이크를 여는 방식의 최소 예제. 단어를 하나씩 묻고, 확정·타임아웃을 처리하고, 마이크를 켜고 끕니다. 앱이 이미 오디오를 캡처한다면 README 의 방법 2~4 를 보세요.",
+      "path": "Samples~/LessonExample"
     }
   ],
   "keywords": [

@@ -98,33 +98,179 @@ python -m python.tools.export_onnx --static-samples 48000   # 3.0초 창
 모델 없이 매칭 계층만 쓰는 것도 됩니다 — `IPhonemeRecognizer` 를 직접
 구현하면 Sentis 경로는 건드리지 않아도 됩니다.
 
-## 사용법
-
-### 녹음 하나 채점 (배치)
+## 준비 (네 방법 공통)
 
 ```csharp
-var matrix  = PhonemeData.LoadMatrix(matrixJson);
-var catalog = PhonemeData.LoadTargets(targetsJson);
-var matcher = new Matcher(matrix);
+using DomiCube.PhonemeMatching;
+using DomiCube.PhonemeMatching.Unity;
+using Unity.Sentis;          // Unity 6 이면 Unity.InferenceEngine
 
-var result = matcher.BestMatch(userPhonemes, catalog.SegmentOf("사과"));
-if (result.Passed) { /* 정답 */ }
+string Read(string f) => System.IO.File.ReadAllText(
+    System.IO.Path.Combine(Application.streamingAssetsPath, f));
+
+var matrix  = PhonemeData.LoadMatrix(Read("ko_child_v1.json"));
+var catalog = PhonemeData.LoadTargets(Read("targets.json"));
+var vocab   = PhonemeData.LoadCtcVocabulary(Read("wav2vec2_ko_vocab.json"));
+
+var recognizer = new SentisPhonemeRecognizer(Model, vocab);   // Model = ModelAsset
+recognizer.Warmup(2.5f);     // 로딩 화면에서. 첫 추론이 ~2초 걸립니다
 ```
 
-### 연속 청취 (VR 흐름)
+다 쓰면 `recognizer.Dispose()`.
+
+## 어느 방법을 쓸지
+
+오디오를 누가 가지고 있느냐로 갈립니다.
+
+| | 상황 | 방법 |
+|---|---|---|
+| 1 | 앱에 오디오 캡처가 **없다** | 패키지가 마이크를 엽니다 |
+| 2 | 앱이 `Microphone` 으로 캡처 중 | `GetData` 결과를 넘깁니다 |
+| 3 | 마이크가 `AudioSource` 로 흐른다 | `OnAudioFilterRead` 에서 넘깁니다 |
+| 4 | 보이스 SDK 가 콜백을 준다 | 그 콜백에서 넘깁니다 |
+
+2~4 는 오디오를 넘기는 지점만 다르고 나머지는 같습니다. 마이크를 두 번
+열면 충돌하므로, 앱이 이미 캡처 중이라면 1 을 쓰지 마세요.
+
+---
+
+### 방법 1 — 마이크까지 맡기기
+
+컴포넌트를 붙이고 이벤트만 받습니다. 마이크는 `Listen()` 과
+`StopListening()` 사이에만 열립니다.
 
 ```csharp
-var sm = new StreamingMatcher(
-    Matcher.ForStreaming(matrix), catalog.SegmentOf("사과"), consecutive: 3);
+var listener = gameObject.AddComponent<PronunciationListener>();
+listener.SetRecognizer(recognizer);
+listener.MicrophoneDevice = "Headset Microphone (...)";   // 비우면 OS 기본
+listener.TargetText = "사과";
 
-// 매 hop마다: 최근 2.5초 오디오를 통째로 재인식해서 넣는다
-var hit = sm.Push(recognizer.Recognize(recentWindow));
-if (hit != null) { StopRecording(); }
+listener.OnConfirmed.AddListener((word, score) => 다음문제로());
+listener.OnTimedOut.AddListener(() => 다시해볼까());
+
+listener.Listen();          // 마이크 켜짐
+listener.StopListening();   // 끄기 (확정·타임아웃에도 자동으로 꺼짐)
 ```
+
+창 길이·hop·확정 횟수·타임아웃은 인스펙터에서 조정합니다. 장치 이름은
+`Microphone.devices` 로 확인하세요 - VR 에서는 OS 기본이 헤드셋 마이크가
+아닌 경우가 많습니다.
+
+---
+
+### 방법 2~4 공통 — 앱이 오디오를 준다
+
+리듬이 둘로 나뉩니다. **오는 대로 붓고, 0.5초마다 채점합니다.**
+
+```
+앱의 오디오 ──Append()──▶ [ 2.5초 창 ] ──Push()──▶ 채점
+            오는 대로 계속                0.5초마다
+```
+
+```csharp
+var buffer  = new AudioWindowBuffer(2.5f);
+var session = new PronunciationSession(matrix, catalog, recognizer,
+                                       buffer: buffer);
+
+// 문제 낼 때 — 창을 비우고 시작합니다
+session.Begin("사과");                      // 같은 세그먼트가 경쟁
+// session.Begin(new[] { "사과", "빵" });   // 지정한 것만 경쟁
+
+// 0.5초마다
+var frame = session.Push();
+if (frame.Confirmed) 다음문제로();
+
+session.End();   // 중단
+```
+
+`Push()` 는 메인 스레드에서 부르세요 - 20~30ms 걸리고 GPU 를 씁니다.
+오답 신호는 따로 없습니다. 시간을 재서 앱이 판단하세요 (방법 1 은 이
+타이머가 내장돼 있습니다).
+
+아래 세 방법은 **`Append` 한 줄만** 다릅니다.
+
+---
+
+### 방법 2 — 앱이 Microphone 으로 캡처 중
+
+```csharp
+int _last = 0;
+
+void Update()
+{
+    int pos = Microphone.GetPosition(device);
+    int available = pos - _last;
+    if (available < 0) available += clip.samples;   // 링 버퍼가 한 바퀴
+    if (available <= 0) return;
+
+    var raw = new float[available];
+    clip.GetData(raw, _last % clip.samples);
+    _last = pos % clip.samples;
+
+    buffer.Append(raw, clip.frequency);
+}
+```
+
+`clip.frequency` 를 넘기는 게 중요합니다. 장치가 16 kHz 를 거절하면
+Unity 가 다른 레이트로 열어주고, 요청한 값으로 리샘플링하면 오디오가
+시간 축으로 어긋납니다 - 에러가 아니라 발음이 나쁜 것처럼 보입니다.
+
+---
+
+### 방법 3 — AudioSource 를 지나는 오디오
+
+```csharp
+void OnAudioFilterRead(float[] data, int channels)
+{
+    buffer.AppendInterleaved(data, channels, AudioSettings.outputSampleRate);
+}
+```
+
+오디오 스레드에서 불리지만 `AudioWindowBuffer` 는 그래도 안전합니다.
+`AppendInterleaved` 가 모노로 섞고 16 kHz 로 변환합니다.
+
+---
+
+### 방법 4 — 보이스 SDK 콜백
+
+```csharp
+// float[] 로 주는 경우
+void OnFrame(float[] frame) => buffer.Append(frame, 48000);
+
+// short[] (16비트 PCM) 로 주는 경우
+void OnFrame(short[] pcm)
+{
+    var f = new float[pcm.Length];
+    for (int i = 0; i < pcm.Length; i++) f[i] = pcm[i] / 32768f;
+    buffer.Append(f, 48000);
+}
+```
+
+청크 크기는 아무래도 좋습니다. 창이 알아서 이어붙이고 오래된 것을
+밀어냅니다.
+
+---
+
+## 결과 읽기
+
+방법 2~4 는 `Push()` 가 돌려주고, 방법 1 은 `OnFrameScored` 로 옵니다.
+
+```csharp
+frame.Confirmed        // true 면 확정 - 이 순간 세션 종료
+frame.Streak           // 연속 몇 번째 (기본 3 이면 확정)
+frame.Best.TargetText  // 지금 가장 유력한 단어
+frame.Best.Score       // 0~1
+frame.Best.Passed      // 이번 창이 임계값을 넘었는지
+frame.Best.Alignment   // 음소별로 무엇이 어긋났는지
+frame.Text             // 인식된 한글
+```
+
+`Alignment` 는 `(사용자음소, 정답음소, 연산)` 의 나열입니다 - 어느 소리를
+어떻게 틀렸는지 보여주는 피드백에 쓰세요.
 
 **청크를 따로 인식해 이어붙이지 마세요.** wav2vec2는 문맥 모델이라 짧은 조각에서
 무너집니다 — 4.4초 발화에서 0.5초 청크는 43음소가 31음소로 줄고 단어가 깨졌습니다.
-매 프레임 **최근 창 전체를 재인식**해야 합니다.
+매 프레임 **최근 창 전체를 재인식**해야 합니다. 위 방법들은 모두 그렇게 합니다.
 
 ## 배치와 스트리밍은 설정이 다릅니다
 

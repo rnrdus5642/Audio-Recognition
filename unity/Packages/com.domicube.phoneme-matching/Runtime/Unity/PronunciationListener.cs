@@ -68,11 +68,18 @@ namespace DomiCube.PhonemeMatching.Unity
         private IPhonemeRecognizer _recognizer;
         private ConfusionMatrix _matrix;
         private TargetCatalog _catalog;
-        private StreamingMatcher _streaming;
+        private PronunciationSession _session;
         private MicrophoneRollingBuffer _mic;
         private Coroutine _loop;
 
         public bool IsListening => _loop != null;
+
+        /// <summary>
+        /// The judging session, live only while listening. Use
+        /// <see cref="PronunciationSession"/> directly instead of this
+        /// component when the application owns its own audio capture.
+        /// </summary>
+        public PronunciationSession Session => _session;
 
         /// <summary>
         /// Supply the acoustic model. Call before <see cref="Listen"/>;
@@ -136,17 +143,23 @@ namespace DomiCube.PhonemeMatching.Unity
                 LoadData();
             }
 
-            var candidates = ResolveCandidates();
-            if (candidates == null || candidates.Count == 0)
+            _session = new PronunciationSession(
+                _matrix, _catalog, _recognizer, Consecutive);
+
+            try
             {
-                Debug.LogError(
-                    $"[PronunciationListener] '{TargetText}' 를 "
-                    + "targets.json 에서 찾지 못했습니다.");
+                _session.Begin(TargetText);
+            }
+            catch (ArgumentException e)
+            {
+                // An unknown word is an authoring mistake, but throwing
+                // out of a UI callback would take the caller down with
+                // it. Say it and stay put.
+                Debug.LogError($"[PronunciationListener] {e.Message}");
+                _session = null;
                 return;
             }
 
-            _streaming = new StreamingMatcher(
-                Matcher.ForStreaming(_matrix), candidates, Consecutive);
             _mic = new MicrophoneRollingBuffer(WindowSeconds);
             _mic.Start(string.IsNullOrEmpty(MicrophoneDevice)
                 ? null
@@ -162,25 +175,11 @@ namespace DomiCube.PhonemeMatching.Unity
                 _loop = null;
             }
 
+            _session?.End();
+
+            // Releases the device: nothing is captured between questions.
             _mic?.Dispose();
             _mic = null;
-        }
-
-        private List<Answer> ResolveCandidates()
-        {
-            if (string.IsNullOrEmpty(TargetText))
-            {
-                var all = new List<Answer>();
-                foreach (var seg in _catalog.Segments)
-                {
-                    all.AddRange(seg.Answers);
-                }
-
-                return all;
-            }
-
-            // The whole segment competes, as it will in the lesson.
-            return _catalog.SegmentOf(TargetText);
         }
 
         private IEnumerator ListenLoop()
@@ -207,11 +206,10 @@ namespace DomiCube.PhonemeMatching.Unity
                     continue;
                 }
 
-                var window = _mic.Snapshot();
-                List<string> phonemes;
+                FrameScore frame;
                 try
                 {
-                    phonemes = _recognizer.Recognize(window);
+                    frame = _session.Push(_mic.Snapshot());
                 }
                 catch (Exception e)
                 {
@@ -219,15 +217,17 @@ namespace DomiCube.PhonemeMatching.Unity
                     break;
                 }
 
-                var hit = _streaming.Push(phonemes);
-                ReportFrame(phonemes);
+                OnFrameScored.Invoke(
+                    frame.Best.TargetText ?? string.Empty,
+                    (float)frame.Best.Score,
+                    frame.Streak);
 
-                if (hit != null)
+                if (frame.Confirmed)
                 {
                     // This is the moment the lesson moves on.
                     StopListening();
                     OnConfirmed.Invoke(
-                        hit.Result.TargetText, (float)hit.Result.Score);
+                        frame.Best.TargetText, (float)frame.Best.Score);
                     yield break;
                 }
 
@@ -250,21 +250,6 @@ namespace DomiCube.PhonemeMatching.Unity
         {
             return TimeoutSeconds > 0f
                 && Time.realtimeSinceStartup - started > TimeoutSeconds;
-        }
-
-        private void ReportFrame(List<string> phonemes)
-        {
-            if (OnFrameScored == null)
-            {
-                return;
-            }
-
-            var best = _streaming.Matcher.BestMatch(
-                phonemes, _streaming.Candidates);
-            OnFrameScored.Invoke(
-                best.TargetText ?? string.Empty,
-                (float)best.Score,
-                _streaming.Streak);
         }
 
         private void OnDisable()

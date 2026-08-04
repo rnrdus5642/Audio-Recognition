@@ -29,6 +29,7 @@ from pathlib import Path
 from typing import Iterable, NamedTuple
 
 from .g2p import get_g2p
+from .g2p.ko.jamo_ipa import hangul_to_ipa_phonemes
 
 
 # ---------------------------------------------------------------------------
@@ -176,11 +177,18 @@ def find_collisions(
 
 def build_answer_entries(
     rows: Iterable[WordRow],
+    apply_rules: bool = True,
 ) -> list[dict]:
     """Run each row through its language's G2P and return enriched dicts.
 
     The result still carries an internal '_segment_id' key used for
     grouping; this is removed before emitting JSON.
+
+    With `apply_rules=False` the phonological rules are skipped and the
+    text is mapped jamo by jamo - the same path the device runtime takes
+    for the user's speech. That makes both sides identical and removes
+    the Python dependency from adding words, at an accuracy cost that has
+    to be measured rather than assumed (see `python.tools.evaluate`).
     """
     g2p_cache: dict[str, object] = {}
     out: list[dict] = []
@@ -190,7 +198,8 @@ def build_answer_entries(
             g2p_cache[row.language] = get_g2p(row.language)
         g2p = g2p_cache[row.language]
 
-        phonemes = g2p.to_ipa(row.text)
+        phonemes = (g2p.to_ipa(row.text) if apply_rules
+                    else hangul_to_ipa_phonemes(row.text))
         if not phonemes:
             raise ValueError(
                 f"G2P produced empty phoneme list for "
@@ -243,9 +252,10 @@ def build(
     matrix_id: str,
     *,
     strict: bool = False,
+    apply_rules: bool = True,
 ) -> dict:
     rows = read_words_csv(input_path)
-    answers = build_answer_entries(rows)
+    answers = build_answer_entries(rows, apply_rules=apply_rules)
 
     # Validation: cross-segment phoneme collisions
     collisions = find_collisions(answers)
@@ -303,6 +313,12 @@ def main() -> int:
         action="store_true",
         help="Treat validation warnings as errors",
     )
+    parser.add_argument(
+        "--no-rules",
+        action="store_true",
+        help="Skip phonological rules; map jamo directly, as the device "
+             "runtime does for user speech",
+    )
     args = parser.parse_args()
 
     if not args.input.exists():
@@ -314,6 +330,7 @@ def main() -> int:
         output_path=args.output,
         matrix_id=args.matrix_id,
         strict=args.strict,
+        apply_rules=not args.no_rules,
     )
 
     n_segments = len(targets["segments"])

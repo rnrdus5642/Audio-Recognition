@@ -43,8 +43,11 @@ namespace DomiCube.PhonemeMatching.Unity
         public bool IsRecording => _clip != null
             && Microphone.IsRecording(_device);
 
-        private readonly float[] _window;
-        private int _filled;
+        /// <summary>
+        /// The rolling window itself, shared with callers that feed their
+        /// own audio instead of letting this class open a device.
+        /// </summary>
+        private readonly AudioWindowBuffer _buffer;
 
         public MicrophoneRollingBuffer(
             float windowSeconds = 2.5f,
@@ -60,8 +63,7 @@ namespace DomiCube.PhonemeMatching.Unity
             _requestedSampleRate = deviceSampleRate;
             _deviceSampleRate = deviceSampleRate;
             _clipSeconds = clipSeconds;
-            _window = new float[Mathf.CeilToInt(
-                windowSeconds * TargetSampleRate)];
+            _buffer = new AudioWindowBuffer(windowSeconds);
         }
 
         /// <summary>Begin capture. Pass null for the default device.</summary>
@@ -92,7 +94,7 @@ namespace DomiCube.PhonemeMatching.Unity
                 : _requestedSampleRate;
 
             _lastReadPosition = 0;
-            _filled = 0;
+            _buffer.Reset();
             Elapsed = 0f;
         }
 
@@ -144,8 +146,7 @@ namespace DomiCube.PhonemeMatching.Unity
             _clip.GetData(raw, _lastReadPosition % _clip.samples);
             _lastReadPosition = position % _clip.samples;
 
-            var resampled = Resample(raw, _deviceSampleRate, TargetSampleRate);
-            Append(resampled);
+            _buffer.Append(raw, _deviceSampleRate);
             Elapsed += available / (float)_deviceSampleRate;
             return true;
         }
@@ -162,57 +163,7 @@ namespace DomiCube.PhonemeMatching.Unity
         /// </summary>
         public float[] Snapshot()
         {
-            var copy = new float[_window.Length];
-            Array.Copy(_window, _window.Length - _filled,
-                copy, _window.Length - _filled, _filled);
-            return copy;
-        }
-
-        private void Append(float[] samples)
-        {
-            if (samples.Length >= _window.Length)
-            {
-                Array.Copy(samples, samples.Length - _window.Length,
-                    _window, 0, _window.Length);
-                _filled = _window.Length;
-                return;
-            }
-
-            // Shift the existing tail left, then write the new samples.
-            int keep = _window.Length - samples.Length;
-            Array.Copy(_window, samples.Length, _window, 0, keep);
-            Array.Copy(samples, 0, _window, keep, samples.Length);
-            _filled = Mathf.Min(_window.Length, _filled + samples.Length);
-        }
-
-        /// <summary>
-        /// Linear resample. Good enough because the capture rate is
-        /// requested as 16 kHz already; this only covers devices that
-        /// refuse that rate.
-        /// </summary>
-        private static float[] Resample(float[] input, int from, int to)
-        {
-            if (from == to || input.Length == 0)
-            {
-                return input;
-            }
-
-            int count = Mathf.Max(1,
-                Mathf.RoundToInt(input.Length * (to / (float)from)));
-            var output = new float[count];
-            float step = (input.Length - 1) / (float)Mathf.Max(1, count - 1);
-
-            for (int i = 0; i < count; i++)
-            {
-                float pos = i * step;
-                int idx = (int)pos;
-                float frac = pos - idx;
-                output[i] = idx + 1 < input.Length
-                    ? Mathf.Lerp(input[idx], input[idx + 1], frac)
-                    : input[input.Length - 1];
-            }
-
-            return output;
+            return _buffer.Snapshot();
         }
 
         public void Dispose()
