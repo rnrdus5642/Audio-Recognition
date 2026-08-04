@@ -1,0 +1,227 @@
+using System;
+using System.Diagnostics;
+using System.IO;
+using Unity.Sentis;
+using UnityEditor;
+using UnityEngine;
+using Debug = UnityEngine.Debug;
+
+/// <summary>
+/// Does Sentis 1.2 on Unity 2022 produce the same phonemes as Python?
+///
+/// The graph is pinned to 40000 samples (the 2.5 s listening window)
+/// because the dynamic version failed the same Reshape at every length
+/// on this engine. Each golden clip is fitted to that length in Python
+/// and handed over raw, so this side does its own normalization - the
+/// step that fails silently if it drifts, since the model just returns
+/// worse phonemes rather than an error.
+///
+/// Compares every one of the 124 frames, not a sample of them.
+///
+/// Tools > Sentis Smoke Test
+/// </summary>
+public static class SentisSmokeTest
+{
+    private const string ModelPath = "Assets/Models/wav2vec2_ko_static.onnx";
+    private const int Classes = 1205;
+
+    private const string CasesPath =
+        @"C:\Users\user\AppData\Local\Temp\claude\C--Users-user-Desktop-AudioProject\c79c3944-8cec-4bc7-8a65-99a5ad6fd9de\scratchpad\audio_cases_static.json";
+
+    [Serializable]
+    private class Case
+    {
+        public string id;
+        public string target_text;
+        public string audio_b64;
+        public int expected_frames;
+        public int[] expected_ids;
+        public string expected_text;
+        public string[] expected_phonemes;
+    }
+
+    [Serializable]
+    private class CaseFile
+    {
+        public Case[] cases;
+    }
+
+    [MenuItem("Tools/Sentis Smoke Test")]
+    public static void Run()
+    {
+        var asset = AssetDatabase.LoadAssetAtPath<ModelAsset>(ModelPath);
+        if (asset == null)
+        {
+            Debug.LogError($"ModelAsset을 찾을 수 없습니다: {ModelPath}");
+            return;
+        }
+
+        if (!File.Exists(CasesPath))
+        {
+            Debug.LogError($"케이스 파일이 없습니다: {CasesPath}");
+            return;
+        }
+
+        var file = JsonUtility.FromJson<CaseFile>(File.ReadAllText(CasesPath));
+
+        var sw = Stopwatch.StartNew();
+        var model = ModelLoader.Load(asset);
+        Debug.Log($"[smoke] 모델 로드 {sw.ElapsedMilliseconds}ms, "
+                  + $"케이스 {file.cases.Length}개");
+
+        RunBackend(model, file, BackendType.GPUCompute);
+        RunBackend(model, file, BackendType.CPU);
+    }
+
+    private static void RunBackend(
+        Model model, CaseFile file, BackendType backend)
+    {
+        IWorker worker;
+        try
+        {
+            worker = WorkerFactory.CreateWorker(backend, model);
+        }
+        catch (Exception e)
+        {
+            Debug.LogError($"[smoke:{backend}] 워커 생성 실패: {e.Message}");
+            return;
+        }
+
+        try
+        {
+            int pass = 0;
+            long warmupMs = 0;
+
+            for (int index = 0; index < file.cases.Length; index++)
+            {
+                var c = file.cases[index];
+                var audio = Normalize(ToFloats(c.audio_b64));
+
+                var sw = Stopwatch.StartNew();
+                int[] ids;
+                int frames;
+                using (var input = new TensorFloat(
+                           new TensorShape(1, audio.Length), audio))
+                {
+                    worker.Execute(input);
+                    var output = worker.PeekOutput() as TensorFloat;
+                    output.MakeReadable();
+                    float[] logits = output.ToReadOnlyArray();
+                    sw.Stop();
+
+                    frames = logits.Length / Classes;
+                    ids = ArgMax(logits, frames, Classes);
+                }
+
+                // The first run pays for shader compilation; report it
+                // separately instead of averaging it into the rest.
+                if (index == 0)
+                {
+                    warmupMs = sw.ElapsedMilliseconds;
+                }
+
+                int mismatchAt = -1;
+                for (int i = 0; i < Math.Min(ids.Length, c.expected_ids.Length); i++)
+                {
+                    if (ids[i] != c.expected_ids[i])
+                    {
+                        mismatchAt = i;
+                        break;
+                    }
+                }
+
+                bool ok = frames == c.expected_frames
+                          && ids.Length == c.expected_ids.Length
+                          && mismatchAt < 0;
+                if (ok)
+                {
+                    pass++;
+                }
+
+                Debug.Log(
+                    $"[smoke:{backend}] {c.id} {(ok ? "OK" : "MISMATCH")} "
+                    + $"| {sw.ElapsedMilliseconds}ms{(index == 0 ? " (첫 실행)" : "")} "
+                    + $"| frames {frames}/{c.expected_frames} "
+                    + (ok
+                        ? $"| 124프레임 전부 일치 | python '{c.expected_text}'"
+                        : $"| 프레임 {mismatchAt}에서 갈림: unity {At(ids, mismatchAt)} "
+                          + $"vs python {At(c.expected_ids, mismatchAt)}"));
+            }
+
+            Debug.Log($"[smoke:{backend}] 일치 {pass}/{file.cases.Length} "
+                      + $"| 첫 실행 {warmupMs}ms");
+        }
+        finally
+        {
+            worker.Dispose();
+        }
+    }
+
+    private static string At(int[] values, int index)
+    {
+        return index >= 0 && index < values.Length
+            ? values[index].ToString()
+            : "-";
+    }
+
+    private static float[] ToFloats(string base64)
+    {
+        byte[] bytes = Convert.FromBase64String(base64);
+        var values = new float[bytes.Length / 4];
+        Buffer.BlockCopy(bytes, 0, values, 0, bytes.Length);
+        return values;
+    }
+
+    /// <summary>(x - mean) / sqrt(var + 1e-7), population variance.</summary>
+    private static float[] Normalize(float[] audio)
+    {
+        double sum = 0.0;
+        for (int i = 0; i < audio.Length; i++)
+        {
+            sum += audio[i];
+        }
+
+        double mean = sum / audio.Length;
+
+        double variance = 0.0;
+        for (int i = 0; i < audio.Length; i++)
+        {
+            double d = audio[i] - mean;
+            variance += d * d;
+        }
+
+        variance /= audio.Length;
+        double scale = 1.0 / Math.Sqrt(variance + 1e-7);
+
+        var result = new float[audio.Length];
+        for (int i = 0; i < audio.Length; i++)
+        {
+            result[i] = (float)((audio[i] - mean) * scale);
+        }
+
+        return result;
+    }
+
+    private static int[] ArgMax(float[] logits, int frames, int classes)
+    {
+        var ids = new int[frames];
+        for (int f = 0; f < frames; f++)
+        {
+            int offset = f * classes;
+            int best = 0;
+            float bestValue = logits[offset];
+            for (int c = 1; c < classes; c++)
+            {
+                if (logits[offset + c] > bestValue)
+                {
+                    bestValue = logits[offset + c];
+                    best = c;
+                }
+            }
+
+            ids[f] = best;
+        }
+
+        return ids;
+    }
+}
