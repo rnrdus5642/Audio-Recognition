@@ -45,14 +45,13 @@ namespace DomiCube.PhonemeMatching.Editor
                 why + "\n\n"
                 + "정답 단어를 바꿀 때만 필요합니다. 한 사람이 바꿔서 "
                 + "targets.json 을 커밋하면 나머지는 받기만 하면 됩니다.\n\n"
-                + "저장소가 없다면 먼저 클론하세요:\n"
-                + $"    git clone {RepoUrl}.git",
-                "폴더 고르기", "취소", "저장소 열기");
+                + "저장소가 없으면 여기서 받을 수 있습니다 (약 3MB).",
+                "저장소 받기", "취소", "이미 있음 - 폴더 고르기");
 
             if (choice == 2)
             {
-                Application.OpenURL(RepoUrl);
-                return false;
+                SetRepository();
+                return FindRepository() != null;
             }
 
             if (choice != 0)
@@ -60,8 +59,82 @@ namespace DomiCube.PhonemeMatching.Editor
                 return false;
             }
 
-            SetRepository();
-            return FindRepository() != null;
+            return Clone();
+        }
+
+        /// <summary>
+        /// Clone the repository so nobody has to leave the editor for it.
+        ///
+        /// git is safe to assume: Unity cannot install a package from a git
+        /// URL without it, which is how this package got here.
+        /// </summary>
+        private static bool Clone()
+        {
+            string git = OnPath("git");
+            if (git == null)
+            {
+                Debug.LogError(
+                    "[PhonemeMatching] git 을 찾지 못했습니다. "
+                    + "https://git-scm.com 에서 설치한 뒤 Unity 를 다시 "
+                    + $"시작하거나, 직접 클론하세요:\n    git clone {RepoUrl}.git");
+                return false;
+            }
+
+            string parent = EditorUtility.OpenFolderPanel(
+                "저장소를 받을 위치 (안에 Audio-Recognition 폴더가 생깁니다)",
+                "", "");
+            if (string.IsNullOrEmpty(parent))
+            {
+                return false;
+            }
+
+            string target = Path.Combine(parent, "Audio-Recognition");
+            if (Directory.Exists(target))
+            {
+                if (IsRepository(target))
+                {
+                    EditorPrefs.SetString(RepoKey, target);
+                    Debug.Log($"[PhonemeMatching] 이미 있어서 그대로 씁니다: {target}");
+                    return true;
+                }
+
+                Debug.LogError(
+                    $"[PhonemeMatching] {target} 이 이미 있는데 저장소가 "
+                    + "아닙니다. 다른 위치를 고르거나 그 폴더를 치우세요.");
+                return false;
+            }
+
+            bool ok;
+            try
+            {
+                EditorUtility.DisplayProgressBar(
+                    "Phoneme Matching", "저장소를 받는 중…", 0.5f);
+                ok = Run(
+                    git, $"clone {RepoUrl}.git \"{target}\"", parent, out string log);
+                if (!ok)
+                {
+                    Debug.LogError($"[PhonemeMatching] 클론 실패:\n{log}");
+                }
+            }
+            finally
+            {
+                EditorUtility.ClearProgressBar();
+            }
+
+            if (!ok || !IsRepository(target))
+            {
+                return false;
+            }
+
+            EditorPrefs.SetString(RepoKey, target);
+            Debug.Log(
+                $"[PhonemeMatching] 저장소를 받았습니다: {target}\n"
+                + "정답 데이터를 다시 만들려면 파이썬 의존성도 한 번 "
+                + "설치해야 합니다 (torch 는 필요 없습니다):\n"
+                + $"    cd \"{target}\"\n"
+                + "    python -m venv .venv\n"
+                + "    .venv\\Scripts\\pip install -r requirements.txt");
+            return true;
         }
 
         [MenuItem("Tools/Phoneme Matching/정답 데이터 다시 만들기", false, 61)]
