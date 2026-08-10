@@ -40,11 +40,14 @@ namespace DomiCube.PhonemeMatching.Editor
         /// </summary>
         private static bool AskForRepository(string why)
         {
+            // Lines are broken by hand. The dialog wraps at its own width
+            // and strands trailing punctuation on a line of its own.
             int choice = EditorUtility.DisplayDialogComplex(
                 "Phoneme Matching",
                 why + "\n\n"
-                + "정답 단어를 바꿀 때만 필요합니다. 한 사람이 바꿔서 "
-                + "targets.json 을 커밋하면 나머지는 받기만 하면 됩니다.\n\n"
+                + "정답 단어를 바꿀 때만 필요합니다.\n"
+                + "한 사람이 바꿔서 targets.json 을 커밋하면\n"
+                + "나머지는 받기만 하면 됩니다.\n\n"
                 + "저장소가 없으면 여기서 받을 수 있습니다 (약 3MB).",
                 "저장소 받기", "취소", "이미 있음 - 폴더 고르기");
 
@@ -144,8 +147,8 @@ namespace DomiCube.PhonemeMatching.Editor
             if (repo == null)
             {
                 if (!AskForRepository(
-                        "정답 데이터를 다시 만들려면 Audio-Recognition "
-                        + "저장소와 파이썬이 필요합니다."))
+                        "정답 데이터를 다시 만들려면\n"
+                        + "Audio-Recognition 저장소와 파이썬이 필요합니다."))
                 {
                     return;
                 }
