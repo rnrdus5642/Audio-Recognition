@@ -30,17 +30,54 @@ namespace DomiCube.PhonemeMatching.Editor
         private const string RepoKey = "DomiCube.PhonemeMatching.RepoPath";
         private const string StreamingTargets = "Assets/StreamingAssets/targets.json";
 
+        private const string RepoUrl =
+            "https://github.com/rnrdus5642/Audio-Recognition";
+
+        /// <summary>
+        /// Shown when neither menu can find a checkout. Most people never
+        /// need one - the built targets.json is committed - so the dialog
+        /// says that first, then how to get one.
+        /// </summary>
+        private static bool AskForRepository(string why)
+        {
+            int choice = EditorUtility.DisplayDialogComplex(
+                "Phoneme Matching",
+                why + "\n\n"
+                + "정답 단어를 바꿀 때만 필요합니다. 한 사람이 바꿔서 "
+                + "targets.json 을 커밋하면 나머지는 받기만 하면 됩니다.\n\n"
+                + "저장소가 없다면 먼저 클론하세요:\n"
+                + $"    git clone {RepoUrl}.git",
+                "폴더 고르기", "취소", "저장소 열기");
+
+            if (choice == 2)
+            {
+                Application.OpenURL(RepoUrl);
+                return false;
+            }
+
+            if (choice != 0)
+            {
+                return false;
+            }
+
+            SetRepository();
+            return FindRepository() != null;
+        }
+
         [MenuItem("Tools/Phoneme Matching/정답 데이터 다시 만들기", false, 61)]
         public static void Rebuild()
         {
             string repo = FindRepository();
             if (repo == null)
             {
-                Debug.LogError(
-                    "[PhonemeMatching] 저장소를 찾지 못했습니다. "
-                    + "Tools > Phoneme Matching > 저장소 경로 지정… 에서 "
-                    + "Audio-Recognition 폴더를 지정하세요.");
-                return;
+                if (!AskForRepository(
+                        "정답 데이터를 다시 만들려면 Audio-Recognition "
+                        + "저장소와 파이썬이 필요합니다."))
+                {
+                    return;
+                }
+
+                repo = FindRepository();
             }
 
             string python = FindPython(repo);
@@ -90,8 +127,13 @@ namespace DomiCube.PhonemeMatching.Editor
             string repo = FindRepository();
             if (repo == null)
             {
-                Debug.LogError("[PhonemeMatching] 저장소 경로를 먼저 지정하세요.");
-                return;
+                if (!AskForRepository(
+                        "words.csv 는 Audio-Recognition 저장소에 있습니다."))
+                {
+                    return;
+                }
+
+                repo = FindRepository();
             }
 
             EditorUtility.OpenWithDefaultApp(
