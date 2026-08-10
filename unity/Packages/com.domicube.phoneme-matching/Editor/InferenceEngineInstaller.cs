@@ -50,7 +50,7 @@ namespace DomiCube.PhonemeMatching.Editor
                 + $"({DisplayName})");
         }
 
-        private static bool HasEngine
+        internal static bool HasEngine
         {
             get
             {
@@ -62,7 +62,7 @@ namespace DomiCube.PhonemeMatching.Editor
             }
         }
 
-        [MenuItem("Tools/Phoneme Matching/추론 엔진 설치", false, 30)]
+        [MenuItem("Tools/Phoneme Matching/추론 엔진 설치", false, 20)]
         public static void Install()
         {
             if (HasEngine)
@@ -84,9 +84,20 @@ namespace DomiCube.PhonemeMatching.Editor
                 return;
             }
 
+            AddPackage();
+        }
+
+        /// <summary>
+        /// Start the install without asking. The setup wizard has already
+        /// asked once for the whole sequence.
+        /// </summary>
+        internal static void AddPackage()
+        {
             _request = Client.Add(PackageId);
             EditorApplication.update += Poll;
         }
+
+        internal static string EngineName => DisplayName;
 
         [MenuItem("Tools/Phoneme Matching/추론 엔진 설치", true)]
         private static bool InstallEnabled()

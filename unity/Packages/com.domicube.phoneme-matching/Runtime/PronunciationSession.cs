@@ -89,6 +89,13 @@ namespace DomiCube.PhonemeMatching
         /// (or <see cref="End"/>).</summary>
         public bool IsActive { get; private set; }
 
+        /// <summary>
+        /// Windows the same answer must win before confirming. Exposed so
+        /// a UI can show progress towards it - a display that hardcodes
+        /// the number goes stale the moment the default changes.
+        /// </summary>
+        public int Consecutive => _consecutive;
+
         /// <summary>The word being asked for, or null.</summary>
         public string TargetText { get; private set; }
 

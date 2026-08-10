@@ -46,7 +46,7 @@ namespace DomiCube.PhonemeMatching.Editor
         private double _started;
 #endif
 
-        [MenuItem("Tools/Phoneme Matching/발음 테스트 (마이크)", false, 10)]
+        [MenuItem("Tools/Phoneme Matching/발음 테스트 (마이크)", false, 40)]
         public static void Open()
         {
             GetWindow<PronunciationTestWindow>("발음 테스트").minSize =
@@ -191,11 +191,11 @@ namespace DomiCube.PhonemeMatching.Editor
             }
 
             _frames.Insert(0, string.Format(
-                "{0,5:F1}s  {1}/3  {2,-6} {3:F3}  '{4}'",
+                "{0,5:F1}s  {1}/{5}  {2,-6} {3:F3}  '{4}'",
                 now - _started, frame.Streak,
                 string.IsNullOrEmpty(frame.Best.TargetText)
                     ? "—" : frame.Best.TargetText,
-                frame.Best.Score, frame.Text));
+                frame.Best.Score, frame.Text, _session.Consecutive));
 
             if (frame.Confirmed)
             {

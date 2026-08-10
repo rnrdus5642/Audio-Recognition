@@ -26,6 +26,24 @@
 
 **Unity 2022.3 과 Unity 6 을 모두 지원합니다.**
 
+패키지를 넣은 뒤 `Tools > Phoneme Matching` 메뉴를 **위에서 아래로** 세 번
+누르면 끝납니다. 순서대로 해야 합니다 - 추론 엔진이 있어야 `.onnx` 가
+`ModelAsset` 으로 임포트됩니다.
+
+```
+추론 엔진 설치              ← 에디터 버전에 맞는 것을 알아서 고릅니다
+데이터 파일 설치            ← JSON 3개를 StreamingAssets 로
+음향 모델 내려받기           ← 1.18GB, Release 에서
+음향 모델 파일에서 가져오기…  ← 이미 파일이 있을 때
+────────────────────────
+발음 테스트 (마이크)         ← 여기까지 되면 설치 완료
+────────────────────────
+단어 목록 열기 (words.csv)   ┐ 정답 단어를 바꿀 때만.
+정답 데이터 다시 만들기       ┘ 저장소와 파이썬이 필요합니다
+────────────────────────
+저장소 경로 지정…
+```
+
 ### 1. 패키지
 
 `Window > Package Manager` > `+` > **Add package from git URL…**
@@ -40,7 +58,7 @@ https://github.com/rnrdus5642/Audio-Recognition.git?path=/unity/Packages/com.dom
 "com.domicube.phoneme-matching": "https://github.com/rnrdus5642/Audio-Recognition.git?path=/unity/Packages/com.domicube.phoneme-matching"
 ```
 
-항상 main 최신을 받습니다. 특정 버전에 고정하려면 뒤에 `#v0.3.2` 처럼
+항상 main 최신을 받습니다. 특정 버전에 고정하려면 뒤에 `#v0.5.0` 처럼
 태그를 붙이세요. 로컬에서 고쳐가며 쓰려면
 `"file:../../path/to/com.domicube.phoneme-matching"` 도 됩니다.
 
@@ -62,21 +80,65 @@ https://github.com/rnrdus5642/Audio-Recognition.git?path=/unity/Packages/com.dom
 선언할 때의 `using` 만 다릅니다 - 2022 는 `Unity.Sentis`, Unity 6 은
 `Unity.InferenceEngine`.
 
-### 데이터와 모델은 따로 옵니다
+### 3. 데이터 파일
 
-코드만 받아서는 동작하지 않습니다. 두 가지를 더 넣어야 합니다.
+`Tools > Phoneme Matching > 데이터 파일 설치`
 
-1. **데이터** — Package Manager 에서 이 패키지의 샘플
-   `Korean data (ko_child_v1)` 을 임포트한 뒤, 세 JSON 을
-   `Assets/StreamingAssets/` 로 복사하세요.
-2. **음향 모델** — 1.18GB 라 패키지에 없습니다. 저장소에서 만드세요:
+`ko_child_v1.json` · `targets.json` · `wav2vec2_ko_vocab.json` 을
+`Assets/StreamingAssets/` 에 넣고, 런타임이 읽는 방식 그대로 다시 읽어
+확인까지 합니다. 이미 있으면 덮어쓸지 물어봅니다.
+
+> Package Manager 의 샘플 임포트 버튼을 써도 되지만, 그건 파일을
+> `Assets/Samples/...` 에 놓기 때문에 `StreamingAssets/` 로 한 번 더
+> 옮겨야 합니다. 위 메뉴가 그 단계를 없앤 것입니다.
+
+단어를 바꿨다면 `데이터 파일 설치` 대신
+`정답 데이터 다시 만들기` 를 쓰세요 — 저장소의 `words.csv` 로 빌드해서
+`targets.json` 만 갱신합니다.
+
+### 4. 음향 모델
+
+`Tools > Phoneme Matching > 음향 모델 내려받기`
+
+1.18GB 라 패키지에 담을 수 없어 GitHub Release 에 따로 올려두었습니다.
+`Assets/Resources/Models/wav2vec2_ko.onnx` 로 받고, **크기와 SHA-256 을
+확인한 뒤에** Assets 로 옮깁니다 - 잘린 모델은 임포트까지는 되고 추론에서
+죽는데, 그때는 원인이 여기라는 단서가 없습니다.
+
+받은 뒤 Unity 임포트에 몇 분 걸립니다. **이 파일을 커밋하지 마세요** -
+GitHub 는 100MB 넘는 파일을 거부합니다. 다운로드가 끝나면 프로젝트
+`.gitignore` 에 규칙을 넣을지 물어봅니다.
+
+이미 파일을 가지고 있다면(사내 공유 폴더, 다른 프로젝트)
+`음향 모델 파일에서 가져오기…` 로 고르면 됩니다. 검증은 똑같이 거칩니다.
+
+> 순서가 중요합니다. **추론 엔진이 먼저** 설치돼 있어야 `.onnx` 가
+> `ModelAsset` 으로 임포트됩니다.
+
+#### 모델은 인스펙터에 끌어다 놓지 마세요
+
+`Resources` 아래에 두는 이유가 있습니다. 모델은 커밋되지 않으므로 팀원마다
+각자 임포트하고, 그때 **애셋 GUID 가 사람마다 달라집니다.** 씬이나 프리팹의
+인스펙터 참조는 GUID 로 저장되니, 한 사람이 끌어다 놓고 커밋하면 다른
+사람들에게는 그 칸이 비어 보입니다. `.meta` 를 커밋해도 소용없습니다 -
+애셋이 없으면 Unity 가 `.meta` 를 지웁니다.
+
+경로로 불러오면 GUID 를 쓰지 않으므로 아무도 깨지지 않습니다.
+
+```csharp
+var model = Resources.Load<ModelAsset>("Models/wav2vec2_ko");
+var recognizer = new SentisPhonemeRecognizer(model, vocab);
+```
+
+팀원이 저장소를 클론해서 쓰는 경우, **모델만 각자 한 번 받으면 됩니다.**
+`manifest.json` 과 `StreamingAssets` 의 JSON 은 커밋되니까요. 모델이 없는
+채로 에디터를 열면 콘솔이 한 번 알려줍니다.
+
+직접 만들 수도 있습니다. 저장소에서:
 
 ```powershell
 python -m python.tools.export_onnx
 ```
-
-`shared/models/wav2vec2_ko.onnx` 가 나옵니다. `Assets/` 아래 두면 Sentis
-가 임포트합니다.
 
 **모델은 정확히 40000 샘플(2.5 초)만 받습니다.** 시간 축이 고정으로
 export 되기 때문입니다 - Sentis 1.2 는 동적 축 그래프를 실행하지 못하고
@@ -109,7 +171,10 @@ var matrix  = PhonemeData.LoadMatrix(Read("ko_child_v1.json"));
 var catalog = PhonemeData.LoadTargets(Read("targets.json"));
 var vocab   = PhonemeData.LoadCtcVocabulary(Read("wav2vec2_ko_vocab.json"));
 
-var recognizer = new SentisPhonemeRecognizer(Model, vocab);   // Model = ModelAsset
+// 인스펙터 참조가 아니라 경로로. 이유는 위 "인스펙터에 끌어다 놓지 마세요".
+var model = Resources.Load<ModelAsset>("Models/wav2vec2_ko");
+
+var recognizer = new SentisPhonemeRecognizer(model, vocab);
 recognizer.Warmup(2.5f);     // 로딩 화면에서. 첫 추론이 ~2초 걸립니다
 ```
 
@@ -297,7 +362,6 @@ using Unity.Sentis;                  // Unity 6 이면 Unity.InferenceEngine
 [RequireComponent(typeof(PronunciationListener))]
 public sealed class Lesson : MonoBehaviour
 {
-    public ModelAsset Model;         // Assets 아래 .onnx 를 인스펙터에서
     public string[] Words = { "사과", "엄마", "토끼" };
 
     PronunciationListener _listener;
@@ -310,7 +374,10 @@ public sealed class Lesson : MonoBehaviour
             Application.streamingAssetsPath, "wav2vec2_ko_vocab.json");
         var vocab = PhonemeData.LoadCtcVocabulary(File.ReadAllText(vocabPath));
 
-        _recognizer = new SentisPhonemeRecognizer(Model, vocab);
+        // 인스펙터 참조 대신 경로로 — 모델은 커밋되지 않아 GUID 가
+        // 사람마다 다릅니다.
+        var model = Resources.Load<ModelAsset>("Models/wav2vec2_ko");
+        _recognizer = new SentisPhonemeRecognizer(model, vocab);
 
         _listener = GetComponent<PronunciationListener>();
         _listener.SetRecognizer(_recognizer);
@@ -364,7 +431,6 @@ using Unity.Sentis;                  // Unity 6 이면 Unity.InferenceEngine
 
 public sealed class Lesson : MonoBehaviour
 {
-    public ModelAsset Model;
     public string[] Words = { "사과", "엄마", "토끼" };
 
     AudioWindowBuffer _buffer;
@@ -382,7 +448,10 @@ public sealed class Lesson : MonoBehaviour
         var catalog = PhonemeData.LoadTargets(Read("targets.json"));
         var vocab   = PhonemeData.LoadCtcVocabulary(Read("wav2vec2_ko_vocab.json"));
 
-        _recognizer = new SentisPhonemeRecognizer(Model, vocab);
+        // 인스펙터 참조 대신 경로로 — 모델은 커밋되지 않아 GUID 가
+        // 사람마다 다릅니다.
+        var model = Resources.Load<ModelAsset>("Models/wav2vec2_ko");
+        _recognizer = new SentisPhonemeRecognizer(model, vocab);
         _buffer = new AudioWindowBuffer(2.5f);
         _judge  = new PronunciationSession(
             matrix, catalog, _recognizer, buffer: _buffer);
@@ -533,7 +602,9 @@ public sealed class Lesson : MonoBehaviour
 
 | 증상 | 원인 |
 |---|---|
+| `targets.json has no 'answers' list` | 구버전 데이터. **데이터 파일 설치** 를 다시 누름 |
 | `'포도' is not in targets.json` | `words.csv` 에 추가 후 **정답 데이터 다시 만들기** 를 안 누름 |
+| `.onnx` 를 넣었는데 `ModelAsset` 으로 안 잡힘 | 추론 엔진보다 모델을 먼저 넣음. 엔진 설치 후 재임포트 |
 | 첫 발화에서 2초 멈춤 | `Warmup()` 을 로딩 중에 안 부름 |
 | 계속 무음, 점수 0 | 마이크 장치가 엉뚱하거나 Windows 개인정보 설정에서 차단 |
 | `inference failed on N samples` | 창 길이와 모델 길이 불일치. `--static-samples` 로 다시 export |

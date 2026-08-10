@@ -30,7 +30,7 @@ namespace DomiCube.PhonemeMatching.Editor
         private const string RepoKey = "DomiCube.PhonemeMatching.RepoPath";
         private const string StreamingTargets = "Assets/StreamingAssets/targets.json";
 
-        [MenuItem("Tools/Phoneme Matching/정답 데이터 다시 만들기", false, 0)]
+        [MenuItem("Tools/Phoneme Matching/정답 데이터 다시 만들기", false, 61)]
         public static void Rebuild()
         {
             string repo = FindRepository();
@@ -84,7 +84,7 @@ namespace DomiCube.PhonemeMatching.Editor
                 + $"{catalog.Answers.Count}개 단어");
         }
 
-        [MenuItem("Tools/Phoneme Matching/단어 목록 열기 (words.csv)", false, 1)]
+        [MenuItem("Tools/Phoneme Matching/단어 목록 열기 (words.csv)", false, 60)]
         public static void OpenWords()
         {
             string repo = FindRepository();
@@ -98,7 +98,7 @@ namespace DomiCube.PhonemeMatching.Editor
                 Path.Combine(repo, "shared", "words.csv"));
         }
 
-        [MenuItem("Tools/Phoneme Matching/저장소 경로 지정…", false, 40)]
+        [MenuItem("Tools/Phoneme Matching/저장소 경로 지정…", false, 80)]
         public static void SetRepository()
         {
             string picked = EditorUtility.OpenFolderPanel(

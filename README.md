@@ -372,7 +372,18 @@ ORT보다 코어-시간을 2.7배 쓰는, **커널 효율 차이**입니다.
   90fps(프레임 11ms)에서 끊길 수 있어, 필요하면 `ScheduleIterable`로
   레이어를 여러 프레임에 나눠야 합니다
 
-### Unity 셋업 (모델은 저장소에 없습니다)
+### Unity 셋업
+
+**다른 프로젝트에서 쓰는 경우** — 저장소도 파이썬도 필요 없습니다.
+패키지를 git URL 로 넣고 `Tools > Phoneme Matching` 메뉴를 위에서부터
+누르면 됩니다: 추론 엔진 설치 → 데이터 파일 설치 → 음향 모델 내려받기.
+자세한 내용은 [패키지 README](unity/Packages/com.domicube.phoneme-matching/README.md).
+
+모델은 저장소에 없고 [Release](https://github.com/rnrdus5642/Audio-Recognition/releases/tag/model-v1)
+에 올려두었습니다 (1.18GB). 내려받기 메뉴가 크기와 SHA-256 을 확인한 뒤
+`Assets/Resources/Models/` 에 넣습니다.
+
+**이 저장소에서 직접 만드는 경우**
 
 ```powershell
 python -m python.tools.export_onnx        # shared/models/wav2vec2_ko.onnx (1.18GB)
@@ -383,6 +394,10 @@ python -m python.tools.export_ctc_vocab   # StreamingAssets 어휘 + 대조 벡�
 임포트 후 씬의 `Pronunciation Demo` 오브젝트에서 `Model` 필드에
 `Assets/Models/wav2vec2_ko.onnx`를 넣고 Play. 비워두면 stub으로 동작하며
 배너에 어느 쪽이 도는지 표시됩니다.
+
+> 모델을 다시 뽑으면 바이트가 달라질 수 있어 `ModelDownloader` 의
+> SHA-256 상수와 어긋납니다. 새로 배포할 때는 Release 를 올리고 그 상수도
+> 같이 갱신하세요.
 
 ### Unity 2022 와 Unity 6 을 모두 지원합니다
 
@@ -409,6 +424,42 @@ Unity 2022.3 + Sentis 1.2 실측: 골든 클립 4개 × 124프레임 토큰 id�
 
 **미해결 마찰**: ONNX가 1.18GB라 Sentis 임포트가 느리고 Git LFS가 필요합니다.
 FP16(≈600MB)이나 더 작은 모델을 검토할 여지가 있습니다.
+
+### 평가용 음성 데이터
+
+지금 골든셋은 Edge-TTS 2목소리 36클립이 전부입니다. 목소리를 바꾸면 결과가
+크게 흔들리므로(같은 `빵`이 SunHi 는 빈 출력, InJoon·Hyunsu·SAPI 는 통과)
+이 숫자는 **시스템 성능이 아니라 이 36클립에 대한 성능**으로 읽어야 합니다.
+
+**한국어 아동 음성 — AI Hub** (회원가입 + 이용 신청 승인 필요, 며칠 소요)
+
+| 데이터셋 | 내용 |
+|---|---|
+| [한국어 아동 음성 데이터](https://aihub.or.kr/aihubdata/data/view.do?dataSetSn=540) | 아동 낭독 발화. 아동 음성인식률 개선 목적 — 가장 근접 |
+| [어린이 음성 데이터셋](https://aihub.or.kr/aihubdata/data/view.do?dataSetSn=266) | 아동 음성인식 성능 개선용 적응·튜닝 데이터 |
+| [어린이 음성 맥락 인식률 향상 데이터](https://aihub.or.kr/aihubdata/data/view.do?dataSetSn=71502) | EBS·KBS 교육방송 기반 |
+
+낭독체 문장 위주라 **단어 하나만 말하는 발화는 적을 가능성**이 큽니다. 받아본
+뒤에 판단해야 합니다. 그리고 어느 쪽도 이 시스템의 진짜 대상인 **발음이
+부정확한 아동**은 아닙니다 — 발달지연 아동 발화 코퍼스는 개인정보·의료정보라
+공개된 것이 사실상 없어서, `ko_child_v1.json` 의 페널티 값들은 결국 현장
+녹음으로만 검증할 수 있습니다.
+
+**한국어 성인 — 승인 없이 즉시**
+
+[Zeroth-Korean](https://openslr.org/40/) (CC BY 4.0, 51.6시간, 화자 105명).
+[HuggingFace](https://huggingface.co/datasets/Bingsu/zeroth-korean) 에서 test
+split(457발화)만 받으면 60MB 입니다. 성인 낭독이라 아동 검증에는 못 쓰지만,
+**실제 사람 목소리에 대한 오발동 검증**에는 유용합니다 — 우리 단어 18개가 전혀
+나오지 않는 자유 발화라, 아이가 딴 얘기를 할 때 오확정이 나는지 그대로
+재현됩니다.
+
+> 주의: 이 모델(`kresnik/wav2vec2-large-xlsr-korean`)을 만든 사람이 Zeroth
+> 데이터셋도 올려놨습니다. 학습에 썼을 가능성이 있어 인식 정확도는 부풀 수
+> 있습니다. 오발동 검증 용도로만 보세요.
+
+**아직 못 한 것**: Hyunsu·SAPI 목소리를 골든셋에 추가해 36 → 72클립으로
+늘리는 것. 한 목소리의 우연에 덜 흔들리게 하는 가장 싼 방법입니다.
 
 ## 알려진 한계
 
