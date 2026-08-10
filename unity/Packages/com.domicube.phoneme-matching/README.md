@@ -26,23 +26,54 @@
 
 **Unity 2022.3 과 Unity 6 을 모두 지원합니다.**
 
-패키지를 넣은 뒤 `Tools > Phoneme Matching` 메뉴를 **위에서 아래로** 세 번
-누르면 끝납니다. 순서대로 해야 합니다 - 추론 엔진이 있어야 `.onnx` 가
-`ModelAsset` 으로 임포트됩니다.
+패키지를 넣고 **버튼 하나** 누르면 끝납니다.
 
 ```
-추론 엔진 설치              ← 에디터 버전에 맞는 것을 알아서 고릅니다
-데이터 파일 설치            ← JSON 3개를 StreamingAssets 로
-음향 모델 내려받기           ← 1.18GB, Release 에서
-음향 모델 파일에서 가져오기…  ← 이미 파일이 있을 때
+Window > Package Manager > + > Add package from git URL…
+https://github.com/rnrdus5642/Audio-Recognition.git?path=/unity/Packages/com.domicube.phoneme-matching
+
+Tools > Phoneme Matching > 초기 세팅
+```
+
+`초기 세팅` 은 없는 것만 차례대로 설치합니다 - 추론 엔진, 데이터 JSON 3개,
+음향 모델. 이미 있는 것은 건너뛰므로 두 경우에 같은 버튼을 씁니다.
+
+| 상황 | 실제로 하는 일 |
+|---|---|
+| 처음 붙이는 프로젝트 | 세 단계 전부 |
+| **이미 쓰는 프로젝트를 clone/pull** | **모델만** (나머지는 커밋돼 있음) |
+
+모델은 1.18GB 라 커밋되지 않으므로 각자 한 번 받아야 합니다. 모델이 없는
+채로 에디터를 열면 콘솔이 알려줍니다.
+
+엔진 설치가 프로젝트를 재컴파일시키므로 중간에 한 번 멈췄다 이어집니다.
+전체는 회선에 따라 5~10분 걸립니다.
+
+끝나면 `Tools > Phoneme Matching > 발음 테스트 (마이크)` 로 확인하세요.
+
+<details>
+<summary>메뉴 전체와 단계별 설명</summary>
+
+```
+초기 세팅                    ← 아래 셋을 알아서
 ────────────────────────
-발음 테스트 (마이크)         ← 여기까지 되면 설치 완료
+추론 엔진 설치               개별 실행도 됩니다
+데이터 파일 설치
+음향 모델 내려받기
+음향 모델 파일에서 가져오기…   이미 파일이 있을 때
 ────────────────────────
-단어 목록 열기 (words.csv)   ┐ 정답 단어를 바꿀 때만.
-정답 데이터 다시 만들기       ┘ 저장소와 파이썬이 필요합니다
+발음 테스트 (마이크)
+────────────────────────
+단어 목록 열기 (words.csv)    ┐ 정답 단어를 바꿀 때만.
+정답 데이터 다시 만들기        ┘ 저장소와 파이썬이 필요합니다
 ────────────────────────
 저장소 경로 지정…
 ```
+
+순서가 중요합니다 - 추론 엔진이 `.onnx` 임포터를 등록하므로, 엔진 없이
+모델을 먼저 넣으면 `ModelAsset` 이 만들어지지 않습니다.
+
+</details>
 
 ### 1. 패키지
 
@@ -58,7 +89,7 @@ https://github.com/rnrdus5642/Audio-Recognition.git?path=/unity/Packages/com.dom
 "com.domicube.phoneme-matching": "https://github.com/rnrdus5642/Audio-Recognition.git?path=/unity/Packages/com.domicube.phoneme-matching"
 ```
 
-항상 main 최신을 받습니다. 특정 버전에 고정하려면 뒤에 `#v0.5.0` 처럼
+항상 main 최신을 받습니다. 특정 버전에 고정하려면 뒤에 `#v0.5.3` 처럼
 태그를 붙이세요. 로컬에서 고쳐가며 쓰려면
 `"file:../../path/to/com.domicube.phoneme-matching"` 도 됩니다.
 
