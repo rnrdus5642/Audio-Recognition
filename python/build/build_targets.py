@@ -69,17 +69,24 @@ class WordRow(NamedTuple):
 def auto_threshold(n_phonemes: int) -> float:
     """Per-word default threshold based on phoneme count.
 
-    Rationale:
-      Shorter words have less information AND are more error-prone for
-      the ASR (partial truncation, single-phoneme noise). They must be
-      MORE strict to avoid false-accepts where a near-empty user output
-      matches some word in a different segment by chance.
+    Short words (<= 6 phonemes) keep the golden-set values: a single
+    wrong phoneme costs a quarter of a 4-phoneme word, so real speech
+    already scores near the line and there is no room to raise it.
 
-      Longer words tolerate more error per phoneme (False Reject is
-      worse than False Accept for child UX).
+    Long words were the opposite of what the original rationale assumed.
+    Measured on 142 words over 100 real adult utterances (2.5 s window,
+    0.5 s hop, streak 2), a 7-phoneme target at 0.60 fired on unrelated
+    speech in 14.6% of sessions - more than three times the rate of a
+    4-phoneme target - because more phonemes means more ways for a long
+    sentence to contain a passable window, and the loose threshold let
+    them through. Raising 7+ to 0.75 cut that to 1.2% while detection
+    went 95% -> 93% (7 phonemes) and 100% -> 100% (9 phonemes).
 
     Returns a value in [0, 1] where higher = stricter match required.
-    Values tuned against the v1 golden set (see eval_results.json).
+
+    Evidence is adult read speech. Child speech scores lower, so the
+    short-word values stay put until there are child recordings to
+    measure against.
     """
     if n_phonemes <= 2:
         return 0.85
@@ -89,7 +96,7 @@ def auto_threshold(n_phonemes: int) -> float:
         return 0.70
     if n_phonemes <= 6:
         return 0.65
-    return 0.60
+    return 0.75
 
 
 # ---------------------------------------------------------------------------
