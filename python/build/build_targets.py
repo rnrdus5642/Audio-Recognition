@@ -69,34 +69,44 @@ class WordRow(NamedTuple):
 def auto_threshold(n_phonemes: int) -> float:
     """Per-word default threshold based on phoneme count.
 
-    Short words (<= 6 phonemes) keep the golden-set values: a single
-    wrong phoneme costs a quarter of a 4-phoneme word, so real speech
-    already scores near the line and there is no room to raise it.
+    These belong to a streaming `skip_cost` of 0.02 and cannot be read
+    apart from it. Skipping is what a rolling window spends most of its
+    budget on - the target occupies a fraction of 2.5 seconds and the
+    rest has to be walked past - so cheaper skipping lifts every score,
+    matches and false alarms alike, and the line has to rise with it.
+    Measured on 100 corpus words over the Zeroth test split (2.5 s
+    window, 0.5 s hop, streak 2), moving skip_cost 0.05 -> 0.02 on its
+    own took false accepts from 2.95% to 18.71% per word per 10-second
+    session. Raising these thresholds to match brought it to 0.78%,
+    below where it started, while detection went 84.5% -> 88.6%.
 
-    Long words were the opposite of what the original rationale assumed.
-    Measured on 142 words over 100 real adult utterances (2.5 s window,
-    0.5 s hop, streak 2), a 7-phoneme target at 0.60 fired on unrelated
-    speech in 14.6% of sessions - more than three times the rate of a
-    4-phoneme target - because more phonemes means more ways for a long
-    sentence to contain a passable window, and the loose threshold let
-    them through. Raising 7+ to 0.75 cut that to 1.2% while detection
-    went 95% -> 93% (7 phonemes) and 100% -> 100% (9 phonemes).
+    Change one without the other and it breaks in whichever direction
+    you moved: skip_cost alone floods, thresholds alone halves detection
+    to 46.7%.
+
+    Long words need a stricter line than short ones, which is the
+    opposite of the original assumption. More phonemes means more ways
+    for a long sentence to contain a passable window.
 
     Returns a value in [0, 1] where higher = stricter match required.
 
-    Evidence is adult read speech. Child speech scores lower, so the
-    short-word values stay put until there are child recordings to
-    measure against.
+    Evidence is adult read speech, and the words it was fitted on are
+    corpus words, not the curriculum - the 18 shipped words appear in
+    only 10 of the test utterances, too few to fit anything to. Child
+    speech scores lower and wants its own values; see
+    tools/child_tuning.
     """
     if n_phonemes <= 2:
         return 0.85
-    if n_phonemes == 3:
-        return 0.73  # tuned against golden set: lets 아빠/앞 (0.733) pass
-    if n_phonemes == 4:
-        return 0.70
-    if n_phonemes <= 6:
-        return 0.65
-    return 0.75
+    if n_phonemes <= 4:
+        return 0.825
+    if n_phonemes == 5:
+        return 0.80
+    if n_phonemes == 6:
+        return 0.775
+    if n_phonemes == 7:
+        return 0.825
+    return 0.875
 
 
 # ---------------------------------------------------------------------------
