@@ -1135,14 +1135,18 @@ def build_app(tester: AudioTester, recordings_dir: Path):
                                  "길면 무음이 많이 섞입니다.",
                         )
                         st_hop = gr.Slider(
-                            0.2, 1.0, value=0.4, step=0.1,
+                            0.2, 1.0, value=0.5, step=0.1,
                             label="채점 주기 hop (초)",
+                            info="기본값은 제품과 같은 0.5초입니다. 임계값과 "
+                                 "skip_cost 를 이 주기로 맞췄으므로, 바꾸면 "
+                                 "여기 결과가 앱과 달라집니다.",
                         )
                         st_consecutive = gr.Slider(
-                            1, 6, value=3, step=1,
+                            1, 6, value=2, step=1,
                             label="확정에 필요한 연속 횟수",
-                            info="낮추면 빨리 반응하지만 오검출이 늘어납니다. "
-                                 "1이면 무관한 발화도 통과합니다.",
+                            info="기본값은 제품과 같은 2회입니다. 낮추면 빨리 "
+                                 "반응하지만 오검출이 늘어납니다 — 1회는 "
+                                 "실측에서 오확정이 두 배였습니다.",
                         )
                     st_btn = gr.Button("🔁 연속 청취 실행", variant="primary")
 
@@ -1217,9 +1221,10 @@ def build_app(tester: AudioTester, recordings_dir: Path):
                         label="ASR 창 (초)",
                     )
                     lv_consecutive = gr.Slider(
-                        1, 6, value=3, step=1,
+                        1, 6, value=2, step=1,
                         label="확정에 필요한 연속 횟수",
-                        info="1이면 무관한 발화도 통과합니다.",
+                        info="기본값은 제품과 같은 2회입니다. 1이면 무관한 "
+                             "발화도 통과합니다.",
                     )
                     lv_audio = gr.Audio(
                         sources=["microphone"],
