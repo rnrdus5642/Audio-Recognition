@@ -173,6 +173,84 @@ skip_cost     0.02     (성인 0.05)
 
 ---
 
+## fine-tune 방침 (2026-08-11 결정)
+
+파라미터 튜닝이 상한에 닿았으므로 다음 단계는 음향 모델입니다. 그때의 방침을
+미리 정해둡니다.
+
+### 성인 모델과 아동 모델을 따로 둡니다
+
+아동 데이터에 **최대한 맞추되 성인 성능도 남기는** 것이 목표입니다. 두
+데이터를 섞어 한 모델로 둘 다 잡으려 하면 양쪽 다 어중간해지므로, 타협하지
+않고 모델을 나눕니다.
+
+```
+wav2vec2_ko.onnx           현재 모델. 손대지 않음
+wav2vec2_ko_child.onnx     아동 전용 fine-tune 결과
+```
+
+성인 모델은 [Release `model-v1`](https://github.com/rnrdus5642/Audio-Recognition/releases/tag/model-v1)
+에 있고 SHA-256 이 `ModelDownloader` 에 박혀 있습니다. **이 Release 를 지우면
+안 됩니다** — 지우는 순간 성인 경로가 사라집니다.
+
+아동 모델은 `model-v2-child` 로 별도 Release 를 만듭니다. 서로 건드리지
+않습니다.
+
+이렇게 하면 "fine-tune 하면 성인 성능이 떨어지지 않나" 라는 걱정 자체가
+사라집니다. 성인용은 그대로 두니까요.
+
+### 학습에 성인 데이터를 섞지 않습니다
+
+catastrophic forgetting 을 막으려고 성인 데이터를 섞는 것이 표준 대응이지만,
+여기서는 **일부러 하지 않습니다.** 성인 성능은 별도 모델이 담당하므로,
+아동 모델은 아동에만 맞추는 것이 낫습니다.
+
+### 앱에서 고르는 방법
+
+`IPhonemeRecognizer` 뒤에 있어 파일만 바꾸면 됩니다. 매칭·임계값·Unity 코드는
+그대로입니다.
+
+```csharp
+var model = Resources.Load<ModelAsset>("Models/wav2vec2_ko_child");
+var recognizer = new SentisPhonemeRecognizer(model, vocab);
+```
+
+### 같이 갈라야 하는 것
+
+| | 성인 | 아동 |
+|---|---|---|
+| 모델 | `wav2vec2_ko.onnx` | `wav2vec2_ko_child.onnx` |
+| matrix | `ko_child_v1.json` | `ko_child_v2.json` (이 폴더) |
+| 임계값 | `targets.json` (현재) | 별도 빌드 필요 |
+
+**어휘(`vocab.json`)는 공유하는 편이 낫습니다.** fine-tune 때 토큰 집합을
+바꾸지 않으면 그대로 쓸 수 있고, 바꾸면 모델 전용 vocab 을 따로 관리해야
+합니다.
+
+`targets.json` 의 임계값은 빌드 타임에 박히므로, 모델별로 다른 값을 쓰려면
+빌드를 갈라야 합니다. fine-tune 결과가 나온 뒤에 정하면 됩니다.
+
+### 학습 후 반드시 잴 것
+
+프레임 캐시가 남아 있으므로 새 모델로 추론만 다시 돌리면 두 숫자가 바로
+나옵니다. **추측하지 말고 확인한 뒤에** 쓸지 정합니다.
+
+```
+아동   AI Hub 5~9세      지금 48.7% (상한 52.8%)
+성인   Zeroth test        지금 87.5% (142단어)
+```
+
+성인이 얼마나 떨어지는지는 아동 모델을 성인 대상으로 쓸 일이 없다면 참고
+수치일 뿐입니다.
+
+### 데이터
+
+지금 받아둔 것은 Validation(500시간)뿐입니다. 학습에는 Training 셋이
+필요하고 그쪽이 500GB 입니다. **평가에는 필요 없고 fine-tune 때만
+받으세요.**
+
+---
+
 ## 다시 돌리는 법
 
 ### 1. 데이터
