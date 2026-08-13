@@ -15,9 +15,12 @@ import random
 
 from config import AGES, AUDIO, INDEX, SPLITS, TARGET_AGES
 
-# below this many children an eval split reports its own speakers, not
-# the age group - 15 speakers once pushed a threshold to 0.925
-MIN_EVAL_SPEAKERS = 40
+# Detection varies about 16 points from child to child, so the error on
+# a split's mean is roughly 16/sqrt(n): 25 children gives +-6 points at
+# 95%, which is comfortably inside the swing a fine-tune should produce.
+# Fitting is the part that needs more - 15 children once pushed a
+# threshold to 0.925 - and fitting happens on train, which is far larger.
+MIN_EVAL_SPEAKERS = 25
 
 problems = []
 notes = []

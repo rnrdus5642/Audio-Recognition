@@ -17,11 +17,11 @@ INDEX = os.path.join(OUT, "index.csv")
 AUDIO = os.path.join(OUT, "audio")
 SPLITS = os.path.join(OUT, "splits.json")
 
-# Ages to pull audio for. The product's users are 5-7; 8 and 9 are worth
-# having because individual difference between children turned out to
-# matter more than age, so older children still teach the model what a
-# child sounds like. Everything else stays in the index only.
-AGES = {5, 6, 7, 8, 9}
+# Ages to pull audio for. The full corpus holds 738 children aged 5-7
+# across 1,028 hours, which is enough on its own - older children were
+# going to be borrowed only to make up speaker numbers, and there is
+# nothing to make up. Everything else stays in the index only.
+AGES = {5, 6, 7}
 
 # Ages the product actually targets - splits are balanced over these.
 TARGET_AGES = {5, 6, 7}

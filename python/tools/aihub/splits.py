@@ -104,7 +104,7 @@ def main():
     out = {
         "note": "화자 단위 분할. 해시 기반이라 데이터를 더 받아도 "
                 "기존 화자의 소속은 바뀌지 않는다.",
-        "speaker_id": "sha256(대문자 화자ID)[:12]",
+        "speaker_id": "sha256(Basic/NumberOfSpeaker)[:12]",
         "share": dict(SHARE),
         "target_ages": sorted(TARGET_AGES),
         "train_only_ages": sorted(AGES - TARGET_AGES),

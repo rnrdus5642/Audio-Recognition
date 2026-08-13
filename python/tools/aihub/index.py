@@ -4,9 +4,15 @@ This is the map of the corpus: age, speaker, length, recording
 conditions and transcript for every file. Everything downstream selects
 from it rather than walking the audio.
 
-Speaker ids are hashed on the way in. The corpus identifies children by
-name or initials, and nothing here needs to know who they are - the
-splits only need to keep the same child on one side of the line.
+Identity comes from Basic/NumberOfSpeaker, the serial the corpus files
+each child's recordings under - not Speaker/SpeakerName, which holds
+initials that different children share. In one validation archive alone
+110 children answered to 99 names, and five of those names spanned two
+ages. Splitting on names would have quietly merged children.
+
+The serial is hashed on the way in. Nothing downstream needs to know
+who the children are; the splits only need the same child kept on one
+side of the line.
 
     python python/tools/aihub/index.py
 """
@@ -35,7 +41,7 @@ def row(d, archive):
     env = d.get("Environment", {})
     fi = d.get("File", {})
     misc = d.get("Miscellaneous_Info", {})
-    name = sp.get("SpeakerName", "")
+    serial = d.get("Basic", {}).get("NumberOfSpeaker", "")
     return {
         "subset": archive.subset,
         "style": archive.style,
@@ -43,7 +49,7 @@ def row(d, archive):
         "age": sp.get("Age", ""),
         "gender": sp.get("Gender", ""),
         "school_year": sp.get("SchoolYear", ""),
-        "speaker": speaker_hash(name) if name else "",
+        "speaker": speaker_hash(serial) if serial else "",
         "seconds": fi.get("FileLength", ""),
         "speech_start": misc.get("SpeechStart", ""),
         "speech_end": misc.get("SpeechEnd", ""),

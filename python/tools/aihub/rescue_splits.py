@@ -8,8 +8,11 @@ and re-sorted.
 
 Speaker ids are hashed. The corpus labels children by name or initials -
 CHOIYEJUN, KDH - and this file is committed, so the raw ids must not be.
-Hashing the ids of freshly indexed audio the same way reproduces the
-split without ever storing who the children are.
+
+Those initials are also why this is a record and not something to build
+on: different children share them, so the splits below merge children
+that the corpus keeps apart. Work from splits.py, which keys on
+Basic/NumberOfSpeaker instead.
 
 Run once, pointing at wherever the caches live:
 
