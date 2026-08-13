@@ -11,7 +11,7 @@
     "streaming": {
       "skip_cost": 0.05,
       "coverage": 0.8,
-      "context_mult": 4.0
+      "context_mult": 6.0
     }
   },
   "hangul_to_ipa": [
@@ -3669,12 +3669,12 @@
           "w",
           "a"
         ],
-        "distance": 2.2,
-        "score": 0.42,
+        "distance": 2.35,
+        "score": 0.3975,
         "window_start": 7,
         "window_end": 10,
-        "context_kept": 23,
-        "context_dropped": 3
+        "context_kept": 26,
+        "context_dropped": 0
       },
       {
         "user": [
@@ -3717,12 +3717,12 @@
           "w",
           "a"
         ],
-        "distance": 2.4,
-        "score": 0.39,
-        "window_start": 23,
-        "window_end": 26,
-        "context_kept": 23,
-        "context_dropped": 8
+        "distance": 2.6,
+        "score": 0.36,
+        "window_start": 7,
+        "window_end": 10,
+        "context_kept": 31,
+        "context_dropped": 0
       },
       {
         "user": [
@@ -3764,12 +3764,12 @@
           "w",
           "a"
         ],
-        "distance": 2.65,
-        "score": 0.235,
-        "window_start": 9,
-        "window_end": 11,
-        "context_kept": 23,
-        "context_dropped": 7
+        "distance": 2.55,
+        "score": 0.3675,
+        "window_start": 4,
+        "window_end": 7,
+        "context_kept": 30,
+        "context_dropped": 0
       },
       {
         "user": [
@@ -3816,12 +3816,12 @@
           "w",
           "a"
         ],
-        "distance": 0.9,
-        "score": 0.82,
+        "distance": 1.4,
+        "score": 0.72,
         "window_start": 25,
         "window_end": 30,
-        "context_kept": 23,
-        "context_dropped": 12
+        "context_kept": 33,
+        "context_dropped": 2
       },
       {
         "user": [
@@ -3864,12 +3864,12 @@
           "w",
           "a"
         ],
-        "distance": 0.9,
-        "score": 0.82,
+        "distance": 1.3,
+        "score": 0.74,
         "window_start": 20,
         "window_end": 25,
-        "context_kept": 23,
-        "context_dropped": 8
+        "context_kept": 31,
+        "context_dropped": 0
       },
       {
         "user": [
@@ -4822,12 +4822,12 @@
           "w",
           "a"
         ],
-        "distance": 2.2,
-        "score": 0.42,
+        "distance": 2.35,
+        "score": 0.3975,
         "window_start": 4,
         "window_end": 7,
-        "context_kept": 23,
-        "context_dropped": 3
+        "context_kept": 26,
+        "context_dropped": 0
       },
       {
         "user": [
@@ -4869,12 +4869,12 @@
           "w",
           "a"
         ],
-        "distance": 2.65,
-        "score": 0.235,
-        "window_start": 8,
-        "window_end": 10,
-        "context_kept": 23,
-        "context_dropped": 7
+        "distance": 2.55,
+        "score": 0.3675,
+        "window_start": 3,
+        "window_end": 6,
+        "context_kept": 30,
+        "context_dropped": 0
       },
       {
         "user": [
@@ -4910,12 +4910,12 @@
           "w",
           "a"
         ],
-        "distance": 2.65,
-        "score": 0.235,
+        "distance": 2.7,
+        "score": 0.23,
         "window_start": 2,
         "window_end": 4,
-        "context_kept": 23,
-        "context_dropped": 1
+        "context_kept": 24,
+        "context_dropped": 0
       },
       {
         "user": [
@@ -5172,12 +5172,12 @@
           "j",
           "o"
         ],
-        "distance": 3.6,
-        "score": 0.083333333,
-        "window_start": 12,
-        "window_end": 13,
-        "context_kept": 27,
-        "context_dropped": 11
+        "distance": 3.9,
+        "score": 0.145833333,
+        "window_start": 3,
+        "window_end": 5,
+        "context_kept": 38,
+        "context_dropped": 0
       },
       {
         "user": [
@@ -5227,12 +5227,12 @@
           "j",
           "o"
         ],
-        "distance": 3.0,
-        "score": 0.3125,
+        "distance": 3.5,
+        "score": 0.260416667,
         "window_start": 31,
         "window_end": 34,
-        "context_kept": 27,
-        "context_dropped": 10
+        "context_kept": 37,
+        "context_dropped": 0
       },
       {
         "user": [
@@ -5278,12 +5278,12 @@
           "j",
           "o"
         ],
-        "distance": 3.0,
-        "score": 0.3125,
+        "distance": 3.3,
+        "score": 0.28125,
         "window_start": 30,
         "window_end": 33,
-        "context_kept": 27,
-        "context_dropped": 6
+        "context_kept": 33,
+        "context_dropped": 0
       },
       {
         "user": [
@@ -5464,12 +5464,12 @@
           "m",
           "a"
         ],
-        "distance": 2.0,
-        "score": 0.5,
+        "distance": 2.1,
+        "score": 0.475,
         "window_start": 12,
         "window_end": 16,
-        "context_kept": 19,
-        "context_dropped": 2
+        "context_kept": 21,
+        "context_dropped": 0
       },
       {
         "user": [
@@ -5505,12 +5505,12 @@
           "m",
           "a"
         ],
-        "distance": 2.0,
-        "score": 0.5,
+        "distance": 2.3,
+        "score": 0.425,
         "window_start": 11,
         "window_end": 15,
-        "context_kept": 19,
-        "context_dropped": 6
+        "context_kept": 25,
+        "context_dropped": 0
       },
       {
         "user": [
@@ -5543,12 +5543,12 @@
           "m",
           "a"
         ],
-        "distance": 2.0,
-        "score": 0.5,
+        "distance": 2.15,
+        "score": 0.4625,
         "window_start": 10,
         "window_end": 14,
-        "context_kept": 19,
-        "context_dropped": 3
+        "context_kept": 22,
+        "context_dropped": 0
       },
       {
         "user": [
@@ -5590,12 +5590,12 @@
           "m",
           "a"
         ],
-        "distance": 2.0,
-        "score": 0.5,
+        "distance": 2.4,
+        "score": 0.4,
         "window_start": 12,
         "window_end": 16,
-        "context_kept": 19,
-        "context_dropped": 12
+        "context_kept": 27,
+        "context_dropped": 4
       },
       {
         "user": [
@@ -5630,12 +5630,12 @@
           "m",
           "a"
         ],
-        "distance": 2.0,
-        "score": 0.5,
+        "distance": 2.25,
+        "score": 0.4375,
         "window_start": 5,
         "window_end": 9,
-        "context_kept": 19,
-        "context_dropped": 5
+        "context_kept": 24,
+        "context_dropped": 0
       },
       {
         "user": [
@@ -5666,12 +5666,12 @@
           "m",
           "a"
         ],
-        "distance": 2.0,
-        "score": 0.5,
+        "distance": 2.05,
+        "score": 0.4875,
         "window_start": 1,
         "window_end": 5,
-        "context_kept": 19,
-        "context_dropped": 1
+        "context_kept": 20,
+        "context_dropped": 0
       },
       {
         "user": [
@@ -5835,12 +5835,12 @@
           "w",
           "a"
         ],
-        "distance": 0.9,
-        "score": 0.82,
+        "distance": 1.15,
+        "score": 0.77,
         "window_start": 13,
         "window_end": 18,
-        "context_kept": 23,
-        "context_dropped": 5
+        "context_kept": 28,
+        "context_dropped": 0
       },
       {
         "user": [
@@ -5885,12 +5885,12 @@
           "w",
           "a"
         ],
-        "distance": 0.9,
-        "score": 0.82,
+        "distance": 1.4,
+        "score": 0.72,
         "window_start": 13,
         "window_end": 18,
-        "context_kept": 23,
-        "context_dropped": 10
+        "context_kept": 33,
+        "context_dropped": 0
       },
       {
         "user": [
@@ -5939,12 +5939,12 @@
           "w",
           "a"
         ],
-        "distance": 2.65,
-        "score": 0.235,
-        "window_start": 15,
-        "window_end": 17,
-        "context_kept": 23,
-        "context_dropped": 14
+        "distance": 1.4,
+        "score": 0.72,
+        "window_start": 7,
+        "window_end": 12,
+        "context_kept": 33,
+        "context_dropped": 4
       },
       {
         "user": [
@@ -5990,12 +5990,12 @@
           "w",
           "a"
         ],
-        "distance": 2.65,
-        "score": 0.235,
-        "window_start": 13,
-        "window_end": 15,
-        "context_kept": 23,
-        "context_dropped": 11
+        "distance": 2.05,
+        "score": 0.59,
+        "window_start": 1,
+        "window_end": 5,
+        "context_kept": 33,
+        "context_dropped": 1
       },
       {
         "user": [
@@ -6038,12 +6038,12 @@
           "w",
           "a"
         ],
-        "distance": 2.95,
-        "score": 0.205,
-        "window_start": 8,
-        "window_end": 10,
-        "context_kept": 23,
-        "context_dropped": 8
+        "distance": 3.05,
+        "score": 0.195,
+        "window_start": 1,
+        "window_end": 3,
+        "context_kept": 31,
+        "context_dropped": 0
       },
       {
         "user": [
@@ -6082,12 +6082,12 @@
           "w",
           "a"
         ],
-        "distance": 2.95,
-        "score": 0.205,
-        "window_start": 19,
-        "window_end": 21,
-        "context_kept": 23,
-        "context_dropped": 4
+        "distance": 3.15,
+        "score": 0.185,
+        "window_start": 0,
+        "window_end": 2,
+        "context_kept": 27,
+        "context_dropped": 0
       },
       {
         "user": [
@@ -6127,12 +6127,12 @@
           "w",
           "a"
         ],
-        "distance": 2.8,
-        "score": 0.33,
+        "distance": 3.05,
+        "score": 0.2925,
         "window_start": 25,
         "window_end": 28,
-        "context_kept": 23,
-        "context_dropped": 5
+        "context_kept": 28,
+        "context_dropped": 0
       },
       {
         "user": [
@@ -6171,12 +6171,12 @@
           "w",
           "a"
         ],
-        "distance": 2.7,
-        "score": 0.345,
+        "distance": 2.9,
+        "score": 0.315,
         "window_start": 18,
         "window_end": 21,
-        "context_kept": 23,
-        "context_dropped": 4
+        "context_kept": 27,
+        "context_dropped": 0
       },
       {
         "user": [
@@ -6219,12 +6219,12 @@
           "w",
           "a"
         ],
-        "distance": 2.7,
-        "score": 0.345,
+        "distance": 3.1,
+        "score": 0.285,
         "window_start": 13,
         "window_end": 16,
-        "context_kept": 23,
-        "context_dropped": 8
+        "context_kept": 31,
+        "context_dropped": 0
       },
       {
         "user": [
@@ -6270,12 +6270,12 @@
           "w",
           "a"
         ],
-        "distance": 2.7,
-        "score": 0.345,
+        "distance": 3.2,
+        "score": 0.27,
         "window_start": 11,
         "window_end": 14,
-        "context_kept": 23,
-        "context_dropped": 11
+        "context_kept": 33,
+        "context_dropped": 1
       },
       {
         "user": [
@@ -6312,12 +6312,12 @@
           "w",
           "a"
         ],
-        "distance": 3.0,
-        "score": 0.3,
-        "window_start": 20,
-        "window_end": 23,
-        "context_kept": 23,
-        "context_dropped": 2
+        "distance": 2.5,
+        "score": 0.375,
+        "window_start": 1,
+        "window_end": 4,
+        "context_kept": 25,
+        "context_dropped": 0
       },
       {
         "user": [
@@ -8639,8 +8639,8 @@
         "friend",
         "book"
       ],
-      "target_id": "dad",
-      "score": 0.533333333,
+      "target_id": "mom",
+      "score": 0.525,
       "passed": false
     },
     {
@@ -9549,7 +9549,7 @@
       ],
       "target_id": "grandma",
       "score": 0.65,
-      "passed": true
+      "passed": false
     },
     {
       "profile": "batch",
@@ -9718,7 +9718,7 @@
         "mom"
       ],
       "target_id": "mom",
-      "score": 0.5,
+      "score": 0.475,
       "passed": false
     },
     {
@@ -10248,7 +10248,7 @@
         "apple"
       ],
       "target_id": "apple",
-      "score": 0.82,
+      "score": 0.77,
       "passed": true
     },
     {
@@ -10608,7 +10608,7 @@
         "book"
       ],
       "target_id": "apple",
-      "score": 0.82,
+      "score": 0.77,
       "passed": true
     }
   ],
@@ -14064,7 +14064,7 @@
         1,
         2,
         3,
-        0,
+        4,
         0,
         0,
         0,
@@ -14513,7 +14513,7 @@
         1,
         2,
         3,
-        0,
+        4,
         0,
         0,
         0,
@@ -14562,7 +14562,7 @@
         "n",
         "i"
       ],
-      "threshold": 0.6
+      "threshold": 0.75
     },
     {
       "id": "grandpa",
@@ -14577,7 +14577,7 @@
         "tɕ",
         "i"
       ],
-      "threshold": 0.6
+      "threshold": 0.75
     },
     {
       "id": "puppy",

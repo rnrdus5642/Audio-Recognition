@@ -13,7 +13,7 @@
   "streaming_profile": {
     "skip_cost": 0.05,
     "coverage": 0.8,
-    "context_mult": 4.0
+    "context_mult": 6.0
   },
   "substitutions": {
     "_comment_lax_tense_aspirated": "격음/평음/경음 자유 교체 - 발달지연 흔함",
