@@ -290,9 +290,8 @@ python python/tools/aihub/verify.py
 ### 2. 프레임 캐시
 
 ```bash
-python python/tools/child_tuning/tune_frames.py     # free 6~7세 (~98분)
-python python/tools/child_tuning/valid_frames.py    # free 8~9세 (~60분)
-python python/tools/child_tuning/more_speakers.py   # formatted 6~7세 (~69분)
+python python/tools/child_tuning/frames.py                     # train·valid·test
+python python/tools/child_tuning/frames.py --split test --pos 900
 ```
 
 **이게 전체 비용의 99% 입니다.** 프레임별 IPA 를 한 번 뽑아두면 이후 설정을
@@ -301,9 +300,15 @@ python python/tools/child_tuning/more_speakers.py   # formatted 6~7세 (~69분)
 
 단 `hop` 이나 창 길이를 바꾸면 캐시가 무효가 됩니다.
 
-이 세 스크립트는 옛 폴더 구조와 옛 분할을 가리킵니다. `tools/aihub` 로 다시
-정리한 뒤에는 `splits.json` 을 읽도록 고쳐 써야 합니다. 표본 설계(분할별 몇
-발화, 어떤 단어)는 분할 크기가 나온 뒤에 정합니다.
+어떤 화자를 쓸지는 `splits.json` 이 정합니다. 결과는 한 줄씩 바로
+기록되므로 중간에 끊겨도 이어서 하면 됩니다.
+
+**torch 가 CPU 빌드면 GPU 빌드로 바꾸세요.** 인식기는 CUDA 가 있으면 알아서
+씁니다. 창 하나당 CPU 0.3초 / GPU 0.03초 수준이라 차이가 큽니다.
+
+```bash
+pip install torch --index-url https://download.pytorch.org/whl/cu130
+```
 
 ### 3. 튜닝
 
