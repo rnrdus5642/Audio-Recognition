@@ -52,10 +52,26 @@ def main():
     mixed = [s for s, a in ages.items() if len(a) > 1]
     check(not mixed, f"화자당 나이 하나 (어긋남 {len(mixed)}명)")
 
-    # duplicate filenames would silently overwrite during organize
-    names = collections.Counter(r["wav"] for r in rows)
-    dupes = [w for w, n in names.items() if n > 1]
-    check(not dupes, f"파일명 중복 없음 (중복 {len(dupes)}개)")
+    # Duplicate filenames overwrite each other during organize. The
+    # corpus ships a handful of labels twice over, which is harmless -
+    # what would not be is two different recordings under one name.
+    by_name = collections.defaultdict(list)
+    for r in rows:
+        by_name[r["wav"]].append(r)
+
+    def identity(r):
+        return (r["speaker"], r["age"], r["seconds"], r["text"])
+
+    repeated = {w: v for w, v in by_name.items() if len(v) > 1}
+    conflicts = {w: v for w, v in repeated.items()
+                 if len({identity(r) for r in v}) > 1}
+    hot = sum(1 for v in conflicts.values() if any(r["_age"] in AGES
+                                                   for r in v))
+    check(not hot, f"이름이 같은데 내용이 다른 파일 중 추출 대상 {hot}개")
+    if repeated:
+        notes.append(f"    같은 라벨이 두 번 실린 것 {len(repeated) - len(conflicts)}개"
+                     " · 이름 충돌 {}개(추출 범위 밖)".format(
+                         len(conflicts) - hot))
 
     # transcripts present
     empty = sum(1 for r in rows if not r["text"].strip())
