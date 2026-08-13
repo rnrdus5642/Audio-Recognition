@@ -11,6 +11,7 @@ htmlcov/
 
 # Environments
 .venv/
+.venv-gpu/
 venv/
 env/
 ENV/

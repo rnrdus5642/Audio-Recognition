@@ -15,8 +15,33 @@ librosa
 soundfile
 
 # PyTorch (CPU build by default for Python 3.13).
-# For NVIDIA GPU users with CUDA drivers, replace these two lines with:
-#   pip install torch torchaudio --index-url https://download.pytorch.org/whl/cu126
+#
+# GPU is worth the trouble for anything that runs the recognizer in bulk:
+# measured 21ms per 2.5s window against 257ms on CPU, so caching frames
+# for a tuning run goes from an afternoon to a coffee break. Verified on
+# an RTX 5060 Ti (Blackwell, sm_120) with:
+#
+#   python -m venv .venv-gpu
+#   .venv-gpu\Scripts\pip install -r requirements.txt -r requirements-phase2.txt
+#   .venv-gpu\Scripts\pip install torch torchaudio ^
+#       --index-url https://download.pytorch.org/whl/cu130
+#
+# Install the CUDA build LAST. Both requirements files ask for a bare
+# `torch`, and pip resolves that against PyPI - run it first and the CPU
+# wheel silently replaces the CUDA one you just installed.
+#
+# Two things that bite on a fresh Windows venv:
+#   - eunjeon compiles from source and needs MSVC build tools. Copying
+#     site-packages/eunjeon and its dist-info from a venv that already
+#     has it works, same Python and platform.
+#   - nltk 3.10 refuses to read a corpus stored outside its expected
+#     root, where 3.9 only warned. If g2pkk dies on cmudict, check where
+#     NLTK_DATA points before pinning anything.
+#
+# CPU and GPU do not agree token for token: 1 window in 646 decoded to a
+# different syllable. It is float ordering in the CTC argmax, not a bug,
+# and it is small next to anything being measured - but frame caches from
+# the two devices are not interchangeable. Generate a set on one device.
 torch
 torchaudio
 
