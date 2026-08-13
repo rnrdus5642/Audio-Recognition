@@ -243,50 +243,51 @@ var recognizer = new SentisPhonemeRecognizer(model, vocab);
 성인이 얼마나 떨어지는지는 아동 모델을 성인 대상으로 쓸 일이 없다면 참고
 수치일 뿐입니다.
 
-### 데이터
+### 데이터 (2026-08-13 수정)
 
-지금 받아둔 것은 Validation(500시간)뿐입니다. 학습에는 Training 셋이
-필요하고 그쪽이 500GB 입니다. **평가에는 필요 없고 fine-tune 때만
-받으세요.**
+Validation 만으로는 부족합니다. **시간이 아니라 화자가 모자랍니다.**
+
+캐시된 2,850건을 화자별로 갈라 분산을 분해했더니 이렇게 나왔습니다.
+
+| | 분산 | 비중 |
+|---|---|---|
+| 나이 | 0.0077 | 20% |
+| **아이별 개인차** | **0.0115** | **29%** |
+| 표본 우연 | 0.0162 | 41% |
+
+같은 나이 안에서도 아이마다 0%~94% 로 갈립니다. 나이대를 맞추는 것보다
+**아이를 많이 넣는 것**이 중요하다는 뜻입니다.
+
+그런데 Validation 의 5~7세는 148명뿐이고, 그 전원이 이미 평가에 쓰였습니다.
+학습·평가로 가르는 것 자체가 불가능했습니다.
+
+그래서 Training 셋을 받습니다. 목표는 **5~7세 화자 500명 이상** — 학습 350 /
+평가 150 으로 갈라도 양쪽 다 믿을 수 있는 규모입니다.
+
+받는 이유가 "많이 학습시키려고"가 아니라는 점은 짚어둘 만합니다. 학습셋은
+150~200시간에서 끊는 게 낫고, 그 이상은 epoch 시간만 늘어납니다.
+
+정리는 [tools/aihub](../aihub/README.md) 가 합니다.
 
 ---
 
 ## 다시 돌리는 법
 
-### 1. 데이터
+### 1. 데이터 정리
 
-[AI Hub 한국어 아동 음성 데이터](https://aihub.or.kr/aihubdata/data/view.do?dataSetSn=540)
-— 휴대폰 인증만 되어 있으면 자동 승인입니다.
-
-**라벨(537MB)부터 받으세요.** 오디오 56GB 를 다 추론하면 열흘이 걸리는데,
-필요한 건 몇 시간 분량입니다.
-
-```
-2.Validation/라벨링데이터/VL_kor_free_01.tar        116MB
-2.Validation/라벨링데이터/VL_kor_formatted_01.tar   421MB
-2.Validation/원천데이터/VS_kor_free_01.tar          10GB
-2.Validation/원천데이터/VS_kor_formatted_01.tar     46GB
-```
-
-오디오는 1GB 씩 쪼개져 옵니다. 오프셋 순서로 이어붙여야 합니다.
+[tools/aihub](../aihub/README.md) 가 받은 것을 그대로 받아 정리합니다.
 
 ```bash
-ls VS_kor_free_01.tar.part* | sed 's/.*part//' | sort -n \
-  | sed 's/^/VS_kor_free_01.tar.part/' > parts.txt
-cat $(cat parts.txt) > VS_kor_free_01.tar
+python python/tools/aihub/index.py
+python python/tools/aihub/organize.py
+python python/tools/aihub/splits.py
+python python/tools/aihub/verify.py
 ```
 
-### 2. 색인과 추출
+`index.csv` 에 나이·화자·전사·길이·발화구간이 다 있어서, 이후로는 라벨을
+다시 읽을 일이 없습니다.
 
-```bash
-python python/tools/child_tuning/aihub_index.py    # 라벨 27만 개 → CSV (~17분)
-python python/tools/child_tuning/aihub_sort.py     # 5~7세 wav 를 나이별 폴더로
-```
-
-`aihub_index.csv` 가 있으면 라벨을 다시 읽을 필요가 없습니다. 나이·화자·전사·
-길이로 원하는 발화만 골라낼 수 있습니다.
-
-### 3. 프레임 캐시
+### 2. 프레임 캐시
 
 ```bash
 python python/tools/child_tuning/tune_frames.py     # free 6~7세 (~98분)
@@ -300,7 +301,11 @@ python python/tools/child_tuning/more_speakers.py   # formatted 6~7세 (~69분)
 
 단 `hop` 이나 창 길이를 바꾸면 캐시가 무효가 됩니다.
 
-### 4. 튜닝
+이 세 스크립트는 옛 폴더 구조와 옛 분할을 가리킵니다. `tools/aihub` 로 다시
+정리한 뒤에는 `splits.json` 을 읽도록 고쳐 써야 합니다. 표본 설계(분할별 몇
+발화, 어떤 단어)는 분할 크기가 나온 뒤에 정합니다.
+
+### 3. 튜닝
 
 ```bash
 python python/tools/child_tuning/learn_matrix.py    # 정렬 빈도로 matrix 추정
@@ -326,7 +331,15 @@ matrix)** 으로 한 번만 판정해야 합니다.
 
 **화자 수.** 15명으로 튜닝했을 때 3음소 임계값 0.925 같은 극단값이 나왔고,
 118명으로 늘리자 0.875 로 내려왔습니다. 화자가 적으면 그 아이들의 발음
-특성에 맞춰집니다.
+특성에 맞춰집니다. `verify.py` 가 이제 이 조건을 검사합니다.
+
+**분할을 나중에 만들면 늦습니다.** 필요할 때마다 덧붙여 만든 탓에 `tune`
+화자가 15명뿐인 채로 튜닝이 돌았고, 5~7세는 전원이 평가에 들어가 학습에
+쓸 화자가 남지 않았습니다. 데이터를 정리하는 시점에 분할까지 정해야 합니다.
+
+**옮길 때는 복사.** `aihub_sort.py` 가 tar 에서 꺼내며 원본을 남기지 않아,
+나중에 확인하려 했을 때 5~9세 말고는 오디오가 없었습니다. 무엇을 가지고
+있는지 모르는 상태가 됩니다.
 
 **Windows 소파일 I/O.** 라벨 27만 개를 하나씩 여는 데 22분 걸립니다. 조사
 목적이면 표본만 읽으세요.
