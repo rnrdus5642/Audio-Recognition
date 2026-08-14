@@ -9,8 +9,8 @@
       "context_mult": null
     },
     "streaming": {
-      "skip_cost": 0.02,
-      "coverage": 0.9,
+      "skip_cost": 0.05,
+      "coverage": 0.8,
       "context_mult": 6.0
     }
   },
@@ -3559,8 +3559,8 @@
           "w",
           "a"
         ],
-        "distance": 2.54,
-        "score": 0.109333333,
+        "distance": 2.6,
+        "score": 0.12,
         "window_start": 1,
         "window_end": 2,
         "context_kept": 3,
@@ -3590,8 +3590,8 @@
           "w",
           "a"
         ],
-        "distance": 1.42,
-        "score": 0.477333333,
+        "distance": 1.75,
+        "score": 0.4875,
         "window_start": 7,
         "window_end": 10,
         "context_kept": 14,
@@ -3626,8 +3626,8 @@
           "w",
           "a"
         ],
-        "distance": 1.52,
-        "score": 0.464,
+        "distance": 2.0,
+        "score": 0.45,
         "window_start": 7,
         "window_end": 10,
         "context_kept": 19,
@@ -3669,8 +3669,8 @@
           "w",
           "a"
         ],
-        "distance": 1.66,
-        "score": 0.445333333,
+        "distance": 2.35,
+        "score": 0.3975,
         "window_start": 7,
         "window_end": 10,
         "context_kept": 26,
@@ -3717,8 +3717,8 @@
           "w",
           "a"
         ],
-        "distance": 1.76,
-        "score": 0.432,
+        "distance": 2.6,
+        "score": 0.36,
         "window_start": 7,
         "window_end": 10,
         "context_kept": 31,
@@ -3764,8 +3764,8 @@
           "w",
           "a"
         ],
-        "distance": 1.74,
-        "score": 0.434666667,
+        "distance": 2.55,
+        "score": 0.3675,
         "window_start": 4,
         "window_end": 7,
         "context_kept": 30,
@@ -3816,8 +3816,8 @@
           "w",
           "a"
         ],
-        "distance": 0.56,
-        "score": 0.888,
+        "distance": 1.4,
+        "score": 0.72,
         "window_start": 25,
         "window_end": 30,
         "context_kept": 33,
@@ -3864,8 +3864,8 @@
           "w",
           "a"
         ],
-        "distance": 0.52,
-        "score": 0.896,
+        "distance": 1.3,
+        "score": 0.74,
         "window_start": 20,
         "window_end": 25,
         "context_kept": 31,
@@ -3901,8 +3901,8 @@
           "w",
           "a"
         ],
-        "distance": 0.3,
-        "score": 0.94,
+        "distance": 0.75,
+        "score": 0.85,
         "window_start": 9,
         "window_end": 14,
         "context_kept": 20,
@@ -3939,8 +3939,8 @@
           "w",
           "a"
         ],
-        "distance": 0.32,
-        "score": 0.936,
+        "distance": 0.8,
+        "score": 0.84,
         "window_start": 10,
         "window_end": 15,
         "context_kept": 21,
@@ -3964,8 +3964,8 @@
           "w",
           "a"
         ],
-        "distance": 0.06,
-        "score": 0.988,
+        "distance": 0.15,
+        "score": 0.97,
         "window_start": 0,
         "window_end": 5,
         "context_kept": 8,
@@ -4029,8 +4029,8 @@
           "j",
           "o"
         ],
-        "distance": 2.22,
-        "score": 0.233333333,
+        "distance": 2.4,
+        "score": 0.25,
         "window_start": 5,
         "window_end": 7,
         "context_kept": 8,
@@ -4058,8 +4058,8 @@
           "j",
           "o"
         ],
-        "distance": 2.28,
-        "score": 0.22962963,
+        "distance": 2.55,
+        "score": 0.239583333,
         "window_start": 5,
         "window_end": 7,
         "context_kept": 11,
@@ -4091,8 +4091,8 @@
           "j",
           "o"
         ],
-        "distance": 2.36,
-        "score": 0.224691358,
+        "distance": 2.75,
+        "score": 0.225694444,
         "window_start": 5,
         "window_end": 7,
         "context_kept": 15,
@@ -4131,8 +4131,8 @@
           "j",
           "o"
         ],
-        "distance": 0.32,
-        "score": 0.946666667,
+        "distance": 0.8,
+        "score": 0.866666667,
         "window_start": 16,
         "window_end": 22,
         "context_kept": 22,
@@ -4174,8 +4174,8 @@
           "j",
           "o"
         ],
-        "distance": 0.38,
-        "score": 0.936666667,
+        "distance": 0.95,
+        "score": 0.841666667,
         "window_start": 15,
         "window_end": 21,
         "context_kept": 25,
@@ -4215,8 +4215,8 @@
           "j",
           "o"
         ],
-        "distance": 0.34,
-        "score": 0.943333333,
+        "distance": 0.85,
+        "score": 0.858333333,
         "window_start": 13,
         "window_end": 19,
         "context_kept": 23,
@@ -4253,8 +4253,8 @@
           "j",
           "o"
         ],
-        "distance": 0.28,
-        "score": 0.953333333,
+        "distance": 0.7,
+        "score": 0.883333333,
         "window_start": 10,
         "window_end": 16,
         "context_kept": 20,
@@ -4290,8 +4290,8 @@
           "m",
           "a"
         ],
-        "distance": 1.36,
-        "score": 0.55,
+        "distance": 1.45,
+        "score": 0.59765625,
         "window_start": 2,
         "window_end": 5,
         "context_kept": 6,
@@ -4316,8 +4316,8 @@
           "m",
           "a"
         ],
-        "distance": 1.44,
-        "score": 0.533333333,
+        "distance": 1.65,
+        "score": 0.55078125,
         "window_start": 2,
         "window_end": 5,
         "context_kept": 10,
@@ -4348,8 +4348,8 @@
           "m",
           "a"
         ],
-        "distance": 1.56,
-        "score": 0.508333333,
+        "distance": 1.95,
+        "score": 0.48046875,
         "window_start": 2,
         "window_end": 5,
         "context_kept": 16,
@@ -4382,8 +4382,8 @@
           "m",
           "a"
         ],
-        "distance": 0.68,
-        "score": 0.83,
+        "distance": 1.1,
+        "score": 0.725,
         "window_start": 14,
         "window_end": 18,
         "context_kept": 18,
@@ -4415,8 +4415,8 @@
           "m",
           "a"
         ],
-        "distance": 1.16,
-        "score": 0.71,
+        "distance": 1.55,
+        "score": 0.6125,
         "window_start": 13,
         "window_end": 17,
         "context_kept": 17,
@@ -4436,8 +4436,8 @@
           "w",
           "a"
         ],
-        "distance": 2.76,
-        "score": 0.099555556,
+        "distance": 2.85,
+        "score": 0.1075,
         "window_start": 1,
         "window_end": 2,
         "context_kept": 4,
@@ -4468,8 +4468,8 @@
           "w",
           "a"
         ],
-        "distance": 2.06,
-        "score": 0.261333333,
+        "distance": 2.45,
+        "score": 0.255,
         "window_start": 8,
         "window_end": 10,
         "context_kept": 15,
@@ -4504,8 +4504,8 @@
           "w",
           "a"
         ],
-        "distance": 2.12,
-        "score": 0.384,
+        "distance": 2.6,
+        "score": 0.36,
         "window_start": 11,
         "window_end": 14,
         "context_kept": 19,
@@ -4542,8 +4542,8 @@
           "w",
           "a"
         ],
-        "distance": 1.84,
-        "score": 0.561777778,
+        "distance": 2.35,
+        "score": 0.53,
         "window_start": 8,
         "window_end": 12,
         "context_kept": 21,
@@ -4582,8 +4582,8 @@
           "w",
           "a"
         ],
-        "distance": 1.88,
-        "score": 0.554666667,
+        "distance": 2.45,
+        "score": 0.51,
         "window_start": 8,
         "window_end": 12,
         "context_kept": 23,
@@ -4621,8 +4621,8 @@
           "w",
           "a"
         ],
-        "distance": 1.86,
-        "score": 0.558222222,
+        "distance": 2.4,
+        "score": 0.52,
         "window_start": 7,
         "window_end": 11,
         "context_kept": 22,
@@ -4653,8 +4653,8 @@
           "w",
           "a"
         ],
-        "distance": 2.04,
-        "score": 0.394666667,
+        "distance": 2.4,
+        "score": 0.39,
         "window_start": 1,
         "window_end": 4,
         "context_kept": 15,
@@ -4674,8 +4674,8 @@
           "w",
           "a"
         ],
-        "distance": 2.04,
-        "score": 0.263111111,
+        "distance": 2.1,
+        "score": 0.29,
         "window_start": 1,
         "window_end": 3,
         "context_kept": 4,
@@ -4705,8 +4705,8 @@
           "w",
           "a"
         ],
-        "distance": 1.42,
-        "score": 0.477333333,
+        "distance": 1.75,
+        "score": 0.4875,
         "window_start": 4,
         "window_end": 7,
         "context_kept": 14,
@@ -4739,8 +4739,8 @@
           "w",
           "a"
         ],
-        "distance": 1.48,
-        "score": 0.469333333,
+        "distance": 1.9,
+        "score": 0.465,
         "window_start": 4,
         "window_end": 7,
         "context_kept": 17,
@@ -4779,8 +4779,8 @@
           "w",
           "a"
         ],
-        "distance": 1.6,
-        "score": 0.453333333,
+        "distance": 2.2,
+        "score": 0.42,
         "window_start": 4,
         "window_end": 7,
         "context_kept": 23,
@@ -4822,8 +4822,8 @@
           "w",
           "a"
         ],
-        "distance": 1.66,
-        "score": 0.445333333,
+        "distance": 2.35,
+        "score": 0.3975,
         "window_start": 4,
         "window_end": 7,
         "context_kept": 26,
@@ -4869,8 +4869,8 @@
           "w",
           "a"
         ],
-        "distance": 1.74,
-        "score": 0.434666667,
+        "distance": 2.55,
+        "score": 0.3675,
         "window_start": 3,
         "window_end": 6,
         "context_kept": 30,
@@ -4910,8 +4910,8 @@
           "w",
           "a"
         ],
-        "distance": 2.04,
-        "score": 0.263111111,
+        "distance": 2.7,
+        "score": 0.23,
         "window_start": 2,
         "window_end": 4,
         "context_kept": 24,
@@ -4947,8 +4947,8 @@
           "w",
           "a"
         ],
-        "distance": 2.12,
-        "score": 0.512,
+        "distance": 2.6,
+        "score": 0.48,
         "window_start": 11,
         "window_end": 15,
         "context_kept": 20,
@@ -4981,8 +4981,8 @@
           "w",
           "a"
         ],
-        "distance": 2.06,
-        "score": 0.522666667,
+        "distance": 2.45,
+        "score": 0.51,
         "window_start": 8,
         "window_end": 12,
         "context_kept": 17,
@@ -5006,8 +5006,8 @@
           "j",
           "o"
         ],
-        "distance": 2.2,
-        "score": 0.234567901,
+        "distance": 2.35,
+        "score": 0.253472222,
         "window_start": 5,
         "window_end": 7,
         "context_kept": 7,
@@ -5034,8 +5034,8 @@
           "j",
           "o"
         ],
-        "distance": 2.26,
-        "score": 0.230864198,
+        "distance": 2.5,
+        "score": 0.243055556,
         "window_start": 5,
         "window_end": 7,
         "context_kept": 10,
@@ -5073,8 +5073,8 @@
           "j",
           "o"
         ],
-        "distance": 2.48,
-        "score": 0.217283951,
+        "distance": 3.05,
+        "score": 0.204861111,
         "window_start": 5,
         "window_end": 7,
         "context_kept": 21,
@@ -5116,8 +5116,8 @@
           "j",
           "o"
         ],
-        "distance": 2.56,
-        "score": 0.212345679,
+        "distance": 3.25,
+        "score": 0.190972222,
         "window_start": 5,
         "window_end": 7,
         "context_kept": 25,
@@ -5172,8 +5172,8 @@
           "j",
           "o"
         ],
-        "distance": 2.82,
-        "score": 0.196296296,
+        "distance": 3.9,
+        "score": 0.145833333,
         "window_start": 3,
         "window_end": 5,
         "context_kept": 38,
@@ -5227,8 +5227,8 @@
           "j",
           "o"
         ],
-        "distance": 2.48,
-        "score": 0.325925926,
+        "distance": 3.5,
+        "score": 0.260416667,
         "window_start": 31,
         "window_end": 34,
         "context_kept": 37,
@@ -5278,8 +5278,8 @@
           "j",
           "o"
         ],
-        "distance": 2.4,
-        "score": 0.333333333,
+        "distance": 3.3,
+        "score": 0.28125,
         "window_start": 30,
         "window_end": 33,
         "context_kept": 33,
@@ -5322,8 +5322,8 @@
           "j",
           "o"
         ],
-        "distance": 2.26,
-        "score": 0.346296296,
+        "distance": 2.95,
+        "score": 0.317708333,
         "window_start": 23,
         "window_end": 26,
         "context_kept": 26,
@@ -5360,8 +5360,8 @@
           "j",
           "o"
         ],
-        "distance": 2.14,
-        "score": 0.357407407,
+        "distance": 2.65,
+        "score": 0.348958333,
         "window_start": 17,
         "window_end": 20,
         "context_kept": 20,
@@ -5396,8 +5396,8 @@
           "j",
           "o"
         ],
-        "distance": 2.1,
-        "score": 0.361111111,
+        "distance": 2.55,
+        "score": 0.359375,
         "window_start": 15,
         "window_end": 18,
         "context_kept": 18,
@@ -5427,8 +5427,8 @@
           "m",
           "a"
         ],
-        "distance": 1.54,
-        "score": 0.5125,
+        "distance": 1.9,
+        "score": 0.4921875,
         "window_start": 2,
         "window_end": 5,
         "context_kept": 15,
@@ -5464,8 +5464,8 @@
           "m",
           "a"
         ],
-        "distance": 1.59,
-        "score": 0.6025,
+        "distance": 2.1,
+        "score": 0.475,
         "window_start": 12,
         "window_end": 16,
         "context_kept": 21,
@@ -5505,10 +5505,10 @@
           "m",
           "a"
         ],
-        "distance": 1.64,
-        "score": 0.491666667,
-        "window_start": 22,
-        "window_end": 25,
+        "distance": 2.3,
+        "score": 0.425,
+        "window_start": 11,
+        "window_end": 15,
         "context_kept": 25,
         "context_dropped": 0
       },
@@ -5543,8 +5543,8 @@
           "m",
           "a"
         ],
-        "distance": 1.61,
-        "score": 0.5975,
+        "distance": 2.15,
+        "score": 0.4625,
         "window_start": 10,
         "window_end": 14,
         "context_kept": 22,
@@ -5590,8 +5590,8 @@
           "m",
           "a"
         ],
-        "distance": 1.71,
-        "score": 0.5725,
+        "distance": 2.4,
+        "score": 0.4,
         "window_start": 12,
         "window_end": 16,
         "context_kept": 27,
@@ -5630,8 +5630,8 @@
           "m",
           "a"
         ],
-        "distance": 1.65,
-        "score": 0.5875,
+        "distance": 2.25,
+        "score": 0.4375,
         "window_start": 5,
         "window_end": 9,
         "context_kept": 24,
@@ -5666,8 +5666,8 @@
           "m",
           "a"
         ],
-        "distance": 1.57,
-        "score": 0.6075,
+        "distance": 2.05,
+        "score": 0.4875,
         "window_start": 1,
         "window_end": 5,
         "context_kept": 20,
@@ -5699,8 +5699,8 @@
           "m",
           "a"
         ],
-        "distance": 1.72,
-        "score": 0.158333333,
+        "distance": 2.2,
+        "score": 0.140625,
         "window_start": 16,
         "window_end": 17,
         "context_kept": 17,
@@ -5719,8 +5719,8 @@
           "w",
           "a"
         ],
-        "distance": 2.74,
-        "score": 0.100444444,
+        "distance": 2.8,
+        "score": 0.11,
         "window_start": 1,
         "window_end": 2,
         "context_kept": 3,
@@ -5750,8 +5750,8 @@
           "w",
           "a"
         ],
-        "distance": 2.14,
-        "score": 0.254222222,
+        "distance": 2.5,
+        "score": 0.25,
         "window_start": 12,
         "window_end": 14,
         "context_kept": 14,
@@ -5790,8 +5790,8 @@
           "w",
           "a"
         ],
-        "distance": 0.36,
-        "score": 0.928,
+        "distance": 0.9,
+        "score": 0.82,
         "window_start": 14,
         "window_end": 19,
         "context_kept": 23,
@@ -5835,8 +5835,8 @@
           "w",
           "a"
         ],
-        "distance": 0.46,
-        "score": 0.908,
+        "distance": 1.15,
+        "score": 0.77,
         "window_start": 13,
         "window_end": 18,
         "context_kept": 28,
@@ -5885,8 +5885,8 @@
           "w",
           "a"
         ],
-        "distance": 0.56,
-        "score": 0.888,
+        "distance": 1.4,
+        "score": 0.72,
         "window_start": 13,
         "window_end": 18,
         "context_kept": 33,
@@ -5939,8 +5939,8 @@
           "w",
           "a"
         ],
-        "distance": 0.56,
-        "score": 0.888,
+        "distance": 1.4,
+        "score": 0.72,
         "window_start": 7,
         "window_end": 12,
         "context_kept": 33,
@@ -5990,8 +5990,8 @@
           "w",
           "a"
         ],
-        "distance": 1.18,
-        "score": 0.679111111,
+        "distance": 2.05,
+        "score": 0.59,
         "window_start": 1,
         "window_end": 5,
         "context_kept": 33,
@@ -6038,10 +6038,10 @@
           "w",
           "a"
         ],
-        "distance": 2.18,
-        "score": 0.250666667,
-        "window_start": 6,
-        "window_end": 8,
+        "distance": 3.05,
+        "score": 0.195,
+        "window_start": 1,
+        "window_end": 3,
         "context_kept": 31,
         "context_dropped": 0
       },
@@ -6082,8 +6082,8 @@
           "w",
           "a"
         ],
-        "distance": 2.4,
-        "score": 0.231111111,
+        "distance": 3.15,
+        "score": 0.185,
         "window_start": 0,
         "window_end": 2,
         "context_kept": 27,
@@ -6127,8 +6127,8 @@
           "w",
           "a"
         ],
-        "distance": 2.3,
-        "score": 0.36,
+        "distance": 3.05,
+        "score": 0.2925,
         "window_start": 25,
         "window_end": 28,
         "context_kept": 28,
@@ -6171,8 +6171,8 @@
           "w",
           "a"
         ],
-        "distance": 2.18,
-        "score": 0.376,
+        "distance": 2.9,
+        "score": 0.315,
         "window_start": 18,
         "window_end": 21,
         "context_kept": 27,
@@ -6219,8 +6219,8 @@
           "w",
           "a"
         ],
-        "distance": 2.26,
-        "score": 0.365333333,
+        "distance": 3.1,
+        "score": 0.285,
         "window_start": 13,
         "window_end": 16,
         "context_kept": 31,
@@ -6270,8 +6270,8 @@
           "w",
           "a"
         ],
-        "distance": 2.3,
-        "score": 0.36,
+        "distance": 3.2,
+        "score": 0.27,
         "window_start": 11,
         "window_end": 14,
         "context_kept": 33,
@@ -6312,8 +6312,8 @@
           "w",
           "a"
         ],
-        "distance": 1.84,
-        "score": 0.421333333,
+        "distance": 2.5,
+        "score": 0.375,
         "window_start": 1,
         "window_end": 4,
         "context_kept": 25,
@@ -6345,8 +6345,8 @@
           "w",
           "a"
         ],
-        "distance": 2.28,
-        "score": 0.241777778,
+        "distance": 2.7,
+        "score": 0.23,
         "window_start": 3,
         "window_end": 5,
         "context_kept": 16,
@@ -6428,8 +6428,8 @@
           "w",
           "a"
         ],
-        "distance": 0.06,
-        "score": 0.988,
+        "distance": 0.15,
+        "score": 0.97,
         "window_start": 2,
         "window_end": 7,
         "context_kept": 8,
@@ -6450,7 +6450,7 @@
           "i"
         ],
         "distance": 3.8,
-        "score": 0.072916667,
+        "score": 0.08203125,
         "window_start": 0,
         "window_end": 1,
         "context_kept": 1,
@@ -6504,7 +6504,7 @@
         "apple"
       ],
       "target_id": "apple",
-      "score": 0.109333333,
+      "score": 0.12,
       "passed": false
     },
     {
@@ -6554,7 +6554,7 @@
         "apple"
       ],
       "target_id": "apple",
-      "score": 0.477333333,
+      "score": 0.4875,
       "passed": false
     },
     {
@@ -6614,7 +6614,7 @@
         "apple"
       ],
       "target_id": "apple",
-      "score": 0.464,
+      "score": 0.45,
       "passed": false
     },
     {
@@ -6730,7 +6730,7 @@
         "book"
       ],
       "target_id": "book",
-      "score": 0.241975309,
+      "score": 0.263888889,
       "passed": false
     },
     {
@@ -6814,7 +6814,7 @@
         "book"
       ],
       "target_id": "come",
-      "score": 0.6,
+      "score": 0.59765625,
       "passed": false
     },
     {
@@ -6907,8 +6907,8 @@
         "friend",
         "book"
       ],
-      "target_id": "come",
-      "score": 0.579166667,
+      "target_id": "friend",
+      "score": 0.55,
       "passed": false
     },
     {
@@ -6966,7 +6966,7 @@
         "apple"
       ],
       "target_id": "apple",
-      "score": 0.988,
+      "score": 0.97,
       "passed": true
     },
     {
@@ -7004,7 +7004,7 @@
         "apple"
       ],
       "target_id": "apple",
-      "score": 0.988,
+      "score": 0.97,
       "passed": true
     },
     {
@@ -7162,7 +7162,7 @@
         "book"
       ],
       "target_id": "apple",
-      "score": 0.988,
+      "score": 0.97,
       "passed": true
     },
     {
@@ -7234,7 +7234,7 @@
         "book"
       ],
       "target_id": "apple",
-      "score": 0.988,
+      "score": 0.97,
       "passed": true
     },
     {
@@ -7358,7 +7358,7 @@
         "school"
       ],
       "target_id": "school",
-      "score": 0.233333333,
+      "score": 0.25,
       "passed": false
     },
     {
@@ -7402,7 +7402,7 @@
         "school"
       ],
       "target_id": "school",
-      "score": 0.22962963,
+      "score": 0.239583333,
       "passed": false
     },
     {
@@ -7454,7 +7454,7 @@
         "school"
       ],
       "target_id": "school",
-      "score": 0.224691358,
+      "score": 0.225694444,
       "passed": false
     },
     {
@@ -7580,7 +7580,7 @@
         "book"
       ],
       "target_id": "go",
-      "score": 0.645833333,
+      "score": 0.69140625,
       "passed": false
     },
     {
@@ -7658,8 +7658,8 @@
         "book"
       ],
       "target_id": "puppy",
-      "score": 0.675925926,
-      "passed": false
+      "score": 0.7,
+      "passed": true
     },
     {
       "profile": "batch",
@@ -7744,8 +7744,8 @@
         "book"
       ],
       "target_id": "puppy",
-      "score": 0.663580247,
-      "passed": false
+      "score": 0.666666667,
+      "passed": true
     },
     {
       "profile": "batch",
@@ -7798,7 +7798,7 @@
         "mom"
       ],
       "target_id": "mom",
-      "score": 0.55,
+      "score": 0.59765625,
       "passed": false
     },
     {
@@ -7840,7 +7840,7 @@
         "mom"
       ],
       "target_id": "mom",
-      "score": 0.533333333,
+      "score": 0.55078125,
       "passed": false
     },
     {
@@ -7894,7 +7894,7 @@
         "mom"
       ],
       "target_id": "mom",
-      "score": 0.508333333,
+      "score": 0.48046875,
       "passed": false
     },
     {
@@ -7983,7 +7983,7 @@
       ],
       "target_id": "apple",
       "score": 0.7,
-      "passed": false
+      "passed": true
     },
     {
       "profile": "streaming",
@@ -8015,9 +8015,9 @@
         "friend",
         "book"
       ],
-      "target_id": "dad",
-      "score": 0.713333333,
-      "passed": false
+      "target_id": "apple",
+      "score": 0.74,
+      "passed": true
     },
     {
       "profile": "batch",
@@ -8091,9 +8091,9 @@
         "friend",
         "book"
       ],
-      "target_id": "dad",
-      "score": 0.686666667,
-      "passed": false
+      "target_id": "apple",
+      "score": 0.7,
+      "passed": true
     },
     {
       "profile": "batch",
@@ -8179,8 +8179,8 @@
         "friend",
         "book"
       ],
-      "target_id": "dad",
-      "score": 0.646666667,
+      "target_id": "apple",
+      "score": 0.64,
       "passed": false
     },
     {
@@ -8230,7 +8230,7 @@
         "apple"
       ],
       "target_id": "apple",
-      "score": 0.099555556,
+      "score": 0.1075,
       "passed": false
     },
     {
@@ -8282,7 +8282,7 @@
         "apple"
       ],
       "target_id": "apple",
-      "score": 0.261333333,
+      "score": 0.255,
       "passed": false
     },
     {
@@ -8342,7 +8342,7 @@
         "apple"
       ],
       "target_id": "apple",
-      "score": 0.384,
+      "score": 0.36,
       "passed": false
     },
     {
@@ -8460,7 +8460,7 @@
         "book"
       ],
       "target_id": "rabbit",
-      "score": 0.475,
+      "score": 0.52734375,
       "passed": false
     },
     {
@@ -8546,7 +8546,7 @@
         "book"
       ],
       "target_id": "mom",
-      "score": 0.6575,
+      "score": 0.575,
       "passed": false
     },
     {
@@ -8640,7 +8640,7 @@
         "book"
       ],
       "target_id": "mom",
-      "score": 0.6375,
+      "score": 0.525,
       "passed": false
     },
     {
@@ -8690,7 +8690,7 @@
         "apple"
       ],
       "target_id": "apple",
-      "score": 0.263111111,
+      "score": 0.29,
       "passed": false
     },
     {
@@ -8740,7 +8740,7 @@
         "apple"
       ],
       "target_id": "apple",
-      "score": 0.477333333,
+      "score": 0.4875,
       "passed": false
     },
     {
@@ -8796,7 +8796,7 @@
         "apple"
       ],
       "target_id": "apple",
-      "score": 0.469333333,
+      "score": 0.465,
       "passed": false
     },
     {
@@ -8914,7 +8914,7 @@
         "book"
       ],
       "target_id": "go",
-      "score": 0.355555556,
+      "score": 0.390625,
       "passed": false
     },
     {
@@ -8997,7 +8997,7 @@
         "friend",
         "book"
       ],
-      "target_id": "come",
+      "target_id": "friend",
       "score": 0.6,
       "passed": false
     },
@@ -9087,8 +9087,8 @@
         "friend",
         "book"
       ],
-      "target_id": "come",
-      "score": 0.5875,
+      "target_id": "friend",
+      "score": 0.57,
       "passed": false
     },
     {
@@ -9144,7 +9144,7 @@
         "school"
       ],
       "target_id": "school",
-      "score": 0.234567901,
+      "score": 0.253472222,
       "passed": false
     },
     {
@@ -9186,7 +9186,7 @@
         "school"
       ],
       "target_id": "school",
-      "score": 0.230864198,
+      "score": 0.243055556,
       "passed": false
     },
     {
@@ -9250,7 +9250,7 @@
         "school"
       ],
       "target_id": "school",
-      "score": 0.217283951,
+      "score": 0.204861111,
       "passed": false
     },
     {
@@ -9374,8 +9374,8 @@
         "book"
       ],
       "target_id": "go",
-      "score": 0.65,
-      "passed": false
+      "score": 0.703125,
+      "passed": true
     },
     {
       "profile": "batch",
@@ -9450,8 +9450,8 @@
         "book"
       ],
       "target_id": "puppy",
-      "score": 0.679012346,
-      "passed": false
+      "score": 0.708333333,
+      "passed": true
     },
     {
       "profile": "batch",
@@ -9548,7 +9548,7 @@
         "book"
       ],
       "target_id": "grandma",
-      "score": 0.680272109,
+      "score": 0.65,
       "passed": false
     },
     {
@@ -9602,7 +9602,7 @@
         "mom"
       ],
       "target_id": "mom",
-      "score": 0.55,
+      "score": 0.59765625,
       "passed": false
     },
     {
@@ -9654,7 +9654,7 @@
         "mom"
       ],
       "target_id": "mom",
-      "score": 0.5125,
+      "score": 0.4921875,
       "passed": false
     },
     {
@@ -9718,7 +9718,7 @@
         "mom"
       ],
       "target_id": "mom",
-      "score": 0.6025,
+      "score": 0.475,
       "passed": false
     },
     {
@@ -9807,7 +9807,7 @@
       ],
       "target_id": "apple",
       "score": 0.7,
-      "passed": false
+      "passed": true
     },
     {
       "profile": "streaming",
@@ -9839,9 +9839,9 @@
         "friend",
         "book"
       ],
-      "target_id": "dad",
-      "score": 0.713333333,
-      "passed": false
+      "target_id": "apple",
+      "score": 0.74,
+      "passed": true
     },
     {
       "profile": "batch",
@@ -9925,9 +9925,9 @@
         "friend",
         "book"
       ],
-      "target_id": "grandpa",
-      "score": 0.66,
-      "passed": false
+      "target_id": "apple",
+      "score": 0.65,
+      "passed": true
     },
     {
       "profile": "batch",
@@ -10024,7 +10024,7 @@
         "book"
       ],
       "target_id": "apple",
-      "score": 0.615111111,
+      "score": 0.59,
       "passed": false
     },
     {
@@ -10052,7 +10052,7 @@
         "apple"
       ],
       "target_id": "apple",
-      "score": 0.100444444,
+      "score": 0.11,
       "passed": false
     },
     {
@@ -10102,7 +10102,7 @@
         "apple"
       ],
       "target_id": "apple",
-      "score": 0.254222222,
+      "score": 0.25,
       "passed": false
     },
     {
@@ -10170,7 +10170,7 @@
         "apple"
       ],
       "target_id": "apple",
-      "score": 0.928,
+      "score": 0.82,
       "passed": true
     },
     {
@@ -10248,7 +10248,7 @@
         "apple"
       ],
       "target_id": "apple",
-      "score": 0.908,
+      "score": 0.77,
       "passed": true
     },
     {
@@ -10310,7 +10310,7 @@
         "book"
       ],
       "target_id": "banana",
-      "score": 0.333333333,
+      "score": 0.375,
       "passed": false
     },
     {
@@ -10394,7 +10394,7 @@
         "book"
       ],
       "target_id": "puppy",
-      "score": 0.359259259,
+      "score": 0.369791667,
       "passed": false
     },
     {
@@ -10496,7 +10496,7 @@
         "book"
       ],
       "target_id": "apple",
-      "score": 0.928,
+      "score": 0.82,
       "passed": true
     },
     {
@@ -10608,7 +10608,7 @@
         "book"
       ],
       "target_id": "apple",
-      "score": 0.908,
+      "score": 0.77,
       "passed": true
     }
   ],
@@ -14538,7 +14538,7 @@
         "m",
         "a"
       ],
-      "threshold": 0.825
+      "threshold": 0.7
     },
     {
       "id": "dad",
@@ -14548,7 +14548,7 @@
         "p͈",
         "a"
       ],
-      "threshold": 0.825
+      "threshold": 0.73
     },
     {
       "id": "grandma",
@@ -14562,7 +14562,7 @@
         "n",
         "i"
       ],
-      "threshold": 0.825
+      "threshold": 0.75
     },
     {
       "id": "grandpa",
@@ -14577,7 +14577,7 @@
         "tɕ",
         "i"
       ],
-      "threshold": 0.875
+      "threshold": 0.75
     },
     {
       "id": "puppy",
@@ -14590,7 +14590,7 @@
         "tɕ",
         "i"
       ],
-      "threshold": 0.775
+      "threshold": 0.65
     },
     {
       "id": "cat",
@@ -14603,7 +14603,7 @@
         "ŋ",
         "i"
       ],
-      "threshold": 0.775
+      "threshold": 0.65
     },
     {
       "id": "rabbit",
@@ -14614,7 +14614,7 @@
         "k͈",
         "i"
       ],
-      "threshold": 0.825
+      "threshold": 0.7
     },
     {
       "id": "butterfly",
@@ -14625,7 +14625,7 @@
         "p",
         "i"
       ],
-      "threshold": 0.825
+      "threshold": 0.7
     },
     {
       "id": "apple",
@@ -14637,7 +14637,7 @@
         "w",
         "a"
       ],
-      "threshold": 0.8
+      "threshold": 0.65
     },
     {
       "id": "banana",
@@ -14650,7 +14650,7 @@
         "n",
         "a"
       ],
-      "threshold": 0.775
+      "threshold": 0.65
     },
     {
       "id": "milk",
@@ -14660,7 +14660,7 @@
         "j",
         "u"
       ],
-      "threshold": 0.825
+      "threshold": 0.73
     },
     {
       "id": "bread",
@@ -14670,7 +14670,7 @@
         "a",
         "ŋ"
       ],
-      "threshold": 0.825
+      "threshold": 0.73
     },
     {
       "id": "go",
@@ -14681,7 +14681,7 @@
         "j",
         "o"
       ],
-      "threshold": 0.825
+      "threshold": 0.7
     },
     {
       "id": "come",
@@ -14692,7 +14692,7 @@
         "j",
         "o"
       ],
-      "threshold": 0.825
+      "threshold": 0.7
     },
     {
       "id": "eat",
@@ -14705,7 +14705,7 @@
         "j",
         "o"
       ],
-      "threshold": 0.775
+      "threshold": 0.65
     },
     {
       "id": "school",
@@ -14718,7 +14718,7 @@
         "j",
         "o"
       ],
-      "threshold": 0.775
+      "threshold": 0.65
     },
     {
       "id": "friend",
@@ -14730,7 +14730,7 @@
         "k",
         "u"
       ],
-      "threshold": 0.8
+      "threshold": 0.65
     },
     {
       "id": "book",
@@ -14740,7 +14740,7 @@
         "ɛ",
         "k̚"
       ],
-      "threshold": 0.825
+      "threshold": 0.73
     }
   ]
 }

@@ -18,7 +18,7 @@
         "a"
       ],
       "min_phonemes": 4,
-      "threshold": 0.825
+      "threshold": 0.7
     },
     {
       "id": "dad",
@@ -30,7 +30,7 @@
         "a"
       ],
       "min_phonemes": 3,
-      "threshold": 0.825
+      "threshold": 0.73
     },
     {
       "id": "grandma",
@@ -46,7 +46,7 @@
         "i"
       ],
       "min_phonemes": 7,
-      "threshold": 0.825
+      "threshold": 0.75
     },
     {
       "id": "grandpa",
@@ -63,7 +63,7 @@
         "i"
       ],
       "min_phonemes": 8,
-      "threshold": 0.875
+      "threshold": 0.75
     },
     {
       "id": "puppy",
@@ -78,7 +78,7 @@
         "i"
       ],
       "min_phonemes": 6,
-      "threshold": 0.775
+      "threshold": 0.65
     },
     {
       "id": "cat",
@@ -93,7 +93,7 @@
         "i"
       ],
       "min_phonemes": 6,
-      "threshold": 0.775
+      "threshold": 0.65
     },
     {
       "id": "rabbit",
@@ -106,7 +106,7 @@
         "i"
       ],
       "min_phonemes": 4,
-      "threshold": 0.825
+      "threshold": 0.7
     },
     {
       "id": "butterfly",
@@ -119,7 +119,7 @@
         "i"
       ],
       "min_phonemes": 4,
-      "threshold": 0.825
+      "threshold": 0.7
     },
     {
       "id": "apple",
@@ -133,7 +133,7 @@
         "a"
       ],
       "min_phonemes": 5,
-      "threshold": 0.8
+      "threshold": 0.65
     },
     {
       "id": "banana",
@@ -148,7 +148,7 @@
         "a"
       ],
       "min_phonemes": 6,
-      "threshold": 0.775
+      "threshold": 0.65
     },
     {
       "id": "milk",
@@ -160,7 +160,7 @@
         "u"
       ],
       "min_phonemes": 3,
-      "threshold": 0.825
+      "threshold": 0.73
     },
     {
       "id": "bread",
@@ -172,7 +172,7 @@
         "ŋ"
       ],
       "min_phonemes": 3,
-      "threshold": 0.825
+      "threshold": 0.73
     },
     {
       "id": "go",
@@ -185,7 +185,7 @@
         "o"
       ],
       "min_phonemes": 4,
-      "threshold": 0.825
+      "threshold": 0.7
     },
     {
       "id": "come",
@@ -198,7 +198,7 @@
         "o"
       ],
       "min_phonemes": 4,
-      "threshold": 0.825
+      "threshold": 0.7
     },
     {
       "id": "eat",
@@ -213,7 +213,7 @@
         "o"
       ],
       "min_phonemes": 6,
-      "threshold": 0.775
+      "threshold": 0.65
     },
     {
       "id": "school",
@@ -228,7 +228,7 @@
         "o"
       ],
       "min_phonemes": 6,
-      "threshold": 0.775
+      "threshold": 0.65
     },
     {
       "id": "friend",
@@ -242,7 +242,7 @@
         "u"
       ],
       "min_phonemes": 5,
-      "threshold": 0.8
+      "threshold": 0.65
     },
     {
       "id": "book",
@@ -254,7 +254,7 @@
         "k̚"
       ],
       "min_phonemes": 3,
-      "threshold": 0.825
+      "threshold": 0.73
     }
   ]
 }
