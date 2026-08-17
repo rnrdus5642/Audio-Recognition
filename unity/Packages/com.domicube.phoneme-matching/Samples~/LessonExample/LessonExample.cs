@@ -129,7 +129,7 @@ public sealed class LessonExample : MonoBehaviour
             return;
         }
 
-        _listener.TargetText = Words[_index];
+        _listener.TargetWords = new[] { Words[_index] };
         _status = $"'{Words[_index]}' 라고 말해보세요";
         _live = string.Empty;
         _listener.Listen();

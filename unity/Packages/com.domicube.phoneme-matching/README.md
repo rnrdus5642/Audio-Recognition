@@ -236,7 +236,7 @@ recognizer.Warmup(2.5f);     // 로딩 화면에서. 첫 추론이 ~2초 걸립�
 var listener = gameObject.AddComponent<PronunciationListener>();
 listener.SetRecognizer(recognizer);
 listener.MicrophoneDevice = "Headset Microphone (...)";   // 비우면 OS 기본
-listener.TargetText = "사과";
+listener.TargetWords = new[] { "사과" };                  // 여러 개도 가능
 
 listener.OnConfirmed.AddListener((word, score) => 다음문제로());
 listener.OnTimedOut.AddListener(() => 다시해볼까());
@@ -248,6 +248,25 @@ listener.StopListening();   // 끄기 (확정·타임아웃에도 자동으로 �
 창 길이·hop·확정 횟수·타임아웃은 인스펙터에서 조정합니다. 장치 이름은
 `Microphone.devices` 로 확인하세요 - VR 에서는 OS 기본이 헤드셋 마이크가
 아닌 경우가 많습니다.
+
+**정답을 여러 개 둘 수 있습니다.** 하나만 맞아도 확정되고, `OnConfirmed`
+의 첫 인자가 어느 단어였는지 알려줍니다.
+
+```csharp
+listener.TargetWords = new[] { "엄마", "어머니" };
+```
+
+다만 **오확정 확률이 대략 곱해집니다.** 개수보다 어느 단어를 넣느냐가
+문제입니다.
+
+```
+엄마/아빠                  3/100
+엄마/아빠/할아버지          5/100
+엄마/아빠/할머니           21/100    ← 할머니 하나가 19
+```
+
+`할머니` 처럼 긴 단어는 다른 말 안에 통과할 구간이 생기기 쉬워 혼자
+오확정을 다 만듭니다. 동의어가 정말 필요할 때만 쓰세요.
 
 ---
 
@@ -438,7 +457,7 @@ public sealed class Lesson : MonoBehaviour
     public void Ask()
     {
         if (_index >= Words.Length) return;
-        _listener.TargetText = Words[_index];
+        _listener.TargetWords = new[] { Words[_index] };
         _listener.Listen();                 // 마이크 켜짐
     }
 
@@ -600,7 +619,7 @@ public sealed class Lesson : MonoBehaviour
 | `SetRecognizer(IPhonemeRecognizer)` | `Listen` 전에 한 번 |
 | `Listen()` / `StopListening()` | 마이크 켜기·끄기 |
 | `IsListening`, `Session` | 상태, 내부 판정 객체 |
-| `TargetText` | 물어볼 단어 |
+| `TargetWords` | 물어볼 단어. 여러 개면 그중 하나만 맞아도 확정 |
 | `MicrophoneDevice` | 비우면 OS 기본 |
 | `WindowSeconds` `HopSeconds` `Consecutive` `TimeoutSeconds` | 2.5 / 0.5 / 2 / 30 |
 | `OnConfirmed(word, score)` | 확정 |

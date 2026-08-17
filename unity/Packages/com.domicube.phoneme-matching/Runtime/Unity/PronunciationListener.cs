@@ -32,8 +32,10 @@ namespace DomiCube.PhonemeMatching.Unity
         public string TargetsFileName = "targets.json";
 
         [Header("Listening")]
-        [Tooltip("정답 단어. 비우면 세그먼트 전체를 후보로 삼습니다.")]
-        public string TargetText = "사과";
+        [Tooltip("정답 단어. 여러 개를 넣으면 그중 하나만 맞아도 확정됩니다 "
+                 + "(동의어용). 다만 오확정 확률이 대략 곱해지므로, "
+                 + "필요한 만큼만 넣으세요.")]
+        public string[] TargetWords = { "사과" };
 
         [Tooltip("ASR에 넣는 오디오 창 (초)")]
         [Range(1f, 4f)] public float WindowSeconds = 2.5f;
@@ -146,9 +148,29 @@ namespace DomiCube.PhonemeMatching.Unity
             _session = new PronunciationSession(
                 _matrix, _catalog, _recognizer, Consecutive);
 
+            var words = new List<string>();
+            if (TargetWords != null)
+            {
+                foreach (var w in TargetWords)
+                {
+                    if (!string.IsNullOrWhiteSpace(w))
+                    {
+                        words.Add(w.Trim());
+                    }
+                }
+            }
+
+            if (words.Count == 0)
+            {
+                Debug.LogError(
+                    "[PronunciationListener] TargetWords가 비어 있습니다.");
+                _session = null;
+                return;
+            }
+
             try
             {
-                _session.Begin(TargetText);
+                _session.Begin(words);
             }
             catch (ArgumentException e)
             {
