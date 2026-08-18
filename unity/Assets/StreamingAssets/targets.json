@@ -5,7 +5,7 @@
     "ko"
   ],
   "confusion_matrix_id": "ko_child_v1",
-  "build_date": "2026-08-14",
+  "build_date": "2026-08-18",
   "answers": [
     {
       "id": "mom",
@@ -255,6 +255,169 @@
       ],
       "min_phonemes": 3,
       "threshold": 0.73
+    },
+    {
+      "id": "lift_polite",
+      "text": "들어요",
+      "language": "ko",
+      "phonemes": [
+        "t",
+        "ɯ",
+        "ɾ",
+        "ʌ",
+        "j",
+        "o"
+      ],
+      "min_phonemes": 6,
+      "threshold": 0.65
+    },
+    {
+      "id": "lift_plain",
+      "text": "들어",
+      "language": "ko",
+      "phonemes": [
+        "t",
+        "ɯ",
+        "ɾ",
+        "ʌ"
+      ],
+      "min_phonemes": 4,
+      "threshold": 0.7
+    },
+    {
+      "id": "hit_polite",
+      "text": "쳐요",
+      "language": "ko",
+      "phonemes": [
+        "tɕʰ",
+        "ʌ",
+        "j",
+        "o"
+      ],
+      "min_phonemes": 4,
+      "threshold": 0.7
+    },
+    {
+      "id": "hit_plain",
+      "text": "쳐",
+      "language": "ko",
+      "phonemes": [
+        "tɕʰ",
+        "ʌ"
+      ],
+      "min_phonemes": 2,
+      "threshold": 0.85
+    },
+    {
+      "id": "put_polite",
+      "text": "놔요",
+      "language": "ko",
+      "phonemes": [
+        "n",
+        "w",
+        "a",
+        "j",
+        "o"
+      ],
+      "min_phonemes": 5,
+      "threshold": 0.65
+    },
+    {
+      "id": "put_plain",
+      "text": "놔",
+      "language": "ko",
+      "phonemes": [
+        "n",
+        "w",
+        "a"
+      ],
+      "min_phonemes": 3,
+      "threshold": 0.73
+    },
+    {
+      "id": "shake_polite",
+      "text": "흔들어요",
+      "language": "ko",
+      "phonemes": [
+        "h",
+        "ɯ",
+        "n",
+        "t",
+        "ɯ",
+        "ɾ",
+        "ʌ",
+        "j",
+        "o"
+      ],
+      "min_phonemes": 9,
+      "threshold": 0.75
+    },
+    {
+      "id": "shake_plain",
+      "text": "흔들어",
+      "language": "ko",
+      "phonemes": [
+        "h",
+        "ɯ",
+        "n",
+        "t",
+        "ɯ",
+        "ɾ",
+        "ʌ"
+      ],
+      "min_phonemes": 7,
+      "threshold": 0.75
+    },
+    {
+      "id": "knock_polite",
+      "text": "두드려요",
+      "language": "ko",
+      "phonemes": [
+        "t",
+        "u",
+        "t",
+        "ɯ",
+        "ɾ",
+        "j",
+        "ʌ",
+        "j",
+        "o"
+      ],
+      "min_phonemes": 9,
+      "threshold": 0.75
+    },
+    {
+      "id": "knock_plain",
+      "text": "두드려",
+      "language": "ko",
+      "phonemes": [
+        "t",
+        "u",
+        "t",
+        "ɯ",
+        "ɾ",
+        "j",
+        "ʌ"
+      ],
+      "min_phonemes": 7,
+      "threshold": 0.75
+    },
+    {
+      "id": "silophone",
+      "text": "실로폰",
+      "language": "ko",
+      "phonemes": [
+        "s",
+        "i",
+        "l",
+        "ɾ",
+        "o",
+        "pʰ",
+        "o",
+        "n"
+      ],
+      "min_phonemes": 8,
+      "threshold": 0.75
     }
   ]
 }

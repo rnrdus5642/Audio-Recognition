@@ -1,7 +1,7 @@
 """Korean G2P implementation.
 
 Pipeline (executed by `to_ipa`):
-  1. g2pkk applies Korean phonological rules:
+  1. `.rules` applies Korean phonological rules:
        자음동화, 비음화, 경음화, 구개음화, ㅎ 탈락, 연음, 자음군 단순화 ...
      Input is orthographic Hangul; output is surface-form Hangul.
   2. Each surface-form Hangul syllable is decomposed into
@@ -10,15 +10,18 @@ Pipeline (executed by `to_ipa`):
   3. Each jamo is mapped to one or more IPA phonemes using the project's
      canonical mapping table (`.jamo_ipa`).
 
-This module is BUILD-TIME ONLY. At runtime the recognizer outputs IPA
-phonemes by going through the same `.jamo_ipa` mapping (see
-`python.runtime.recognizer.ko.asr`), so target and user IPA are always
-drawn from the same inventory.
+Both steps run at runtime too, on the recogniser's output, and both have
+C# counterparts the device runs (`Korean.Rules`, `Korean.JamoIpa`).
+Answers and user speech therefore reach IPA by the same route, which is
+what the matching assumes. They did not always: the rules used to be
+build-time only, so a perfectly spoken 쳐 arrived as 쳐 and was compared
+against 처.
 """
 
 from __future__ import annotations
 
 from ..base import BaseG2P
+from . import rules
 from .jamo_ipa import hangul_to_ipa_phonemes
 
 
@@ -48,8 +51,19 @@ class KoreanG2P(BaseG2P):
     def apply_rules(self, text: str) -> str:
         """Return the surface-form Hangul (phonological rules applied).
 
-        Exposed as a separate method to make build-time debugging easier.
+        Uses the mecab-free implementation, which is the one C# can run.
+        Answers and user speech both pass through here, so anything the
+        device cannot reproduce would show up as a mismatch between two
+        spellings of the same sound rather than as a missing rule.
+
+        `g2pkk` itself is still available through `apply_rules_g2pkk` for
+        comparing the two; it needs a 112 MB dictionary and, measured on
+        the curriculum, changes nothing.
         """
+        return rules.apply_rules(text.strip())
+
+    def apply_rules_g2pkk(self, text: str) -> str:
+        """The full g2pkk path, morphological analyser included."""
         self._ensure_g2p()
         return self._g2p(text.strip())
 

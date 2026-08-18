@@ -17,3 +17,14 @@ eat,먹어요,ko
 school,학교,ko
 friend,친구,ko
 book,책,ko
+lift_polite,들어요,ko
+lift_plain,들어,ko
+hit_polite,쳐요,ko
+hit_plain,쳐,ko
+put_polite,놔요,ko
+put_plain,놔,ko
+shake_polite,흔들어요,ko
+shake_plain,흔들어,ko
+knock_polite,두드려요,ko
+knock_plain,두드려,ko
+silophone,실로폰,ko

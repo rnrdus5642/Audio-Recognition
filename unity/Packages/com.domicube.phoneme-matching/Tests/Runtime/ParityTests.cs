@@ -107,7 +107,33 @@ namespace DomiCube.PhonemeMatching.Tests
         }
 
         // ------------------------------------------------------------------
-        // 1. Hangul -> IPA
+        // 1. Phonological rules
+        // ------------------------------------------------------------------
+
+        [Test]
+        public void PhonologicalRulesMatchPython()
+        {
+            var failures = new List<string>();
+            foreach (var c in (JArray)_vectors["phonological_rules"])
+            {
+                var text = (string)c["text"];
+                var expected = (string)c["surface"];
+                var actual = Rules.Apply(text);
+                if (actual != expected)
+                {
+                    failures.Add($"{text}: expected {expected} got {actual}");
+                }
+            }
+
+            Assert.That(failures, Is.Empty,
+                $"{failures.Count} of "
+                + $"{((JArray)_vectors["phonological_rules"]).Count}\n"
+                + string.Join("\n", failures.GetRange(
+                    0, failures.Count < 20 ? failures.Count : 20)));
+        }
+
+        // ------------------------------------------------------------------
+        // 2. Hangul -> IPA
         // ------------------------------------------------------------------
 
         [Test]

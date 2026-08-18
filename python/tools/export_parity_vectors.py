@@ -7,11 +7,12 @@ still return a plausible score. These vectors pin every layer of the
 pipeline so the C# tests fail loudly instead.
 
 Covers, in dependency order:
-  1. hangul -> IPA          (the runtime path: NO phonological rules)
-  2. confusion matrix costs
-  3. score_against          (batch and streaming profiles)
-  4. best_match
-  5. StreamingMatcher       (streak behaviour over real ASR frames)
+  1. phonological rules     (hangul -> surface-form hangul)
+  2. hangul -> IPA
+  3. confusion matrix costs
+  4. score_against          (batch and streaming profiles)
+  5. best_match
+  6. StreamingMatcher       (streak behaviour over real ASR frames)
 
 Usage:
     python -m python.tools.export_parity_vectors
@@ -30,6 +31,7 @@ if sys.platform == "win32":
             _s.reconfigure(encoding="utf-8")
 
 from python.build.g2p.ko.jamo_ipa import hangul_to_ipa_phonemes
+from python.build.g2p.ko.rules import apply_rules
 from python.runtime.matching import ConfusionMatrix, Matcher, StreamingMatcher
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
@@ -39,6 +41,13 @@ MATRIX_PATH = (
 TARGETS_PATH = PROJECT_ROOT / "shared" / "targets.json"
 FRAMES_PATH = (
     PROJECT_ROOT / "python" / "tests" / "fixtures" / "streaming_frames.json"
+)
+# Inputs chosen to fire every entry of the rule table at least once:
+# the curriculum, corpus sentences, and synthesised syllable pairs for
+# the coda/onset combinations that Korean children's speech never
+# happens to contain.
+RULE_SAMPLES_PATH = (
+    PROJECT_ROOT / "python" / "tests" / "fixtures" / "rule_samples.json"
 )
 DEFAULT_OUT = (
     PROJECT_ROOT / "unity" / "Packages" / "com.domicube.phoneme-matching"
@@ -178,6 +187,11 @@ def build(matrix_path: Path, targets_path: Path, frames_path: Path) -> dict:
                 "context_mult": stream.context_mult,
             },
         },
+        "phonological_rules": [
+            {"text": t, "surface": apply_rules(t)}
+            for t in json.loads(
+                RULE_SAMPLES_PATH.read_text(encoding="utf-8"))
+        ],
         "hangul_to_ipa": [
             {"text": t, "phonemes": hangul_to_ipa_phonemes(t)}
             for t in HANGUL_SAMPLES
@@ -224,7 +238,8 @@ def main() -> int:
         json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8"
     )
 
-    n = (len(data["hangul_to_ipa"])
+    n = (len(data["phonological_rules"])
+         + len(data["hangul_to_ipa"])
          + sum(len(v) for v in data["matrix_costs"].values())
          + sum(len(v) for v in data["score_against"].values())
          + len(data["best_match"]) + len(data["streaming_sessions"]))

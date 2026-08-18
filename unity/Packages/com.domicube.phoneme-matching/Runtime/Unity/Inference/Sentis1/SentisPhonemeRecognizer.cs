@@ -83,7 +83,7 @@ namespace DomiCube.PhonemeMatching.Unity
             text = CtcDecoder.Decode(logits, shape.frames, shape.classes, _vocab);
             phonemes = text.Length == 0
                 ? new List<string>()
-                : Korean.JamoIpa.ToPhonemes(text);
+                : Korean.JamoIpa.ToPhonemes(Korean.Rules.Apply(text));
         }
 
         private void Infer(

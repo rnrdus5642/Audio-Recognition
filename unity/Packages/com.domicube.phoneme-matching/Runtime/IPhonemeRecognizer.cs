@@ -10,8 +10,12 @@ namespace DomiCube.PhonemeMatching
     ///
     /// Implementations must emit phonemes from the same inventory the
     /// targets were built with - for Korean that means running the
-    /// recogniser's text output through
-    /// <see cref="Korean.JamoIpa.ToPhonemes"/>.
+    /// recogniser's text output through <see cref="Korean.Rules.Apply"/>
+    /// and then <see cref="Korean.JamoIpa.ToPhonemes"/>, in that order.
+    /// The build applies the same rules to the answers, and skipping
+    /// them here compares two spellings of the same sound: 먹어요 against
+    /// 머거요, and 쳐 against 처, which cost a perfect utterance enough
+    /// to put it under its own threshold.
     /// </summary>
     public interface IPhonemeRecognizer
     {
