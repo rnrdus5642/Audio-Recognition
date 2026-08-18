@@ -39,6 +39,11 @@ from config import AUDIO, INDEX, OUT, SPLITS  # noqa: E402
 
 FRAMES = os.path.join(OUT, "frames")
 WINDOW_S, HOP_S = 2.5, 0.5
+
+# One cache per acoustic model. The cache holds what a particular model
+# heard, so a fine-tuned checkpoint and the stock one cannot share it -
+# and comparing the two is the entire reason for keeping both.
+BASE_TAG = "base"
 PARTICLES = "을를이가와과는은의에도로만부터까지에서으로"
 
 
@@ -47,9 +52,9 @@ def path_of(row):
                         row["style"] or "unknown", row["wav"])
 
 
-def load(split):
-    """Every cached utterance for one split."""
-    p = os.path.join(FRAMES, f"{split}.jsonl")
+def load(split, tag=BASE_TAG):
+    """Every cached utterance for one split, as one model heard it."""
+    p = os.path.join(FRAMES, tag, f"{split}.jsonl")
     if not os.path.exists(p):
         return []
     with open(p, encoding="utf-8") as fh:
@@ -96,8 +101,15 @@ def main():
                     help="기본: train valid test 전부")
     ap.add_argument("--pos", type=int, default=900, help="분할당 검출 케이스")
     ap.add_argument("--neg", type=int, default=600, help="분할당 오발동 케이스")
+    ap.add_argument("--model", default=None,
+                    help="허브 이름이나 체크포인트 폴더. 기본은 성인 모델")
+    ap.add_argument("--tag", default=None,
+                    help="캐시 폴더 이름. 기본은 --model 에서 따옴")
     args = ap.parse_args()
     splits = args.split or ["train", "valid", "test"]
+    tag = args.tag or (
+        os.path.basename(os.path.normpath(args.model)) if args.model
+        else BASE_TAG)
 
     for p in (INDEX, SPLITS):
         if not os.path.exists(p):
@@ -106,7 +118,10 @@ def main():
 
     words = [a["text"] for a in json.load(
         open("shared/targets.json", encoding="utf-8"))["answers"]]
-    os.makedirs(FRAMES, exist_ok=True)
+    out_dir = os.path.join(FRAMES, tag)
+    os.makedirs(out_dir, exist_ok=True)
+    print("모델 " + (args.model or "성인 (기본)"))
+    print("캐시 " + out_dir)
 
     plan = {}
     for split in splits:
@@ -119,14 +134,15 @@ def main():
               f"화자 {len({r['speaker'] for r, _ in rows}):4}명 · "
               f"{secs/3600:5.1f}시간", flush=True)
 
-    todo = sum(len(v) - len({i["wav"] for i in load(s)})
+    todo = sum(len(v) - len({i["wav"] for i in load(s, tag)})
                for s, v in plan.items())
     if not todo:
         print("\n전부 캐시되어 있습니다.")
         return 0
 
     from python.runtime.recognizer.ko.asr import KoreanASRRecognizer
-    rec = KoreanASRRecognizer()
+    rec = (KoreanASRRecognizer(model_name=args.model) if args.model
+           else KoreanASRRecognizer())
     rec._load()
     print(f"\n장치: {rec._device}"
           + ("  (torch 가 CPU 빌드입니다 - cu130 을 깔면 훨씬 빠릅니다)"
@@ -152,8 +168,8 @@ def main():
 
     t0, done = time.time(), 0
     for split, rows in plan.items():
-        out_path = os.path.join(FRAMES, f"{split}.jsonl")
-        have = {i["wav"] for i in load(split)}
+        out_path = os.path.join(out_dir, f"{split}.jsonl")
+        have = {i["wav"] for i in load(split, tag)}
         with open(out_path, "a", encoding="utf-8") as fh:
             for r, is_pos in rows:
                 if r["wav"] in have:
@@ -174,7 +190,7 @@ def main():
                     print(f"  {done:,}/{todo:,}  {time.time()-t0:.0f}s"
                           f"  남은 예상 {left/60:.0f}분", flush=True)
 
-    print(f"\n{done:,}개  {time.time()-t0:.0f}초\n{FRAMES}")
+    print(f"\n{done:,}개  {time.time()-t0:.0f}초\n{out_dir}")
     return 0
 
 
