@@ -215,6 +215,10 @@ def main() -> int:
     parser.add_argument("--warmup", type=int, default=500)
     parser.add_argument("--eval-every", type=int, default=1000)
     parser.add_argument("--out", type=Path, default=RUNS / "child")
+    parser.add_argument("--resume", type=Path, default=None,
+                        help="an epoch-NN directory to carry on from; "
+                             "picks up its weights, optimiser and step "
+                             "count and starts the epoch after it")
     args = parser.parse_args()
 
     if not torch.cuda.is_available():
@@ -225,8 +229,11 @@ def main() -> int:
     torch.backends.cudnn.allow_tf32 = True
 
     processor = Wav2Vec2Processor.from_pretrained(MODEL)
+    start = args.resume or MODEL
+    if args.resume:
+        print(f"이어받기 {args.resume}")
     model = Wav2Vec2ForCTC.from_pretrained(
-        MODEL,
+        start,
         # Without this a target longer than the frame count yields an
         # infinite loss and takes the weights with it.
         ctc_loss_reduction="mean",
@@ -254,6 +261,19 @@ def main() -> int:
                                   weight_decay=0.005)
     scaler = torch.amp.GradScaler("cuda")
 
+    # Adam's moments matter as much as the weights here: dropping them
+    # and re-entering a decayed schedule at full learning rate undoes a
+    # chunk of the epoch that was just saved.
+    first_epoch = 0
+    resumed_step = 0
+    if args.resume:
+        state = torch.load(args.resume / "trainer.pt", map_location=device,
+                           weights_only=False)
+        optimiser.load_state_dict(state["optimiser"])
+        scaler.load_state_dict(state["scaler"])
+        first_epoch = state["epoch"]
+        resumed_step = state["step"]
+
     per_epoch = math.ceil(
         len(batches(train, args.batch_seconds, shuffle=False))
         / args.accumulate)
@@ -269,7 +289,10 @@ def main() -> int:
     log = open(args.out / "log.jsonl", "a", encoding="utf-8")
     print(f"epoch 당 {per_epoch:,} step · 총 {total_steps:,} step")
 
-    history: list[dict] = []
+    previous = args.out / "history.json"
+    history: list[dict] = (
+        json.loads(previous.read_text(encoding="utf-8"))
+        if args.resume and previous.exists() else [])
 
     def record(cer: float, epoch: int | None, keep: bool) -> None:
         """Log a dev score, and keep the weights that produced it.
@@ -294,22 +317,27 @@ def main() -> int:
         processor.save_pretrained(target)
         (target / "metrics.json").write_text(
             json.dumps(entry, indent=2), encoding="utf-8")
+        if epoch:
+            torch.save({"optimiser": optimiser.state_dict(),
+                        "scaler": scaler.state_dict(),
+                        "epoch": epoch, "step": step}, target / "trainer.pt")
 
-    step = 0
-    # Scoring the untouched checkpoint first gives the history a zero
-    # point, and proves the evaluation path works before a night of
-    # training rides on it.
+    step = resumed_step
+    # Scoring the starting weights first gives the history a zero point,
+    # and proves the evaluation path works before a night of training
+    # rides on it. On a resume it also confirms the checkpoint loaded as
+    # the epoch that wrote it, rather than silently as the base model.
     best, _ = character_error(
         model, processor, dev, device)
-    record(best, 0, keep=False)
-    print(f"기준선 dev CER {best*100:.2f}%")
+    record(best, first_epoch, keep=False)
+    print(f"시작 dev CER {best*100:.2f}%")
 
     audio_seconds = 0.0
     started = time.time()
     running = []
     stop = False
 
-    for epoch in range(args.epochs):
+    for epoch in range(first_epoch, args.epochs):
         groups = batches(train, args.batch_seconds, shuffle=True, seed=epoch)
         # partial rather than a closure: Windows starts workers by
         # spawning, which pickles collate_fn, and a local lambda has no
