@@ -153,18 +153,28 @@ def main():
     import soundfile as sf
 
     def frames_of(path):
+        """Per-window IPA, and the Hangul it was derived from.
+
+        The recogniser produces both in one acoustic pass and used to
+        throw the Hangul away. Keeping it costs nothing and buys two
+        things: the cache survives a change to the phonological rules,
+        which would otherwise void hours of inference; and a false accept
+        can be read back as words rather than as a row of phonemes.
+        """
         audio, sr = sf.read(path, dtype="float32")
         if audio.ndim > 1:
             audio = audio.mean(axis=1)
         win, hop = int(WINDOW_S * sr), int(HOP_S * sr)
-        out, start = [], 0
+        out, heard, start = [], [], 0
         while start < len(audio):
             chunk = audio[start:start + win]
             if len(chunk) < win:
                 chunk = np.pad(chunk, (win - len(chunk), 0))
-            out.append(rec.recognize(chunk))
+            text, ipa = rec.recognize_with_text(chunk)
+            out.append(ipa)
+            heard.append(text)
             start += hop
-        return out
+        return out, heard
 
     t0, done = time.time(), 0
     for split, rows in plan.items():
@@ -179,8 +189,8 @@ def main():
                     "speaker": r["speaker"], "style": r["style"],
                     "seconds": float(r["seconds"] or 0), "text": r["text"],
                     "hits": r["hits"], "positive": is_pos,
-                    "frames": frames_of(path_of(r)),
                 }
+                item["frames"], item["heard"] = frames_of(path_of(r))
                 fh.write(json.dumps(item, ensure_ascii=False) + "\n")
                 fh.flush()
                 done += 1
