@@ -61,8 +61,17 @@ def load(split, tag=BASE_TAG):
         return [json.loads(line) for line in fh if line.strip()]
 
 
-def select(split, words, n_pos, n_neg):
-    """Utterances for one split, spread over as many children as possible."""
+def select(split, words, n_pos, n_neg, isolated=False):
+    """Utterances for one split, spread over as many children as possible.
+
+    With `isolated`, detections are restricted to utterances that are the
+    word on its own. That is the condition the product actually listens
+    in - a child answers a prompt with one word - and it scores
+    differently from the same word inside a sentence, because phonemes
+    outside the match window cost `skip_cost` and silence produces none.
+    Tuning on sentences and shipping for single words is what broke the
+    adult thresholds on 2026-08-18.
+    """
     speakers = json.load(open(SPLITS, encoding="utf-8"))["speakers"]
     hit = re.compile("|".join(
         rf"(?:(?:^|\s){re.escape(w)}(?:[\s{PARTICLES}]|$|[.,?!]))"
@@ -76,6 +85,9 @@ def select(split, words, n_pos, n_neg):
                 continue
             r["hits"] = [w for w in words if re.search(
                 rf"(^|\s){re.escape(w)}([\s{PARTICLES}]|$|[.,?!])", r["text"])]
+            if isolated and r["hits"]:
+                if len(re.sub(r"[^가-힣 ]", "", r["text"]).split()) != 1:
+                    continue
             (pos if r["hits"] else neg).append(r)
 
     return balance(pos, n_pos), balance(neg, n_neg)
@@ -103,6 +115,8 @@ def main():
     ap.add_argument("--neg", type=int, default=600, help="분할당 오발동 케이스")
     ap.add_argument("--model", default=None,
                     help="허브 이름이나 체크포인트 폴더. 기본은 성인 모델")
+    ap.add_argument("--isolated", action="store_true",
+                    help="검출 케이스를 단독 단어 발화로 제한 (제품 조건)")
     ap.add_argument("--tag", default=None,
                     help="캐시 폴더 이름. 기본은 --model 에서 따옴")
     args = ap.parse_args()
@@ -125,7 +139,7 @@ def main():
 
     plan = {}
     for split in splits:
-        pos, neg = select(split, words, args.pos, args.neg)
+        pos, neg = select(split, words, args.pos, args.neg, args.isolated)
         rows = [(r, True) for r in pos] + [(r, False) for r in neg]
         rows = [(r, is_pos) for r, is_pos in rows if os.path.exists(path_of(r))]
         plan[split] = rows
