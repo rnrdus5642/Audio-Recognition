@@ -26,9 +26,15 @@ examples to fit a threshold from, while this works for all 29 - and for
 whatever word gets added next, including 실로폰, which appears nowhere
 in 2.76M utterances.
 
-The budget is spent against train speakers and lands about twice as high
-on unseen ones, so --budget is deliberately below the real target: 0.5%
-here measured 0.89% on 458 held-out children.
+The budget is spent against train speakers and lands higher on unseen
+ones, so --budget sits below the real target: 0.5% here measured 0.70%
+over 234 held-out children at the shipped profile.
+
+The profile it reads from the matrix has to be the one that ships, and
+so does --consecutive: a threshold is the lowest value that stays quiet
+for that many frames in a row, and the answer changes if the app asks
+for a different number. `fit_streaming.py` searches for the profile;
+this sets thresholds once the profile is settled.
 
     python python/tools/child_tuning/derive_thresholds.py
     python python/tools/child_tuning/derive_thresholds.py --budget 0.003
@@ -73,7 +79,7 @@ def main():
     ap.add_argument("--targets", default="shared/targets.json",
                     help="IPA 를 읽어올 곳 - 임계값은 여기서 안 씁니다")
     ap.add_argument("--budget", type=float, default=0.005,
-                    help="분할 내 오확정 상한. held-out 은 약 2배가 됩니다")
+                    help="분할 내 오확정 상한. held-out 은 더 높게 나옵니다")
     ap.add_argument("--consecutive", type=int, default=2)
     ap.add_argument("--out", default="shared/thresholds_child.json")
     args = ap.parse_args()

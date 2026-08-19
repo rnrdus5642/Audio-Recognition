@@ -151,6 +151,15 @@ def main():
     args = ap.parse_args()
     consecutives = [args.consecutive] if args.consecutive else CONSECUTIVE
 
+    # The grid takes ten minutes and the write is the last thing that
+    # happens, so an unwritable path used to cost the whole run - a
+    # mistyped --out landed in C:/Program Files and failed there.
+    try:
+        with open(args.out, "a", encoding="utf-8"):
+            pass
+    except OSError as err:
+        raise SystemExit(f"--out 을 쓸 수 없습니다: {err}")
+
     base = ConfusionMatrix.from_json(args.matrix)
     answers = json.load(open(args.targets, encoding="utf-8"))["answers"]
 
