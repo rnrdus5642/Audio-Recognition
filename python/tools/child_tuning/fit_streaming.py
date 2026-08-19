@@ -24,6 +24,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import math
 import os
 import sys
 
@@ -103,6 +104,35 @@ def evaluate(positives, negatives, seconds, answers, thresholds, consecutive):
     return hit / max(said, 1), rate, hit, said
 
 
+def standard_error(rate, n):
+    """Sampling error of a detection rate over `n` utterances."""
+    return math.sqrt(max(rate * (1 - rate), 1e-9) / max(n, 1))
+
+
+def choose(grid, n_isolated, n_surround):
+    """Pick a profile, deciding ties by what the next column says.
+
+    Taking the top single-word score alone picks skip_cost 0.08, which
+    leads by 1.3 points on train - inside one standard error at this
+    sample size, and gone by the test split, where it ties. That same
+    profile scores 80.2% once anything surrounds the word against 89.8%
+    for 0.005, so the tie-break is not cosmetic.
+
+    Order: single words, then words with speech around them, then fewest
+    false accepts. Each step keeps everything within one standard error
+    of the leader, so a difference has to be real to decide anything.
+    """
+    top = max(g["detection"] for g in grid)
+    margin = standard_error(top, n_isolated)
+    near = [g for g in grid if g["detection"] >= top - margin]
+
+    top_surround = max(g["surround"] for g in near)
+    margin = standard_error(top_surround, n_surround)
+    near = [g for g in near if g["surround"] >= top_surround - margin]
+
+    return min(near, key=lambda g: g["rate"])
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--positives", default="child-iso",
@@ -141,7 +171,9 @@ def main():
 
     print(f"\n{'skip':>7}{'cov':>6}{'ctx':>6}{'연속':>5}"
           f"{'train 검출':>11}{'덧붙임':>9}{'train 오확정':>13}", flush=True)
-    best = None
+    grid = []
+    n_isolated = len(data["train"][0])
+    n_surround = len(data["train"][3])
     for skip in SKIP:
         for coverage in COVERAGE:
             for context in CONTEXT:
@@ -165,14 +197,16 @@ def main():
                     print(f"{skip:>7}{coverage:>6}{context:>6}{consecutive:>5}"
                           f"{det*100:10.1f}%{add*100:8.1f}%"
                           f"{rate*100:12.2f}%", flush=True)
-                    if best is None or det > best["detection"]:
-                        best = {"skip_cost": skip, "coverage": coverage,
-                                "context_mult": context,
-                                "consecutive": consecutive,
-                                "detection": det, "thresholds": th,
-                                "scored": scored}
+                    grid.append({"skip_cost": skip, "coverage": coverage,
+                                 "context_mult": context,
+                                 "consecutive": consecutive,
+                                 "detection": det, "surround": add,
+                                 "rate": rate, "thresholds": th,
+                                 "scored": scored})
 
-    print(f"\ntrain 최적  skip {best['skip_cost']} · 커버리지 "
+    best = choose(grid, n_isolated, n_surround)
+
+    print(f"\n선택  skip {best['skip_cost']} · 커버리지 "
           f"{best['coverage']} · 문맥 {best['context_mult']}배 · "
           f"연속 {best['consecutive']}회")
     for split in ("train", "valid", "test"):

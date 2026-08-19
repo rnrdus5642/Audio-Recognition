@@ -412,3 +412,58 @@ class TestSubstringFalseAccept:
         result = matcher.best_match(["a"], [])
         assert result.target_id is None
         assert result.passed is False
+
+
+class TestMatrixIntrospection:
+    """The tuning tools rebuild a matrix from an existing one.
+
+    `known_substitutions` is a method, and autotune once read it as a
+    mapping: `isinstance(..., dict)` was False, so the merge fell back to
+    an empty dict and every round after the first ran with none of the 52
+    hand-set costs. It reported 0.64% false accepts where the thresholds
+    it produced actually gave 4.67%.
+    """
+
+    def test_substitutions_round_trip(self, matrix: ConfusionMatrix) -> None:
+        pairs = {(a, b): c for a, b, c in matrix.known_substitutions()}
+        assert pairs
+        for (a, b), cost in pairs.items():
+            assert matrix.sub_cost(a, b) == pytest.approx(cost)
+
+    def test_deletions_round_trip(self, matrix: ConfusionMatrix) -> None:
+        deletions = dict(matrix.known_deletions())
+        assert deletions
+        for phoneme, cost in deletions.items():
+            assert matrix.del_cost(phoneme) == pytest.approx(cost)
+
+    def test_insertions_round_trip(self, matrix: ConfusionMatrix) -> None:
+        for phoneme, cost in matrix.known_insertions():
+            assert matrix.ins_cost(phoneme) == pytest.approx(cost)
+
+    def test_rebuilds_without_losing_costs(
+        self, matrix: ConfusionMatrix
+    ) -> None:
+        """A matrix rebuilt from the accessors scores identically."""
+        copy = ConfusionMatrix(
+            matrix_id="rebuilt",
+            language=matrix.language,
+            version=matrix.version,
+            substitutions={(a, b): c
+                           for a, b, c in matrix.known_substitutions()},
+            deletions=dict(matrix.known_deletions()),
+            insertions=dict(matrix.known_insertions()),
+            default_substitution=matrix.default_substitution,
+            default_deletion=matrix.default_deletion,
+            default_insertion=matrix.default_insertion,
+            skip_cost=matrix.skip_cost,
+            streaming_profile=dict(matrix.streaming_profile),
+        )
+        original = Matcher(matrix)
+        rebuilt = Matcher(copy)
+        for user, target in (
+            (["s", "a", "k", "w", "a"], ["s", "a", "k", "w", "a"]),
+            (["n", "u", "a"], ["n", "w", "a"]),
+            (["tɕʰ", "ɛ"], ["tɕʰ", "ɛ", "k̚"]),
+        ):
+            assert (original.score_against(user, target)[1]
+                    == pytest.approx(rebuilt.score_against(user, target)[1]))

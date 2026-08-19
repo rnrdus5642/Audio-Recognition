@@ -76,6 +76,11 @@ def measure(items, matcher, by_text, targets):
                    for f in item["frames"]]
             trips += fires(seq, answer["threshold"])
 
+    if not seconds:
+        # An --isolated cache holds detections only. Reporting 0.00% here
+        # would read as "never false-fires" rather than "not measured".
+        return hit, said, None, per_word
+
     # Every utterance is scored against every answer, so the rate is per
     # word-second; one session listens for one word at a time.
     words = max(1, len(targets))
@@ -120,8 +125,9 @@ def main():
         hit, said, fa, per_word = measure(items, matcher, by_text, targets)
         speakers = len({i["speaker"] for i in items})
         rate = hit / max(said, 1) * 100
+        shown = f"{fa*100:8.2f}%" if fa is not None else "  측정 안 함"
         print(f"{tag:12} {rate:6.1f}% ({hit:4}/{said:4}) "
-              f"{fa*100:9.2f}%   {speakers:5}")
+              f"{shown:>10}   {speakers:5}")
         results[tag] = per_word
 
     if args.words and results:
