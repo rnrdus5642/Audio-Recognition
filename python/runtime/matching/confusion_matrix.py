@@ -142,6 +142,12 @@ class ConfusionMatrix:
         for (a, b), cost in self._substitutions.items():
             yield a, b, cost
 
+    def known_deletions(self) -> Iterable[tuple[str, float]]:
+        yield from self._deletions.items()
+
+    def known_insertions(self) -> Iterable[tuple[str, float]]:
+        yield from self._insertions.items()
+
     def __repr__(self) -> str:
         return (
             f"ConfusionMatrix(id={self.matrix_id!r}, "

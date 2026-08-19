@@ -67,7 +67,12 @@ class WordRow(NamedTuple):
 
 
 def auto_threshold(n_phonemes: int) -> float:
-    """Per-word default threshold based on phoneme count.
+    """Fallback threshold, from phoneme count alone.
+
+    Only used for words that `--thresholds` does not cover. Length is a
+    poor stand-in for how much unrelated speech a word attracts - 빵 and
+    책 are both three phonemes and need 0.925 and 0.725 - so prefer a
+    measured map when one exists.
 
     Short words (<= 6 phonemes) keep the golden-set values: a single
     wrong phoneme costs a quarter of a 4-phoneme word, so real speech
@@ -193,9 +198,24 @@ def find_collisions(answers: list[dict]) -> list[tuple[str, str]]:
 # ---------------------------------------------------------------------------
 
 
+def load_thresholds(path: Path | None) -> dict[str, float]:
+    """Measured per-word thresholds, keyed by word.
+
+    Produced by tools/child_tuning/derive_thresholds.py, which scores
+    each target against children saying other things and takes the
+    lowest threshold that stays inside the false-accept budget. Words
+    missing from the map fall back to `auto_threshold`.
+    """
+    if path is None:
+        return {}
+    data = json.loads(path.read_text(encoding="utf-8"))
+    return data["thresholds"]
+
+
 def build_answer_entries(
     rows: Iterable[WordRow],
     apply_rules: bool = True,
+    thresholds: dict[str, float] | None = None,
 ) -> list[dict]:
     """Run each row through its language's G2P and return enriched dicts.
 
@@ -205,6 +225,7 @@ def build_answer_entries(
     the Python dependency from adding words, at an accuracy cost that has
     to be measured rather than assumed (see `python.tools.evaluate`).
     """
+    thresholds = thresholds or {}
     g2p_cache: dict[str, object] = {}
     out: list[dict] = []
 
@@ -228,7 +249,9 @@ def build_answer_entries(
                 "language": row.language,
                 "phonemes": phonemes,
                 "min_phonemes": len(phonemes),
-                "threshold": round(auto_threshold(len(phonemes)), 4),
+                "threshold": round(
+                    thresholds.get(row.text, auto_threshold(len(phonemes))), 4
+                ),
             }
         )
     return out
@@ -241,9 +264,12 @@ def build(
     *,
     strict: bool = False,
     apply_rules: bool = True,
+    thresholds_path: Path | None = None,
 ) -> dict:
     rows = read_words_csv(input_path)
-    answers = build_answer_entries(rows, apply_rules=apply_rules)
+    answers = build_answer_entries(
+        rows, apply_rules=apply_rules,
+        thresholds=load_thresholds(thresholds_path))
 
     collisions = find_collisions(answers)
     if collisions:
@@ -295,6 +321,14 @@ def main() -> int:
         help="Confusion matrix id to embed in targets.json",
     )
     parser.add_argument(
+        "--thresholds",
+        type=Path,
+        default=None,
+        help="Measured per-word thresholds from "
+             "tools/child_tuning/derive_thresholds.py; words it does not "
+             "cover fall back to the phoneme-count default",
+    )
+    parser.add_argument(
         "--strict",
         action="store_true",
         help="Treat validation warnings as errors",
@@ -317,6 +351,7 @@ def main() -> int:
         matrix_id=args.matrix_id,
         strict=args.strict,
         apply_rules=not args.no_rules,
+        thresholds_path=args.thresholds,
     )
 
     print(

@@ -85,3 +85,7 @@ unity/.idea/
 bin/
 obj/
 *.user
+
+# Tuning run outputs; the thresholds that matter are committed as
+# shared/thresholds_child.json instead.
+python/tools/child_tuning/autotune_best_*.json

@@ -5,19 +5,23 @@ coverage, and the best thresholds depend on the matrix. So one is held
 while the other moves, and the pair is iterated until detection stops
 improving on held-out children.
 
-Splits are disjoint by speaker:
-  tune   free 6-7 (15명) + formatted 6-7 (103명)
-  valid  free 8-9 (47명)          same conditions, older
-  check  formatted 5 (30명)       younger, and read rather than free
+Splits come from tools/aihub and are disjoint by speaker, so a child
+never appears on both sides of a decision. Selection uses train only;
+valid and test are printed every round so a choice that only suits the
+tuning children is visible rather than inferred at the end.
 
-Selection uses tune only. valid and check are printed every round so a
-choice that only suits the tuning children is visible rather than
-inferred at the end.
+The frame cache is per-model, and --tag says which one to fit. The
+parameters that ship were fitted against a recogniser making a 55%
+character error; the fine-tuned one makes 8.7%, and thresholds set for
+the first are far too permissive for the second - 6.5% false accepts
+against a 1% budget.
 """
 
+import argparse
 import json
 import math
 import os
+import sys
 import time
 from collections import Counter, defaultdict
 
@@ -25,6 +29,9 @@ from python.runtime.matching.confusion_matrix import ConfusionMatrix
 from python.runtime.matching.matcher import Matcher
 
 BASE = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, BASE)
+
+from frames import load  # noqa: E402
 SESSION_S = 10.0
 BUDGET = 0.01
 ROUNDS = 3
@@ -38,17 +45,23 @@ CTX = [6.0, 8.0, 12.0]
 CONSECUTIVE = [1, 2]
 THRESHOLDS = [round(0.50 + 0.025 * i, 3) for i in range(19)]
 
-raw = {}
-for f in ("tune_frames.json", "valid_frames.json", "more_frames.json"):
-    p = os.path.join(BASE, f)
-    if os.path.exists(p):
-        raw.update(json.load(open(p, encoding="utf-8"))["sets"])
+ap = argparse.ArgumentParser()
+ap.add_argument("--tag", default="child", help="어느 모델의 프레임 캐시로 맞출지")
+ARGS = ap.parse_args()
 
-SPLITS = {
-    "tune": (raw["tune_pos"] + raw["more_pos"], raw["tune_neg"] + raw["more_neg"]),
-    "valid": (raw["valid_pos"], raw["valid_neg"]),
-    "check": (raw["check_pos"], raw["check_neg"]),
-}
+# train picks the settings; valid and test are printed every round so a
+# choice that only suits the tuning children is visible rather than
+# inferred at the end.
+SPLITS = {}
+for name in ("train", "valid", "test"):
+    items = load(name, ARGS.tag)
+    SPLITS[name] = ([i for i in items if i["positive"]],
+                    [i for i in items if not i["positive"]])
+if not SPLITS["train"][0]:
+    raise SystemExit(
+        f"'{ARGS.tag}' 캐시가 비어 있습니다. 먼저 frames.py 를 돌리세요.")
+
+print(f"캐시 {ARGS.tag}", flush=True)
 for name, (pos, neg) in SPLITS.items():
     print(f"{name}: 검출 {len(pos)} · 오발동 {len(neg)} · 화자 "
           f"{len({i['speaker'] for i in pos + neg})}명", flush=True)
@@ -65,7 +78,7 @@ def learn(prior, skip, coverage):
     subs = defaultdict(Counter)
     dels = Counter()
     total = Counter()
-    pos, _ = SPLITS["tune"]
+    pos, _ = SPLITS["train"]
     used = 0
     for item in pos:
         for w in item["hits"]:
@@ -108,12 +121,18 @@ def learn(prior, skip, coverage):
         deletions[a] = round(
             (n * learned + SHRINK_K * HAND.del_cost(a)) / (n + SHRINK_K), 3)
 
-    merged = dict(HAND.known_substitutions) if isinstance(
-        HAND.known_substitutions, dict) else {}
+    # known_substitutions() yields (a, b, cost) triples - it is a method,
+    # not a mapping. Treating it as one used to leave `merged` empty, so
+    # every round after the first ran on a matrix with none of the 61
+    # hand-set costs and charged the 0.8 default for every substitution.
+    merged = {(a, b): cost for a, b, cost in HAND.known_substitutions()}
     merged.update(substitutions)
+    merged_del = dict(HAND.known_deletions())
+    merged_del.update(deletions)
     return ConfusionMatrix(
         matrix_id="ko_child_v2", language="ko", version="2.0.0",
-        substitutions=merged, deletions=deletions, insertions={},
+        substitutions=merged, deletions=merged_del,
+        insertions=dict(HAND.known_insertions()),
         default_substitution=HAND.default_substitution,
         default_deletion=HAND.default_deletion,
         default_insertion=HAND.default_insertion,
@@ -171,7 +190,7 @@ for rnd in range(1, ROUNDS + 1):
             for ctx in CTX:
                 m = Matcher(matrix, skip_cost=skip, coverage=cov,
                             context_mult=ctx)
-                p, g, secs, n_items = scores(m, "tune")
+                p, g, secs, n_items = scores(m, "train")
                 for con in CONSECUTIVE:
                     th = {}
                     for n in LENGTHS:
@@ -199,7 +218,7 @@ for rnd in range(1, ROUNDS + 1):
                         round_best = cand
 
     best_overall = round_best
-    print(f"튜닝 최적: 검출 {round_best['detection']:.1%} · "
+    print(f"train 최적: 검출 {round_best['detection']:.1%} · "
           f"오확정 {round_best['rate']:.2%} · skip {round_best['skip']} · "
           f"cov {round_best['coverage']} · ctx {round_best['ctx']} · "
           f"연속 {round_best['consecutive']}", flush=True)
@@ -208,7 +227,7 @@ for rnd in range(1, ROUNDS + 1):
     m = Matcher(matrix, skip_cost=round_best["skip"],
                 coverage=round_best["coverage"],
                 context_mult=round_best["ctx"])
-    for split in ("tune", "valid", "check"):
+    for split in ("train", "valid", "test"):
         p, g, secs, n_items = scores(m, split)
         hit, det, rate = report(p, g, secs, n_items,
                                 round_best["thresholds"],
@@ -220,9 +239,12 @@ json.dump(
     {"skip": best_overall["skip"], "coverage": best_overall["coverage"],
      "ctx": best_overall["ctx"], "consecutive": best_overall["consecutive"],
      "thresholds": best_overall["thresholds"],
+     "matrix_id": matrix.matrix_id,
      "substitutions": {f"{a}|{b}": c
-                       for (a, b), c in matrix.known_substitutions.items()}
-     if isinstance(matrix.known_substitutions, dict) else {}},
-    open(os.path.join(BASE, "autotune_best.json"), "w", encoding="utf-8"),
+                       for a, b, c in matrix.known_substitutions()},
+     "deletions": dict(matrix.known_deletions()),
+     "insertions": dict(matrix.known_insertions())},
+    open(os.path.join(BASE, f"autotune_best_{ARGS.tag}.json"), "w",
+         encoding="utf-8"),
     ensure_ascii=False, indent=2)
 print(f"\n{time.time()-t0:.0f}초", flush=True)
