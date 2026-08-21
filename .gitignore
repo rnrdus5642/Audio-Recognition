@@ -33,6 +33,8 @@ Thumbs.db
 # 짝이 되는 .meta 도 함께 제외한다.
 unity/Assets/Models/*.onnx
 unity/Assets/Models/*.onnx.meta
+unity/Assets/Resources/Models/*.onnx
+unity/Assets/Resources/Models/*.onnx.meta
 # 폴더 안이 전부 제외되므로 폴더 meta 도 제외한다. 커밋하면 폴더 없는
 # .meta 가 되어 에디터가 지운다. 모델을 복사하면 Unity가 다시 만든다.
 unity/Assets/Models.meta

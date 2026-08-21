@@ -39,6 +39,94 @@ namespace DomiCube.PhonemeMatching.Editor
         /// <summary>What Resources.Load takes - no folder, no extension.</summary>
         public const string ResourcePath = "Models/wav2vec2_ko";
 
+        /// <summary>
+        /// The child model is a separate download, not a replacement. It
+        /// was fine-tuned on 200 hours of five to seven year olds and
+        /// makes an 8.7% character error where the adult model makes
+        /// 55%, but the two mishear differently: the thresholds and
+        /// streaming profile fitted for one are wrong for the other.
+        /// Pair it with targets_child.json and ko_child_v2.json.
+        /// </summary>
+        private const string ChildDestination =
+            "Assets/Resources/Models/wav2vec2_ko_child.onnx";
+
+        public const string ChildResourcePath = "Models/wav2vec2_ko_child";
+
+        private const string ChildUrl =
+            "https://github.com/rnrdus5642/Audio-Recognition/releases/"
+            + "download/model-v2-child/wav2vec2_ko_child.onnx";
+
+        private const long ChildExpectedBytes = 1267007332;
+
+        private const string ChildExpectedSha256 =
+            "3a2a244cc8e062d92b7b71067c6d612a5eba4e8c428916d72e9736cf858bdebe";
+
+        internal static bool ChildIsInstalled =>
+            File.Exists(ChildDestination);
+
+        [MenuItem("Tools/Phoneme Matching/아동 음향 모델 내려받기", false, 24)]
+        public static void DownloadChild()
+        {
+            if (File.Exists(ChildDestination) && !EditorUtility.DisplayDialog(
+                    "Phoneme Matching",
+                    $"{ChildDestination} 이 이미 있습니다. 다시 받을까요?",
+                    "다시 받기", "취소"))
+            {
+                return;
+            }
+
+            if (!EditorUtility.DisplayDialog(
+                    "Phoneme Matching",
+                    $"아동 음향 모델을 내려받습니다 (약 1.18GB).\n\n{ChildUrl}"
+                    + "\n\n성인 모델을 대체하지 않습니다. 함께 쓸 정답 "
+                    + "데이터는 targets_child.json 과 ko_child_v2.json 입니다.",
+                    "내려받기", "취소"))
+            {
+                return;
+            }
+
+            string temp = Path.Combine(
+                Path.GetTempPath(), "wav2vec2_ko_child.onnx.download");
+            try
+            {
+                if (Fetch(ChildUrl, temp))
+                {
+                    InstallTo(temp, ChildDestination, ChildResourcePath,
+                              ChildExpectedBytes, ChildExpectedSha256);
+                }
+            }
+            finally
+            {
+                EditorUtility.ClearProgressBar();
+                if (File.Exists(temp))
+                {
+                    File.Delete(temp);
+                }
+            }
+        }
+
+        [MenuItem("Tools/Phoneme Matching/아동 음향 모델 파일에서 가져오기…",
+                  false, 25)]
+        public static void ImportChildFromFile()
+        {
+            string picked = EditorUtility.OpenFilePanel(
+                "wav2vec2_ko_child.onnx", "", "onnx");
+            if (string.IsNullOrEmpty(picked))
+            {
+                return;
+            }
+
+            try
+            {
+                InstallTo(picked, ChildDestination, ChildResourcePath,
+                          ChildExpectedBytes, ChildExpectedSha256);
+            }
+            finally
+            {
+                EditorUtility.ClearProgressBar();
+            }
+        }
+
         private const string NoticeKey =
             "DomiCube.PhonemeMatching.ModelNoticeShown";
 
@@ -162,22 +250,30 @@ namespace DomiCube.PhonemeMatching.Editor
 
         private static bool Install(string source)
         {
-            if (!Verify(source))
+            return InstallTo(source, Destination, ResourcePath,
+                             ExpectedBytes, ExpectedSha256);
+        }
+
+        private static bool InstallTo(
+            string source, string destination, string resourcePath,
+            long expectedBytes, string expectedSha256)
+        {
+            if (!Verify(source, expectedBytes, expectedSha256))
             {
                 return false;
             }
 
-            Directory.CreateDirectory(Path.GetDirectoryName(Destination));
-            File.Copy(source, Destination, overwrite: true);
+            Directory.CreateDirectory(Path.GetDirectoryName(destination));
+            File.Copy(source, destination, overwrite: true);
             EditorUtility.ClearProgressBar();
 
             AssetDatabase.Refresh();
             Debug.Log(
-                $"[PhonemeMatching] {Destination} 준비 완료. Unity 임포트에 "
+                $"[PhonemeMatching] {destination} 준비 완료. Unity 임포트에 "
                 + "몇 분 걸립니다.\n"
                 + "코드에서는 경로로 부르세요 - 인스펙터에 끌어다 놓으면 "
                 + "다른 팀원 PC 에서 참조가 비어 있게 됩니다.\n"
-                + $"    Resources.Load<ModelAsset>(\"{ResourcePath}\")");
+                + $"    Resources.Load<ModelAsset>(\"{resourcePath}\")");
 
             OfferToIgnore();
             return true;
@@ -280,19 +376,20 @@ namespace DomiCube.PhonemeMatching.Editor
             return true;
         }
 
-        private static bool Verify(string path)
+        private static bool Verify(
+            string path, long expectedBytes, string expectedSha256)
         {
             var info = new FileInfo(path);
-            if (ExpectedBytes > 0 && info.Length != ExpectedBytes)
+            if (expectedBytes > 0 && info.Length != expectedBytes)
             {
                 Debug.LogError(
                     $"[PhonemeMatching] 받은 파일 크기가 다릅니다: "
-                    + $"{info.Length} != {ExpectedBytes}. 내려받기가 중간에 "
+                    + $"{info.Length} != {expectedBytes}. 내려받기가 중간에 "
                     + "끊겼거나 다른 파일입니다.");
                 return false;
             }
 
-            if (string.IsNullOrEmpty(ExpectedSha256))
+            if (string.IsNullOrEmpty(expectedSha256))
             {
                 return true;
             }
@@ -305,11 +402,11 @@ namespace DomiCube.PhonemeMatching.Editor
                     .ToString(sha.ComputeHash(stream))
                     .Replace("-", "")
                     .ToLowerInvariant();
-                if (actual != ExpectedSha256)
+                if (actual != expectedSha256)
                 {
                     Debug.LogError(
                         $"[PhonemeMatching] 해시가 다릅니다.\n"
-                        + $"받은 값: {actual}\n기대 값: {ExpectedSha256}");
+                        + $"받은 값: {actual}\n기대 값: {expectedSha256}");
                     return false;
                 }
             }

@@ -6,7 +6,7 @@ using UnityEngine;
 namespace DomiCube.PhonemeMatching.Editor
 {
     /// <summary>
-    /// Puts the three JSON files the runtime loads into StreamingAssets.
+    /// Puts the JSON files the runtime loads into StreamingAssets.
     ///
     /// They ship in the package's Samples~ folder, which Unity's own
     /// "Import Sample" button copies into Assets/Samples/... - one
@@ -22,14 +22,22 @@ namespace DomiCube.PhonemeMatching.Editor
     {
         private const string StreamingAssets = "Assets/StreamingAssets";
 
+        // Adult and child ship side by side rather than one replacing
+        // the other. The two acoustic models mishear differently, so the
+        // thresholds and the streaming profile fitted for one are wrong
+        // for the other - the child settings applied to the adult model
+        // confirm 6.47% of sessions the child never spoke in, against a
+        // 1% budget. PronunciationListener names which pair it wants.
         private static readonly string[] Files =
         {
             "ko_child_v1.json",
             "targets.json",
+            "ko_child_v2.json",
+            "targets_child.json",
             "wav2vec2_ko_vocab.json",
         };
 
-        /// <summary>True when all three files are already in place.</summary>
+        /// <summary>True when every file is already in place.</summary>
         internal static bool IsInstalled
         {
             get

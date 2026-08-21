@@ -1,0 +1,423 @@
+{
+  "version": "2.0.0",
+  "phoneme_set": "ipa",
+  "languages": [
+    "ko"
+  ],
+  "confusion_matrix_id": "ko_child_v2",
+  "build_date": "2026-08-21",
+  "answers": [
+    {
+      "id": "mom",
+      "text": "엄마",
+      "language": "ko",
+      "phonemes": [
+        "ʌ",
+        "m",
+        "m",
+        "a"
+      ],
+      "min_phonemes": 4,
+      "threshold": 0.9
+    },
+    {
+      "id": "dad",
+      "text": "아빠",
+      "language": "ko",
+      "phonemes": [
+        "a",
+        "p͈",
+        "a"
+      ],
+      "min_phonemes": 3,
+      "threshold": 0.925
+    },
+    {
+      "id": "grandma",
+      "text": "할머니",
+      "language": "ko",
+      "phonemes": [
+        "h",
+        "a",
+        "l",
+        "m",
+        "ʌ",
+        "n",
+        "i"
+      ],
+      "min_phonemes": 7,
+      "threshold": 0.85
+    },
+    {
+      "id": "grandpa",
+      "text": "할아버지",
+      "language": "ko",
+      "phonemes": [
+        "h",
+        "a",
+        "ɾ",
+        "a",
+        "p",
+        "ʌ",
+        "tɕ",
+        "i"
+      ],
+      "min_phonemes": 8,
+      "threshold": 0.775
+    },
+    {
+      "id": "puppy",
+      "text": "강아지",
+      "language": "ko",
+      "phonemes": [
+        "k",
+        "a",
+        "ŋ",
+        "a",
+        "tɕ",
+        "i"
+      ],
+      "min_phonemes": 6,
+      "threshold": 0.8
+    },
+    {
+      "id": "cat",
+      "text": "고양이",
+      "language": "ko",
+      "phonemes": [
+        "k",
+        "o",
+        "j",
+        "a",
+        "ŋ",
+        "i"
+      ],
+      "min_phonemes": 6,
+      "threshold": 0.775
+    },
+    {
+      "id": "rabbit",
+      "text": "토끼",
+      "language": "ko",
+      "phonemes": [
+        "tʰ",
+        "o",
+        "k͈",
+        "i"
+      ],
+      "min_phonemes": 4,
+      "threshold": 0.8
+    },
+    {
+      "id": "butterfly",
+      "text": "나비",
+      "language": "ko",
+      "phonemes": [
+        "n",
+        "a",
+        "p",
+        "i"
+      ],
+      "min_phonemes": 4,
+      "threshold": 0.825
+    },
+    {
+      "id": "apple",
+      "text": "사과",
+      "language": "ko",
+      "phonemes": [
+        "s",
+        "a",
+        "k",
+        "w",
+        "a"
+      ],
+      "min_phonemes": 5,
+      "threshold": 0.875
+    },
+    {
+      "id": "banana",
+      "text": "바나나",
+      "language": "ko",
+      "phonemes": [
+        "p",
+        "a",
+        "n",
+        "a",
+        "n",
+        "a"
+      ],
+      "min_phonemes": 6,
+      "threshold": 0.825
+    },
+    {
+      "id": "milk",
+      "text": "우유",
+      "language": "ko",
+      "phonemes": [
+        "u",
+        "j",
+        "u"
+      ],
+      "min_phonemes": 3,
+      "threshold": 0.725
+    },
+    {
+      "id": "bread",
+      "text": "빵",
+      "language": "ko",
+      "phonemes": [
+        "p͈",
+        "a",
+        "ŋ"
+      ],
+      "min_phonemes": 3,
+      "threshold": 0.975
+    },
+    {
+      "id": "go",
+      "text": "가요",
+      "language": "ko",
+      "phonemes": [
+        "k",
+        "a",
+        "j",
+        "o"
+      ],
+      "min_phonemes": 4,
+      "threshold": 0.875
+    },
+    {
+      "id": "come",
+      "text": "와요",
+      "language": "ko",
+      "phonemes": [
+        "w",
+        "a",
+        "j",
+        "o"
+      ],
+      "min_phonemes": 4,
+      "threshold": 0.9
+    },
+    {
+      "id": "eat",
+      "text": "먹어요",
+      "language": "ko",
+      "phonemes": [
+        "m",
+        "ʌ",
+        "k",
+        "ʌ",
+        "j",
+        "o"
+      ],
+      "min_phonemes": 6,
+      "threshold": 0.8
+    },
+    {
+      "id": "school",
+      "text": "학교",
+      "language": "ko",
+      "phonemes": [
+        "h",
+        "a",
+        "k̚",
+        "k͈",
+        "j",
+        "o"
+      ],
+      "min_phonemes": 6,
+      "threshold": 0.75
+    },
+    {
+      "id": "friend",
+      "text": "친구",
+      "language": "ko",
+      "phonemes": [
+        "tɕʰ",
+        "i",
+        "n",
+        "k",
+        "u"
+      ],
+      "min_phonemes": 5,
+      "threshold": 0.825
+    },
+    {
+      "id": "book",
+      "text": "책",
+      "language": "ko",
+      "phonemes": [
+        "tɕʰ",
+        "ɛ",
+        "k̚"
+      ],
+      "min_phonemes": 3,
+      "threshold": 0.825
+    },
+    {
+      "id": "lift_polite",
+      "text": "들어요",
+      "language": "ko",
+      "phonemes": [
+        "t",
+        "ɯ",
+        "ɾ",
+        "ʌ",
+        "j",
+        "o"
+      ],
+      "min_phonemes": 6,
+      "threshold": 0.825
+    },
+    {
+      "id": "lift_plain",
+      "text": "들어",
+      "language": "ko",
+      "phonemes": [
+        "t",
+        "ɯ",
+        "ɾ",
+        "ʌ"
+      ],
+      "min_phonemes": 4,
+      "threshold": 1.0
+    },
+    {
+      "id": "hit_polite",
+      "text": "쳐요",
+      "language": "ko",
+      "phonemes": [
+        "tɕʰ",
+        "ʌ",
+        "j",
+        "o"
+      ],
+      "min_phonemes": 4,
+      "threshold": 0.8
+    },
+    {
+      "id": "hit_plain",
+      "text": "쳐",
+      "language": "ko",
+      "phonemes": [
+        "tɕʰ",
+        "ʌ"
+      ],
+      "min_phonemes": 2,
+      "threshold": 1.0
+    },
+    {
+      "id": "put_polite",
+      "text": "놔요",
+      "language": "ko",
+      "phonemes": [
+        "n",
+        "w",
+        "a",
+        "j",
+        "o"
+      ],
+      "min_phonemes": 5,
+      "threshold": 0.925
+    },
+    {
+      "id": "put_plain",
+      "text": "놔",
+      "language": "ko",
+      "phonemes": [
+        "n",
+        "w",
+        "a"
+      ],
+      "min_phonemes": 3,
+      "threshold": 0.85
+    },
+    {
+      "id": "shake_polite",
+      "text": "흔들어요",
+      "language": "ko",
+      "phonemes": [
+        "h",
+        "ɯ",
+        "n",
+        "t",
+        "ɯ",
+        "ɾ",
+        "ʌ",
+        "j",
+        "o"
+      ],
+      "min_phonemes": 9,
+      "threshold": 0.875
+    },
+    {
+      "id": "shake_plain",
+      "text": "흔들어",
+      "language": "ko",
+      "phonemes": [
+        "h",
+        "ɯ",
+        "n",
+        "t",
+        "ɯ",
+        "ɾ",
+        "ʌ"
+      ],
+      "min_phonemes": 7,
+      "threshold": 0.9
+    },
+    {
+      "id": "knock_polite",
+      "text": "두드려요",
+      "language": "ko",
+      "phonemes": [
+        "t",
+        "u",
+        "t",
+        "ɯ",
+        "ɾ",
+        "j",
+        "ʌ",
+        "j",
+        "o"
+      ],
+      "min_phonemes": 9,
+      "threshold": 0.8
+    },
+    {
+      "id": "knock_plain",
+      "text": "두드려",
+      "language": "ko",
+      "phonemes": [
+        "t",
+        "u",
+        "t",
+        "ɯ",
+        "ɾ",
+        "j",
+        "ʌ"
+      ],
+      "min_phonemes": 7,
+      "threshold": 0.8
+    },
+    {
+      "id": "silophone",
+      "text": "실로폰",
+      "language": "ko",
+      "phonemes": [
+        "s",
+        "i",
+        "l",
+        "ɾ",
+        "o",
+        "pʰ",
+        "o",
+        "n"
+      ],
+      "min_phonemes": 8,
+      "threshold": 0.775
+    }
+  ]
+}

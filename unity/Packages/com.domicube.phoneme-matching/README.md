@@ -59,8 +59,10 @@ Tools > Phoneme Matching > 초기 세팅
 ────────────────────────
 추론 엔진 설치               개별 실행도 됩니다
 데이터 파일 설치
-음향 모델 내려받기
+음향 모델 내려받기              성인용
 음향 모델 파일에서 가져오기…   이미 파일이 있을 때
+아동 음향 모델 내려받기         5~7세 전용. 성인용을 대체하지 않습니다
+아동 음향 모델 파일에서 가져오기…
 ────────────────────────
 발음 테스트 (마이크)
 ────────────────────────
@@ -115,9 +117,14 @@ https://github.com/rnrdus5642/Audio-Recognition.git?path=/unity/Packages/com.dom
 
 `Tools > Phoneme Matching > 데이터 파일 설치`
 
-`ko_child_v1.json` · `targets.json` · `wav2vec2_ko_vocab.json` 을
+`ko_child_v1.json` · `targets.json` · `ko_child_v2.json` ·
+`targets_child.json` · `wav2vec2_ko_vocab.json` 을
 `Assets/StreamingAssets/` 에 넣고, 런타임이 읽는 방식 그대로 다시 읽어
 확인까지 합니다. 이미 있으면 덮어쓸지 물어봅니다.
+
+뒤의 두 개가 아동 전용입니다. 성인용을 대체하지 않고 나란히 놓입니다 —
+두 음향 모델이 서로 다르게 잘못 들어서, 한쪽에 맞춘 임계값과 채점 설정이
+다른 쪽에는 맞지 않습니다.
 
 > Package Manager 의 샘플 임포트 버튼을 써도 되지만, 그건 파일을
 > `Assets/Samples/...` 에 놓기 때문에 `StreamingAssets/` 로 한 번 더
@@ -142,6 +149,35 @@ GitHub 는 100MB 넘는 파일을 거부합니다. 다운로드가 끝나면 프
 
 이미 파일을 가지고 있다면(사내 공유 폴더, 다른 프로젝트)
 `음향 모델 파일에서 가져오기…` 로 고르면 됩니다. 검증은 똑같이 거칩니다.
+
+### 5. 아동 모델 (선택)
+
+5~7세 아동 음성 200시간으로 재학습한 별도 모델입니다. 아이 목소리에서
+문자 오류율이 55.4% 에서 8.7% 로 내려갑니다.
+
+`Tools > Phoneme Matching > 아동 음향 모델 내려받기`
+
+**성인 모델을 대체하지 않습니다.** 둘은 서로 다르게 잘못 듣기 때문에
+데이터도 같이 바꿔야 합니다.
+
+```csharp
+var listener = GetComponent<PronunciationListener>();
+listener.MatrixFileName  = "ko_child_v2.json";
+listener.TargetsFileName = "targets_child.json";
+
+var model = Resources.Load<ModelAsset>(
+    "Models/wav2vec2_ko_child");
+```
+
+셋을 섞으면 안 됩니다. 아동 설정을 성인 모델에 쓰면 아이가 말하지도 않은
+세션의 6.47% 를 확정합니다 (예산은 1%).
+
+처음 보는 아이 52명 기준 성능입니다.
+
+| | 단독 단어 | 오확정 |
+|---|---|---|
+| 성인 모델 + 성인 설정 | 37.3% | 3.50% |
+| 아동 모델 + 아동 설정 | **88.1%** | **0.40%** |
 
 > 순서가 중요합니다. **추론 엔진이 먼저** 설치돼 있어야 `.onnx` 가
 > `ModelAsset` 으로 임포트됩니다.
