@@ -296,12 +296,29 @@ AudioProject/
 │   │   ├── export_onnx.py        # ONNX export + 검증
 │   │   ├── export_ctc_vocab.py   # CTC 어휘 + 대조 벡터
 │   │   ├── export_parity_vectors.py
-│   │   └── sentis_parity/        # Unity 대조 하네스 (일회용)
-│   └── tests/                    # 83개
+│   │   ├── sentis_parity/        # Unity 대조 하네스 (일회용)
+│   │   ├── aihub/                # AI Hub 아동 코퍼스 정리
+│   │   ├── child_finetune/       # 아동 모델 fine-tune
+│   │   │   ├── manifest.py       #   학습셋 선정 (676h → 200h)
+│   │   │   └── train.py          #   CTC 학습 · --resume
+│   │   └── child_tuning/         # 아동 매칭 파라미터
+│   │       ├── frames.py         #   프레임 캐시 (--isolated)
+│   │       ├── build_reference.py#   기준 데이터 두 파일
+│   │       ├── derive_thresholds.py  # 단어별 임계값 + 상한 경고
+│   │       ├── fit_streaming.py  #   프로필 탐색
+│   │       └── compare.py        #   모델·설정 비교
+│   └── tests/                    # 95개
 ├── shared/
 │   ├── words.csv                 # 정답 단어 (UTF-8 BOM)
-│   ├── targets.json              # 빌드 산출물
-│   ├── confusion_matrices/ko_child_v1.json
+│   ├── targets.json              # 빌드 산출물 (성인)
+│   ├── targets_child.json        # 빌드 산출물 (아동)
+│   ├── thresholds_child.json     # 단어별 임계값 - 빌드 입력
+│   ├── reference/                # 임계값을 재는 기준 (325KB)
+│   │   ├── reference_frames.json.gz  # 아이 4,998발화의 음소열
+│   │   └── reference_errors.json     # 이 모델이 뭘 뭘로 틀리는지
+│   ├── confusion_matrices/
+│   │   ├── ko_child_v1.json      # 성인 모델용
+│   │   └── ko_child_v2.json      # 아동 모델용 (프로필만 다름)
 │   └── models/                   # ONNX (gitignore)
 ├── unity/
 │   ├── Assets/                   # 데모 프로젝트 (Unity 6)
@@ -695,10 +712,36 @@ Unity 대조는 [python/tools/sentis_parity/](python/tools/sentis_parity/) 에
 
 ## 다음 작업
 
-1. **아동 녹음으로 파라미터 재튜닝** — 진행 중. 화자 단위 3분할(튜닝 free
-   6~7세 / 검증 free 8~9세 / 평가 formatted 5세), 오확정 예산 10초 세션당 1%
-   아래에서 검출 최대화
-2. Confusion Matrix 를 실제 아동 발화로 재튜닝
-3. 커리큘럼 단어 선정 — 짧은 단어를 피하면 지금 상태로도 크게 개선됨
-4. VR 씬에서 GPU 경합 측정
-5. (검토) FP16 ≈ 600MB 또는 더 작은 모델
+### 막고 있는 것
+
+1. **`놔`·`놔요` 교체** — `놔` 가 모델 어휘 1205음절에 없어 정확히 발음해도
+   전사되지 않습니다. 어떤 임계값으로도 안 됩니다. `올려요`/`올려` 를
+   권합니다 (7·5음소, 오확정 0.00%·0.24%)
+2. **아이 1명이 29단어를 한 번씩** — 근거 발화가 0~2건인 단어가 9개입니다
+   (`쳐`·`실로폰`·`흔들어요` 등). 구조적으로 불가능한 단어는 1명으로
+   드러납니다 — `놔` 가 그렇게 발견됐습니다. 5분이면 됩니다
+3. **Unity 실기기 확인** — Editor 스크립트는 Unity 안에서만 컴파일됩니다
+
+### 근거가 없는 것
+
+4. **발달지연 아동 데이터** — 실제 사용자인데 공개 코퍼스가 없어 측정한 적이
+   없습니다. 10~15명이면 지금 값이 통하는지 처음으로 알 수 있습니다
+5. **단어별 검출률** — 29단어 중 9개만 실측했습니다. 나머지는 문장에서만
+   쟀거나 근거가 없습니다. 아이 25명이면 ±6pp 로 잽니다
+
+### 개선 여지
+
+6. **Confusion Matrix 실측** — 61쌍 중 대부분이 문헌 기반입니다. 아동 정렬
+   935건으로 재학습해도 1쌍만 바뀌었습니다. 프레임 캐시를 늘리면 같이
+   좋아집니다
+7. **연속 확인 1회 vs 2회** — 1회가 검출 6.3pp 높은데, 오확정을 코퍼스
+   발화로만 재서 헤드셋 잡음이 빠져 있습니다. 잡음 녹음이 생기면 정할 값
+8. VR 씬에서 GPU 경합 측정
+9. (검토) FP16 ≈ 600MB 또는 더 작은 모델
+
+### 손대지 않은 것
+
+`learn_matrix.py`·`budget_curve.py`·`sensitivity.py` 는 아직 옛 파일명
+(`tune_frames.json`)을 읽어 실행되지 않습니다. `autotune.py` 는 새 캐시로
+옮겼지만 음소 길이별 임계값과 문장 조건을 써서 지금 설정을 재현하지
+못합니다 — 아동 설정을 다시 맞출 때는 `fit_streaming.py` 를 쓰세요.

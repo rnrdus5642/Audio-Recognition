@@ -1,13 +1,41 @@
-# 아동 발화 튜닝 (2026-08-11)
+# 아동 발화 튜닝
 
-AI Hub 아동 음성으로 매칭 파라미터와 confusion matrix 를 실측 조정한
-기록입니다. **결과는 저장소에 반영하지 않았습니다** — 이번 주 배포가 성인
-대상이고, 아동 값을 성인에 쓰면 임계값이 지나치게 관대해집니다.
+이 폴더는 두 시기의 작업이 겹쳐 있습니다.
 
-나중에 아동 대상으로 넘어갈 때 이 폴더의 스크립트로 재현하거나,
-`ko_child_v2.json` 과 아래 설정을 그대로 가져다 쓰면 됩니다.
+**2026-08-19 (현재)** — 아동 fine-tune 모델에 맞춰 매칭을 다시 맞췄고,
+결과가 저장소에 반영돼 있습니다. `ko_child_v2.json` · `targets_child.json`
+· `shared/reference/` 가 그 산출물입니다.
+
+| | 단독 단어 | 덧붙임 | 오확정 |
+|---|---|---|---|
+| 성인 모델 + 성인 설정 | 37.3% | 48.5% | 3.50% |
+| **아동 모델 + 아동 설정** | **88.1%** | **86.9%** | **0.40%** |
+
+test 화자 52명 기준. 자세한 것은
+[child_finetune](../child_finetune/README.md) 를 보세요.
+
+### 지금 쓰는 도구
+
+```bash
+python python/tools/child_tuning/frames.py --model <체크포인트> --tag child
+python python/tools/child_tuning/frames.py --isolated --neg 0 --tag child-iso
+python python/tools/child_tuning/build_reference.py     # 기준 데이터 두 파일
+python python/tools/child_tuning/fit_streaming.py       # 프로필 탐색
+python python/tools/child_tuning/derive_thresholds.py   # 단어별 임계값
+python python/tools/child_tuning/compare.py base child  # 비교
+```
+
+`autotune.py` 는 음소 길이별 임계값과 문장 조건을 쓰므로 지금 설정을
+재현하지 못합니다. `learn_matrix.py` · `budget_curve.py` ·
+`sensitivity.py` 는 옛 파일명을 읽어 실행되지 않습니다.
 
 ---
+
+# 아래는 2026-08-11 기록 (성인 모델 시절)
+
+아동 fine-tune 이전, 성인 모델로 파라미터만 조정했을 때의 측정입니다.
+숫자는 지금과 비교하지 마세요 — 모델이 다릅니다. **이 시기 결론이 fine-tune
+을 하기로 한 근거였습니다.**
 
 ## 한 줄 결론
 
