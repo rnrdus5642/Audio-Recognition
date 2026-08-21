@@ -357,7 +357,15 @@ class AudioTester:
     def _make_custom_target(
         self, text: str, language: str = "ko"
     ) -> tuple[str, dict]:
-        """Build an on-the-fly candidate for a word not in targets.json."""
+        """Build an on-the-fly candidate for a word not in targets.json.
+
+        The threshold is measured the same way the build measures it,
+        against the reference utterances, and only falls back to the
+        phoneme-count table when those are missing. Typing a word used to
+        get the table unconditionally: 싫어요 was handed 0.65, where 187
+        of 600 unrelated utterances confirm it, and 좋아요 duly passed.
+        Measuring says 0.75, where two do.
+        """
         from python.build.g2p import get_g2p
 
         g2p = get_g2p(language)
@@ -366,6 +374,7 @@ class AudioTester:
             raise ValueError(
                 f"G2P produced empty phoneme list for {text!r}"
             )
+        threshold = self._measured_threshold(phonemes, text)
         return (
             "__custom__",
             {
@@ -373,9 +382,42 @@ class AudioTester:
                 "text": text,
                 "phonemes": phonemes,
                 "min_phonemes": len(phonemes),
-                "threshold": round(auto_threshold(len(phonemes)), 4),
+                "threshold": round(threshold, 4),
             },
         )
+
+    def _measured_threshold(self, phonemes: list[str], text: str) -> float:
+        """Lowest threshold whose false accepts stay inside the budget."""
+        reference = self._reference()
+        if not reference:
+            return auto_threshold(len(phonemes))
+
+        from python.tools.child_tuning.derive_thresholds import lower_bound
+
+        matrix = self._matrix_for("ko")
+        profile = matrix.streaming_profile
+        matcher = Matcher(matrix,
+                          skip_cost=profile["skip_cost"],
+                          coverage=profile["coverage"],
+                          context_mult=profile["context_mult"])
+        items, seconds = reference
+        threshold, _rate = lower_bound(
+            matcher, phonemes, text, items, seconds, 0.005, 2)
+        return threshold
+
+    def _reference(self):
+        """Reference utterances, loaded once, or None when absent."""
+        if not hasattr(self, "_reference_cache"):
+            path = (PROJECT_ROOT / "shared" / "reference"
+                    / "reference_frames.json")
+            if path.exists():
+                data = json.loads(path.read_text(encoding="utf-8"))
+                items = data["items"]
+                self._reference_cache = (
+                    items, sum(i["seconds"] for i in items))
+            else:
+                self._reference_cache = None
+        return self._reference_cache
 
     def _score_against(
         self,

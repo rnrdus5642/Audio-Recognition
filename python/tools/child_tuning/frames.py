@@ -175,7 +175,13 @@ def main():
         which would otherwise void hours of inference; and a false accept
         can be read back as words rather than as a row of phonemes.
         """
-        audio, sr = sf.read(path, dtype="float32")
+        try:
+            audio, sr = sf.read(path, dtype="float32")
+        except Exception:
+            # About 30 in 125,000 arrive with a broken header. They have a
+            # plausible size, so existence is not enough to catch them, and
+            # one of them ending a two-hour run is not a good trade.
+            return None, None
         if audio.ndim > 1:
             audio = audio.mean(axis=1)
         win, hop = int(WINDOW_S * sr), int(HOP_S * sr)
@@ -190,7 +196,7 @@ def main():
             start += hop
         return out, heard
 
-    t0, done = time.time(), 0
+    t0, done, skipped = time.time(), 0, 0
     for split, rows in plan.items():
         out_path = os.path.join(out_dir, f"{split}.jsonl")
         have = {i["wav"] for i in load(split, tag)}
@@ -205,6 +211,9 @@ def main():
                     "hits": r["hits"], "positive": is_pos,
                 }
                 item["frames"], item["heard"] = frames_of(path_of(r))
+                if item["frames"] is None:
+                    skipped += 1
+                    continue
                 fh.write(json.dumps(item, ensure_ascii=False) + "\n")
                 fh.flush()
                 done += 1
@@ -214,7 +223,7 @@ def main():
                     print(f"  {done:,}/{todo:,}  {time.time()-t0:.0f}s"
                           f"  남은 예상 {left/60:.0f}분", flush=True)
 
-    print(f"\n{done:,}개  {time.time()-t0:.0f}초\n{out_dir}")
+    print(f"\n{done:,}개 (건너뜀 {skipped})  {time.time()-t0:.0f}초\n{out_dir}")
     return 0
 
 

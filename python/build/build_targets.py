@@ -216,6 +216,7 @@ def build_answer_entries(
     rows: Iterable[WordRow],
     apply_rules: bool = True,
     thresholds: dict[str, float] | None = None,
+    strict: bool = False,
 ) -> list[dict]:
     """Run each row through its language's G2P and return enriched dicts.
 
@@ -228,6 +229,7 @@ def build_answer_entries(
     thresholds = thresholds or {}
     g2p_cache: dict[str, object] = {}
     out: list[dict] = []
+    guessed: list[str] = []
 
     for row in rows:
         if row.language not in g2p_cache:
@@ -242,6 +244,9 @@ def build_answer_entries(
                 f"'{row.text}' ({row.answer_id})"
             )
 
+        if thresholds and row.text not in thresholds:
+            guessed.append(row.text)
+
         out.append(
             {
                 "id": row.answer_id,
@@ -254,6 +259,18 @@ def build_answer_entries(
                 ),
             }
         )
+    if guessed:
+        # The phoneme-count table lands within one step of the measured
+        # value 19% of the time. 북 got 0.73 where measuring says 0.85,
+        # and nothing said so.
+        msg = ("측정된 임계값이 없어 음소 개수 기본값을 씁니다 "
+               f"({len(guessed)}단어): {' '.join(guessed)}. "
+               "python python/tools/child_tuning/derive_thresholds.py "
+               "를 다시 돌리세요.")
+        if strict:
+            raise ValueError(msg)
+        print(f"WARNING: {msg}", file=sys.stderr)
+
     return out
 
 
@@ -269,7 +286,7 @@ def build(
     rows = read_words_csv(input_path)
     answers = build_answer_entries(
         rows, apply_rules=apply_rules,
-        thresholds=load_thresholds(thresholds_path))
+        thresholds=load_thresholds(thresholds_path), strict=strict)
 
     collisions = find_collisions(answers)
     if collisions:

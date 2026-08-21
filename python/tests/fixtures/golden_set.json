@@ -292,6 +292,182 @@
       "target_text": "책",
       "voice": "ko-KR-InJoonNeural",
       "kind": "positive"
+    },
+    {
+      "case_id": "lift_polite_f",
+      "audio_path": "python/tests/fixtures/audio/lift_polite__f.wav",
+      "target_answer_id": "lift_polite",
+      "target_text": "들어요",
+      "voice": "ko-KR-SunHiNeural",
+      "kind": "positive"
+    },
+    {
+      "case_id": "lift_polite_m",
+      "audio_path": "python/tests/fixtures/audio/lift_polite__m.wav",
+      "target_answer_id": "lift_polite",
+      "target_text": "들어요",
+      "voice": "ko-KR-InJoonNeural",
+      "kind": "positive"
+    },
+    {
+      "case_id": "lift_plain_f",
+      "audio_path": "python/tests/fixtures/audio/lift_plain__f.wav",
+      "target_answer_id": "lift_plain",
+      "target_text": "들어",
+      "voice": "ko-KR-SunHiNeural",
+      "kind": "positive"
+    },
+    {
+      "case_id": "lift_plain_m",
+      "audio_path": "python/tests/fixtures/audio/lift_plain__m.wav",
+      "target_answer_id": "lift_plain",
+      "target_text": "들어",
+      "voice": "ko-KR-InJoonNeural",
+      "kind": "positive"
+    },
+    {
+      "case_id": "hit_polite_f",
+      "audio_path": "python/tests/fixtures/audio/hit_polite__f.wav",
+      "target_answer_id": "hit_polite",
+      "target_text": "쳐요",
+      "voice": "ko-KR-SunHiNeural",
+      "kind": "positive"
+    },
+    {
+      "case_id": "hit_polite_m",
+      "audio_path": "python/tests/fixtures/audio/hit_polite__m.wav",
+      "target_answer_id": "hit_polite",
+      "target_text": "쳐요",
+      "voice": "ko-KR-InJoonNeural",
+      "kind": "positive"
+    },
+    {
+      "case_id": "hit_plain_f",
+      "audio_path": "python/tests/fixtures/audio/hit_plain__f.wav",
+      "target_answer_id": "hit_plain",
+      "target_text": "쳐",
+      "voice": "ko-KR-SunHiNeural",
+      "kind": "positive"
+    },
+    {
+      "case_id": "hit_plain_m",
+      "audio_path": "python/tests/fixtures/audio/hit_plain__m.wav",
+      "target_answer_id": "hit_plain",
+      "target_text": "쳐",
+      "voice": "ko-KR-InJoonNeural",
+      "kind": "positive"
+    },
+    {
+      "case_id": "put_polite_f",
+      "audio_path": "python/tests/fixtures/audio/put_polite__f.wav",
+      "target_answer_id": "put_polite",
+      "target_text": "놔요",
+      "voice": "ko-KR-SunHiNeural",
+      "kind": "positive"
+    },
+    {
+      "case_id": "put_polite_m",
+      "audio_path": "python/tests/fixtures/audio/put_polite__m.wav",
+      "target_answer_id": "put_polite",
+      "target_text": "놔요",
+      "voice": "ko-KR-InJoonNeural",
+      "kind": "positive"
+    },
+    {
+      "case_id": "put_plain_f",
+      "audio_path": "python/tests/fixtures/audio/put_plain__f.wav",
+      "target_answer_id": "put_plain",
+      "target_text": "놔",
+      "voice": "ko-KR-SunHiNeural",
+      "kind": "positive"
+    },
+    {
+      "case_id": "put_plain_m",
+      "audio_path": "python/tests/fixtures/audio/put_plain__m.wav",
+      "target_answer_id": "put_plain",
+      "target_text": "놔",
+      "voice": "ko-KR-InJoonNeural",
+      "kind": "positive"
+    },
+    {
+      "case_id": "shake_polite_f",
+      "audio_path": "python/tests/fixtures/audio/shake_polite__f.wav",
+      "target_answer_id": "shake_polite",
+      "target_text": "흔들어요",
+      "voice": "ko-KR-SunHiNeural",
+      "kind": "positive"
+    },
+    {
+      "case_id": "shake_polite_m",
+      "audio_path": "python/tests/fixtures/audio/shake_polite__m.wav",
+      "target_answer_id": "shake_polite",
+      "target_text": "흔들어요",
+      "voice": "ko-KR-InJoonNeural",
+      "kind": "positive"
+    },
+    {
+      "case_id": "shake_plain_f",
+      "audio_path": "python/tests/fixtures/audio/shake_plain__f.wav",
+      "target_answer_id": "shake_plain",
+      "target_text": "흔들어",
+      "voice": "ko-KR-SunHiNeural",
+      "kind": "positive"
+    },
+    {
+      "case_id": "shake_plain_m",
+      "audio_path": "python/tests/fixtures/audio/shake_plain__m.wav",
+      "target_answer_id": "shake_plain",
+      "target_text": "흔들어",
+      "voice": "ko-KR-InJoonNeural",
+      "kind": "positive"
+    },
+    {
+      "case_id": "knock_polite_f",
+      "audio_path": "python/tests/fixtures/audio/knock_polite__f.wav",
+      "target_answer_id": "knock_polite",
+      "target_text": "두드려요",
+      "voice": "ko-KR-SunHiNeural",
+      "kind": "positive"
+    },
+    {
+      "case_id": "knock_polite_m",
+      "audio_path": "python/tests/fixtures/audio/knock_polite__m.wav",
+      "target_answer_id": "knock_polite",
+      "target_text": "두드려요",
+      "voice": "ko-KR-InJoonNeural",
+      "kind": "positive"
+    },
+    {
+      "case_id": "knock_plain_f",
+      "audio_path": "python/tests/fixtures/audio/knock_plain__f.wav",
+      "target_answer_id": "knock_plain",
+      "target_text": "두드려",
+      "voice": "ko-KR-SunHiNeural",
+      "kind": "positive"
+    },
+    {
+      "case_id": "knock_plain_m",
+      "audio_path": "python/tests/fixtures/audio/knock_plain__m.wav",
+      "target_answer_id": "knock_plain",
+      "target_text": "두드려",
+      "voice": "ko-KR-InJoonNeural",
+      "kind": "positive"
+    },
+    {
+      "case_id": "silophone_f",
+      "audio_path": "python/tests/fixtures/audio/silophone__f.wav",
+      "target_answer_id": "silophone",
+      "target_text": "실로폰",
+      "voice": "ko-KR-SunHiNeural",
+      "kind": "positive"
+    },
+    {
+      "case_id": "silophone_m",
+      "audio_path": "python/tests/fixtures/audio/silophone__m.wav",
+      "target_answer_id": "silophone",
+      "target_text": "실로폰",
+      "voice": "ko-KR-InJoonNeural",
+      "kind": "positive"
     }
   ]
 }
