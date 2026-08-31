@@ -73,5 +73,20 @@ class KoreanG2P(BaseG2P):
         surface = self.apply_rules(text)
         return hangul_to_ipa_phonemes(surface)
 
+    def to_ipa_syllables(
+        self, text: str
+    ) -> list[tuple[str, list[str]]] | None:
+        """`to_ipa`, split at surface-form syllable boundaries.
+
+        Korean writes one syllable per character, so this is the same
+        mapping run character by character over the surface form. Non-
+        Hangul characters map to nothing and drop out, exactly as they
+        do in `to_ipa`.
+        """
+        if not text or not text.strip():
+            return []
+        surface = self.apply_rules(text)
+        return [(ch, hangul_to_ipa_phonemes(ch)) for ch in surface]
+
 
 __all__ = ["KoreanG2P"]

@@ -1,4 +1,5 @@
 from .confusion_matrix import ConfusionMatrix
+from .feedback import ModelErrors, Slip, SyllableReport, explain
 from .matcher import Matcher, MatchResult
 from .streaming import StreamingHit, StreamingMatcher
 
@@ -8,4 +9,8 @@ __all__ = [
     "MatchResult",
     "StreamingMatcher",
     "StreamingHit",
+    "ModelErrors",
+    "Slip",
+    "SyllableReport",
+    "explain",
 ]

@@ -67,7 +67,7 @@ if sys.platform == "win32":
 
 import numpy as np
 
-from python.build.build_targets import auto_threshold
+from python.build.build_targets import auto_threshold, syllable_spans
 from python.runtime.audio import load_audio_16k_mono
 from python.runtime.matching import ConfusionMatrix, Matcher
 # NOTE: scoring now goes through Matcher.score_against, which dispatches
@@ -104,6 +104,9 @@ class CandidateScore:
     window_start: int = 0
     window_end: int = 0
     alignment: list[tuple[str, str, str]] = field(default_factory=list)
+    # Which syllable each phoneme came from, for per-syllable feedback.
+    # Empty when targets.json predates the field or G2P could not group.
+    syllables: list[dict] = field(default_factory=list)
 
     @property
     def would_pass(self) -> bool:
@@ -259,6 +262,14 @@ def _print_test_result(result: TestResult) -> None:
 # ---------------------------------------------------------------------------
 
 
+# What the shipped per-word thresholds were derived at
+# (`shared/thresholds_child.json` records both). Deriving at anything
+# else silently produces a different set: at a 0.005 budget 사과 comes
+# out 0.925 where the shipped value is 0.875.
+THRESHOLD_BUDGET = 0.01
+THRESHOLD_CONSECUTIVE = 2
+
+
 class AudioTester:
     """Multi-language audio recognition + matching.
 
@@ -283,6 +294,10 @@ class AudioTester:
         self._matchers: dict[str, Matcher] = {}
         self._recognizers: dict[str, object] = {}
         self._custom_model_name = model_name  # only used for Korean today
+        # Measuring a threshold walks 4,998 reference utterances, so each
+        # word is measured once and kept - the live tab re-resolves its
+        # candidates on every frame.
+        self._threshold_cache: dict[str, tuple[float, str]] = {}
 
         # Answer indexes (language-aware). targets.json is a flat list:
         # a question scores the word it asked for, so there is no group
@@ -374,23 +389,50 @@ class AudioTester:
             raise ValueError(
                 f"G2P produced empty phoneme list for {text!r}"
             )
-        threshold = self._measured_threshold(phonemes, text)
+        threshold, source = self._measured_threshold(phonemes, text)
+        # Same grouping the build writes into targets.json, from the same
+        # helper, so a typed word and a curriculum word give feedback the
+        # same way instead of two implementations drifting apart.
+        spans = syllable_spans(text, g2p.to_ipa_syllables(text), phonemes)
         return (
             "__custom__",
             {
                 "id": "custom_target",
                 "text": text,
                 "phonemes": phonemes,
+                "syllables": spans or [],
                 "min_phonemes": len(phonemes),
                 "threshold": round(threshold, 4),
+                "threshold_source": source,
             },
         )
 
-    def _measured_threshold(self, phonemes: list[str], text: str) -> float:
-        """Lowest threshold whose false accepts stay inside the budget."""
+    def _measured_threshold(
+        self, phonemes: list[str], text: str
+    ) -> tuple[float, str]:
+        """Lowest threshold whose false accepts stay inside the budget.
+
+        Returns (threshold, "measured") or, when there is no usable
+        reference, (phoneme-count default, "default"). The caller shows
+        which, because the fallback is not a near miss: it gave 사과 0.65
+        against a measured 0.875, loose enough to confirm on speech that
+        never contained the word.
+
+        Same budget and streak the shipped thresholds were derived at, so
+        a curriculum word comes out at exactly the value in
+        `shared/thresholds_child.json` and a typed word gets one on the
+        same terms. Measured: 사과 0.875, 엄마 0.900, 빵 0.975,
+        할아버지 0.775, all matching the shipped file, ~1-2.5 s each.
+        """
+        cached = self._threshold_cache.get(text)
+        if cached is not None:
+            return cached
+
         reference = self._reference()
         if not reference:
-            return auto_threshold(len(phonemes))
+            result = (auto_threshold(len(phonemes)), "default")
+            self._threshold_cache[text] = result
+            return result
 
         from python.tools.child_tuning.derive_thresholds import lower_bound
 
@@ -402,21 +444,53 @@ class AudioTester:
                           context_mult=profile["context_mult"])
         items, seconds = reference
         threshold, _rate = lower_bound(
-            matcher, phonemes, text, items, seconds, 0.005, 2)
-        return threshold
+            matcher, phonemes, text, items, seconds,
+            THRESHOLD_BUDGET, THRESHOLD_CONSECUTIVE)
+        result = (threshold, "measured")
+        self._threshold_cache[text] = result
+        return result
 
     def _reference(self):
-        """Reference utterances, loaded once, or None when absent."""
+        """Reference utterances, loaded once, or None when absent.
+
+        `build_reference.py` writes this gzipped and
+        `child_tuning/derive_thresholds.py` reads it gzipped; this used
+        to look for a plain `.json` that nothing produces, found nothing,
+        and quietly handed every word the phoneme-count default - 사과
+        got 0.65 where measuring says 0.875. The uncompressed name is
+        still accepted for a hand-made file.
+
+        Only the reference built for the loaded matrix is usable. It
+        records what one recogniser heard, so deriving an adult-model
+        threshold from what the child model misheard would be worse than
+        not measuring at all.
+        """
         if not hasattr(self, "_reference_cache"):
-            path = (PROJECT_ROOT / "shared" / "reference"
-                    / "reference_frames.json")
-            if path.exists():
-                data = json.loads(path.read_text(encoding="utf-8"))
+            base = PROJECT_ROOT / "shared" / "reference"
+            gz = base / "reference_frames.json.gz"
+            plain = base / "reference_frames.json"
+            data = None
+            if gz.exists():
+                import gzip
+                with gzip.open(gz, "rt", encoding="utf-8") as handle:
+                    data = json.load(handle)
+            elif plain.exists():
+                data = json.loads(plain.read_text(encoding="utf-8"))
+
+            if data is None:
+                self._reference_cache = None
+            elif data.get("matrix_id") != self._matrix_for("ko").matrix_id:
+                print(
+                    f"WARNING: 기준 데이터는 {data.get('matrix_id')} 용인데 "
+                    f"{self._matrix_for('ko').matrix_id} 를 쓰고 있습니다. "
+                    "임계값을 측정하지 않고 음소 개수 기본값을 씁니다.",
+                    file=sys.stderr,
+                )
+                self._reference_cache = None
+            else:
                 items = data["items"]
                 self._reference_cache = (
                     items, sum(i["seconds"] for i in items))
-            else:
-                self._reference_cache = None
         return self._reference_cache
 
     def _score_against(
@@ -447,6 +521,7 @@ class AudioTester:
                     window_start=ws,
                     window_end=we,
                     alignment=ops,
+                    syllables=c.get("syllables") or [],
                 )
             )
         if rows:

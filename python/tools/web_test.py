@@ -32,11 +32,13 @@ if sys.platform == "win32" and hasattr(sys.stdout, "reconfigure"):
 
 import numpy as np
 
+from python.runtime.matching.feedback import ModelErrors, explain
 from python.tools.test_real_audio import AudioTester, TestResult
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_RECORDINGS = PROJECT_ROOT / "recordings"
+ERRORS_PATH = PROJECT_ROOT / "shared" / "reference" / "reference_errors.json"
 
 SAMPLE_RATE = 16_000
 
@@ -85,6 +87,161 @@ def _audio_stats(audio: np.ndarray) -> dict[str, Any]:
         "peak": round(peak, 4),
         "trailing_ms": trailing_ms,
     }
+
+
+# ---------------------------------------------------------------------------
+# Per-syllable feedback
+# ---------------------------------------------------------------------------
+
+# colour, and what to call the verdict on screen
+_VERDICT = {
+    "clean": ("#22c55e", "좋아요"),
+    "near": ("#eab308", "거의 맞음"),
+    "blurred": ("#f97316", "흐림"),
+    "different": ("#ef4444", "다르게 들림"),
+    "no_comment": ("#6b7280", "판단 보류"),
+}
+
+_MODEL_ERRORS: dict[str, Optional[ModelErrors]] = {}
+
+
+def _model_errors(matrix_id: str) -> Optional[ModelErrors]:
+    """The recogniser error table, but only for the model it was measured
+    on.
+
+    Every entry is "how often *this* model writes X for Y". Running the
+    adult model against the child model's table would mute pairs the
+    adult model does not confuse while leaving its own confusions
+    unmuted - worse than not muting at all - so a mismatch returns None
+    and the UI says muting is off.
+    """
+    if matrix_id not in _MODEL_ERRORS:
+        table = None
+        if ERRORS_PATH.exists():
+            loaded = ModelErrors.from_json(ERRORS_PATH)
+            if loaded.matrix_id == matrix_id:
+                table = loaded
+        _MODEL_ERRORS[matrix_id] = table
+    return _MODEL_ERRORS[matrix_id]
+
+
+def _syllable_feedback_html(
+    tester: AudioTester,
+    alignment: list[tuple[str, str, str]],
+    syllables: list[dict],
+    passed: bool,
+    language: str,
+) -> str:
+    """Which syllable of the recognised word came out soft.
+
+    Prototype for the in-game view. The game would show the cards alone;
+    this also prints the cost behind each verdict and everything that was
+    muted, because whether the muting is set right is exactly what needs
+    eyes on real speech before any of it reaches Unity.
+
+    Takes the alignment and the syllables rather than a result object, so
+    the batch tab (a whole recording) and the live tab (the frame that
+    confirmed) can both hand over what they have.
+    """
+    if not syllables:
+        return ""
+
+    matrix = tester._matrix_for(language)
+    errors = _model_errors(matrix.matrix_id)
+    try:
+        reports = explain(alignment, syllables, matrix, errors)
+    except ValueError:
+        # Alignment and syllables describe different words; nothing
+        # truthful to say.
+        return ""
+
+    cards = []
+    for report in reports:
+        colour, label = _VERDICT[report.status]
+        spoken = (
+            f"<div style='font-size:11px;color:#9ca3af;'>소리 "
+            f"{report.spoken}</div>"
+            if report.resyllabified else ""
+        )
+        cards.append(
+            f"<div style=\"display:inline-block;text-align:center;"
+            f"margin:4px 6px 4px 0;padding:10px 14px;border-radius:8px;"
+            f"background:#1f2937;border:2px solid {colour};\">"
+            f"<div style='font-size:28px;color:#f3f4f6;line-height:1.1;'>"
+            f"{report.text}</div>"
+            f"{spoken}"
+            f"<div style='font-size:12px;color:{colour};margin-top:4px;'>"
+            f"{label}</div>"
+            f"</div>"
+        )
+
+    lines = []
+    for report in reports:
+        for slip in report.slips:
+            if slip.kind == "sub":
+                what = f"/{slip.target}/ 를 /{slip.heard}/ 로"
+            elif slip.kind == "del":
+                what = f"/{slip.target}/ 가 빠짐"
+            else:
+                what = f"/{slip.heard}/ 가 더 들어감"
+            if slip.muted:
+                lines.append(
+                    f"<div style='color:#6b7280;'>· <b>{report.text}</b> "
+                    f"{what} — 말하지 않음 ({slip.muted_because})</div>"
+                )
+            else:
+                colour = _VERDICT[slip.severity][0]
+                lines.append(
+                    f"<div style='color:#d1d5db;'>· <b>{report.text}</b> "
+                    f"{what} <span style='color:{colour};'>"
+                    f"[{_VERDICT[slip.severity][1]}, 비용 "
+                    f"{slip.cost:.2f}]</span></div>"
+                )
+    if not lines:
+        lines.append(
+            "<div style='color:#6b7280;'>· 정답 음소와 어긋난 곳이 "
+            "없습니다</div>"
+        )
+
+    if errors is None:
+        banner = (
+            f"<div style='padding:6px 10px;margin-bottom:8px;"
+            f"border-radius:6px;background:#422006;color:#fbbf24;"
+            f"font-size:12px;'>⚠ <b>{matrix.matrix_id}</b> 의 오류표가 "
+            "없어 모델 자체 오류를 걸러내지 못합니다. 아래 지적 중 "
+            "일부는 아이가 아니라 인식기 탓일 수 있습니다.</div>"
+        )
+    else:
+        banner = (
+            f"<div style='padding:6px 10px;margin-bottom:8px;"
+            f"border-radius:6px;background:#1f2937;color:#9ca3af;"
+            f"font-size:12px;'>{errors.utterances}발화로 잰 "
+            f"<b>{errors.matrix_id}</b> 오류표로 거르는 중 — 이 모델이 "
+            "혼자서도 자주 틀리는 것은 말하지 않습니다.</div>"
+        )
+
+    note = ""
+    if not passed:
+        note = (
+            "<div style='padding:6px 10px;margin-bottom:8px;"
+            "border-radius:6px;background:#1f2937;color:#9ca3af;"
+            "font-size:12px;'>통과하지 못한 발화입니다. 아래는 "
+            "말했다고 가정했을 때의 참고값입니다.</div>"
+        )
+
+    return (
+        "<div style='margin-bottom:14px;'>"
+        + note
+        + banner
+        + "<div style='margin-bottom:8px;'>"
+        + "".join(cards)
+        + "</div>"
+        + "<div style='font-size:13px;line-height:1.7;"
+          "font-family:sans-serif;'>"
+        + "".join(lines)
+        + "</div>"
+        + "</div>"
+    )
 
 
 # ---------------------------------------------------------------------------
@@ -388,16 +545,29 @@ def _streak_summary_md(points: list[dict], consecutive: int) -> str:
 def _thresholds_md(candidates: list[dict]) -> str:
     """One-line reference of each answer's pass mark.
 
-    Thresholds are derived from phoneme count, so showing the count
-    explains why they differ.
+    Shows the phoneme count, which explains why the numbers differ, and
+    where each one came from. A measured threshold and the phoneme-count
+    fallback are not near each other - 사과 is 0.875 measured and 0.65 by
+    count - and which one is in play decides whether the word confirms on
+    speech that never contained it. The number alone does not say, and a
+    silent fallback is how this went unnoticed.
     """
     if not candidates:
         return ""
-    parts = [
-        f"**{c['text']}** `{c['threshold']:.2f}`"
-        f" <sub>({len(c['phonemes'])}음소)</sub>"
-        for c in candidates
-    ]
+    parts = []
+    for c in candidates:
+        note = f"{len(c['phonemes'])}음소"
+        source = c.get("threshold_source")
+        if source == "measured":
+            note += " · 측정"
+        elif source == "default":
+            note += " · 기본값"
+        # Three decimals: the candidates sit on a 0.025 grid, so two
+        # round 0.875 to 0.88 and there is no reading it back against
+        # shared/thresholds_child.json.
+        parts.append(
+            f"**{c['text']}** `{c['threshold']:.3f}` <sub>({note})</sub>"
+        )
     return "임계값 &nbsp; " + " &nbsp;·&nbsp; ".join(parts)
 
 
@@ -646,7 +816,19 @@ def build_app(tester: AudioTester, recordings_dir: Path):
         )
         diff_html = ""
         if result.best is not None:
-            diff_html = _phoneme_diff_html(
+            feedback = _syllable_feedback_html(
+                tester,
+                result.best.alignment,
+                result.best.syllables,
+                result.best.would_pass,
+                lang,
+            )
+            if feedback:
+                feedback += (
+                    "<hr style='border:none;border-top:1px solid #374151;"
+                    "margin:4px 0 12px;'>"
+                )
+            diff_html = feedback + _phoneme_diff_html(
                 result.user_ipa,
                 result.best.phonemes,
                 alignment=result.best.alignment,
@@ -966,9 +1148,19 @@ def build_app(tester: AudioTester, recordings_dir: Path):
 
         if hit:
             state["done"] = True
+            # The frame that confirmed is the one the game would react
+            # to, so its alignment - not the running `best` - is what the
+            # feedback has to describe.
+            syllables = next(
+                (c.get("syllables") or [] for c in state["cands"]
+                 if c["id"] == hit.result.target_id),
+                [],
+            )
             state["status"] = _streaming_status_html(
                 hit, state["elapsed"], sm.streak,
                 int(consecutive), LIVE_HOP_S
+            ) + _syllable_feedback_html(
+                tester, hit.result.alignment, syllables, True, lang
             )
             # Stop the mic - this is the "answer accepted, move on" moment.
             return (state, state["status"], thresholds, plot, runs,
@@ -1085,7 +1277,9 @@ def build_app(tester: AudioTester, recordings_dir: Path):
 
                 hangul_md = gr.Markdown()
 
-                with gr.Accordion("음소 정렬 (사용자 vs 정답)", open=True):
+                with gr.Accordion(
+                    "어디가 뭉개졌나 · 음소 정렬", open=True
+                ):
                     diff_html = gr.HTML()
 
                 with gr.Accordion("이번 세션 기록", open=False):

@@ -35,3 +35,22 @@ class BaseG2P(ABC):
             diacritics (e.g., "ㅋ" -> "kʰ", "ㄲ" -> "k͈").
         """
         raise NotImplementedError
+
+    def to_ipa_syllables(
+        self, text: str
+    ) -> list[tuple[str, list[str]]] | None:
+        """`to_ipa`, grouped into the units it is pronounced in.
+
+        Returns (spoken unit, its phonemes) pairs. Concatenating the
+        phonemes must reproduce `to_ipa(text)` exactly - the grouping
+        only says which phonemes came from where, so feedback can point
+        at a syllable instead of at an IPA symbol.
+
+        The unit is the *spoken* one, which need not be the written one:
+        Korean 먹어요 is pronounced 머거요, and the ㄱ written at the end
+        of 먹 is spoken at the start of 거.
+
+        Returns None when the language cannot draw that boundary; callers
+        must treat the grouping as optional.
+        """
+        return None

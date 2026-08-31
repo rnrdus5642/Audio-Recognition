@@ -173,6 +173,57 @@ def read_words_csv(path: Path) -> list[WordRow]:
 # ---------------------------------------------------------------------------
 
 
+def syllable_spans(
+    text: str,
+    groups: list[tuple[str, list[str]]] | None,
+    phonemes: list[str],
+) -> list[dict] | None:
+    """Pair each syllable with the slice of `phonemes` it produced.
+
+    Feedback has to name something the child can see - "사과의 과" - and
+    a flat phoneme list cannot say which character a phoneme came from.
+    It is not a fixed ratio: ㅘ is one character and two phonemes
+    (사과 = 4 characters, 5 phonemes).
+
+    Each entry carries both spellings, because they are not always the
+    same syllable. `text` is what is printed on screen and `spoken` is
+    how it comes out once the rules run. Under 연음 the two disagree
+    about which syllable owns a consonant: 먹어요 is spoken 머거요, so
+    the ㄱ written at the end of 먹 is spoken at the start of 거 and
+    lands in the second entry. Six of the 29 curriculum words do this.
+    Point at `text` to tell a reader where to look, but say `spoken` to
+    describe the sound, or the two will contradict each other.
+
+    `groups` is the same mapping run per spoken syllable, so the grouping
+    is correct by construction as long as it still concatenates back to
+    `phonemes`; when it does not, the two have drifted apart and guessing
+    a boundary would point at the wrong syllable.
+
+    Korean phonological rules rewrite syllables without adding or
+    removing any, so written and spoken line up position by position.
+    All 29 curriculum words hold to that; a word that ever broke it
+    returns None rather than mislabelling every syllable after the
+    break.
+    """
+    if groups is None:
+        return None
+    if [p for _, group in groups for p in group] != phonemes:
+        return None
+
+    written = [ch for ch in text if not ch.isspace()]
+    voiced = [(ch, group) for ch, group in groups if group]
+    if len(written) != len(voiced):
+        return None
+
+    spans: list[dict] = []
+    start = 0
+    for ch, (spoken, group) in zip(written, voiced):
+        end = start + len(group)
+        spans.append({"text": ch, "spoken": spoken, "span": [start, end]})
+        start = end
+    return spans
+
+
 def find_collisions(answers: list[dict]) -> list[tuple[str, str]]:
     """Find pairs of answers that come out as the same phoneme sequence.
 
@@ -230,6 +281,7 @@ def build_answer_entries(
     g2p_cache: dict[str, object] = {}
     out: list[dict] = []
     guessed: list[str] = []
+    ungrouped: list[str] = []
 
     for row in rows:
         if row.language not in g2p_cache:
@@ -244,6 +296,12 @@ def build_answer_entries(
                 f"'{row.text}' ({row.answer_id})"
             )
 
+        groups = (g2p.to_ipa_syllables(row.text) if apply_rules
+                  else [(ch, hangul_to_ipa_phonemes(ch)) for ch in row.text])
+        spans = syllable_spans(row.text, groups, phonemes)
+        if spans is None:
+            ungrouped.append(row.text)
+
         if thresholds and row.text not in thresholds:
             guessed.append(row.text)
 
@@ -253,6 +311,7 @@ def build_answer_entries(
                 "text": row.text,
                 "language": row.language,
                 "phonemes": phonemes,
+                **({"syllables": spans} if spans else {}),
                 "min_phonemes": len(phonemes),
                 "threshold": round(
                     thresholds.get(row.text, auto_threshold(len(phonemes))), 4
@@ -270,6 +329,13 @@ def build_answer_entries(
         if strict:
             raise ValueError(msg)
         print(f"WARNING: {msg}", file=sys.stderr)
+    if ungrouped:
+        # Not fatal: matching never reads the grouping. Only the
+        # per-syllable feedback does, and it stays silent without it.
+        print(f"WARNING: 음절 구분을 만들지 못했습니다 "
+              f"({len(ungrouped)}단어): {' '.join(ungrouped)}. "
+              "이 단어들은 발음 피드백에서 글자를 짚지 못합니다.",
+              file=sys.stderr)
 
     return out
 
