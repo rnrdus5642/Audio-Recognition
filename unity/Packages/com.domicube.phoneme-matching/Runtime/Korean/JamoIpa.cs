@@ -23,20 +23,20 @@ namespace DomiCube.PhonemeMatching.Korean
         private const int MedialCount = 21;
         private const int FinalCount = 28;
 
-        private static readonly string[] Initials =
+        internal static readonly string[] Initials =
         {
             "ㄱ", "ㄲ", "ㄴ", "ㄷ", "ㄸ", "ㄹ", "ㅁ", "ㅂ", "ㅃ", "ㅅ",
             "ㅆ", "ㅇ", "ㅈ", "ㅉ", "ㅊ", "ㅋ", "ㅌ", "ㅍ", "ㅎ"
         };
 
-        private static readonly string[] Medials =
+        internal static readonly string[] Medials =
         {
             "ㅏ", "ㅐ", "ㅑ", "ㅒ", "ㅓ", "ㅔ", "ㅕ", "ㅖ", "ㅗ", "ㅘ",
             "ㅙ", "ㅚ", "ㅛ", "ㅜ", "ㅝ", "ㅞ", "ㅟ", "ㅠ", "ㅡ", "ㅢ", "ㅣ"
         };
 
         // Index 0 = no final consonant.
-        private static readonly string[] Finals =
+        internal static readonly string[] Finals =
         {
             "", "ㄱ", "ㄲ", "ㄳ", "ㄴ", "ㄵ", "ㄶ", "ㄷ", "ㄹ", "ㄺ",
             "ㄻ", "ㄼ", "ㄽ", "ㄾ", "ㄿ", "ㅀ", "ㅁ", "ㅂ", "ㅄ", "ㅅ",
@@ -44,7 +44,7 @@ namespace DomiCube.PhonemeMatching.Korean
         };
 
         /// <summary>Onset jamo -> IPA. ㅇ is silent in onset position.</summary>
-        private static readonly Dictionary<string, string[]> Onset =
+        internal static readonly Dictionary<string, string[]> Onset =
             new Dictionary<string, string[]>
             {
                 { "ㄱ", new[] { "k" } },
@@ -73,7 +73,7 @@ namespace DomiCube.PhonemeMatching.Korean
         /// matcher can tolerate glide deletion, which is common in child
         /// speech.
         /// </summary>
-        private static readonly Dictionary<string, string[]> Nucleus =
+        internal static readonly Dictionary<string, string[]> Nucleus =
             new Dictionary<string, string[]>
             {
                 { "ㅏ", new[] { "a" } },
@@ -100,7 +100,7 @@ namespace DomiCube.PhonemeMatching.Korean
             };
 
         /// <summary>Coda jamo -> IPA. Korean coda stops are unreleased.</summary>
-        private static readonly Dictionary<string, string[]> Coda =
+        internal static readonly Dictionary<string, string[]> Coda =
             new Dictionary<string, string[]>
             {
                 { "ㄱ", new[] { "k̚" } },

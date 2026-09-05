@@ -1,0 +1,312 @@
+[
+  {
+    "name": "aspirated_t_is_ta",
+    "target_text": "사과",
+    "target_phonemes": ["s","a","k","w","a"],
+    "alignment": [["tʰ","s","sub"],["a","a","match"],["k","k","match"],["w","w","match"],["a","a","match"]],
+    "expected": {
+      "syllable_mapping_available": true,
+      "summary": "정답과 다르게 인식된 부분이에요.",
+      "items": [
+        {"kind":"sub","syllable_index":0,"target_syllable":"사","heard_syllable":"타","message":"‘사과’의 ‘사’가 ‘타’에 가까운 소리로 인식됐어요.","alignment_indices":[0]}
+      ]
+    }
+  },
+  {
+    "name": "unaspirated_t_is_da",
+    "target_text": "사과",
+    "target_phonemes": ["s","a","k","w","a"],
+    "alignment": [["t","s","sub"],["a","a","match"],["k","k","match"],["w","w","match"],["a","a","match"]],
+    "expected": {
+      "syllable_mapping_available": true,
+      "summary": "정답과 다르게 인식된 부분이에요.",
+      "items": [
+        {"kind":"sub","syllable_index":0,"target_syllable":"사","heard_syllable":"다","message":"‘사과’의 ‘사’가 ‘다’에 가까운 소리로 인식됐어요.","alignment_indices":[0]}
+      ]
+    }
+  },
+  {
+    "name": "two_substitutions_form_one_hint",
+    "target_text": "사",
+    "target_phonemes": ["s","a"],
+    "alignment": [["tʰ","s","sub"],["ʌ","a","sub"]],
+    "expected": {
+      "syllable_mapping_available": true,
+      "summary": "정답과 다르게 인식된 부분이에요.",
+      "items": [
+        {"kind":"sub","syllable_index":0,"target_syllable":"사","heard_syllable":"터","message":"‘사’의 ‘사’가 ‘터’에 가까운 소리로 인식됐어요.","alignment_indices":[0,1]}
+      ]
+    }
+  },
+  {
+    "name": "missing_glide_gwa_to_ga",
+    "target_text": "과",
+    "target_phonemes": ["k","w","a"],
+    "alignment": [["k","k","match"],["","w","del"],["a","a","match"]],
+    "expected": {
+      "syllable_mapping_available": true,
+      "summary": "정답과 다르게 인식된 부분이에요.",
+      "items": [
+        {"kind":"del","syllable_index":0,"target_syllable":"과","heard_syllable":"가","message":"‘과’의 ‘과’가 ‘가’에 가까운 소리로 인식됐어요.","alignment_indices":[1]}
+      ]
+    }
+  },
+  {
+    "name": "missing_onset_sa_to_a",
+    "target_text": "사",
+    "target_phonemes": ["s","a"],
+    "alignment": [["","s","del"],["a","a","match"]],
+    "expected": {
+      "syllable_mapping_available": true,
+      "summary": "정답과 다르게 인식된 부분이에요.",
+      "items": [
+        {"kind":"del","syllable_index":0,"target_syllable":"사","heard_syllable":"아","message":"‘사’의 ‘사’가 ‘아’에 가까운 소리로 인식됐어요.","alignment_indices":[0]}
+      ]
+    }
+  },
+  {
+    "name": "missing_coda_gan_to_ga",
+    "target_text": "간",
+    "target_phonemes": ["k","a","n"],
+    "alignment": [["k","k","match"],["a","a","match"],["","n","del"]],
+    "expected": {
+      "syllable_mapping_available": true,
+      "summary": "정답과 다르게 인식된 부분이에요.",
+      "items": [
+        {"kind":"del","syllable_index":0,"target_syllable":"간","heard_syllable":"가","message":"‘간’의 ‘간’이 ‘가’에 가까운 소리로 인식됐어요.","alignment_indices":[2]}
+      ]
+    }
+  },
+  {
+    "name": "whole_syllable_is_missing",
+    "target_text": "사과",
+    "target_phonemes": ["s","a","k","w","a"],
+    "alignment": [["","s","del"],["","a","del"],["k","k","match"],["w","w","match"],["a","a","match"]],
+    "expected": {
+      "syllable_mapping_available": true,
+      "summary": "정답과 다르게 인식된 부분이에요.",
+      "items": [
+        {"kind":"del","syllable_index":0,"target_syllable":"사","heard_syllable":"","message":"‘사과’의 ‘사’ 소리가 인식 결과에서 빠졌어요.","alignment_indices":[0,1]}
+      ]
+    }
+  },
+  {
+    "name": "coda_substitution_gam_to_gang",
+    "target_text": "감",
+    "target_phonemes": ["k","a","m"],
+    "alignment": [["k","k","match"],["a","a","match"],["ŋ","m","sub"]],
+    "expected": {
+      "syllable_mapping_available": true,
+      "summary": "정답과 다르게 인식된 부분이에요.",
+      "items": [
+        {"kind":"sub","syllable_index":0,"target_syllable":"감","heard_syllable":"강","message":"‘감’의 ‘감’이 ‘강’에 가까운 소리로 인식됐어요.","alignment_indices":[2]}
+      ]
+    }
+  },
+  {
+    "name": "coda_stop_uses_representative_sound",
+    "target_text": "감",
+    "target_phonemes": ["k","a","m"],
+    "alignment": [["k","k","match"],["a","a","match"],["k̚","m","sub"]],
+    "expected": {
+      "syllable_mapping_available": true,
+      "summary": "정답과 다르게 인식된 부분이에요.",
+      "items": [
+        {"kind":"sub","syllable_index":0,"target_syllable":"감","heard_syllable":"각","message":"‘감’의 ‘감’이 ‘각’에 가까운 소리로 인식됐어요.","alignment_indices":[2]}
+      ]
+    }
+  },
+  {
+    "name": "unchanged_neutralized_coda_preserves_spelling",
+    "target_text": "옷",
+    "target_phonemes": ["o","t̚"],
+    "alignment": [["a","o","sub"],["t̚","t̚","match"]],
+    "expected": {
+      "syllable_mapping_available": true,
+      "summary": "정답과 다르게 인식된 부분이에요.",
+      "items": [
+        {"kind":"sub","syllable_index":0,"target_syllable":"옷","heard_syllable":"앗","message":"‘옷’의 ‘옷’이 ‘앗’에 가까운 소리로 인식됐어요.","alignment_indices":[0]}
+      ]
+    }
+  },
+  {
+    "name": "ambiguous_we_vowel_does_not_invent_a_letter",
+    "target_text": "과",
+    "target_phonemes": ["k","w","a"],
+    "alignment": [["k","k","match"],["w","w","match"],["e","a","sub"]],
+    "expected": {
+      "syllable_mapping_available": true,
+      "summary": "정답과 다르게 인식된 부분이에요.",
+      "items": [
+        {"kind":"sub","syllable_index":0,"target_syllable":"과","heard_syllable":"","message":"‘과’의 ‘과’: ‘아’의 모음 소리가 ‘에’의 모음 소리로 인식됐어요.","alignment_indices":[2]}
+      ]
+    }
+  },
+  {
+    "name": "phonological_tensing_does_not_mislocalize",
+    "target_text": "학교",
+    "target_phonemes": ["h","a","k̚","k͈","j","o"],
+    "alignment": [["h","h","match"],["a","a","match"],["k̚","k̚","match"],["k","k͈","sub"],["j","j","match"],["o","o","match"]],
+    "expected": {
+      "syllable_mapping_available": false,
+      "summary": "정답과 다르게 인식된 부분이에요. 글자 위치를 정확히 연결하기 어려워 소리만 안내해요.",
+      "items": [
+        {"kind":"sub","syllable_index":-1,"target_syllable":"","heard_syllable":"","message":"쌍기역 소리가 기역 소리로 인식됐어요.","alignment_indices":[3]}
+      ]
+    }
+  },
+  {
+    "name": "liaison_does_not_mislocalize",
+    "target_text": "옷이",
+    "target_phonemes": ["o","s","i"],
+    "alignment": [["o","o","match"],["tʰ","s","sub"],["i","i","match"]],
+    "expected": {
+      "syllable_mapping_available": false,
+      "summary": "정답과 다르게 인식된 부분이에요. 글자 위치를 정확히 연결하기 어려워 소리만 안내해요.",
+      "items": [
+        {"kind":"sub","syllable_index":-1,"target_syllable":"","heard_syllable":"","message":"시옷 소리가 티읕 소리로 인식됐어요.","alignment_indices":[1]}
+      ]
+    }
+  },
+  {
+    "name": "insertion_is_not_forced_into_a_syllable",
+    "target_text": "사",
+    "target_phonemes": ["s","a"],
+    "alignment": [["s","s","match"],["n","","ins"],["a","a","match"]],
+    "expected": {
+      "syllable_mapping_available": true,
+      "summary": "정답과 다르게 인식된 부분이에요.",
+      "items": [
+        {"kind":"ins","syllable_index":-1,"target_syllable":"","heard_syllable":"","message":"정답에 없는 니은 소리가 추가로 인식됐어요.","alignment_indices":[1]}
+      ]
+    }
+  },
+  {
+    "name": "insertion_blocks_nearby_reconstruction",
+    "target_text": "사",
+    "target_phonemes": ["s","a"],
+    "alignment": [["t","s","sub"],["n","","ins"],["a","a","match"]],
+    "expected": {
+      "syllable_mapping_available": true,
+      "summary": "정답과 다르게 인식된 부분이에요.",
+      "items": [
+        {"kind":"sub","syllable_index":0,"target_syllable":"사","heard_syllable":"","message":"‘사’의 ‘사’: 시옷 소리가 디귿 소리로 인식됐어요.","alignment_indices":[0]},
+        {"kind":"ins","syllable_index":-1,"target_syllable":"","heard_syllable":"","message":"정답에 없는 니은 소리가 추가로 인식됐어요.","alignment_indices":[1]}
+      ]
+    }
+  },
+  {
+    "name": "unknown_sound_uses_plain_language",
+    "target_text": "사",
+    "target_phonemes": ["s","a"],
+    "alignment": [["θ","s","sub"],["a","a","match"]],
+    "expected": {
+      "syllable_mapping_available": true,
+      "summary": "정답과 다르게 인식된 부분이에요.",
+      "items": [
+        {"kind":"sub","syllable_index":0,"target_syllable":"사","heard_syllable":"","message":"‘사’의 ‘사’: 시옷 소리가 한글로 옮기기 어려운 소리로 인식됐어요.","alignment_indices":[0]}
+      ]
+    }
+  },
+  {
+    "name": "non_hangul_target_is_not_localized",
+    "target_text": "test",
+    "target_phonemes": ["s","a"],
+    "alignment": [["t","s","sub"],["a","a","match"]],
+    "expected": {
+      "syllable_mapping_available": false,
+      "summary": "정답과 다르게 인식된 부분이에요. 글자 위치를 정확히 연결하기 어려워 소리만 안내해요.",
+      "items": [
+        {"kind":"sub","syllable_index":-1,"target_syllable":"","heard_syllable":"","message":"시옷 소리가 디귿 소리로 인식됐어요.","alignment_indices":[0]}
+      ]
+    }
+  },
+  {
+    "name": "emoji_spaces_and_repeated_syllables_use_hangul_ordinal",
+    "target_text": "🙂사 사!",
+    "target_phonemes": ["s","a","s","a"],
+    "alignment": [["s","s","match"],["a","a","match"],["t","s","sub"],["a","a","match"]],
+    "expected": {
+      "syllable_mapping_available": true,
+      "summary": "정답과 다르게 인식된 부분이에요.",
+      "items": [
+        {"kind":"sub","syllable_index":1,"target_syllable":"사","heard_syllable":"다","message":"‘🙂사 사!’의 ‘사’가 ‘다’에 가까운 소리로 인식됐어요.","alignment_indices":[2]}
+      ]
+    }
+  },
+  {
+    "name": "missing_vowel_cannot_form_a_syllable",
+    "target_text": "사",
+    "target_phonemes": ["s","a"],
+    "alignment": [["s","s","match"],["","a","del"]],
+    "expected": {
+      "syllable_mapping_available": true,
+      "summary": "정답과 다르게 인식된 부분이에요.",
+      "items": [
+        {"kind":"del","syllable_index":0,"target_syllable":"사","heard_syllable":"","message":"‘사’의 ‘사’: ‘아’의 모음 소리가 인식 결과에서 빠졌어요.","alignment_indices":[1]}
+      ]
+    }
+  },
+  {
+    "name": "mixed_changes_stay_grouped",
+    "target_text": "과",
+    "target_phonemes": ["k","w","a"],
+    "alignment": [["tʰ","k","sub"],["","w","del"],["a","a","match"]],
+    "expected": {
+      "syllable_mapping_available": true,
+      "summary": "정답과 다르게 인식된 부분이에요.",
+      "items": [
+        {"kind":"mixed","syllable_index":0,"target_syllable":"과","heard_syllable":"타","message":"‘과’의 ‘과’가 ‘타’에 가까운 소리로 인식됐어요.","alignment_indices":[0,1]}
+      ]
+    }
+  },
+  {
+    "name": "matching_sounds_are_not_reported_as_errors",
+    "target_text": "사과",
+    "target_phonemes": ["s","a","k","w","a"],
+    "alignment": [["s","s","match"],["a","a","match"],["k","k","match"],["w","w","match"],["a","a","match"]],
+    "expected": {
+      "syllable_mapping_available": true,
+      "summary": "비교한 구간에서 정답과 다른 소리가 발견되지 않았어요.",
+      "items": []
+    }
+  },
+  {
+    "name": "no_alignment_is_not_a_perfect_result",
+    "target_text": "사",
+    "target_phonemes": ["s","a"],
+    "alignment": [],
+    "expected": {
+      "syllable_mapping_available": false,
+      "summary": "발음 비교 정보가 없어 자세히 설명할 수 없어요.",
+      "items": []
+    }
+  },
+  {
+    "name": "both_syllables_keep_their_own_positions",
+    "target_text": "사과",
+    "target_phonemes": ["s","a","k","w","a"],
+    "alignment": [["t","s","sub"],["a","a","match"],["k","k","match"],["","w","del"],["a","a","match"]],
+    "expected": {
+      "syllable_mapping_available": true,
+      "summary": "정답과 다르게 인식된 부분이에요.",
+      "items": [
+        {"kind":"sub","syllable_index":0,"target_syllable":"사","heard_syllable":"다","message":"‘사과’의 ‘사’가 ‘다’에 가까운 소리로 인식됐어요.","alignment_indices":[0]},
+        {"kind":"del","syllable_index":1,"target_syllable":"과","heard_syllable":"가","message":"‘사과’의 ‘과’가 ‘가’에 가까운 소리로 인식됐어요.","alignment_indices":[3]}
+      ]
+    }
+  },
+  {
+    "name": "null_target_text_falls_back",
+    "target_text": null,
+    "target_phonemes": ["s"],
+    "alignment": [["t","s","sub"]],
+    "expected": {
+      "syllable_mapping_available": false,
+      "summary": "정답과 다르게 인식된 부분이에요. 글자 위치를 정확히 연결하기 어려워 소리만 안내해요.",
+      "items": [
+        {"kind":"sub","syllable_index":-1,"target_syllable":"","heard_syllable":"","message":"시옷 소리가 디귿 소리로 인식됐어요.","alignment_indices":[0]}
+      ]
+    }
+  }
+]

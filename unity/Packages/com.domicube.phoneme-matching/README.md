@@ -10,17 +10,16 @@
 
 ```
 [개발 PC · 오프라인]
-  words.csv ──(파이썬 g2pkk)──> targets.json     ← 앱에 동봉하는 데이터
+  words.csv ──(한국어 음운 규칙 + IPA 매핑)──> targets.json
 
 [기기 · 런타임]
   마이크 → IPhonemeRecognizer → IPA → Matcher → 통과/재시도
 ```
 
-음운 규칙(g2pkk)은 **빌드 타임에만** 씁니다. 런타임은 유니코드 한글 분해 + 자모→IPA
-테이블만 쓰므로 mecab이 필요 없습니다. 규칙 생략의 대가는 측정했습니다 — 골든셋에서
-18단어 중 3개만 달라지고 negatives 거절율이 91.7%→90.3%로 1.4%p 떨어질 뿐입니다.
-달라지는 세 쌍(`ɾ/l`, `k/k̚`, `k̚/k͈`)이 confusion matrix가 이미 거의 무료로 처리하는
-쌍이기 때문입니다.
+정답 빌드와 인식 결과 모두 한국어 음운 규칙을 적용합니다. Unity에서는
+`Korean.Rules.Apply(text)` 후 `JamoIpa.ToPhonemes()`를 호출하며, Python에도
+같은 규칙 구현이 있습니다. 런타임에 mecab이나 Python은 필요 없습니다.
+g2pkk는 Python의 별도 비교 실험 경로에서만 사용합니다.
 
 ## 설치
 
@@ -402,6 +401,23 @@ void OnFrame(short[] pcm)
 
 ## 결과 읽기
 
+정답 확정 시에는 `frame.Feedback`과 `session.LastConfirmation`으로
+쉬운 한글 설명·음소별 차이·점수·임계값·연속 횟수를 받습니다.
+마이크 Listener는 `OnConfirmedDetailed`와 `LastConfirmation`을 제공하고,
+기존 `OnConfirmed(word, score)`도 유지합니다.
+[발음 설명 API](Documentation~/pronunciation-feedback.md)에 전체 필드와 예제가 있습니다.
+
+```csharp
+listener.OnConfirmedDetailed.AddListener(feedback =>
+{
+    foreach (var hint in feedback.KoreanFeedback.Items)
+        Debug.Log(hint.Message);
+});
+```
+
+이 계약은 인식된 음소의 원본 비교이며 실제 발음 진단이 아닙니다.
+웹의 별도 모델 오류표 기반 판단 보류 정책은 C# 기본 DTO에 적용되지 않습니다.
+
 방법 2~4 는 `Push()` 가 돌려주고, 방법 1 은 `OnFrameScored` 로 옵니다.
 
 ```csharp
@@ -627,6 +643,7 @@ public sealed class Lesson : MonoBehaviour
 | 필드 | 설명 |
 |---|---|
 | `Confirmed` | 확정됨 (세션 종료) |
+| `Feedback` | 확정 프레임의 PronunciationFeedback, 확정 전에는 null |
 | `Streak` | 연속 횟수 |
 | `Text` | 인식된 한글 (`""` 면 무음) |
 | `Phonemes` | 인식된 IPA |
@@ -659,6 +676,7 @@ public sealed class Lesson : MonoBehaviour
 | `MicrophoneDevice` | 비우면 OS 기본 |
 | `WindowSeconds` `HopSeconds` `Consecutive` `TimeoutSeconds` | 2.5 / 0.5 / 2 / 30 |
 | `OnConfirmed(word, score)` | 확정 |
+| `OnConfirmedDetailed(feedback)` / `LastConfirmation` | 확정 원본 비교·한글 설명, 다음 Listen 시도 시 초기화 |
 | `OnTimedOut()` | 시간 초과 |
 | `OnFrameScored(word, score, streak)` | 매 프레임 (진행 표시용) |
 
@@ -699,12 +717,15 @@ public sealed class Lesson : MonoBehaviour
 
 ## 배치와 스트리밍은 설정이 다릅니다
 
-| | 배치 | 스트리밍 |
-|---|---|---|
-| `skip_cost` | 0.15 | 0.05 |
-| 윈도우 커버리지 | 0.5 | 0.8 |
-| 문맥 제한 | 없음 | 최근 `4×정답음소수+3` |
-| 연속 확인 | 없음 | 2회 |
+| | 배치 | 성인 모델 스트리밍 (v1) | 아동 모델 스트리밍 (v2) |
+|---|---|---|---|
+| `skip_cost` | 0.15 | 0.05 | 0.005 |
+| 윈도우 커버리지 | 0.5 | 0.8 | 0.8 |
+| 문맥 제한 | 없음 | 최근 `6×정답음소수+3` | 최근 `8×정답음소수+3` |
+| 연속 확인 | 없음 | 2회 | 2회 |
+
+현재 값은 각 matrix의 `streaming_profile`에서 읽습니다. 아래 골든셋 수치는
+초기 성인 모델 실험이며, 아동 모델의 별도 검증은 위 아동 모델 항목을 참고하세요.
 
 **하나로 통일할 수 없습니다.** 배치 설정을 스트리밍에 쓰면 정답 4개 중 3개를 놓치고,
 스트리밍 설정을 배치에 쓰면 positives가 69.4%→47.2%로 무너집니다. 배치는 커버리지가
@@ -726,17 +747,16 @@ public sealed class Lesson : MonoBehaviour
 | **2회** | **18/36** | **16/612** | **2.1초** |
 | 3회 | 15/36 | 10/612 | 2.5초 |
 
-2회는 1회보다 무조건 낫고(검출 같고 오발동만 줄어듦), 3회는 오발동 1%p를 얻는 대신
-검출 8%p를 잃습니다. 제대로 말했는데 못 알아듣는 쪽이 더 나쁘므로 기본값은 2입니다.
-성인 TTS 기준이라, 아이 발화로는 다시 재봐야 합니다.
+이 성인 TTS 실험에서는 2회가 1회와 검출은 같고 오발동은 적었습니다.
+3회는 오발동을 약 1%p 줄이는 대신 검출이 약 8%p 낮았습니다. 현재 성인·아동
+기본값은 모두 2회이며, 아동 모델은 별도의 실제 아동 발화로 설정을 검증했습니다.
 
 ### 문맥 제한은 연속 횟수와 묶여 있습니다
 
-정답은 문맥 창 **안에 있는 동안만** 점수를 얻습니다. 창이 `연속횟수 × hop`초보다 짧으면
-말을 계속하는 사용자는 확정이 산술적으로 불가능합니다. 한국어는 약 10음소/초라
-`context_mult 2.0`(사과 기준 13음소 ≈ 1.3초 ≈ 2.6프레임)으로는 연속 확인을 못 채웠고,
-4.0(≈2.3초 ≈ 4.6프레임)으로 해결했습니다. 연속 횟수를 올릴 땐 이 관계를 먼저
-확인하세요.
+정답은 문맥 창 **안에 있는 동안만** 점수를 얻습니다. 첫 통과 뒤에도
+`(연속횟수 - 1) × hop` 동안 같은 후보가 통과해야 합니다. 말을 계속 덧붙이면
+정답 음소가 문맥 범위 밖으로 밀려날 수 있으므로, 연속 횟수를 올릴 때에는
+문맥 제한과 실제 발화 속도를 함께 확인하세요. 현재 문맥 배수는 성인 6, 아동 8입니다.
 
 ## 음향 모델
 
@@ -760,9 +780,12 @@ PC, RTX 5060 Ti): GPU 22~32ms, CPU 461~523ms. hop 예산이 500ms인데 CPU 는
 
 다른 모델을 쓰려면 `IPhonemeRecognizer` 를 구현하면 됩니다. 주의: 출력 음소는
 targets 를 만든 것과 **같은 표기 체계**여야 합니다. 한국어는 인식기의 한글
-출력을 `JamoIpa.ToPhonemes()` 에 통과시키면 됩니다.
+출력에 `Korean.Rules.Apply()` 후 `JamoIpa.ToPhonemes()`를 적용하면 됩니다.
 
 ## 테스트
+
+2026-09-06: .NET C# 28개, Unity 6000.3.18f1 PlayMode 29개 통과.
+동일한 JSON 피드백 벡터와 24개 한글 설명 사례·전체 11,172음절 매핑을 Python/C#에서 대조합니다.
 
 ```bash
 dotnet test csharp/PhonemeMatching.Tests    # Unity 없이, 초 단위

@@ -281,11 +281,16 @@ class AudioTester:
 
     def __init__(
         self,
-        targets_path: Path = TARGETS_PATH,
+        targets_path: Path | None = TARGETS_PATH,
         matrix_path: Path = MATRIX_PATH,
         model_name: str | None = None,
     ) -> None:
-        self.targets = json.loads(targets_path.read_text(encoding="utf-8"))
+        # Live/custom-target callers do not need a prebuilt catalog.
+        self.targets = (
+            json.loads(targets_path.read_text(encoding="utf-8"))
+            if targets_path is not None
+            else {"answers": []}
+        )
         # Korean's matrix is the default for backwards compatibility.
         # Other languages can ship their own ko_child_v1.json siblings.
         self._default_matrix_path = matrix_path

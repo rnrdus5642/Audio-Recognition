@@ -5,10 +5,9 @@
 #   pip install -r requirements.txt
 
 # G2P (Korean)
-g2pkk==0.1.2          # mecab-free fork of g2pk (Windows-friendly)
-eunjeon==0.4.0        # mecab wrapper required by g2pkk
+g2pkk==0.1.2          # Korean phonological rules
+mecab-ko==1.0.2       # MeCab-ko + dictionary; Windows Python 3.10-3.13 wheels
 jamo==0.4.1           # Hangul -> Jamo decomposition (currently unused at runtime, kept for parity)
-setuptools<70        # eunjeon depends on pkg_resources, removed in setuptools >=70
 
 # Test framework
 pytest>=8.0

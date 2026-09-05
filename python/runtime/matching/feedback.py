@@ -331,3 +331,8 @@ __all__ = [
     "ModelErrors",
     "explain",
 ]
+
+# Shared web/Unity confirmation contract; keep the model-aware API above intact.
+from .confirmation import PhonemeComparison, PronunciationFeedback
+
+__all__ += ["PhonemeComparison", "PronunciationFeedback"]

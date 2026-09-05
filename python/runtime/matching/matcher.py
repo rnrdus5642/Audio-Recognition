@@ -32,6 +32,7 @@ class MatchResult:
     window_end: int = 0
     # Per-step alignment (user_ph, target_ph, op) within the window.
     alignment: list[tuple[str, str, str]] | None = None
+    threshold: float = 0.0
 
 
 def substring_edit_distance(
@@ -456,4 +457,5 @@ class Matcher:
             window_start=best_ws,
             window_end=best_we,
             alignment=best_ops,
+            threshold=float(best.get("threshold", 0.6)),
         )

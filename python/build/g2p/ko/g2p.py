@@ -25,11 +25,27 @@ from . import rules
 from .jamo_ipa import hangul_to_ipa_phonemes
 
 
+class _MecabPosAdapter:
+    """Expose the POS pairs g2pkk expects using the mecab-ko wheel."""
+
+    def __init__(self, tagger) -> None:
+        self._tagger = tagger
+
+    def pos(self, text: str) -> list[tuple[str, str]]:
+        pairs = []
+        for line in self._tagger.parse(text).splitlines():
+            if not line or line == "EOS":
+                continue
+            surface, features = line.split("\t", 1)
+            pairs.append((surface, features.split(",", 1)[0]))
+        return pairs
+
+
 class KoreanG2P(BaseG2P):
     """Korean text -> IPA phoneme list.
 
     Lazy-initialises the g2pkk model on first use so that simply importing
-    the class does not download NLTK data or build the mecab wrapper.
+    the class does not download NLTK data or load the mecab wrapper.
     """
 
     def __init__(self) -> None:
@@ -45,8 +61,18 @@ class KoreanG2P(BaseG2P):
             # when g2pkk is not strictly required (e.g., during pure unit
             # tests of the IPA mapping table).
             from g2pkk import G2p
+            from mecab_ko import Tagger
 
-            self._g2p = G2p()
+            class G2pWithMecabKo(G2p):
+                def check_mecab(self):
+                    # Dependencies are installed explicitly, never by
+                    # g2pkk's runtime "pip install eunjeon" subprocess.
+                    pass
+
+                def get_mecab(self):
+                    return _MecabPosAdapter(Tagger())
+
+            self._g2p = G2pWithMecabKo()
 
     def apply_rules(self, text: str) -> str:
         """Return the surface-form Hangul (phonological rules applied).

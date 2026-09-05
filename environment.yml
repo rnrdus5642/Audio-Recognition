@@ -19,10 +19,9 @@ dependencies:
   - ffmpeg
   - pip:
       # G2P (Phase 1)
-      - g2pkk==0.1.2          # mecab-free fork of g2pk
-      - eunjeon==0.4.0        # mecab wrapper required by g2pkk
+      - g2pkk==0.1.2          # Korean phonological rules
+      - mecab-ko==1.0.2       # MeCab-ko wrapper and dictionary
       - jamo==0.4.1
-      - "setuptools<70"      # eunjeon needs pkg_resources
 
       # Tests / lint
       - pytest>=8.0

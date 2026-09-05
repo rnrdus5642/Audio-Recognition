@@ -43,6 +43,12 @@ public sealed class PronunciationTestBench : MonoBehaviour
     [Tooltip("확정에 필요한 연속 프레임 수")]
     [Range(1, 6)] public int Consecutive = 2;
 
+    [Header("Confirmation feedback")]
+    public PronunciationConfirmedEvent OnConfirmedDetailed =
+        new PronunciationConfirmedEvent();
+
+    public PronunciationFeedback LastConfirmation { get; private set; }
+
     private ConfusionMatrix _matrix;
     private TargetCatalog _catalog;
     private SentisPhonemeRecognizer _recognizer;
@@ -138,6 +144,7 @@ public sealed class PronunciationTestBench : MonoBehaviour
 
     private IEnumerator ListenLoop()
     {
+        LastConfirmation = null;
         _frames.Clear();
         _scoredIpa = string.Empty;
 
@@ -187,6 +194,7 @@ public sealed class PronunciationTestBench : MonoBehaviour
             _status = "듣는 중 — 말해보세요";
         }
 
+        PronunciationFeedback confirmed = null;
         while (_listening)
         {
             yield return wait;
@@ -221,6 +229,7 @@ public sealed class PronunciationTestBench : MonoBehaviour
 
             if (hit != null)
             {
+                confirmed = hit.Feedback;
                 _status = $"확정: {hit.Result.TargetText} "
                     + $"({hit.Result.Score:F3}, {_frames.Count}프레임)";
                 _listening = false;
@@ -230,7 +239,12 @@ public sealed class PronunciationTestBench : MonoBehaviour
 
         mic.Dispose();
 
-        if (_status.StartsWith("듣는 중"))
+        if (confirmed != null)
+        {
+            LastConfirmation = confirmed;
+            OnConfirmedDetailed?.Invoke(confirmed);
+        }
+        else if (_status.StartsWith("듣는 중"))
         {
             _status = $"중지 ({_frames.Count}프레임, 확정 없음)";
         }

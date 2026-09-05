@@ -9,6 +9,7 @@ namespace DomiCube.PhonemeMatching
         public MatchResult Result;
         public int Frames;  // frames consumed before confirming
         public int Streak;  // consecutive frames the winner held
+        public PronunciationFeedback Feedback; // snapshot of the confirming frame
     }
 
     /// <summary>
@@ -126,7 +127,8 @@ namespace DomiCube.PhonemeMatching
                 {
                     Result = result,
                     Frames = _frames,
-                    Streak = _streak
+                    Streak = _streak,
+                    Feedback = PronunciationFeedback.FromMatch(result, _frames, _streak)
                 };
             }
 

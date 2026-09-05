@@ -1,0 +1,384 @@
+[
+  {
+    "name": "all_operations_with_surrounding_context",
+    "result": {
+      "score": 0.68,
+      "distance": 1.6,
+      "threshold": 0.65,
+      "passed": true,
+      "target_id": "apple",
+      "target_text": "사과",
+      "target_phonemes": [
+        "s",
+        "a",
+        "k",
+        "w",
+        "a"
+      ],
+      "user_phonemes": [
+        "z",
+        "t",
+        "a",
+        "n",
+        "k",
+        "a",
+        "h"
+      ],
+      "window_start": 1,
+      "window_end": 6,
+      "alignment": [
+        [
+          "t",
+          "s",
+          "sub"
+        ],
+        [
+          "a",
+          "a",
+          "match"
+        ],
+        [
+          "n",
+          "",
+          "ins"
+        ],
+        [
+          "k",
+          "k",
+          "match"
+        ],
+        [
+          "",
+          "w",
+          "del"
+        ],
+        [
+          "a",
+          "a",
+          "match"
+        ]
+      ]
+    },
+    "frames": 4,
+    "streak": 2,
+    "expected": {
+      "schema_version": 2,
+      "target_id": "apple",
+      "target_text": "사과",
+      "score": 0.68,
+      "distance": 1.6,
+      "threshold": 0.65,
+      "passed": true,
+      "frames": 4,
+      "streak": 2,
+      "target_phonemes": [
+        "s",
+        "a",
+        "k",
+        "w",
+        "a"
+      ],
+      "user_phonemes": [
+        "z",
+        "t",
+        "a",
+        "n",
+        "k",
+        "a",
+        "h"
+      ],
+      "window_start": 1,
+      "window_end": 6,
+      "alignment_available": true,
+      "alignment": [
+        {
+          "operation": "sub",
+          "target_phoneme": "s",
+          "user_phoneme": "t",
+          "target_index": 0,
+          "user_index": 1
+        },
+        {
+          "operation": "match",
+          "target_phoneme": "a",
+          "user_phoneme": "a",
+          "target_index": 1,
+          "user_index": 2
+        },
+        {
+          "operation": "ins",
+          "target_phoneme": "",
+          "user_phoneme": "n",
+          "target_index": -1,
+          "user_index": 3
+        },
+        {
+          "operation": "match",
+          "target_phoneme": "k",
+          "user_phoneme": "k",
+          "target_index": 2,
+          "user_index": 4
+        },
+        {
+          "operation": "del",
+          "target_phoneme": "w",
+          "user_phoneme": "",
+          "target_index": 3,
+          "user_index": -1
+        },
+        {
+          "operation": "match",
+          "target_phoneme": "a",
+          "user_phoneme": "a",
+          "target_index": 4,
+          "user_index": 5
+        }
+      ],
+      "match_count": 3,
+      "substitution_count": 1,
+      "deletion_count": 1,
+      "insertion_count": 1,
+      "korean_feedback": {
+        "syllable_mapping_available": true,
+        "summary": "정답과 다르게 인식된 부분이에요.",
+        "items": [
+          {
+            "kind": "sub", "syllable_index": 0, "target_syllable": "사", "heard_syllable": "",
+            "message": "‘사과’의 ‘사’: 시옷 소리가 디귿 소리로 인식됐어요.", "alignment_indices": [0]
+          },
+          {
+            "kind": "ins", "syllable_index": -1, "target_syllable": "", "heard_syllable": "",
+            "message": "정답에 없는 니은 소리가 추가로 인식됐어요.", "alignment_indices": [2]
+          },
+          {
+            "kind": "del", "syllable_index": 1, "target_syllable": "과", "heard_syllable": "",
+            "message": "‘사과’의 ‘과’: ‘와’에서 앞에 붙는 소리가 인식 결과에서 빠졌어요.", "alignment_indices": [4]
+          }
+        ]
+      }
+    }
+  },
+  {
+    "name": "matching_word_with_nonzero_input_offset",
+    "result": {
+      "score": 0.95,
+      "distance": 0.25,
+      "threshold": 0.65,
+      "passed": true,
+      "target_id": "apple",
+      "target_text": "사과",
+      "target_phonemes": [
+        "s",
+        "a"
+      ],
+      "user_phonemes": [
+        "h",
+        "s",
+        "a",
+        "m"
+      ],
+      "window_start": 1,
+      "window_end": 3,
+      "alignment": [
+        [
+          "s",
+          "s",
+          "match"
+        ],
+        [
+          "a",
+          "a",
+          "match"
+        ]
+      ]
+    },
+    "frames": 7,
+    "streak": 3,
+    "expected": {
+      "schema_version": 2,
+      "target_id": "apple",
+      "target_text": "사과",
+      "score": 0.95,
+      "distance": 0.25,
+      "threshold": 0.65,
+      "passed": true,
+      "frames": 7,
+      "streak": 3,
+      "target_phonemes": [
+        "s",
+        "a"
+      ],
+      "user_phonemes": [
+        "h",
+        "s",
+        "a",
+        "m"
+      ],
+      "window_start": 1,
+      "window_end": 3,
+      "alignment_available": true,
+      "alignment": [
+        {
+          "operation": "match",
+          "target_phoneme": "s",
+          "user_phoneme": "s",
+          "target_index": 0,
+          "user_index": 1
+        },
+        {
+          "operation": "match",
+          "target_phoneme": "a",
+          "user_phoneme": "a",
+          "target_index": 1,
+          "user_index": 2
+        }
+      ],
+      "match_count": 2,
+      "substitution_count": 0,
+      "deletion_count": 0,
+      "insertion_count": 0,
+      "korean_feedback": {
+        "syllable_mapping_available": false,
+        "summary": "비교한 구간에서 정답과 다른 소리가 발견되지 않았어요.",
+        "items": []
+      }
+    }
+  },
+  {
+    "name": "missing_alignment_is_not_perfect_pronunciation",
+    "result": {
+      "score": 1,
+      "distance": 0,
+      "threshold": 0.65,
+      "passed": true,
+      "target_id": "apple",
+      "target_text": "사과",
+      "target_phonemes": [
+        "a"
+      ],
+      "user_phonemes": [
+        "a"
+      ],
+      "window_start": 0,
+      "window_end": 1,
+      "alignment": []
+    },
+    "frames": 4,
+    "streak": 2,
+    "expected": {
+      "schema_version": 2,
+      "target_id": "apple",
+      "target_text": "사과",
+      "score": 1,
+      "distance": 0,
+      "threshold": 0.65,
+      "passed": true,
+      "frames": 4,
+      "streak": 2,
+      "target_phonemes": [
+        "a"
+      ],
+      "user_phonemes": [
+        "a"
+      ],
+      "window_start": 0,
+      "window_end": 1,
+      "alignment_available": false,
+      "alignment": [],
+      "match_count": 0,
+      "substitution_count": 0,
+      "deletion_count": 0,
+      "insertion_count": 0,
+      "korean_feedback": {
+        "syllable_mapping_available": false,
+        "summary": "발음 비교 정보가 없어 자세히 설명할 수 없어요.",
+        "items": []
+      }
+    }
+  },
+  {
+    "name": "empty_input_deletes_all_target_phonemes",
+    "result": {
+      "score": 0,
+      "distance": 2,
+      "threshold": 0.65,
+      "passed": false,
+      "target_id": "apple",
+      "target_text": "사과",
+      "target_phonemes": [
+        "s",
+        "a"
+      ],
+      "user_phonemes": [],
+      "window_start": 0,
+      "window_end": 0,
+      "alignment": [
+        [
+          "",
+          "s",
+          "del"
+        ],
+        [
+          "",
+          "a",
+          "del"
+        ]
+      ]
+    },
+    "frames": 1,
+    "streak": 0,
+    "expected": {
+      "schema_version": 2,
+      "target_id": "apple",
+      "target_text": "사과",
+      "score": 0,
+      "distance": 2,
+      "threshold": 0.65,
+      "passed": false,
+      "frames": 1,
+      "streak": 0,
+      "target_phonemes": [
+        "s",
+        "a"
+      ],
+      "user_phonemes": [],
+      "window_start": 0,
+      "window_end": 0,
+      "alignment_available": true,
+      "alignment": [
+        {
+          "operation": "del",
+          "target_phoneme": "s",
+          "user_phoneme": "",
+          "target_index": 0,
+          "user_index": -1
+        },
+        {
+          "operation": "del",
+          "target_phoneme": "a",
+          "user_phoneme": "",
+          "target_index": 1,
+          "user_index": -1
+        }
+      ],
+      "match_count": 0,
+      "substitution_count": 0,
+      "deletion_count": 2,
+      "insertion_count": 0,
+      "korean_feedback": {
+        "syllable_mapping_available": false,
+        "summary": "정답과 다르게 인식된 부분이에요. 글자 위치를 정확히 연결하기 어려워 소리만 안내해요.",
+        "items": [
+          {
+            "kind": "del", "syllable_index": -1, "target_syllable": "", "heard_syllable": "",
+            "message": "시옷 소리가 인식 결과에서 빠졌어요.", "alignment_indices": [0]
+          },
+          {
+            "kind": "del", "syllable_index": -1, "target_syllable": "", "heard_syllable": "",
+            "message": "‘아’의 모음 소리가 인식 결과에서 빠졌어요.", "alignment_indices": [1]
+          }
+        ]
+      }
+    }
+  }
+]

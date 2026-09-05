@@ -1,10 +1,17 @@
 # 새 언어 추가 가이드
 
-영어를 추가하는 예시로 설명합니다. 다른 언어도 동일한 흐름.
+Python의 G2P·ASR·매칭 경로에 영어를 추가하는 예시입니다. 아래 코드는 확장 예제이며,
+현재 한국어만 구현되어 있습니다. Unity 런타임과 언어별 쉬운 발음 설명은 별도로 확장해야 합니다.
 
 ## 핵심 원칙
 
-언어별 코드는 모두 `<lang>/` 폴더로 격리됩니다. 추가 시 **기존 파일 수정은 거의 없고**, 폴더 신설 + 두 곳의 REGISTRY에 한 줄씩만 등록하면 됩니다.
+G2P와 ASR의 언어별 구현은 `<lang>/` 폴더로 격리됩니다. 두 곳의 REGISTRY 등록으로 Python
+도구에서 인식기를 선택할 수 있지만, 새 언어의 IPA 매핑·모델·혼동행렬·회귀 테스트는 직접 준비해야 합니다.
+
+현재 `python/runtime/matching/korean_feedback.py`와 Unity의
+`Runtime/Korean/KoreanFeedbackBuilder.cs`는 한국어 설명 전용입니다. 다른 언어의 글자에
+자동 대응하지 않습니다. 일반 `PronunciationFeedback.Alignment`는 재사용할 수 있지만,
+자연스러운 설명·글자 강조는 해당 언어의 규칙과 결과 계약을 추가해 검증해야 합니다.
 
 ## 1단계: G2P 추가
 
@@ -214,18 +221,23 @@ python -m python.build.build_targets
 
 # 4. 정확도 검증
 python -m python.tools.web_test
-#    → 0. 언어 선택 라디오에 자동으로 새 언어 옵션 표시
+#    → 실시간 단일 화면의 언어 선택에 새 언어 옵션 표시
+#    정답은 화면에서 즉석 입력하며, CLI 카탈로그 빌드는 웹 실행의 필수 조건이 아님
 ```
 
 ## 안 건드려도 되는 것들
 
-다음은 **언어 추가 시 절대 수정하지 않음**:
+Python의 음소 매칭만 확장할 때 다음 공통 부분은 보통 재사용합니다.
 
 - `python/runtime/audio.py` — 16kHz 변환 공통
-- `python/runtime/matching/` — 매칭 엔진 (편집거리 등)
+- `python/runtime/matching/matcher.py`, `streaming.py` — 음소 편집거리·연속 확인
 - `python/build/build_targets.py` — 빌드 파이프라인 디스패처
 - `python/tools/` 의 모든 도구 — 자동으로 새 언어 인식
 - `python/runtime/recognizer/base.py`, `python/build/g2p/base.py` — 인터페이스
+
+Unity에는 별도의 `IPhonemeRecognizer` 구현과 모델·어휘·IPA 후처리가 필요합니다. Python
+레지스트리에 등록했다고 Unity가 자동으로 새 언어를 지원하지는 않습니다. 웹·Unity 공통 실행
+모듈은 아직 [설계 단계](SHARED_RUNTIME_ARCHITECTURE.md)입니다.
 
 ## 새 언어 추가 시 변경 파일 요약
 

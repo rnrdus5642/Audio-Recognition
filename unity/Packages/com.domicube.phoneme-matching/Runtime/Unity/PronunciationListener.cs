@@ -11,6 +11,9 @@ namespace DomiCube.PhonemeMatching.Unity
     public sealed class AnswerConfirmedEvent : UnityEvent<string, float> { }
 
     [Serializable]
+    public sealed class PronunciationConfirmedEvent : UnityEvent<PronunciationFeedback> { }
+
+    [Serializable]
     public sealed class FrameScoredEvent : UnityEvent<string, float, int> { }
 
     /// <summary>
@@ -58,6 +61,13 @@ namespace DomiCube.PhonemeMatching.Unity
         public AnswerConfirmedEvent OnConfirmed = new AnswerConfirmedEvent();
 
         /// <summary>
+        /// Detailed snapshot for pronunciation UI. Fired after capture
+        /// stops, before the legacy OnConfirmed event can advance scenes.
+        /// </summary>
+        public PronunciationConfirmedEvent OnConfirmedDetailed =
+            new PronunciationConfirmedEvent();
+
+        /// <summary>
         /// Nothing was confirmed before <see cref="TimeoutSeconds"/> ran
         /// out. A lesson needs this to offer another try; without it the
         /// only way to notice is polling <see cref="IsListening"/>.
@@ -75,6 +85,9 @@ namespace DomiCube.PhonemeMatching.Unity
         private Coroutine _loop;
 
         public bool IsListening => _loop != null;
+
+        /// <summary>Last confirmed feedback; cleared on the next Listen attempt.</summary>
+        public PronunciationFeedback LastConfirmation { get; private set; }
 
         /// <summary>
         /// The judging session, live only while listening. Use
@@ -127,6 +140,7 @@ namespace DomiCube.PhonemeMatching.Unity
         /// <summary>Start listening for the configured target.</summary>
         public void Listen()
         {
+            LastConfirmation = null;
             if (_loop != null)
             {
                 StopListening();
@@ -246,10 +260,7 @@ namespace DomiCube.PhonemeMatching.Unity
 
                 if (frame.Confirmed)
                 {
-                    // This is the moment the lesson moves on.
-                    StopListening();
-                    OnConfirmed.Invoke(
-                        frame.Best.TargetText, (float)frame.Best.Score);
+                    Confirm(frame.Feedback);
                     yield break;
                 }
 
@@ -266,6 +277,15 @@ namespace DomiCube.PhonemeMatching.Unity
             {
                 OnTimedOut.Invoke();
             }
+        }
+
+        private void Confirm(PronunciationFeedback feedback)
+        {
+            // Stop capture before UI callbacks can advance scenes.
+            StopListening();
+            LastConfirmation = feedback;
+            OnConfirmedDetailed?.Invoke(feedback);
+            OnConfirmed.Invoke(feedback.TargetText, (float)feedback.Score);
         }
 
         private bool TimedOut(float started)

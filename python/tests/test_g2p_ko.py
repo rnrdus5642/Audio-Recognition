@@ -1,6 +1,6 @@
 """End-to-end tests for the Korean G2P pipeline.
 
-Requires g2pkk + eunjeon to be installed. The tests verify that the
+Requires g2pkk + mecab-ko to be installed. The tests verify that the
 combination of g2pkk's phonological rules and our jamo->IPA mapping
 produces the expected IPA sequence for words that exercise each major
 Korean phonological rule.

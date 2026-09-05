@@ -1,5 +1,11 @@
 # Audio Recognition — 한국어 발음 판정
 
+현재 개발 소스(2026-09-06)는 아동 파인튜닝·단어별 임계값·Unity Session API에
+실시간 전용 웹 UI와 쉬운 한글 발음 설명을 추가한 상태입니다.
+웹과 Unity의 연속 확정 기본값은 **2회**입니다.
+변경 사항은 [CHANGELOG](CHANGELOG.md), 확정 결과 필드는
+[발음 설명 API](unity/Packages/com.domicube.phoneme-matching/Documentation~/pronunciation-feedback.md)를 참고하세요.
+
 아이가 화면에 뜬 단어를 **말했는지 아닌지** 판정합니다. VR 발음 훈련 앱에
 넣을 엔진이고, 발음이 부정확한 사용자(아동·발달지연 포함)를 대상으로 합니다.
 
@@ -58,7 +64,7 @@
 | # | 단계 | 하는 일 |
 |---|---|---|
 | 1 | `shared/words.csv` | 정답 단어를 글자로 적어둠 (`answer_id,text,language`) |
-| 2 | g2pkk + eunjeon(mecab) | 음운 규칙을 적용해 소리 나는 대로 (`먹어요` → `머거요`) |
+| 2 | Python 한국어 음운 규칙 | 소리 나는 대로 변환 (`먹어요` → `머거요`), Unity에도 같은 규칙 구현 |
 | 3 | 자모 → IPA + 임계값 | `shared/targets.json` 생성 |
 | 4 | `export_onnx.py` | wav2vec2 를 시간축 40000 고정 ONNX 로 |
 | 5 | `export_ctc_vocab.py` | 번호 ↔ 글자 대응표와 전처리 설정 추출 |
@@ -70,7 +76,7 @@
 | 1 | 오디오 2.5초 창 | 최근 2.5 초를 16 kHz 모노로 들고 있다가 40000 샘플을 통째로 넘김 |
 | 2 | wav2vec2 추론 | 볼륨을 정규화해 모델에 넣고 124 프레임 × 1205 글자 점수를 받음 |
 | 3 | CTC 디코딩 | 프레임마다 최고점을 골라 중복과 blank 를 걷어내고 한글로 되돌림 |
-| 4 | 자모 → IPA | 인식된 한글을 정답과 **같은 표**로 음소 기호로 바꿈 |
+| 4 | 음운 규칙 → 자모 → IPA | 인식 한글에 `Korean.Rules.Apply` 후 정답과 같은 IPA 매핑 적용 |
 | 5 | 부분문자열 매칭 | 정답 음소가 가장 잘 맞는 구간을 찾아 confusion matrix 가중치로 채점 |
 | 6 | 연속 2회 확인 | 같은 단어가 두 프레임 연속 통과하면 확정하고 세션을 닫음 |
 
@@ -78,25 +84,15 @@
 정답 측과 사용자 측이 같은 IPA 표기 체계로 떨어지지 않으면 거리 계산이 의미가
 없습니다.
 
-### 왜 G2P 를 빌드 타임으로 뺐나
+### 한국어 음운 규칙
 
-한국어 음운 규칙은 형태소 분석기(mecab)가 필요하고, 사전만 112MB 에 네이티브
-바이너리까지 딸려 옵니다. Unity 에 넣을 수 없습니다.
+현재는 정답 빌드뿐 아니라 인식된 한글에도 음운 규칙을 적용합니다.
+Python의 `python/build/g2p/ko/rules.py`와 Unity의 `Korean.Rules`가 같은 규칙을
+구현하며, 그 결과를 자모 → IPA로 바꿉니다. 아동 모델도 철자형 전사로 학습했으므로
+이 경로를 유지해야 합니다.
 
-넣을 필요도 없습니다 — 단어→IPA 변환은 아이가 말할 때가 아니라 **단어 목록을
-만들 때** 하는 일입니다. 앱에는 결과인 `targets.json` 만 들어갑니다.
-
-규칙을 생략했을 때의 손해는 측정했습니다. 런타임의 자모→IPA 만으로 18단어를
-변환해 빌드 결과와 비교하니 **3/18 만 달랐습니다**. 사용자 발화 쪽은 ASR 이
-이미 소리 나는 대로 뱉으므로 규칙을 적용할 대상이 아니고, **정답 쪽만
-정확하면 됩니다.**
-
-다만 규칙이 음소를 통째로 바꾸는 경우는 손해가 큽니다.
-
-```
-같이   규칙 적용 [k,a,tɕʰ,i]  →  1.000
-       규칙 없음 [k,a,t̚, i]  →  0.800   (임계 0.70)
-```
+런타임에는 mecab이 필요 없습니다. g2pkk는 비교용
+`KoreanG2P.apply_rules_g2pkk()`에서만 쓰며 Windows 어댑터는 mecab-ko를 사용합니다.
 
 ### 왜 시간축을 고정했나
 
@@ -134,7 +130,7 @@ Unity 6 은 동적도 실행하지만 파일 하나로 양쪽을 덮으려고 �
 | 그 밖의 치환 (기본) | 0.8 | `l` ↔ `t` |
 
 ```
-사과 → 타과   [t,a,k,w,a]     거리 0.30   점수 0.940
+사과 → 다과   [t,a,k,w,a]     거리 0.30   점수 0.940
 사과 → 차과   [tɕʰ,a,k,w,a]   거리 0.75   점수 0.850
 ```
 
@@ -200,7 +196,7 @@ if (windowLen < Coverage * targetLen)
 VR 흐름은 마이크를 열어두고 정답이 들리면 즉시 넘어갑니다. 녹음 하나를
 채점하는 것과 **다른 문제**라 설정을 분리했습니다.
 
-| | 배치 (웹 UI·CLI) | 스트리밍 (VR) |
+| | 배치 (CLI) | 스트리밍 (웹 UI·VR) |
 |---|---|---|
 | `skip_cost` | 0.15 | 0.05 |
 | 창 커버리지 하한 | 0.5 | 0.8 |
@@ -224,8 +220,8 @@ wav2vec2 는 문맥 모델이라 짧은 조각을 따로 인식해 합치면 뭉
 0.5초 hop 이면 채점이 20번 돕니다. 같은 답을 연속 N회 요구하면 우연한 일치는
 다음 프레임에 흩어지고, 진짜 발화는 창에 남아 계속 이깁니다.
 
-대가는 지연 `연속횟수 × hop`(기본 1.0초)입니다. **정답 직후 마이크를 닫으면
-확정되지 않습니다.**
+첫 통과 뒤 추가 확인 간격은 `(연속횟수 - 1) × hop`입니다. 기본 2회·0.5초
+주기에서는 한 번 더 채점합니다. 실제 지연에는 음성 창과 추론·큐 시간도 포함됩니다.
 
 연속 횟수를 더 올리면 지연·검출·상한을 함께 잃습니다. 단어가 2.5초 창에
 온전히 들어있는 프레임은 5개 남짓이라, 연속 6회는 원리적으로 불가능합니다.
@@ -284,9 +280,11 @@ AudioProject/
 │   ├── runtime/                  # 파이썬 기준 구현
 │   │   ├── audio.py              #   16kHz mono 로딩
 │   │   ├── matching/             #   matcher, confusion_matrix, streaming
-│   │   └── recognizer/ko/asr.py  #   wav2vec2 + g2pkk
+│   │   └── recognizer/ko/asr.py  #   wav2vec2 + 한국어 음운 규칙
 │   ├── tools/
-│   │   ├── web_test.py           # 🌐 웹 UI (탭 4개)
+│   │   ├── web_test.py           # 🌐 실시간 마이크 전용 UI
+│   │   ├── _web_feedback.py      # 한글 설명·원본 IPA 비교
+│   │   ├── _web_syllable_feedback.py # 기존 모델 오류표 기반 판단 보류
 │   │   ├── record_live.py        # 마이크 녹음
 │   │   ├── test_real_audio.py    # 파일/일괄 테스트
 │   │   ├── test_streaming.py     # 연속 청취 시뮬레이션
@@ -307,7 +305,7 @@ AudioProject/
 │   │       ├── derive_thresholds.py  # 단어별 임계값 + 상한 경고
 │   │       ├── fit_streaming.py  #   프로필 탐색
 │   │       └── compare.py        #   모델·설정 비교
-│   └── tests/                    # 95개
+│   └── tests/                    # 170개
 ├── shared/
 │   ├── words.csv                 # 정답 단어 (UTF-8 BOM)
 │   ├── targets.json              # 빌드 산출물 (성인)
@@ -331,7 +329,7 @@ AudioProject/
 │       ├── Editor/               # 초기 세팅·데이터·모델·테스트 메뉴
 │       ├── Tests/Runtime/        # 파이썬 대조 벡터
 │       └── Samples~/             # 한국어 데이터 + 예제
-├── csharp/PhonemeMatching.Tests/ # Unity 없이 dotnet test (20개)
+├── csharp/PhonemeMatching.Tests/ # Unity 없이 dotnet test (28개)
 ├── docs/ADDING_A_LANGUAGE.md
 ├── REPORT.md                     # 종합 보고서
 └── REPORT_PHASE2.md              # 초기 골든셋 분석 (역사)
@@ -350,7 +348,7 @@ AudioProject/
 python -m venv .venv
 .\.venv\Scripts\Activate.ps1
 
-pip install -r requirements.txt          # 빌드 + 테스트 (g2pkk, eunjeon, jamo)
+pip install -r requirements.txt          # 빌드 + 테스트 (g2pkk 비교용 mecab-ko 포함)
 pip install -r requirements-phase2.txt   # 모델 + 웹 UI + 녹음
 pip install gradio sounddevice
 ```
@@ -363,16 +361,27 @@ pip install gradio sounddevice
 
 ### 웹 UI
 
+실시간 화면 하나만 제공합니다. 정답 입력 → 준비 → 마이크 청취 → 동일 후보
+연속 2회 통과 → 확정/자동 중단 흐름입니다. 창 기본 2.5초, 입력 전달 주기 0.5초입니다.
+파일 평가·녹음 저장·정답 빌드 화면은 제거했으며 해당 CLI 도구는 유지합니다.
+즉석 정답의 단어별 임계값 측정과 아동용 streaming profile은 유지합니다.
+정답 카탈로그 없이도 실행할 수 있습니다.
+
 ```powershell
 python -m python.tools.web_test          # http://127.0.0.1:7860
 ```
 
-| 탭 | 용도 |
-|---|---|
-| 🎤 발음 테스트 | 단어 입력 후 마이크/파일 채점, 음소 정렬 시각화 |
-| 🔁 연속 청취 | VR 흐름 재현. 창 길이·hop·연속 횟수를 바꿔가며 점수 그래프 |
-| 🔴 실시간 | 마이크 스트리밍 (⚡ 준비 버튼으로 예열 먼저) |
-| 📝 정답 데이터 만들기 | 단어 → IPA 추출 |
+학습한 아동 체크포인트로 테스트하려면 모델과 아동 판정 설정을 함께 지정합니다.
+
+```powershell
+python -m python.tools.web_test --model python/tools/child_finetune/runs/child/best --matrix shared/confusion_matrices/ko_child_v2.json
+```
+
+체크포인트는 Git에 포함되지 않으므로 별도로 보관해야 합니다.
+확정 시 쉬운 한글 설명·음절별 참고 안내·공통 JSON을 제공합니다. 기존 모델 오류표가
+보류하는 차이는 주 안내에서 제외하고 접힌 원본 비교에 남깁니다.
+이 판단 보류 정책은 Python 화면 기능이며 C# 기본 DTO는 원본 음소 비교를 제공합니다.
+웹과 Unity가 하나의 C# 실행 모듈로 연결된 상태는 아닙니다.
 
 첫 인식 시 모델(~1.2GB)이 로드되어 1~2분 걸립니다.
 
@@ -512,8 +521,8 @@ Sentis CPU 가 느린 이유는 그래프 융합 부재도, 에디터 오버헤�
 부족도 아니었습니다(셋 다 측정으로 배제). 코어 6개를 쓰면서 ORT 보다 코어-
 시간을 2.7배 쓰는 커널 효율 차이입니다.
 
-주의: **VRAM 1.2GB** 를 가중치가 차지하고, **첫 추론 1.9초**가 모든 PC 에서
-발생합니다. VR 렌더링과 GPU 를 공유할 때의 경합은 아직 미측정이며, 필요하면
+주의: **VRAM 1.2GB** 를 가중치가 차지하고, 측정 PC의 **첫 추론은 약 1.9초**였습니다.
+VR 렌더링과 GPU 를 공유할 때의 경합은 아직 미측정이며, 필요하면
 `ScheduleIterable` 로 레이어를 여러 프레임에 나눠야 합니다.
 
 ### 배포 전제
@@ -637,11 +646,14 @@ split(457발화) 만 받으면 60MB 입니다.
 ## 10. 테스트
 
 ```powershell
-pytest python/tests -v                      # 파이썬 83개
-dotnet test csharp/PhonemeMatching.Tests    # C# 20개 (Unity 불필요)
+pytest python/tests -v                      # 파이썬 170개
+dotnet test csharp/PhonemeMatching.Tests    # C# 28개 (Unity 불필요)
 ```
 
-Unity PlayMode 테스트 20개는 같은 소스를 컴파일합니다.
+Unity PlayMode에서는 같은 소스에 Listener 이벤트 순서·초기화 검증을 더해 실행합니다.
+2026-09-06 Unity 6000.3.18f1 PlayMode 29개 통과를 확인했습니다.
+공통 JSON 결과, 24개 한글 설명 사례, 전체 한글 11,172음절, Session의 확정 스냅샷을
+검증합니다. 실제 아동 정확도 평가는 이 자동 테스트와 별개입니다.
 
 **파이썬에서 C# 으로 옮긴 것은 전부 벡터로 대조합니다.** "옮겼다"가 아니라
 "같은 값이 나온다"를 확인하는 게 목적입니다.
@@ -679,7 +691,7 @@ Unity 대조는 [python/tools/sentis_parity/](python/tools/sentis_parity/) 에
 
 ### 알려진 이슈
 
-- **eunjeon `pkg_resources` 경고** — `setuptools<70` 에서 발생. 무해
+- **Windows MeCab** — g2pkk 비교 경로는 `mecab-ko` 어댑터를 사용하며 실행 중 자동 설치하지 않습니다. 기본 인식·판정 경로는 mecab-free 한국어 규칙을 씁니다.
 - **Gradio 6.0** — `theme` 은 `launch()` 인자로만 전달 가능
 - **마이크 녹음 잘림** — `--trailing-ms 1000` 으로 늘리거나 `record_live` 기본값 조정
 - **Unity 실행 중 `packages-lock.json` 편집 금지** — Unity 가 manifest 를 다시

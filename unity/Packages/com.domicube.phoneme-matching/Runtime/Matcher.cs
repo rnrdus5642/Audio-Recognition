@@ -31,6 +31,7 @@ namespace DomiCube.PhonemeMatching
     {
         public double Score;
         public double Distance;
+        public double Threshold;
         public string TargetId;
         public string TargetText;
         public List<string> TargetPhonemes;
@@ -549,6 +550,7 @@ namespace DomiCube.PhonemeMatching
             {
                 Score = bestScore,
                 Distance = bestDistance,
+                Threshold = best.Threshold,
                 TargetId = best.Id,
                 TargetText = best.Text,
                 TargetPhonemes = best.Phonemes,

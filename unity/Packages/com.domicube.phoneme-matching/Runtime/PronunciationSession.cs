@@ -19,6 +19,9 @@ namespace DomiCube.PhonemeMatching
 
         /// <summary>The answer is confirmed and the session has ended.</summary>
         public bool Confirmed;
+
+        /// <summary>Confirmation snapshot, or null before confirmation.</summary>
+        public PronunciationFeedback Feedback;
     }
 
     /// <summary>
@@ -99,6 +102,9 @@ namespace DomiCube.PhonemeMatching
         /// <summary>The word being asked for, or null.</summary>
         public string TargetText { get; private set; }
 
+        /// <summary>Last confirmation; cleared when a new question starts.</summary>
+        public PronunciationFeedback LastConfirmation { get; private set; }
+
         /// <summary>The answers that count as correct this question.</summary>
         public IReadOnlyList<Answer> Candidates => _candidates;
 
@@ -119,6 +125,7 @@ namespace DomiCube.PhonemeMatching
         /// </summary>
         public void Begin(IReadOnlyList<string> targetWords)
         {
+            LastConfirmation = null;
             if (targetWords == null || targetWords.Count == 0)
             {
                 throw new ArgumentException(
@@ -205,6 +212,8 @@ namespace DomiCube.PhonemeMatching
             if (hit != null)
             {
                 frame.Best = hit.Result;
+                frame.Feedback = hit.Feedback;
+                LastConfirmation = hit.Feedback;
                 End();
             }
 

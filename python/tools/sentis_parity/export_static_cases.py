@@ -8,22 +8,22 @@ compare two different inputs.
 import base64
 import json
 import sys
+from pathlib import Path
 
 sys.stdout.reconfigure(encoding="utf-8")
 
 import numpy as np
 import onnxruntime as ort
 
-sys.path.insert(0, r"C:\Users\user\Desktop\AudioProject")
+ROOT = Path(__file__).resolve().parents[3]
+sys.path.insert(0, str(ROOT))
 
 from python.build.g2p.ko.jamo_ipa import hangul_to_ipa_phonemes
 from python.runtime.audio import load_audio_16k_mono
 from python.runtime.recognizer.ko.asr import DEFAULT_MODEL, KoreanASRRecognizer
 
-from pathlib import Path
 from transformers import Wav2Vec2Processor
 
-ROOT = Path(r"C:\Users\user\Desktop\AudioProject")
 OUT = Path(__file__).with_name("audio_cases_static.json")
 SAMPLES = 40000
 PICK = ["mom_f", "dad_f", "puppy_m", "grandma_f"]

@@ -3,6 +3,7 @@
     "rootNamespace": "DomiCube.PhonemeMatching.Tests",
     "references": [
         "DomiCube.PhonemeMatching",
+        "DomiCube.PhonemeMatching.Unity",
         "UnityEngine.TestRunner",
         "UnityEditor.TestRunner"
     ],
