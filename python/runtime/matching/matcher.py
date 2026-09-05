@@ -255,8 +255,8 @@ def similarity_score(
 
 
 class Matcher:
-    """Match a user phoneme sequence against a set of candidate targets
-    (e.g., the answers in one segment) and return the best one.
+    """Match a user phoneme sequence against the acceptable answers for
+    one question, preferring answers that clear their own thresholds.
 
     Two scoring modes:
 
@@ -409,7 +409,12 @@ class Matcher:
         user: list[str],
         candidates: list[dict],
     ) -> MatchResult:
-        """Find the candidate with the highest similarity score.
+        """Return the highest-scoring candidate that passes its own threshold.
+
+        If none pass, return the highest-scoring failure for progress display.
+        Ties within the same pass/fail group keep the earlier candidate.
+        Only the supplied answers are considered; a higher-scoring failure
+        must not hide an acceptable answer with a lower pass mark.
 
         Each candidate dict must have keys:
             id (str), text (str), phonemes (list[str]), threshold (float)
@@ -430,6 +435,7 @@ class Matcher:
 
         best_dist = float("inf")
         best_score = -1.0
+        best_passed = False
         best = candidates[0]
         best_ws = 0
         best_we = len(user)
@@ -438,8 +444,11 @@ class Matcher:
             d, s, ws, we, ops = self.score_against(
                 user, cand["phonemes"]
             )
-            if s > best_score:
+            passed = s >= float(cand.get("threshold", 0.6))
+            if ((passed and not best_passed)
+                    or (passed == best_passed and s > best_score)):
                 best_score = s
+                best_passed = passed
                 best_dist = d
                 best = cand
                 best_ws = ws
@@ -453,7 +462,7 @@ class Matcher:
             target_text=best["text"],
             target_phonemes=best["phonemes"],
             user_phonemes=user,
-            passed=best_score >= float(best.get("threshold", 0.6)),
+            passed=best_passed,
             window_start=best_ws,
             window_end=best_we,
             alignment=best_ops,

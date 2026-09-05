@@ -504,8 +504,13 @@ namespace DomiCube.PhonemeMatching
             return result;
         }
 
-        /// <summary>Highest-scoring candidate. Ties keep the earlier
-        /// candidate.</summary>
+        /// <summary>
+        /// Highest-scoring candidate that passes its own threshold. If none
+        /// pass, returns the highest-scoring failure for progress display.
+        /// Ties within the same pass/fail group keep the earlier candidate.
+        /// Only the supplied answers are considered; a higher-scoring failure
+        /// must not hide an acceptable answer with a lower pass mark.
+        /// </summary>
         public MatchResult BestMatch(
             IReadOnlyList<string> user, IReadOnlyList<Answer> candidates)
         {
@@ -523,6 +528,7 @@ namespace DomiCube.PhonemeMatching
             }
 
             double bestScore = -1.0;
+            bool bestPassed = false;
             double bestDistance = double.PositiveInfinity;
             Answer best = candidates[0];
             int bestWs = 0, bestWe = userList.Count;
@@ -535,9 +541,12 @@ namespace DomiCube.PhonemeMatching
                     userList, cand.Phonemes, out double s,
                     out int ws, out int we, ops);
 
-                if (s > bestScore)
+                bool passed = s >= cand.Threshold;
+                if ((passed && !bestPassed)
+                    || (passed == bestPassed && s > bestScore))
                 {
                     bestScore = s;
+                    bestPassed = passed;
                     bestDistance = d;
                     best = cand;
                     bestWs = ws;
@@ -555,7 +564,7 @@ namespace DomiCube.PhonemeMatching
                 TargetText = best.Text,
                 TargetPhonemes = best.Phonemes,
                 UserPhonemes = userList,
-                Passed = bestScore >= best.Threshold,
+                Passed = bestPassed,
                 WindowStart = bestWs,
                 WindowEnd = bestWe,
                 Alignment = bestOps

@@ -3,7 +3,8 @@
 상태: 웹 호스트·공유 번들 통합 설계 초안. 기존 C# `PronunciationSession`과
 `AudioWindowBuffer`는 구현되어 있다. 실시간 전용 UI와 확정 결과 계약도 구현했다.
 아래의 새로운 호스트·번들 API·파일 배치는 제안이며 기존 Session API와 구분한다.
-기준: 아동 파인튜닝·음절 피드백을 포함한 `f2d05ba`에 이번 확정 결과 통합을 반영, 2026-09-06.
+기준: 2026-09-06 개발 소스. 아동 파인튜닝·확정 피드백에 합격 후보 우선 선택,
+Unity 설치/테스트 창 보완, 웹의 초기 무음 패딩 통일을 반영했다.
 
 목표는 웹에서 검증한 판정 로직, 설정, 정답 데이터, 결과 형식을 Unity에서 다시 작성하지 않고 사용하는 것이다. 웹의 실시간 탭을 Unity와 같은 세션 API를 사용하는 테스트 클라이언트로 만들고, 자동 회귀 테스트의 파일 재생도 같은 세션을 통과시킨다. Unity는 기존처럼 기기 안에서 실행하며, 웹 서버로 음성을 보내는 기능을 추가하지 않는다.
 
@@ -12,6 +13,11 @@
 Unity에는 이미 **로컬 C# API**가 있다. 게임이 `PronunciationListener.Listen()`을 호출하면 같은 프로세스에서 마이크를 읽고 `SentisPhonemeRecognizer`가 추론한다. 결과는 `OnFrameScored`, `OnConfirmedDetailed`, `OnConfirmed`, `OnTimedOut` 이벤트로 받는다. 이 저장소의 Unity 런타임에는 웹 서버에 음성을 보내는 HTTP/WebSocket 클라이언트가 없다.
 
 웹의 Gradio 앱은 Python ASR·매처를 실행한다. 따라서 현재의 웹은 Unity API를 호출하는 클라이언트가 아니다.
+
+웹의 초기 버퍼는 Unity와 동일하게 기본 40,000샘플(2.5초)을 유지하고 부족한 앞부분을
+무음으로 채운다. 패딩은 경과 시간·판정 횟수에 포함하지 않는다. 창 길이를 바꾸면
+다음 입력부터 웹 세션을 초기화하며, 배포된 Unity ONNX와 비교할 때는 2.5초를 유지한다.
+이는 입력 정책을 맞춘 것이지 공통 C# 오디오 모듈로 교체한 것은 아니다.
 
 실시간 화면에 확정 프레임의 한글 설명과 접힌 상세 IPA 비교를 추가했고, 양쪽에 `PronunciationFeedback` 버전 2 데이터 계약을 구현했다. Unity의 `OnConfirmedDetailed`, `LastConfirmation`, `StreamingHit.Feedback`이 이를 제공한다. `KoreanFeedback.Items[].Message`는 UI에 바로 표시할 문장이다. [구현된 피드백 API](../unity/Packages/com.domicube.phoneme-matching/Documentation~/pronunciation-feedback.md)는 아래의 전체 공통 세션 API 제안과 구분한다. 이 변경만으로 추론·프레임 생성까지 통합된 것은 아니다.
 
@@ -22,6 +28,7 @@ Unity에는 이미 **로컬 C# API**가 있다. 게임이 `PronunciationListener
 | 추론 | Python PyTorch | C# Sentis | 같은 ONNX 모델과 공통 입출력 계약 |
 | 인식 한글 → IPA | Python 한국어 규칙 + 매핑 | C# Korean.Rules + JamoIpa | 동일 구현을 공통 C# 후처리로 재사용 |
 | 매칭·연속 확정 | Python 구현 | C# 구현 | 같은 C# 소스 직접 사용 |
+| 초기 오디오 창 | 고정 창·앞쪽 무음, 기본 2.5초 | AudioWindowBuffer, 기본 2.5초·앞쪽 무음 | 현재 정책은 일치, 구현은 공통 C#으로 교체 예정 |
 | 실시간 프레임 | 브라우저 청크가 올 때마다 채점 | 코루틴에서 마이크 창을 채점 | 공통 샘플 기준 프레임 생성 |
 | 설정 | 실시간 화면 슬라이더·상수 | Inspector·씬 직렬화 값 | 공통 프로필 + 세션 시작 시 확정된 설정 |
 | 후보 | 입력 단어 즉석 생성·측정 임계값 | TargetWords / Session.Begin에 넘긴 허용 정답만 | 명시적인 후보 ID·허용 정답 ID |
@@ -36,7 +43,8 @@ Unity에는 이미 **로컬 C# API**가 있다. 게임이 `PronunciationListener
 - [Python 한국어 ASR](../python/runtime/recognizer/ko/asr.py)
 - [정답 빌드 도구](../python/build/build_targets.py)
 - [Unity Listener](../unity/Packages/com.domicube.phoneme-matching/Runtime/Unity/PronunciationListener.cs)
-- [Unity Sentis 인식기](../unity/Packages/com.domicube.phoneme-matching/Runtime/Unity/SentisPhonemeRecognizer.cs)
+- [Unity 2022 Sentis 인식기](../unity/Packages/com.domicube.phoneme-matching/Runtime/Unity/Inference/Sentis1/SentisPhonemeRecognizer.cs)
+- [Unity 6 Inference Engine 인식기](../unity/Packages/com.domicube.phoneme-matching/Runtime/Unity/Inference/Sentis2/SentisPhonemeRecognizer.cs)
 - [Unity TestBench](../unity/Assets/Scripts/PronunciationTestBench.cs)
 
 ## 2. 같은 로컬 C# API를 사용하는 두 실행 환경
@@ -275,10 +283,12 @@ Git 태그에 고정된 UPM 패키지는 로컬 수정이 자동으로 반영되
 
 - 현재 Unity 런타임의 API는 로컬 C# 호출이며 서버 호출 경로는 확인되지 않았다.
 - 공통 코어 소스를 Unity 외부 .NET 프로젝트에서 직접 컴파일하는 기반이 이미 있다.
-- Python 170개, .NET C# 28개, Unity 6000.3.18f1 PlayMode 29개 통과. Session·Listener의 확정 스냅샷과 이벤트 순서도 검사한다.
+- Python CPU/GPU 각각 201개, .NET C# 46개 통과. Unity 2022.3.62f2와 6000.3.18f1은 각각 Editor 27개·PlayMode 47개 통과. Session·Listener의 확정 스냅샷과 이벤트 순서도 검사한다.
+- 새로운 소비 프로젝트에서 수정본을 Git 의존성으로 설치하고, 두 Unity 버전의 Windows x64 Mono 개발 빌드와 실제 GPU 추론을 확인했다. IL2CPP는 미검증이다.
 - 웹 UI는 실시간 마이크 단일 화면으로 정리했다. 정답 카탈로그 사전 빌드 없이 실행할 수 있고, 기존 CLI는 유지했다.
 - 기본 한국어 처리는 이미 포팅된 mecab-free 규칙을 유지한다. g2pkk 비교용 MeCab 어댑터만 교체했다.
 - 확정 결과 계약과 한글 설명을 양쪽에 구현했다. 공유 JSON 계약 벡터, 24개 설명 사례, 전체 한글 음절 매핑으로 대조한다. 웹 모델 예열과 합성 확정 결과 HTML/JSON을 확인했다.
-- 새 설명 기능의 실제 마이크 발화 평가는 별도다. 같은 PCM을 웹·Unity 전체 파이프라인에 넣는 통합 회귀 테스트를 완료한 것은 아니다.
+- 웹 버퍼 수정 후 실제 아동 모델로 58개 합성 음성/199개 창을 재생하고, 변경되지 않은 Unity 2022/6의 앞선 실제 GPU 실행 기록과 비교했다. 인식·점수·확정 시점이 일치했다. 웹 수정 뒤 Unity 실행을 다시 수행한 것은 아니다.
+- 이 동일 PCM 검증은 새 마이크 발화·브라우저 입력 지연·모든 장치/설정의 동등성을 보장하지 않는다. 전체 C# 공유 모듈 통합 완료와도 구분한다. 상세 범위는 [검증 기록](../unity/Packages/com.domicube.phoneme-matching/Documentation~/validation-2026-09-06.md)을 참고한다.
 - 기존 C# Session은 `frame.Feedback` / `LastConfirmation`을 제공한다. 웹의 C# 호스트 연결·공유 번들·전체 PCM 경로 통합은 아직 미구현이다.
 - 기존 모델 오류표 기반 판단 보류는 Python의 화면 정책으로 보존했다. 공통 JSON/C# DTO는 원본 차이를 유지하며 그 정책까지 같은 구현이라고 주장하지 않는다.

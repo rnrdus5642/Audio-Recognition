@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using UnityEditor;
@@ -57,14 +58,16 @@ namespace DomiCube.PhonemeMatching.Editor
         [MenuItem("Tools/Phoneme Matching/데이터 파일 설치", false, 21)]
         public static void Install()
         {
-            Install(askBeforeOverwriting: true);
+            Install(overwriteExisting: true);
         }
 
-        /// <param name="askBeforeOverwriting">
-        /// False from the setup wizard, which has already asked once for
-        /// the whole sequence.
-        /// </param>
-        internal static bool Install(bool askBeforeOverwriting)
+        /// <summary>Initial setup only fills gaps; never replaces user data.</summary>
+        internal static bool InstallMissing()
+        {
+            return Install(overwriteExisting: false);
+        }
+
+        private static bool Install(bool overwriteExisting)
         {
             string source = SampleFolder();
             if (source == null)
@@ -76,45 +79,25 @@ namespace DomiCube.PhonemeMatching.Editor
                 return false;
             }
 
-            var missing = new List<string>();
-            var existing = new List<string>();
-            foreach (string file in Files)
+            int copied;
+            try
             {
-                if (!File.Exists(Path.Combine(source, file)))
+                if (!InstallFiles(source, StreamingAssets, overwriteExisting,
+                        existing => EditorUtility.DisplayDialog(
+                            "Phoneme Matching",
+                            $"{StreamingAssets} 의 기존 파일 {existing.Count}개를 "
+                            + "패키지 기본 데이터로 교체합니다.\n"
+                            + "직접 추가한 단어와 수정한 판정 설정도 덮어씁니다.\n\n"
+                            + string.Join("\n", existing),
+                            "기본 데이터로 교체", "취소"), out copied))
                 {
-                    missing.Add(file);
-                }
-                else if (File.Exists(Path.Combine(StreamingAssets, file)))
-                {
-                    existing.Add(file);
+                    return false;
                 }
             }
-
-            if (missing.Count > 0)
+            catch (IOException e)
             {
-                Debug.LogError(
-                    $"[PhonemeMatching] {source} 에 없는 파일: "
-                    + string.Join(", ", missing));
+                Debug.LogError($"[PhonemeMatching] 데이터 설치 실패: {e.Message}");
                 return false;
-            }
-
-            if (askBeforeOverwriting && existing.Count > 0
-                && !EditorUtility.DisplayDialog(
-                    "Phoneme Matching",
-                    $"{StreamingAssets} 에 이미 있는 파일 {existing.Count}개를 "
-                    + "덮어씁니다.\n\n" + string.Join("\n", existing),
-                    "덮어쓰기", "취소"))
-            {
-                return false;
-            }
-
-            Directory.CreateDirectory(StreamingAssets);
-            foreach (string file in Files)
-            {
-                File.Copy(
-                    Path.Combine(source, file),
-                    Path.Combine(StreamingAssets, file),
-                    overwrite: true);
             }
 
             AssetDatabase.Refresh();
@@ -128,9 +111,64 @@ namespace DomiCube.PhonemeMatching.Editor
                     Path.Combine(StreamingAssets, "wav2vec2_ko_vocab.json")));
 
             Debug.Log(
-                $"[PhonemeMatching] {StreamingAssets} 에 {Files.Length}개 복사 "
-                + $"완료 - 단어 {catalog.Answers.Count}개, 어휘 {vocab.Size}개.\n"
+                $"[PhonemeMatching] {StreamingAssets}: {copied}개 설치, "
+                + $"기존 {Files.Length - copied}개 유지 - "
+                + $"단어 {catalog.Answers.Count}개, 어휘 {vocab.Size}개.\n"
                 + ModelNotice());
+            return true;
+        }
+
+        /// <summary>
+        /// File policy shared by initial setup and explicit replacement.
+        /// Replacement requires approval of the existing filenames before
+        /// any writes. Kept independent of dialogs and AssetDatabase so
+        /// tests can exercise it in disposable directories.
+        /// </summary>
+        internal static bool InstallFiles(
+            string source, string destination, bool overwriteExisting,
+            Func<IReadOnlyList<string>, bool> confirmOverwrite, out int copied)
+        {
+            copied = 0;
+            var existing = new List<string>();
+            foreach (string file in Files)
+            {
+                // Validate the entire source before changing anything.
+                string sourceFile = Path.Combine(source, file);
+                if (!File.Exists(sourceFile))
+                {
+                    throw new FileNotFoundException(
+                        $"패키지 기본 데이터가 없습니다: {file}", sourceFile);
+                }
+
+                if (File.Exists(Path.Combine(destination, file)))
+                {
+                    existing.Add(file);
+                }
+            }
+
+            if (overwriteExisting && existing.Count > 0
+                && (confirmOverwrite == null
+                    || !confirmOverwrite(existing.AsReadOnly())))
+            {
+                return false;
+            }
+
+            Directory.CreateDirectory(destination);
+            foreach (string file in Files)
+            {
+                string target = Path.Combine(destination, file);
+                if (!overwriteExisting && File.Exists(target))
+                {
+                    continue;
+                }
+
+                // A file appearing after the prompt was not approved for
+                // replacement. File.Copy must fail rather than clobber it.
+                File.Copy(Path.Combine(source, file), target,
+                    overwrite: overwriteExisting && existing.Contains(file));
+                copied++;
+            }
+
             return true;
         }
 

@@ -97,7 +97,7 @@ namespace DomiCube.PhonemeMatching.Editor
             if (!DataInstaller.IsInstalled)
             {
                 Debug.Log("[PhonemeMatching] 2/3 데이터 파일 설치 중…");
-                if (!DataInstaller.Install(askBeforeOverwriting: false))
+                if (!DataInstaller.InstallMissing())
                 {
                     Debug.LogError("[PhonemeMatching] 2/3 실패. 위 오류를 보세요.");
                     return;
@@ -130,7 +130,7 @@ namespace DomiCube.PhonemeMatching.Editor
 
             if (!DataInstaller.IsInstalled)
             {
-                steps += "· 데이터 파일 설치 (JSON 3개)\n";
+                steps += "· 누락된 데이터 파일 설치 (기존 JSON 유지)\n";
             }
 
             if (!ModelDownloader.IsInstalled)

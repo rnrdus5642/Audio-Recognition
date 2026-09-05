@@ -11,7 +11,8 @@ namespace DomiCube.PhonemeMatching
 
         public List<string> Phonemes = new List<string>();
 
-        /// <summary>Best candidate for this window, with alignment.</summary>
+        /// <summary>Selected candidate for this window, with alignment:
+        /// highest-scoring pass, or highest-scoring failure if none pass.</summary>
         public MatchResult Best;
 
         /// <summary>Consecutive windows the leader has held.</summary>
@@ -120,8 +121,11 @@ namespace DomiCube.PhonemeMatching
 
         /// <summary>
         /// Start judging with several acceptable answers - synonyms, or a
-        /// question that takes any of a set. Any of them confirms, and
-        /// <see cref="FrameScore.Best"/> says which.
+        /// question that takes any of a set. Each frame chooses the highest
+        /// score among answers that pass their own thresholds. The SAME answer
+        /// must be selected for <see cref="Consecutive"/> windows running;
+        /// <see cref="FrameScore.Best"/> says which. If none pass, Best is the
+        /// highest-scoring failure and the streak resets.
         /// </summary>
         public void Begin(IReadOnlyList<string> targetWords)
         {

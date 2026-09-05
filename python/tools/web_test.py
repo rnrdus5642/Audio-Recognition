@@ -307,7 +307,8 @@ def build_app(tester: AudioTester):
             return unchanged(state)
 
         lang = language or "ko"
-        key = f"{lang}|{answers_text}|{consecutive}"
+        keep = int(float(window_s) * SAMPLE_RATE)
+        key = f"{lang}|{answers_text}|{consecutive}|{keep}"
         if state.get("key") != key:
             try:
                 words, cands = _live_candidates(answers_text, lang)
@@ -327,7 +328,11 @@ def build_app(tester: AudioTester):
                     matcher, cands, consecutive=int(consecutive)
                 ),
                 "cands": cands,
-                "buf": np.zeros(0, dtype=np.float32),
+                # Match Unity's AudioWindowBuffer.Snapshot(): every model
+                # input has the full window length, with silence on the
+                # left until enough real audio has arrived. Padding does
+                # not count toward elapsed time or confirmation frames.
+                "buf": np.zeros(keep, dtype=np.float32),
                 "rows": [],
                 "points": [],
                 "elapsed": 0.0,
@@ -337,7 +342,6 @@ def build_app(tester: AudioTester):
         if len(chunk) == 0:
             return unchanged(state)
 
-        keep = int(float(window_s) * SAMPLE_RATE)
         state["buf"] = np.concatenate([state["buf"], chunk])[-keep:]
         state["elapsed"] += len(chunk) / SAMPLE_RATE
 
@@ -394,7 +398,7 @@ def build_app(tester: AudioTester):
             "color:#f3f4f6;'><h2 style='margin:0;'>🎧 듣는 중…</h2>"
             f"<p style='margin:4px 0;font-size:16px;'>{state['elapsed']:.1f}초 · "
             f"연속 <b>{sm.streak}</b>/{int(consecutive)} · "
-            f"최고 {best.target_text or '—'} "
+            f"선택 {best.target_text or '—'} "
             f"{best.score:.3f} / {threshold:.2f}</p></div>"
         )
         return (state, state["status"], thresholds, plot, runs,
@@ -442,6 +446,9 @@ def build_app(tester: AudioTester):
                 lv_window = gr.Slider(
                     1.0, 4.0, value=2.5, step=0.1,
                     label="ASR 창 (초)",
+                    info="Unity 기본값은 2.5초입니다. 부족한 앞부분은 무음으로 "
+                         "채워 바로 검사합니다. 길이를 바꾸면 다음 입력부터 "
+                         "음성과 연속 판정을 초기화합니다.",
                 )
                 lv_consecutive = gr.Slider(
                     1, 6, value=2, step=1,
@@ -473,7 +480,7 @@ def build_app(tester: AudioTester):
                 lv_ipa = gr.Markdown()
                 with gr.Accordion("프레임 상세", open=False):
                     lv_table = gr.Dataframe(
-                        headers=["시각(s)", "연속", "최고 후보", "점수",
+                        headers=["시각(s)", "연속", "선택 후보", "점수",
                                  "임계값"],
                         datatype=["number", "number", "str", "number",
                                   "number"],

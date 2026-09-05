@@ -3,14 +3,18 @@
 현재 개발 소스(2026-09-06)는 아동 파인튜닝·단어별 임계값·Unity Session API에
 실시간 전용 웹 UI와 쉬운 한글 발음 설명을 추가한 상태입니다.
 웹과 Unity의 연속 확정 기본값은 **2회**입니다.
+초기 음성 버퍼도 기본 2.5초·앞쪽 무음 패딩으로 맞췄으며, 여러 정답은 합격 후보를
+우선 선택합니다. Unity 초기 세팅의 기존 JSON 보존과 테스트 창의 모델별 데이터 연결도 반영했습니다.
 변경 사항은 [CHANGELOG](CHANGELOG.md), 확정 결과 필드는
 [발음 설명 API](unity/Packages/com.domicube.phoneme-matching/Documentation~/pronunciation-feedback.md)를 참고하세요.
+설치·Windows 실행·웹 대조 결과와 남은 제약은
+[2026-09-06 검증 기록](unity/Packages/com.domicube.phoneme-matching/Documentation~/validation-2026-09-06.md)에 정리했습니다.
 
 아이가 화면에 뜬 단어를 **말했는지 아닌지** 판정합니다. VR 발음 훈련 앱에
 넣을 엔진이고, 발음이 부정확한 사용자(아동·발달지연 포함)를 대상으로 합니다.
 
 - Unity 패키지: [`com.domicube.phoneme-matching`](unity/Packages/com.domicube.phoneme-matching/)
-- 종합 보고서: [REPORT.md](REPORT.md)
+- 초기 설계·실험 기록: [REPORT.md](REPORT.md) (2026-08-11 시점)
 - 저장소: <https://github.com/rnrdus5642/Audio-Recognition>
 
 ---
@@ -256,8 +260,14 @@ wav2vec2 는 문맥 모델이라 짧은 조각을 따로 인식해 합치면 뭉
 임계값과 `skip_cost` 였습니다. 경쟁은 앱이 "화면에 어떤 단어들이 떠 있는지"를
 알아야 하게 만들 뿐이라 제거했습니다. 지금은 **물어본 단어만 채점**합니다.
 
-`Begin` 에 단어를 여러 개 넘길 수는 있습니다(동의어용). 다만 오확정 확률이
-대략 곱해집니다.
+`Begin` 에 단어를 여러 개 넘길 수는 있습니다(동의어용). 각 후보가 자기 임계값을
+통과하는지 먼저 검사하고, 통과한 후보 중 점수가 가장 높은 단어를 선택합니다.
+전부 불합격이면 최고 점수를 표시용으로 반환합니다. 선택된 **같은 통과 단어**가
+기본 2프레임 연속 유지돼야 확정되며, 웹 Python과 Unity C#에 같은 규칙을 적용합니다.
+합격 기준·점수 계산·호출 방식·피드백 JSON 형식은 그대로입니다.
+
+다만 오확정 확률이 대략 곱해집니다. 아래는 **이전 후보 선택 규칙에서의 측정 예시**로,
+현재 규칙의 정확도 수치로 사용하면 안 됩니다.
 
 ```
 엄마/아빠                  3/100
@@ -305,7 +315,7 @@ AudioProject/
 │   │       ├── derive_thresholds.py  # 단어별 임계값 + 상한 경고
 │   │       ├── fit_streaming.py  #   프로필 탐색
 │   │       └── compare.py        #   모델·설정 비교
-│   └── tests/                    # 170개
+│   └── tests/                    # 201개 (2026-09-06)
 ├── shared/
 │   ├── words.csv                 # 정답 단어 (UTF-8 BOM)
 │   ├── targets.json              # 빌드 산출물 (성인)
@@ -329,9 +339,9 @@ AudioProject/
 │       ├── Editor/               # 초기 세팅·데이터·모델·테스트 메뉴
 │       ├── Tests/Runtime/        # 파이썬 대조 벡터
 │       └── Samples~/             # 한국어 데이터 + 예제
-├── csharp/PhonemeMatching.Tests/ # Unity 없이 dotnet test (28개)
+├── csharp/PhonemeMatching.Tests/ # Unity 없이 dotnet test (46개)
 ├── docs/ADDING_A_LANGUAGE.md
-├── REPORT.md                     # 종합 보고서
+├── REPORT.md                     # 초기 설계·실험 기록 (2026-08-11)
 └── REPORT_PHASE2.md              # 초기 골든셋 분석 (역사)
 ```
 
@@ -363,6 +373,11 @@ pip install gradio sounddevice
 
 실시간 화면 하나만 제공합니다. 정답 입력 → 준비 → 마이크 청취 → 동일 후보
 연속 2회 통과 → 확정/자동 중단 흐름입니다. 창 기본 2.5초, 입력 전달 주기 0.5초입니다.
+Unity와 같이 처음부터 2.5초(40,000샘플) 입력을 유지하며, 아직 녹음되지 않은
+앞부분은 무음으로 채웁니다. 2.5초를 기다리지 않고 첫 입력부터 판정하며,
+추가한 무음은 경과 시간이나 연속 판정 횟수에 포함하지 않습니다.
+웹에서 창 길이를 바꾸면 다음 입력부터 버퍼·연속 판정을 새로 시작합니다.
+현재 배포된 Unity ONNX 모델과 비교할 때는 기본 2.5초를 유지하세요.
 파일 평가·녹음 저장·정답 빌드 화면은 제거했으며 해당 CLI 도구는 유지합니다.
 즉석 정답의 단어별 임계값 측정과 아동용 streaming profile은 유지합니다.
 정답 카탈로그 없이도 실행할 수 있습니다.
@@ -646,14 +661,21 @@ split(457발화) 만 받으면 60MB 입니다.
 ## 10. 테스트
 
 ```powershell
-pytest python/tests -v                      # 파이썬 170개
-dotnet test csharp/PhonemeMatching.Tests    # C# 28개 (Unity 불필요)
+python -m pytest python/tests -v           # Python 201개
+dotnet test csharp/PhonemeMatching.Tests    # C# 46개 (Unity 불필요)
 ```
 
-Unity PlayMode에서는 같은 소스에 Listener 이벤트 순서·초기화 검증을 더해 실행합니다.
-2026-09-06 Unity 6000.3.18f1 PlayMode 29개 통과를 확인했습니다.
+2026-09-06 기준 Python CPU/GPU 환경에서 각각 201개가 통과했습니다.
+Unity 2022.3.62f2와 6000.3.18f1에서는 각각 Editor 27개, PlayMode 47개가 통과했습니다.
+Editor는 기존 JSON 보존·모델별 설정을, PlayMode는 공통 코어와 Listener 이벤트 순서·초기화를 검사합니다.
 공통 JSON 결과, 24개 한글 설명 사례, 전체 한글 11,172음절, Session의 확정 스냅샷을
 검증합니다. 실제 아동 정확도 평가는 이 자동 테스트와 별개입니다.
+
+수정본의 Git 의존성 설치와 두 Unity 버전의 Windows x64 Mono 빌드·실제 GPU 추론도
+확인했습니다. 웹 버퍼 수정 후에는 58개 합성 음성/199개 창을 앞선 Unity 실행 기록과
+대조해 인식·점수·확정 시점 차이가 없음을 확인했습니다. 마이크 실기기·IL2CPP는 미검증입니다.
+설치 방식, 모델, 경고, 실행 기록 재사용 범위는
+[상세 검증 기록](unity/Packages/com.domicube.phoneme-matching/Documentation~/validation-2026-09-06.md)을 참고하세요.
 
 **파이썬에서 C# 으로 옮긴 것은 전부 벡터로 대조합니다.** "옮겼다"가 아니라
 "같은 값이 나온다"를 확인하는 게 목적입니다.
@@ -664,6 +686,9 @@ Unity PlayMode에서는 같은 소스에 Listener 이벤트 순서·초기화 �
 | CTC 디코더 ↔ 파이썬 `batch_decode` | 43 (36개는 실제 ONNX argmax) |
 | ONNX ↔ PyTorch 한글·IPA | 36 |
 | Unity 2022 Sentis 1.2 ↔ 파이썬 토큰 id | 4클립 × 124프레임 |
+
+위 36클립·4클립 수치는 기존 성인 모델 기준 벡터입니다. 최신 아동 모델의 58클립
+연속 입력 대조와는 다른 검사이며, 합성 음성을 실제 사용자 정확도로 일반화하지 않습니다.
 
 매처나 matrix 를 고쳤으면 `export_parity_vectors`, 모델이나 어휘를 바꿨으면
 `export_ctc_vocab` 로 벡터를 다시 만드세요.
@@ -691,6 +716,11 @@ Unity 대조는 [python/tools/sentis_parity/](python/tools/sentis_parity/) 에
 
 ### 알려진 이슈
 
+- **추론 엔진 설치 전 예제 임포트** — 기본 패키지는 엔진 없이 컴파일되지만,
+  `LessonExample` 샘플은 `SentisPhonemeRecognizer` 참조로 오류가 납니다. 엔진을 먼저
+  설치한 뒤 샘플을 가져오세요. 이 샘플의 무엔진 경로 수정은 보류했습니다.
+- **Unity 6 Editor 추론 종료 경고** — Inference Engine 2.6.1의 정적 GPU 버퍼에서
+  Persistent 할당 경고를 확인했습니다. 검사한 Windows Player에는 같은 경고가 없었습니다.
 - **Windows MeCab** — g2pkk 비교 경로는 `mecab-ko` 어댑터를 사용하며 실행 중 자동 설치하지 않습니다. 기본 인식·판정 경로는 mecab-free 한국어 규칙을 씁니다.
 - **Gradio 6.0** — `theme` 은 `launch()` 인자로만 전달 가능
 - **마이크 녹음 잘림** — `--trailing-ms 1000` 으로 늘리거나 `record_live` 기본값 조정

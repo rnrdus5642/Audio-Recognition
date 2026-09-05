@@ -1,0 +1,19 @@
+{
+    "name": "DomiCube.PhonemeMatching.Editor.Tests",
+    "rootNamespace": "DomiCube.PhonemeMatching.Editor.Tests",
+    "references": [
+        "DomiCube.PhonemeMatching.Editor",
+        "DomiCube.PhonemeMatching",
+        "UnityEngine.TestRunner",
+        "UnityEditor.TestRunner"
+    ],
+    "includePlatforms": ["Editor"],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "precompiledReferences": ["nunit.framework.dll"],
+    "autoReferenced": false,
+    "defineConstraints": ["UNITY_INCLUDE_TESTS"],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

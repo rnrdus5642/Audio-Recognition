@@ -1,4 +1,10 @@
-# 아동 발음 판정 시스템 — 종합 보고서
+# 아동 발음 판정 시스템 — 초기 설계·실험 기록
+
+> 아래 본문은 **2026-08-11 / v0.4.0 당시의 기록**입니다. 모델·탭 구성·설치·테스트 개수의
+> 최신 사양으로 사용하지 마세요. 현재는 아동 파인튜닝 모델과 실시간 단일 웹 화면을 사용하며,
+> 웹·Unity의 기본 버퍼/연속 판정을 맞췄습니다. 현재 사용법은 [README](README.md),
+> 변경 이력은 [CHANGELOG](CHANGELOG.md), 설치·실행·남은 제약은
+> [2026-09-06 검증 기록](unity/Packages/com.domicube.phoneme-matching/Documentation~/validation-2026-09-06.md)을 참고하세요.
 
 VR 발음 훈련 앱에 넣을 **발음 판정 엔진**을 만들었습니다. 파이썬 프로토타입에서
 출발해 Unity 패키지(`com.domicube.phoneme-matching` v0.4.0)까지 왔고, 지금은

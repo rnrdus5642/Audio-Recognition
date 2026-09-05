@@ -6,6 +6,12 @@
 
 **온디바이스 전용입니다.** 서버도 파이썬 런타임도 필요 없습니다.
 
+2026-09-06 개발 소스에는 기존 JSON을 보존하는 초기 세팅, 합격 후보 우선 선택,
+모델별 테스트 창 설정이 반영되어 있습니다. 웹도 기본 2.5초 창·앞쪽 무음 패딩으로 맞췄습니다.
+검증된 환경과 남은 제약은 [검증 기록](Documentation~/validation-2026-09-06.md)을 참고하세요.
+패키지 버전 표기는 `0.7.0`이지만 기존 `v0.7.0` 태그와 같은 소스라는 뜻은 아닙니다.
+이번 변경을 포함한 커밋/브랜치가 원격에 게시된 뒤 해당 Git 참조로 갱신해야 합니다.
+
 ## 실행 구조
 
 ```
@@ -34,7 +40,7 @@ https://github.com/rnrdus5642/Audio-Recognition.git?path=/unity/Packages/com.dom
 Tools > Phoneme Matching > 초기 세팅
 ```
 
-`초기 세팅` 은 없는 것만 차례대로 설치합니다 - 추론 엔진, 데이터 JSON 3개,
+`초기 세팅` 은 없는 것만 차례대로 설치합니다 - 추론 엔진, 데이터 JSON 5개,
 음향 모델. 이미 있는 것은 건너뛰므로 두 경우에 같은 버튼을 씁니다.
 
 | 상황 | 실제로 하는 일 |
@@ -49,6 +55,23 @@ Tools > Phoneme Matching > 초기 세팅
 전체는 회선에 따라 5~10분 걸립니다.
 
 끝나면 `Tools > Phoneme Matching > 발음 테스트 (마이크)` 로 확인하세요.
+
+테스트 창은 선택한 모델의 **표준 파일명**에 맞춰 채점 데이터를 자동 연결하며,
+창에 실제 사용하는 JSON 파일을 표시합니다.
+
+| 모델 파일명 | matrix | 정답 데이터 |
+|---|---|---|
+| `wav2vec2_ko.onnx` | `ko_child_v1.json` | `targets.json` |
+| `wav2vec2_ko_child.onnx` | `ko_child_v2.json` | `targets_child.json` |
+
+공통 어휘는 `wav2vec2_ko_vocab.json`입니다. 이름을 바꾼 모델이나 별도 모델은
+`채점 설정 (직접 지정)`에서 기본/아동 모델용을 선택해야 시작할 수 있으며,
+선택은 모델 에셋별로 기억합니다. 자동 구분은 파일명 기준이지 모델 내부를 분석한
+결과는 아니므로, 표준 이름으로 다른 모델을 덮어쓴 경우까지 식별하지는 않습니다.
+모델·채점 설정을 바꾸면 이전 준비 세션과 결과를 비우고 다시 준비합니다.
+JSON이 누락되면 해당 파일을 안내하며 다른 모델용 설정으로 대체하지 않습니다.
+기존 JSON 수정 내용도 그대로 읽습니다. 이 자동 연결은 **에디터 테스트 창에만**
+적용되며, 게임의 `PronunciationListener`·`PronunciationSession` 설정 API는 그대로입니다.
 
 <details>
 <summary>메뉴 전체와 단계별 설명</summary>
@@ -90,13 +113,21 @@ https://github.com/rnrdus5642/Audio-Recognition.git?path=/unity/Packages/com.dom
 "com.domicube.phoneme-matching": "https://github.com/rnrdus5642/Audio-Recognition.git?path=/unity/Packages/com.domicube.phoneme-matching"
 ```
 
-항상 main 최신을 받습니다. 특정 버전에 고정하려면 뒤에 `#v0.5.3` 처럼
-태그를 붙이세요. 로컬에서 고쳐가며 쓰려면
-`"file:../../path/to/com.domicube.phoneme-matching"` 도 됩니다.
+새로 설치할 때는 원격 기본 브랜치를 사용하지만, 설치 후에는 `packages-lock.json`의
+커밋이 유지되므로 main 변경이 자동 반영되지는 않습니다. 수정본이 푸시된 뒤
+`Add package from git URL…`에 같은 URL을 다시 입력하거나, 뒤에 `#`와 원하는
+전체 40자리 커밋 해시 또는 태그를 붙여 갱신하세요. 기존 `v0.7.0` 태그를 지정하면
+이번 수정본이 아닌 그 태그의 소스를 받습니다.
+[Unity의 Git 의존성 잠금·갱신 설명](https://docs.unity3d.com/2022.3/Documentation/Manual/upm-git.html#git-locks).
+로컬에서 고쳐가며 쓰려면 `"file:../../path/to/com.domicube.phoneme-matching"`도 됩니다.
 
 ### 2. 추론 엔진
 
 `Tools > Phoneme Matching > 추론 엔진 설치`
+
+`LessonExample` 샘플도 엔진 설치 후에 가져오세요. 기본 패키지는 엔진 없이 컴파일되지만,
+현재 예제의 무엔진 대체 경로는 `SentisPhonemeRecognizer` 참조로 컴파일 오류가 납니다.
+이 문제의 코드 수정은 보류했으며, 엔진 설치 후 같은 예제는 정상 컴파일됩니다.
 
 에디터 버전을 보고 알맞은 것을 받습니다 - 2022.3 은
 `com.unity.sentis 1.2.0-exp.2`, Unity 6 은
@@ -120,6 +151,10 @@ https://github.com/rnrdus5642/Audio-Recognition.git?path=/unity/Packages/com.dom
 `targets_child.json` · `wav2vec2_ko_vocab.json` 을
 `Assets/StreamingAssets/` 에 넣고, 런타임이 읽는 방식 그대로 다시 읽어
 확인까지 합니다. 이미 있으면 덮어쓸지 물어봅니다.
+
+`초기 세팅`은 누락된 JSON만 추가하고, 이미 있는 단어 목록·판정 설정은 수정하지
+않습니다. 반면 별도 `데이터 파일 설치` 메뉴는 확인 후 기존 파일을 패키지 기본
+데이터로 교체합니다. 직접 추가한 단어와 수정한 임계값이 있다면 교체 전에 보관하세요.
 
 뒤의 두 개가 아동 전용입니다. 성인용을 대체하지 않고 나란히 놓입니다 —
 두 음향 모델이 서로 다르게 잘못 들어서, 한쪽에 맞춘 임계값과 채점 설정이
@@ -291,8 +326,16 @@ listener.StopListening();   // 끄기 (확정·타임아웃에도 자동으로 �
 listener.TargetWords = new[] { "엄마", "어머니" };
 ```
 
+각 프레임에서 **각 정답의 점수를 그 정답의 임계값과 먼저 비교**합니다. 통과한
+정답이 있으면 그중 최고 점수를 선택하고, 전부 불합격이면 표시용 최고 점수만
+반환합니다. 같은 통과 정답이 연속 2회(기본값) 선택돼야 최종 확정됩니다.
+정답이 바뀌면 연속 횟수는 1부터, 모두 불합격이면 0부터 다시 시작합니다.
+`FrameScore.Best`, 이벤트의 단어·점수, 확정 피드백은 모두 이 선택된 정답 기준입니다.
+`Begin(...)`·이벤트·결과 JSON 형식은 바뀌지 않습니다.
+
 다만 **오확정 확률이 대략 곱해집니다.** 개수보다 어느 단어를 넣느냐가
-문제입니다.
+문제입니다. 아래 수치는 이전 후보 선택 규칙에서의 측정 예시이며, 현재 규칙의
+정확도 수치로 사용하면 안 됩니다.
 
 ```
 엄마/아빠                  3/100
@@ -423,7 +466,7 @@ listener.OnConfirmedDetailed.AddListener(feedback =>
 ```csharp
 frame.Confirmed        // true 면 확정 - 이 순간 세션 종료
 frame.Streak           // 연속 몇 번째 (기본 2 면 확정)
-frame.Best.TargetText  // 지금 가장 유력한 단어
+frame.Best.TargetText  // 합격 후보 우선으로 선택된 단어 (전부 불합격이면 최고 점수)
 frame.Best.Score       // 0~1
 frame.Best.Passed      // 이번 창이 임계값을 넘었는지
 frame.Best.Alignment   // 음소별로 무엇이 어긋났는지
@@ -784,8 +827,13 @@ targets 를 만든 것과 **같은 표기 체계**여야 합니다. 한국어는
 
 ## 테스트
 
-2026-09-06: .NET C# 28개, Unity 6000.3.18f1 PlayMode 29개 통과.
+2026-09-06: .NET C# 46개, Unity 2022.3.62f2 / 6000.3.18f1 각각 Editor 27개·PlayMode 47개 통과.
 동일한 JSON 피드백 벡터와 24개 한글 설명 사례·전체 11,172음절 매핑을 Python/C#에서 대조합니다.
+두 Unity 버전의 Windows x64 Mono 빌드·실제 GPU 추론도 통과했습니다.
+초기 버퍼를 맞춘 웹의 아동 모델 결과는 58개 합성 음성/199개 창에서 앞선 Unity 실행 기록과
+일치했습니다. 새 마이크·사용자의 게임 씬·Windows IL2CPP는 미검증이며, Unity 6 Editor
+추론 종료 시 외부 엔진의 정적 버퍼 경고가 남아 있습니다. 자세한 범위와 설치 검증 방식은
+[검증 기록](Documentation~/validation-2026-09-06.md)에 정리했습니다.
 
 ```bash
 dotnet test csharp/PhonemeMatching.Tests    # Unity 없이, 초 단위
