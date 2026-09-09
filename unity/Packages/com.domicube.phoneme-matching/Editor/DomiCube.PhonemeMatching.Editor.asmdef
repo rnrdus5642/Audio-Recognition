@@ -4,6 +4,7 @@
     "references": [
         "DomiCube.PhonemeMatching",
         "DomiCube.PhonemeMatching.Unity",
+        "DomiCube.PhonemeMatching.Music",
         "DomiCube.PhonemeMatching.Sentis1",
         "DomiCube.PhonemeMatching.Sentis2",
         "Unity.Sentis",

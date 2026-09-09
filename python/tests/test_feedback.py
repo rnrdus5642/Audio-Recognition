@@ -111,7 +111,8 @@ class TestSeverity:
 
         reports = explain(alignment, SAGWA, matrix)
 
-        assert reports[1].status == "near"
+        assert reports[1].slips[0].severity == "near"
+        assert reports[1].status == "no_comment"
 
     def test_place_of_articulation_move_is_blurred(
         self, matrix: ConfusionMatrix
@@ -127,7 +128,8 @@ class TestSeverity:
 
         reports = explain(alignment, SAGWA, matrix)
 
-        assert reports[0].status == "blurred"
+        assert reports[0].slips[0].severity == "blurred"
+        assert reports[0].status == "no_comment"
 
     def test_unlisted_pair_is_different(self, matrix: ConfusionMatrix) -> None:
         # Not in the matrix at all -> default 0.8
@@ -141,7 +143,8 @@ class TestSeverity:
 
         reports = explain(alignment, SAGWA, matrix)
 
-        assert reports[0].status == "different"
+        assert reports[0].slips[0].severity == "different"
+        assert reports[0].status == "no_comment"
 
     def test_worst_slip_sets_the_status(self, matrix: ConfusionMatrix) -> None:
         alignment = [
@@ -154,11 +157,12 @@ class TestSeverity:
 
         reports = explain(alignment, SAGWA, matrix)
 
-        assert reports[1].status == "different"
+        assert max(reports[1].slips, key=lambda s: s.cost).severity == "different"
+        assert reports[1].status == "no_comment"
 
 
 class TestMuting:
-    def test_without_a_table_nothing_is_muted(
+    def test_without_a_table_guidance_is_withheld(
         self, matrix: ConfusionMatrix
     ) -> None:
         # 아빠: the model writes /p͈/ as /p/ 12% of the time by itself
@@ -174,8 +178,8 @@ class TestMuting:
 
         reports = explain(alignment, appa, matrix)
 
-        assert reports[1].status != "no_comment"
-        assert not reports[1].slips[0].muted
+        assert reports[1].status == "no_comment"
+        assert reports[1].slips[0].muted
 
     def test_the_models_own_confusion_is_muted(
         self, matrix: ConfusionMatrix, errors: ModelErrors
@@ -198,10 +202,10 @@ class TestMuting:
         assert slip.observations == 10
         assert slip.model_error_rate == pytest.approx(10 / 83)
 
-    def test_a_pair_the_model_does_not_make_still_reports(
+    def test_an_absent_pair_is_unmeasured_and_withheld(
         self, matrix: ConfusionMatrix, errors: ModelErrors
     ) -> None:
-        # s->t is not in the error table: this model does not do it alone
+        # An absent s->t pair is not proof that the recognizer never makes it.
         alignment = [
             ("t", "s", "sub"),
             ("a", "a", "match"),
@@ -212,7 +216,7 @@ class TestMuting:
 
         reports = explain(alignment, SAGWA, matrix, errors)
 
-        assert reports[0].status == "blurred"
+        assert reports[0].status == "no_comment"
         assert reports[0].slips[0].model_error_rate is None
 
     def test_glide_deletion_is_muted(
@@ -237,7 +241,7 @@ class TestMuting:
         self, matrix: ConfusionMatrix, errors: ModelErrors
     ) -> None:
         # s->tɕ appears once in 76 chances. One observation is a
-        # coincidence, so it must not buy silence.
+        # insufficient evidence, so it cannot justify pronunciation criticism.
         alignment = [
             ("tɕ", "s", "sub"),
             ("a", "a", "match"),
@@ -249,7 +253,7 @@ class TestMuting:
         reports = explain(alignment, SAGWA, matrix, errors)
 
         assert reports[0].slips[0].observations == 1
-        assert not reports[0].slips[0].muted
+        assert reports[0].slips[0].muted
 
     def test_insertions_never_blame_the_child(
         self, matrix: ConfusionMatrix
@@ -326,7 +330,7 @@ class TestAgainstTheRealMatcher:
         assert result.passed
         reports = explain(result.alignment, SAGWA, matrix, errors)
 
-        assert reports[0].status == "blurred"
+        assert reports[0].status == "no_comment"
         assert reports[0].slips[0].heard == "t"
         assert reports[1].status == "clean"
 

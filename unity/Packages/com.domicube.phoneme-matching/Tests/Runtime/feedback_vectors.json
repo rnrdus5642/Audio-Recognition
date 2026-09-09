@@ -62,7 +62,7 @@
     "frames": 4,
     "streak": 2,
     "expected": {
-      "schema_version": 2,
+      "schema_version": 3,
       "target_id": "apple",
       "target_text": "사과",
       "score": 0.68,
@@ -140,19 +140,71 @@
       "insertion_count": 1,
       "korean_feedback": {
         "syllable_mapping_available": true,
+        "summary": "발음에 문제 없어요.",
+        "items": []
+      },
+      "raw_korean_feedback": {
+        "syllable_mapping_available": true,
         "summary": "정답과 다르게 인식된 부분이에요.",
         "items": [
           {
-            "kind": "sub", "syllable_index": 0, "target_syllable": "사", "heard_syllable": "",
-            "message": "‘사과’의 ‘사’: 시옷 소리가 디귿 소리로 인식됐어요.", "alignment_indices": [0]
+            "kind": "sub",
+            "syllable_index": 0,
+            "target_syllable": "사",
+            "heard_syllable": "",
+            "message": "‘사과’의 ‘사’: 시옷 소리가 디귿 소리로 인식됐어요.",
+            "alignment_indices": [
+              0
+            ]
           },
           {
-            "kind": "ins", "syllable_index": -1, "target_syllable": "", "heard_syllable": "",
-            "message": "정답에 없는 니은 소리가 추가로 인식됐어요.", "alignment_indices": [2]
+            "kind": "ins",
+            "syllable_index": -1,
+            "target_syllable": "",
+            "heard_syllable": "",
+            "message": "정답에 없는 니은 소리가 추가로 인식됐어요.",
+            "alignment_indices": [
+              2
+            ]
           },
           {
-            "kind": "del", "syllable_index": 1, "target_syllable": "과", "heard_syllable": "",
-            "message": "‘사과’의 ‘과’: ‘와’에서 앞에 붙는 소리가 인식 결과에서 빠졌어요.", "alignment_indices": [4]
+            "kind": "del",
+            "syllable_index": 1,
+            "target_syllable": "과",
+            "heard_syllable": "",
+            "message": "‘사과’의 ‘과’: ‘와’에서 앞에 붙는 소리가 인식 결과에서 빠졌어요.",
+            "alignment_indices": [
+              4
+            ]
+          }
+        ]
+      },
+      "feedback_review": {
+        "matrix_id": "",
+        "profile_matrix_id": "",
+        "reference_utterances": 0,
+        "status": "withheld",
+        "withheld": [
+          {
+            "alignment_index": 0,
+            "reason": "missing_or_mismatched_profile",
+            "observations": 0,
+            "total": 0,
+            "model_error_rate": null
+          },
+          {
+            "alignment_index": 2,
+            "reason": "missing_or_mismatched_profile",
+            "observations": 0,
+            "total": 0,
+            "model_error_rate": null
+          },
+          {
+            "alignment_index": 4,
+            "reason": "missing_or_mismatched_profile",
+            "observations": 0,
+            "total": 0,
+            "model_error_rate": null
           }
         ]
       }
@@ -195,7 +247,7 @@
     "frames": 7,
     "streak": 3,
     "expected": {
-      "schema_version": 2,
+      "schema_version": 3,
       "target_id": "apple",
       "target_text": "사과",
       "score": 0.95,
@@ -241,6 +293,18 @@
         "syllable_mapping_available": false,
         "summary": "비교한 구간에서 정답과 다른 소리가 발견되지 않았어요.",
         "items": []
+      },
+      "raw_korean_feedback": {
+        "syllable_mapping_available": false,
+        "summary": "비교한 구간에서 정답과 다른 소리가 발견되지 않았어요.",
+        "items": []
+      },
+      "feedback_review": {
+        "matrix_id": "",
+        "profile_matrix_id": "",
+        "reference_utterances": 0,
+        "status": "matched",
+        "withheld": []
       }
     }
   },
@@ -266,7 +330,7 @@
     "frames": 4,
     "streak": 2,
     "expected": {
-      "schema_version": 2,
+      "schema_version": 3,
       "target_id": "apple",
       "target_text": "사과",
       "score": 1,
@@ -293,6 +357,18 @@
         "syllable_mapping_available": false,
         "summary": "발음 비교 정보가 없어 자세히 설명할 수 없어요.",
         "items": []
+      },
+      "raw_korean_feedback": {
+        "syllable_mapping_available": false,
+        "summary": "발음 비교 정보가 없어 자세히 설명할 수 없어요.",
+        "items": []
+      },
+      "feedback_review": {
+        "matrix_id": "",
+        "profile_matrix_id": "",
+        "reference_utterances": 0,
+        "status": "unavailable",
+        "withheld": []
       }
     }
   },
@@ -328,7 +404,7 @@
     "frames": 1,
     "streak": 0,
     "expected": {
-      "schema_version": 2,
+      "schema_version": 3,
       "target_id": "apple",
       "target_text": "사과",
       "score": 0,
@@ -367,15 +443,54 @@
       "insertion_count": 0,
       "korean_feedback": {
         "syllable_mapping_available": false,
+        "summary": "발음에 문제 없어요.",
+        "items": []
+      },
+      "raw_korean_feedback": {
+        "syllable_mapping_available": false,
         "summary": "정답과 다르게 인식된 부분이에요. 글자 위치를 정확히 연결하기 어려워 소리만 안내해요.",
         "items": [
           {
-            "kind": "del", "syllable_index": -1, "target_syllable": "", "heard_syllable": "",
-            "message": "시옷 소리가 인식 결과에서 빠졌어요.", "alignment_indices": [0]
+            "kind": "del",
+            "syllable_index": -1,
+            "target_syllable": "",
+            "heard_syllable": "",
+            "message": "시옷 소리가 인식 결과에서 빠졌어요.",
+            "alignment_indices": [
+              0
+            ]
           },
           {
-            "kind": "del", "syllable_index": -1, "target_syllable": "", "heard_syllable": "",
-            "message": "‘아’의 모음 소리가 인식 결과에서 빠졌어요.", "alignment_indices": [1]
+            "kind": "del",
+            "syllable_index": -1,
+            "target_syllable": "",
+            "heard_syllable": "",
+            "message": "‘아’의 모음 소리가 인식 결과에서 빠졌어요.",
+            "alignment_indices": [
+              1
+            ]
+          }
+        ]
+      },
+      "feedback_review": {
+        "matrix_id": "",
+        "profile_matrix_id": "",
+        "reference_utterances": 0,
+        "status": "withheld",
+        "withheld": [
+          {
+            "alignment_index": 0,
+            "reason": "missing_or_mismatched_profile",
+            "observations": 0,
+            "total": 0,
+            "model_error_rate": null
+          },
+          {
+            "alignment_index": 1,
+            "reason": "missing_or_mismatched_profile",
+            "observations": 0,
+            "total": 0,
+            "model_error_rate": null
           }
         ]
       }

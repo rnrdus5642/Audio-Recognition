@@ -72,6 +72,7 @@ public sealed class PronunciationTestBench : MonoBehaviour
     {
         public float Time;
         public int Streak;
+        public int RequiredFrames;
         public string Word;
         public double Score;
         public double Threshold;
@@ -164,7 +165,8 @@ public sealed class PronunciationTestBench : MonoBehaviour
         var device = Microphone.devices.Length > 0
             ? Microphone.devices[_deviceIndex % Microphone.devices.Length]
             : null;
-        var mic = new MicrophoneRollingBuffer(WindowSeconds);
+        var mic = new MicrophoneRollingBuffer(
+            WindowSeconds, hopSeconds: HopSeconds);
         try
         {
             mic.Start(device);
@@ -181,8 +183,6 @@ public sealed class PronunciationTestBench : MonoBehaviour
 
         _deviceRate = mic.DeviceSampleRate;
 
-        var wait = new WaitForSeconds(HopSeconds);
-        float started = Time.realtimeSinceStartup;
         var sw = new System.Diagnostics.Stopwatch();
 
         if (missing.Count > 0)
@@ -195,45 +195,69 @@ public sealed class PronunciationTestBench : MonoBehaviour
         }
 
         PronunciationFeedback confirmed = null;
+        bool failed = false;
         while (_listening)
         {
-            yield return wait;
+            // Poll every frame, but score per hop of captured audio: a
+            // slow frame must not cost a window, and a burst of audio
+            // must not score the same window twice. The bench exists to
+            // reproduce what the game does, so it has to frame the same
+            // way the game does.
+            yield return null;
 
-            if (!mic.Pump())
+            try
             {
-                continue;
+                if (!mic.Pump())
+                {
+                    continue;
+                }
+
+                // Re-recognise the whole recent window, never a fresh
+                // chunk: wav2vec2 is a context model and mangles short
+                // fragments.
+                HopFrame hop;
+                while (_listening && mic.TryReadFrame(out hop))
+                {
+                    sw.Restart();
+                    _recognizer.RecognizeWithText(
+                        hop.Window, out var hangul, out var phonemes);
+                    sw.Stop();
+
+                    var hit = streaming.Push(phonemes);
+                    var best = matcher.BestMatch(phonemes, _candidates);
+
+                    _frames.Add(new Frame
+                    {
+                        // Where the window ended in the recording, not
+                        // how long the coroutine had been alive.
+                        Time = hop.EndSampleIndex
+                            / (float)MicrophoneRollingBuffer.TargetSampleRate,
+                        Streak = streaming.Streak,
+                        RequiredFrames = streaming.RequiredFrames(best.TargetId),
+                        Word = best.TargetText,
+                        Score = best.Score,
+                        Threshold = ThresholdOf(best.TargetId),
+                        Ms = sw.ElapsedMilliseconds,
+                        Hangul = hangul
+                    });
+
+                    _scoredIpa = DescribeScored(matcher, phonemes, best);
+
+                    if (hit != null)
+                    {
+                        confirmed = hit.Feedback;
+                        _status = $"확정: {hit.Result.TargetText} "
+                            + $"({hit.Result.Score:F3}, {_frames.Count}프레임)";
+                        _listening = false;
+                        break;
+                    }
+                }
             }
-
-            // Re-recognise the whole recent window, never a fresh chunk:
-            // wav2vec2 is a context model and mangles short fragments.
-            sw.Restart();
-            _recognizer.RecognizeWithText(
-                mic.Snapshot(), out var hangul, out var phonemes);
-            sw.Stop();
-
-            var hit = streaming.Push(phonemes);
-            var best = matcher.BestMatch(phonemes, _candidates);
-
-            _frames.Add(new Frame
+            catch (System.Exception e)
             {
-                Time = Time.realtimeSinceStartup - started,
-                Streak = streaming.Streak,
-                Word = best.TargetText,
-                Score = best.Score,
-                Threshold = ThresholdOf(best.TargetId),
-                Ms = sw.ElapsedMilliseconds,
-                Hangul = hangul
-            });
-
-            _scoredIpa = DescribeScored(matcher, phonemes, best);
-
-            if (hit != null)
-            {
-                confirmed = hit.Feedback;
-                _status = $"확정: {hit.Result.TargetText} "
-                    + $"({hit.Result.Score:F3}, {_frames.Count}프레임)";
+                _status = $"채점 실패: {e.Message}";
+                failed = true;
                 _listening = false;
-                break;
             }
         }
 
@@ -244,7 +268,7 @@ public sealed class PronunciationTestBench : MonoBehaviour
             LastConfirmation = confirmed;
             OnConfirmedDetailed?.Invoke(confirmed);
         }
-        else if (_status.StartsWith("듣는 중"))
+        else if (!failed && _status.StartsWith("듣는 중"))
         {
             _status = $"중지 ({_frames.Count}프레임, 확정 없음)";
         }
@@ -391,11 +415,10 @@ public sealed class PronunciationTestBench : MonoBehaviour
         GUI.enabled = true;
         GUILayout.Space(8);
         GUILayout.Label(
-            $"창 {WindowSeconds:F1}s · hop {HopSeconds:F1}s · 확정 {Consecutive}회",
+            $"창 {WindowSeconds:F1}s · hop {HopSeconds:F1}s · 기본 {Consecutive}회 (단어별 설정 우선)",
             small);
         GUILayout.Label(
-            $"확정까지 최소 {Consecutive * HopSeconds:F1}s — 정답을 말한 뒤에도"
-            + " 그만큼 더 들어야 합니다.", small);
+            "같은 정답이 필요한 검사 횟수만큼 이어지면 확정합니다.", small);
 
         GUILayout.Space(10);
         GUILayout.Label("스트리밍 프로파일", head);
@@ -484,7 +507,7 @@ public sealed class PronunciationTestBench : MonoBehaviour
         {
             var f = _frames[i];
             GUILayout.Label(
-                $"{f.Time,6:F1}s  {f.Streak}/{Consecutive}   "
+                $"{f.Time,6:F1}s  {f.Streak}/{f.RequiredFrames}   "
                 + $"{(string.IsNullOrEmpty(f.Word) ? "—" : f.Word),-6}  "
                 + $"{f.Score:F3}   {f.Threshold:F2}   {f.Ms,4}  "
                 + $"'{f.Hangul}'", label);

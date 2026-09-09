@@ -52,7 +52,8 @@ def test_confirmation_uses_last_frame_and_copies_mutable_lists():
     assert feedback.user_phonemes[0] == "t"
     assert feedback.target_phonemes[0] == "s"
     assert len(feedback.alignment) == 5
-    assert feedback.korean_feedback.items[0].heard_syllable == "다"
+    assert feedback.raw_korean_feedback.items[0].heard_syllable == "다"
+    assert feedback.korean_feedback.items == []
 
 
 def test_context_limit_keeps_full_user_indices_and_excludes_prefix():

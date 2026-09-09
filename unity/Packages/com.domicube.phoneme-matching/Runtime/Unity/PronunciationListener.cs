@@ -16,6 +16,9 @@ namespace DomiCube.PhonemeMatching.Unity
     [Serializable]
     public sealed class FrameScoredEvent : UnityEvent<string, float, int> { }
 
+    [Serializable]
+    public sealed class FrameScoredDetailedEvent : UnityEvent<FrameScore> { }
+
     /// <summary>
     /// Drives the whole listening loop: microphone -> recogniser ->
     /// <see cref="StreamingMatcher"/> -> stop on confirmation.
@@ -77,12 +80,38 @@ namespace DomiCube.PhonemeMatching.Unity
         /// <summary>(단어, 점수, 연속 횟수) - 디버그 UI용.</summary>
         public FrameScoredEvent OnFrameScored = new FrameScoredEvent();
 
+        /// <summary>Same inference, including text, rejection reason and input level.</summary>
+        public FrameScoredDetailedEvent OnFrameScoredDetailed = new FrameScoredDetailedEvent();
+
+        /// <summary>Last frame remains available after timeout; reset on Listen.</summary>
+        public FrameScore LastFrameScored { get; private set; }
+        private readonly List<FrameScore> _diagnosticFrames = new List<FrameScore>();
+        private readonly List<string> _diagnosticTargets = new List<string>();
+        public IReadOnlyList<FrameScore> RecentDiagnosticFrames => _diagnosticFrames.AsReadOnly();
+
+        [ContextMenu("Save recognition diagnostics / 인식 진단 저장")]
+        public void SaveRecognitionDiagnostics()
+        {
+            var directory = System.IO.Path.Combine(Application.persistentDataPath, "PhonemeMatchingDiagnostics");
+            System.IO.Directory.CreateDirectory(directory);
+            var path = System.IO.Path.Combine(directory, "recognition-" + DateTime.UtcNow.ToString("yyyyMMdd-HHmmss-fff") + ".json");
+            System.IO.File.WriteAllText(path, RecognitionDiagnostics.ToJson(_diagnosticTargets, _diagnosticFrames));
+            Debug.Log("Recognition diagnostics saved: " + path, this);
+        }
+
         private IPhonemeRecognizer _recognizer;
         private ConfusionMatrix _matrix;
+        private ModelErrorProfile _feedbackErrors;
         private TargetCatalog _catalog;
         private PronunciationSession _session;
         private MicrophoneRollingBuffer _mic;
         private Coroutine _loop;
+
+        // Bumped by every Listen/StopListening. A running loop carries the
+        // value it started with, so a handler that stops or restarts the
+        // component from inside a frame event cannot have the old loop
+        // keep scoring, firing events or cleaning up after it.
+        private int _generation;
 
         public bool IsListening => _loop != null;
 
@@ -111,16 +140,14 @@ namespace DomiCube.PhonemeMatching.Unity
         /// </summary>
         public void LoadData()
         {
-            _matrix = PhonemeData.LoadMatrix(
-                ReadStreamingAsset(MatrixFileName));
-            _catalog = PhonemeData.LoadTargets(
-                ReadStreamingAsset(TargetsFileName));
+            LoadData(ReadStreamingAsset(MatrixFileName), ReadStreamingAsset(TargetsFileName));
         }
 
-        public void LoadData(string matrixJson, string targetsJson)
+        public void LoadData(string matrixJson, string targetsJson, ModelErrorProfile feedbackErrors = null)
         {
             _matrix = PhonemeData.LoadMatrix(matrixJson);
             _catalog = PhonemeData.LoadTargets(targetsJson);
+            _feedbackErrors = feedbackErrors ?? ModelFeedbackResources.Load(_matrix.MatrixId);
         }
 
         private static string ReadStreamingAsset(string fileName)
@@ -140,7 +167,16 @@ namespace DomiCube.PhonemeMatching.Unity
         /// <summary>Start listening for the configured target.</summary>
         public void Listen()
         {
+            // Every attempt retires the one before it, whether or not
+            // this one gets off the ground. A handler that calls Listen()
+            // from inside a confirmation and is turned away at validation
+            // must still leave the old attempt unable to fire the rest of
+            // its events into the question it just tried to start.
+            _generation++;
             LastConfirmation = null;
+            LastFrameScored = null;
+            _diagnosticFrames.Clear();
+            _diagnosticTargets.Clear();
             if (_loop != null)
             {
                 StopListening();
@@ -159,9 +195,6 @@ namespace DomiCube.PhonemeMatching.Unity
                 LoadData();
             }
 
-            _session = new PronunciationSession(
-                _matrix, _catalog, _recognizer, Consecutive);
-
             var words = new List<string>();
             if (TargetWords != null)
             {
@@ -178,9 +211,17 @@ namespace DomiCube.PhonemeMatching.Unity
             {
                 Debug.LogError(
                     "[PronunciationListener] TargetWords가 비어 있습니다.");
-                _session = null;
                 return;
             }
+            _diagnosticTargets.AddRange(words);
+
+            // The buffer is built first because the session drains it. Both
+            // freeze the window and hop for this question: changing the
+            // Inspector mid-answer must not move the frame boundaries.
+            _mic = new MicrophoneRollingBuffer(
+                WindowSeconds, hopSeconds: HopSeconds);
+            _session = new PronunciationSession(
+                _matrix, _catalog, _recognizer, Consecutive, _mic.Buffer, _feedbackErrors);
 
             try
             {
@@ -193,18 +234,36 @@ namespace DomiCube.PhonemeMatching.Unity
                 // it. Say it and stay put.
                 Debug.LogError($"[PronunciationListener] {e.Message}");
                 _session = null;
+                _mic.Dispose();
+                _mic = null;
                 return;
             }
 
-            _mic = new MicrophoneRollingBuffer(WindowSeconds);
-            _mic.Start(string.IsNullOrEmpty(MicrophoneDevice)
-                ? null
-                : MicrophoneDevice);
-            _loop = StartCoroutine(ListenLoop());
+            try
+            {
+                _mic.Start(string.IsNullOrEmpty(MicrophoneDevice)
+                    ? null
+                    : MicrophoneDevice);
+            }
+            catch
+            {
+                // Do not leave the device or the session half-open when
+                // the microphone refuses to start.
+                _mic.Dispose();
+                _mic = null;
+                _session.End();
+                _session = null;
+                throw;
+            }
+
+            _loop = StartCoroutine(ListenLoop(_generation));
         }
 
         public void StopListening()
         {
+            // Any loop still on the stack belongs to the previous attempt.
+            _generation++;
+
             if (_loop != null)
             {
                 StopCoroutine(_loop);
@@ -218,52 +277,159 @@ namespace DomiCube.PhonemeMatching.Unity
             _mic = null;
         }
 
-        private IEnumerator ListenLoop()
+        /// <summary>What one attempt at scoring a queued frame did.</summary>
+        private enum Step
         {
-            var wait = new WaitForSeconds(HopSeconds);
+            /// <summary>No whole hop was waiting; nothing ran.</summary>
+            Idle,
+
+            /// <summary>A frame was scored and reported; look for more.</summary>
+            Scored,
+
+            /// <summary>The answer is in and the confirmation has fired.</summary>
+            Confirmed,
+
+            /// <summary>A handler stopped or restarted us mid-drain.</summary>
+            Stopped,
+
+            /// <summary>Scoring threw; the loop is over.</summary>
+            Failed
+        }
+
+        /// <summary>
+        /// Score at most one queued frame, report it, and act on it.
+        ///
+        /// Deliberately one frame per call. The recogniser must not run
+        /// again until the last frame has been through
+        /// <see cref="OnFrameScored"/>, because a handler is allowed to
+        /// stop the question there - and audio that arrived in the same
+        /// pump would otherwise already have been scored, and could
+        /// already have confirmed, before it got the chance.
+        /// </summary>
+        private Step ScoreOneFrame(int generation)
+        {
+            FrameScore frame;
+            try
+            {
+                if (!_session.TryPush(out frame))
+                {
+                    return Step.Idle;
+                }
+            }
+            catch (Exception e)
+            {
+                // An overflowing frame queue invalidates the session; it
+                // must not take the scene down with it either.
+                Debug.LogException(e);
+                return Step.Failed;
+            }
+
+            LastFrameScored = frame;
+            if (_diagnosticFrames.Count >= 120) _diagnosticFrames.RemoveAt(0);
+            _diagnosticFrames.Add(frame);
+            OnFrameScored.Invoke(
+                frame.Best.TargetText ?? string.Empty,
+                (float)frame.Best.Score,
+                frame.Streak);
+
+            if (generation != _generation)
+            {
+                return Step.Stopped;
+            }
+
+            OnFrameScoredDetailed.Invoke(frame);
+            if (generation != _generation) return Step.Stopped;
+
+            if (frame.Confirmed)
+            {
+                // IsActive is already false here - that is what
+                // confirming means, not a reason to drop the event.
+                Confirm(frame.Feedback);
+                return Step.Confirmed;
+            }
+
+            return Step.Scored;
+        }
+
+        /// <summary>
+        /// Poll the microphone every frame and score whole hops of new
+        /// audio, in order.
+        ///
+        /// The loop used to wait one hop and score whatever was in the
+        /// window, which made a frame "one coroutine tick" - a stalled
+        /// frame or a device that delivers in bursts changed how many
+        /// windows a child was judged on, and so changed when the answer
+        /// confirmed. Now polling only decides how promptly a frame is
+        /// noticed; <see cref="HopSeconds"/> of captured samples is what
+        /// makes one.
+        /// </summary>
+        private IEnumerator ListenLoop(int generation)
+        {
             float started = Time.realtimeSinceStartup;
 
             // Distinguishes "gave up" from "the recogniser threw", which
             // both end the loop but mean different things to the caller.
             bool timedOut = false;
+            bool failed = false;
 
             while (true)
             {
-                yield return wait;
+                yield return null;
 
-                if (_mic == null || !_mic.Pump())
+                if (generation != _generation)
                 {
-                    if (TimedOut(started))
-                    {
-                        timedOut = true;
-                        break;
-                    }
-
-                    continue;
-                }
-
-                FrameScore frame;
-                try
-                {
-                    frame = _session.Push(_mic.Snapshot());
-                }
-                catch (Exception e)
-                {
-                    Debug.LogException(e);
-                    break;
-                }
-
-                OnFrameScored.Invoke(
-                    frame.Best.TargetText ?? string.Empty,
-                    (float)frame.Best.Score,
-                    frame.Streak);
-
-                if (frame.Confirmed)
-                {
-                    Confirm(frame.Feedback);
+                    // Stopped or restarted from a callback; whoever did
+                    // that owns the cleanup and the new session.
                     yield break;
                 }
 
+                bool pumped;
+                try
+                {
+                    pumped = _mic != null && _mic.Pump();
+                }
+                catch (Exception e)
+                {
+                    // A dead microphone must not take the scene with it.
+                    Debug.LogException(e);
+                    pumped = false;
+                    failed = true;
+                }
+
+                while (!failed && pumped)
+                {
+                    // One frame at a time, all the way through: score it,
+                    // tell the listeners, and only then look for the next
+                    // one. Scoring the whole queue first would run the
+                    // recogniser on audio that arrived after a handler
+                    // had already stopped us - and could confirm on it.
+                    var step = ScoreOneFrame(generation);
+                    if (step == Step.Idle)
+                    {
+                        break;
+                    }
+
+                    if (step == Step.Failed)
+                    {
+                        failed = true;
+                        break;
+                    }
+
+                    if (step != Step.Scored)
+                    {
+                        // Confirmed, or a handler stopped or restarted
+                        // us. Either way this loop is finished and the
+                        // cleanup belongs to whoever did it.
+                        yield break;
+                    }
+                }
+
+                if (failed)
+                {
+                    break;
+                }
+
+                // Checked on every poll, so a silent room still times out.
                 if (TimedOut(started))
                 {
                     timedOut = true;
@@ -283,8 +449,21 @@ namespace DomiCube.PhonemeMatching.Unity
         {
             // Stop capture before UI callbacks can advance scenes.
             StopListening();
+
+            // Read after the stop, so this names the attempt that just
+            // confirmed rather than one a handler goes on to start.
+            int generation = _generation;
             LastConfirmation = feedback;
             OnConfirmedDetailed?.Invoke(feedback);
+
+            if (generation != _generation)
+            {
+                // The detailed handler began or stopped another attempt.
+                // Delivering the old answer to the legacy event now would
+                // advance a question that has nothing to do with it.
+                return;
+            }
+
             OnConfirmed.Invoke(feedback.TargetText, (float)feedback.Score);
         }
 

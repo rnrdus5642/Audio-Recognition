@@ -22,6 +22,15 @@ namespace DomiCube.PhonemeMatching.Tests
             _matrix = PhonemeData.LoadMatrix(RepoFiles.Read(Data + "ko_child_v2.json"));
             _matcher = Matcher.ForStreaming(_matrix);
             _catalog = PhonemeData.LoadTargets(RepoFiles.Read(Data + "targets_child.json"));
+            // These cases are about the streak and the candidate switch,
+            // which the strict two-frame rule owns. ExactSingleFrameTests
+            // covers the calibrated escape; leaving it on here would
+            // confirm an exact frame before the logic under test ran.
+            foreach (var answer in _catalog.Answers)
+            {
+                answer.AllowExactSingleFrame = false;
+            }
+
             _puppy = _catalog.Find("puppy");
             _bread = _catalog.Find("bread");
         }
@@ -140,7 +149,7 @@ namespace DomiCube.PhonemeMatching.Tests
             Assert.That(hit.Streak, Is.EqualTo(2));
             var expected = _matcher.BestMatch(final, new[] { _catalog.Find(expectedId) });
             Assert.That(JsonConvert.SerializeObject(hit.Feedback), Is.EqualTo(
-                JsonConvert.SerializeObject(PronunciationFeedback.FromMatch(expected, frameCount, 2))));
+                JsonConvert.SerializeObject(PronunciationFeedback.FromMatch(expected, frameCount, 2, _matrix.MatrixId))));
             sm.Reset();
             Assert.That(sm.Streak, Is.EqualTo(0));
             Assert.That(sm.Push(final), Is.Null);
@@ -177,7 +186,7 @@ namespace DomiCube.PhonemeMatching.Tests
             Assert.That(second.Confirmed, Is.True);
             Assert.That(second.Feedback, Is.SameAs(session.LastConfirmation));
             Assert.That(JsonConvert.SerializeObject(second.Feedback), Is.EqualTo(
-                JsonConvert.SerializeObject(PronunciationFeedback.FromMatch(expected, 2, 2))));
+                JsonConvert.SerializeObject(PronunciationFeedback.FromMatch(expected, 2, 2, _matrix.MatrixId))));
             Assert.That(session.IsActive, Is.False);
             Assert.That(recognizer.Calls, Is.EqualTo(2));
             session.Begin("빵");

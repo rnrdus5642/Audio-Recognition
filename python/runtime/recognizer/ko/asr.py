@@ -46,6 +46,8 @@ class KoreanASRRecognizer(BaseRecognizer):
         self._processor = None  # type: ignore[assignment]
         self._model = None      # type: ignore[assignment]
         self._g2p = None        # type: ignore[assignment]
+        self._last_log_probabilities = None
+        self._last_text = ""
 
     # ------------------------------------------------------------------
     # Properties
@@ -91,6 +93,8 @@ class KoreanASRRecognizer(BaseRecognizer):
         """Run only the ASR step. Useful for debugging the acoustic stage
         in isolation from the G2P step.
         """
+        self._last_log_probabilities = None
+        self._last_text = ""
         self._load()
         import torch
 
@@ -114,7 +118,24 @@ class KoreanASRRecognizer(BaseRecognizer):
         # Wav2Vec2Processor.batch_decode strips CTC blanks and collapses
         # repeats internally.
         text = self._processor.batch_decode(pred_ids)[0]
-        return self._sanitize(text)
+        self._last_text = self._sanitize(text)
+        self._last_log_probabilities = logits[0].log_softmax(-1).cpu().numpy()
+        return self._last_text
+
+    def acoustic_evidence(self, target_text, contrast_text):
+        """Support from the just-recognized frame; never rewrites ASR text."""
+        from ...matching.acoustic import AcousticEvidence
+        from .ctc_evidence import sequence_log_probability
+        if self._last_log_probabilities is None or not self._last_text:
+            return None
+        tokenizer = self._processor.tokenizer
+        values = []
+        for text in (target_text, self._last_text, contrast_text):
+            ids = tokenizer(text).input_ids
+            if tokenizer.unk_token_id in ids:
+                return None
+            values.append(sequence_log_probability(self._last_log_probabilities, ids, tokenizer.pad_token_id))
+        return AcousticEvidence(target_text, contrast_text, *values)
 
     def recognize(self, audio_16k_mono: np.ndarray) -> list[str]:
         return self.recognize_with_text(audio_16k_mono)[1]

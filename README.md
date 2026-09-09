@@ -1,7 +1,16 @@
 # Audio Recognition — 한국어 발음 판정
 
-현재 개발 소스(2026-09-06)는 아동 파인튜닝·단어별 임계값·Unity Session API에
-실시간 전용 웹 UI와 쉬운 한글 발음 설명을 추가한 상태입니다.
+악기놀이 발표용 12단어 설정은 `./start_music_demo.ps1`로 실행합니다.
+9단계 선택, 마이크 체험, 녹음 파일 테스트를 지원합니다.
+[최신 적용 현황·9단계 정답표·오확정률·남은 한계](docs/MUSIC_DEMO_STATUS_2026-09-10.md)를 확인하세요.
+
+Unity 패키지 0.8.5에는 변경된 12단어·9단계와 실제 사용자 음성에 따른 `잡아` 보조 판정이 내장되어 있습니다. 제공 녹음은 잡아 4/5 통과, 작아 2/2 거절이며, 다른 단어 설정은 0.8.4와 같습니다. [실제 음성 검증과 남은 한계](docs/GRAB_REAL_VOICE_2026-09-10.md)를 참고하세요.
+[9월 10일 수정·검증 결과](docs/MUSIC_WORD_FIX_2026-09-10.md)를 확인하세요.
+`Tools > Phoneme Matching > 악기놀이 발표 설정`으로 준비하고,
+[새 프로젝트·기존 게임 적용 안내](unity/Packages/com.domicube.phoneme-matching/Documentation~/music-presentation.md)를 따라 연결하세요.
+
+현재 개발 소스(2026-09-10)는 아동 모델·단어별 임계값·Unity Session API에
+악기놀이 발표 프로필, 실시간 웹 테스트, 모델 오류를 고려한 발음 안내를 포함합니다.
 웹과 Unity의 연속 확정 기본값은 **2회**입니다.
 초기 음성 버퍼도 기본 2.5초·앞쪽 무음 패딩으로 맞췄으며, 여러 정답은 합격 후보를
 우선 선택합니다. Unity 초기 세팅의 기존 JSON 보존과 테스트 창의 모델별 데이터 연결도 반영했습니다.
@@ -222,9 +231,25 @@ wav2vec2 는 문맥 모델이라 짧은 조각을 따로 인식해 합치면 뭉
 
 프레임마다 채점하므로 우연히 한 번 넘길 기회가 계속 생깁니다. 10초 세션에
 0.5초 hop 이면 채점이 20번 돕니다. 같은 답을 연속 N회 요구하면 우연한 일치는
-다음 프레임에 흩어지고, 진짜 발화는 창에 남아 계속 이깁니다.
+걸러질 수 있습니다. 다만 실제 발화가 창에 남아 있어도 다음 프레임에서 같은
+전사·점수가 나온다는 보장은 없습니다. 짧은 발화가 한 번만 통과해 미확정되는
+문제는 현재도 남아 있습니다([재현 기록](docs/SHORT_WORD_CONFIRMATION_2026-09-06.md)).
 
 첫 통과 뒤 추가 확인 간격은 `(연속횟수 - 1) × hop`입니다. 기본 2회·0.5초
+
+**보정된 예외 하나.** 정답 데이터가 그 단어에 `allow_exact_single_frame`
+을 켜 뒀고 연속 확인이 2회이며 지금 설정이 그 단어의 보정 스냅샷(매트릭스
+이름·스트리밍 프로파일·임계값·음소열)과 같을 때는, 점수가 **정확히 1.0**
+인 프레임 하나로 확정합니다. 점수 1.0 은 설정된 정답 음소열과 그대로
+일치했다는 뜻입니다 — 정확히는 **그 프레임에서 채점에 쓰인 구간**(문맥
+제한으로 잘라낸 최근 음소열)이 그렇다는 뜻이지, 전사 전체가 정답뿐이었다는
+뜻도 발음이 옳았다는 인증도 아닙니다. 짧은 단어가 그런
+프레임을 한 번만 얻는 경우를 위한 것입니다 — 발화는 다음 hop 에도 2.5초 창
+안에 있지만 창 안 위치가 바뀌면 인식 결과가 달라집니다. 어떤 단어가 이
+예외를 받을지는 오확정 예산으로 정합니다 — 예산을 늘리지 않고 일반
+임계값을 조여서 값을 치릅니다. 29단어 중 28단어가 켜져 있고 와요는
+제외입니다. 근거·트레이드오프·한계는
+[docs/DEMO_RELIABILITY_2026-09-06.md](docs/DEMO_RELIABILITY_2026-09-06.md).
 주기에서는 한 번 더 채점합니다. 실제 지연에는 음성 창과 추론·큐 시간도 포함됩니다.
 
 연속 횟수를 더 올리면 지연·검출·상한을 함께 잃습니다. 단어가 2.5초 창에
@@ -339,7 +364,7 @@ AudioProject/
 │       ├── Editor/               # 초기 세팅·데이터·모델·테스트 메뉴
 │       ├── Tests/Runtime/        # 파이썬 대조 벡터
 │       └── Samples~/             # 한국어 데이터 + 예제
-├── csharp/PhonemeMatching.Tests/ # Unity 없이 dotnet test (46개)
+├── csharp/PhonemeMatching.Tests/ # Unity 없이 dotnet test
 ├── docs/ADDING_A_LANGUAGE.md
 ├── REPORT.md                     # 초기 설계·실험 기록 (2026-08-11)
 └── REPORT_PHASE2.md              # 초기 골든셋 분석 (역사)
@@ -376,9 +401,27 @@ pip install gradio sounddevice
 Unity와 같이 처음부터 2.5초(40,000샘플) 입력을 유지하며, 아직 녹음되지 않은
 앞부분은 무음으로 채웁니다. 2.5초를 기다리지 않고 첫 입력부터 판정하며,
 추가한 무음은 경과 시간이나 연속 판정 횟수에 포함하지 않습니다.
+
+**채점 한 번은 새 샘플 8,000개(0.5초)이지, 콜백 한 번이 아닙니다.**
+브라우저가 청크를 어떻게 쪼개 보내든 같은 PCM 이면 같은 창이 같은 순서로
+생기고 같은 샘플에서 확정됩니다 — 예전에는 1초를 8,000샘플씩 두 번 보내면
+2회, 4,000샘플씩 네 번 보내면 4회 채점돼 확정 시점이 달라졌습니다.
+한 청크에 hop 이 여러 개 들어 있으면 각각의 경계 시점 창을 순서대로
+채점하고 확정된 프레임에서 멈춥니다. hop 이 덜 찼으면 아무것도 하지
+않습니다(모델 호출 없음). 표에 찍히는 시각은 그 창이 끝난 오디오 위치이지
+콜백이 도착한 시각이 아닙니다. 구현은 `python/runtime/audio.py` 의
+`HopFramer` 이고 라이브 콜백이 `HopFramer.feed` 로 씁니다.
+
+인식이나 채점이 도중에 실패하면 그 녹음은 **버립니다**: 프레임·연속 횟수·
+로그를 비우고 빨간 실패 배너를 띄운 뒤 녹음을 멈춥니다. 실패한 프레임
+앞뒤를 이어 붙여 "연속 2회" 로 세지 않기 위해서이고, 그 뒤에 도착하는
+오디오는 모델에 닿지 않습니다. 마이크를 다시 누르거나 초기화하면
+처음부터입니다.
+
 웹에서 창 길이를 바꾸면 다음 입력부터 버퍼·연속 판정을 새로 시작합니다.
 현재 배포된 Unity ONNX 모델과 비교할 때는 기본 2.5초를 유지하세요.
-파일 평가·녹음 저장·정답 빌드 화면은 제거했으며 해당 CLI 도구는 유지합니다.
+악기놀이 프로필에는 같은 실시간 판정 경로로 녹음 파일을 재생하는 기능이 있습니다.
+별도 녹음 저장·정답 빌드 화면은 없으며 해당 CLI 도구는 유지합니다.
 즉석 정답의 단어별 임계값 측정과 아동용 streaming profile은 유지합니다.
 정답 카탈로그 없이도 실행할 수 있습니다.
 
@@ -393,9 +436,27 @@ python -m python.tools.web_test --model python/tools/child_finetune/runs/child/b
 ```
 
 체크포인트는 Git에 포함되지 않으므로 별도로 보관해야 합니다.
+
+아동 확정 정책(보정된 정확일치 1프레임 예외)까지 그대로 쓰려면 카탈로그도
+함께 지정해야 합니다. `--matrix` 나 `--targets` 가 빠지면 정책이 상속되지
+않습니다. `--model` 은 다릅니다 — 런타임은 **음향 모델의 신원을 확인하지
+않으므로**, 매트릭스와 카탈로그만 맞으면 다른 모델에서도 예외가 적용됩니다.
+보정은 아동 파인튜닝 모델에서 잰 값이니 모델을 맞추는 것은 호출자의
+책임이고, 아래 세 인자를 모두 준 조합만 검증된 구성입니다.
+
+```powershell
+python -m python.tools.web_test --model python/tools/child_finetune/runs/child/best --matrix shared/confusion_matrices/ko_child_v2.json --targets shared/targets_child.json
+```
+
+`--targets` 만 주고 기본 매트릭스(ko_child_v1)로 두면 카탈로그가 다른
+매트릭스용이라 상속되지 않습니다. 설정을 바꾸면 UI를 다시 시작하세요.
 확정 시 쉬운 한글 설명·음절별 참고 안내·공통 JSON을 제공합니다. 기존 모델 오류표가
 보류하는 차이는 주 안내에서 제외하고 접힌 원본 비교에 남깁니다.
-이 판단 보류 정책은 Python 화면 기능이며 C# 기본 DTO는 원본 음소 비교를 제공합니다.
+0.8.1부터 웹·C# 모두 같은 보류 규칙을 적용합니다. `KoreanFeedback`은 표시용이며
+원본 비교는 `RawKoreanFeedback`과 `Alignment`에 남습니다. 모델 자료가 없거나 부족한
+차이도 내부적으로 보류합니다. 0.8.3부터 보류된 음절은 화면에 `문제 없음`으로 표시하며,
+남은 지적이 없으면 `발음에 문제 없어요.`라고 안내합니다. 내부 상태와 원본 차이는 유지합니다.
+[변경 내용과 실제 파일 검증](docs/MODEL_AWARE_FEEDBACK_2026-09-09.md).
 웹과 Unity가 하나의 C# 실행 모듈로 연결된 상태는 아닙니다.
 
 첫 인식 시 모델(~1.2GB)이 로드되어 1~2분 걸립니다.
@@ -404,10 +465,29 @@ python -m python.tools.web_test --model python/tools/child_finetune/runs/child/b
 
 ```csv
 # shared/words.csv  (UTF-8 BOM)
-answer_id,text,language
+answer_id,text,language,action_group
 mom,엄마,ko
 apple,사과,ko
+lift_plain,들어,ko,lift
+lift_gerund,들기,ko,lift
+shake_plain,흔들어,ko,shake
 ```
+
+`action_group` 은 선택 항목입니다. 비워 두면 예전과 같습니다. 같은 그룹의
+두 줄은 **같은 동작을 부르는 두 표현**이라 서로 경쟁하지 않습니다. 빌드는
+그룹이 있는 모든 답을 `contrastive_alternatives` 로 넣습니다. 같은 그룹의
+표현은 비교 기준을 보완하고, 다른 그룹의 표현만 통과 취소에 쓰입니다. 런타임은
+통과한 답이 있을 때만 그 목록을 보고, **다른 동작이 발화 전체에 더 잘 맞으면
+통과를 취소**합니다(점수·정렬·임계값은 그대로, 취소 사유만 따로 실립니다).
+다른 동작을 대신 정답으로 바꾸지는 않습니다. 들기 `t ɯ l k i` 가 흔들기
+`h ɯ n t ɯ l k i` 의 뒷부분이라 창이 어디서든 시작할 수 있는 부분열 채점이
+흔들기 발화를 들기로 0.997 에 받아주던 문제를 막습니다.
+
+확정은 `Passed`·`Confirmed`·확정 이벤트로 판단하세요. 보호 규칙이 취소한
+경우에도 원래 점수는 유지되므로 `Score >= Threshold` 만으로 판단하면 안 됩니다.
+아동 악기 표현 10종의 등록·실측 결과·Unity 적용 방법은
+[2026-09-07 검증 기록](docs/MUSIC_ACTION_RELIABILITY_2026-09-07.md)을 참고하세요.
+현재 해당 아동 카탈로그는 35개이며, 성인 카탈로그 29개는 이번에 재생성하지 않았습니다.
 
 ```powershell
 python -m python.build.build_targets     # → shared/targets.json
@@ -416,14 +496,35 @@ python -m python.build.build_targets     # → shared/targets.json
 Unity 에서는 `Tools → Phoneme Matching → 정답 데이터 다시 만들기` 가 이 빌드를
 대신 돌리고 `StreamingAssets` 까지 복사합니다.
 
-**모델이 낼 수 없는 음절이 있습니다.** wav2vec2 의 어휘는 음절 1205개고, 거기
-없는 음절은 아무리 정확히 발음해도 전사되지 않습니다. 단어를 넣기 전에
-`unity/Assets/StreamingAssets/wav2vec2_ko_vocab.json` 의 `tokens` 에 그 음절이
-있는지 보세요.
+**모델이 낼 수 없는 음절이 있습니다.** 출력은 1205항목(한글 1202개 + 특수
+항목 3개)이고, 목록에 없는 음절은 그 철자로 정확히 전사되지 않습니다. 단어를 넣기 전에
+확인하세요. 손으로 볼 필요는 없습니다.
 
-지금 커리큘럼에서는 `놔`(`놔`·`놔요`) 하나가 여기 걸립니다. AI Hub 아동
-전사 276만 발화 전체를 봐도 `놔` 는 64건뿐이라 학습으로 메우기도 어렵습니다.
-다른 동사로 바꾸는 것이 맞습니다.
+```powershell
+python -m python.tools.vocab_coverage        # 배포 어휘 vs 커리큘럼 전부
+python -m python.tools.vocab_coverage --strict --allow 놔
+```
+
+지금 커리큘럼에서는 `놔`(`놔`·`놔요`) 하나가 여기 걸립니다. 배포 중인 두 모델
+로는 정확히 전사할 수 없습니다. 다만 매칭은 IPA 와 혼동행렬로 하므로 "항상
+확정 실패"와 같은 말은 아니고, 실제 확정률은 그 단어 녹음으로 재야 합니다.
+
+`놔`만 빠진 것은 아닙니다. 분할에 배정된 아동 전사에서는 누락 철자 523종,
+그중 기존 글자와 같은 **단독 IPA**를 내는 110종을 확인했습니다. 남은 413종은
+391가지 IPA 조합이지만, 문맥을 포함한 최소 추가 출력 수를 뜻하지는 않습니다.
+**어휘·발음 통합은 문서 정리 후 보류**했으며 추가 학습·배포는 하지 않았습니다.
+[분석 결과와 남은 판단](docs/VOCABULARY_IPA_COVERAGE_2026-09-06.md)을 참고하세요.
+
+> **2026-09-06 정정.** 이 문단에 오래 적혀 있던 "코퍼스에 64건뿐"은 틀린
+> 수치였습니다. 인덱스 2,765,817행을 훑고 **분할에 배정된 전사**를 기준으로
+> 다시 세니, `놔` 가 있으면서 다른 어휘 밖 음절은 없고 1~15초인 발화가
+> train 235 · dev 11 · valid 74 · test 63 건입니다. train 쪽은 화자 179명
+> 1,420초이고 383개 파일 전부 16kHz 모노로 열립니다 (헤더만 확인). 따라서
+> **"학습으로 메우기 어렵다"와 "다른 동사로 바꾸는 것이 맞다"는 근거가
+> 확인되지 않았습니다.** 반대로 학습이 된다는 근거도 없습니다 — 분할에
+> 배정된 전사 중 `놔`·`놔요` 를 단독으로 말한 발화는 0건이라, 코퍼스만으로는
+> 단어 단위 정확도를 잴 수단이 없습니다. 자세한 것은
+> [python/tools/child_finetune/validation-vocab-2026-09-06.md](python/tools/child_finetune/validation-vocab-2026-09-06.md).
 
 ### 그 밖의 CLI
 
@@ -437,6 +538,10 @@ python -m python.tools.diagnose_audio recordings/.../001_사과.wav
 
 python -m python.tools.generate_golden_audio              # 합성음 36클립
 python -m python.tools.evaluate                           # 회귀 검사
+```
+
+```powershell
+python -m python.tools.vocab_coverage                     # 어휘 밖 음절 점검
 ```
 
 ### 모델 준비
@@ -488,12 +593,14 @@ var model      = Resources.Load<ModelAsset>("Models/wav2vec2_ko");
 var recognizer = new SentisPhonemeRecognizer(model, vocab);
 recognizer.Warmup(2.5f);            // 로딩 화면에서. 첫 추론이 ~2초
 
-var buffer  = new AudioWindowBuffer(2.5f);
+var buffer  = new AudioWindowBuffer(2.5f, 0.5f);   // 창 2.5초 · hop 0.5초
 var session = new PronunciationSession(matrix, catalog, recognizer, buffer: buffer);
 
-session.Begin("사과");               // 문제 시작
-var frame = session.Push();         // 0.5초마다
-if (frame.Confirmed) 다음문제로();
+session.Begin("사과");                          // 문제 시작
+while (session.TryPush(out var frame))          // 새 샘플 0.5초당 한 번
+{
+    if (frame.Confirmed) { 다음문제로(); break; }
+}
 session.End();
 ```
 
@@ -503,6 +610,23 @@ session.End();
 buffer.Append(raw, clip.frequency);                                  // Microphone
 buffer.AppendInterleaved(data, ch, AudioSettings.outputSampleRate);  // OnAudioFilterRead
 ```
+
+웹과 같은 규칙입니다. `AudioWindowBuffer` 에 hop 을 주면 새 샘플 8,000개마다
+프레임을 하나씩 FIFO 로 쌓고 `PronunciationSession.TryPush` 가 순서대로
+꺼내 채점합니다. 덜 찼으면 추론 없이 `false` 입니다. 패키지 안에서는
+`PronunciationListener` 와 에디터 발음 테스트 창이 `TryPush` 를 쓰고,
+저장소의 `PronunciationTestBench` 는 `MicrophoneRollingBuffer.TryReadFrame`
+으로 직접 프레임을 꺼내 자기 `StreamingMatcher` 로 채점합니다.
+
+**기존 코드는 그대로 돕니다.** 창을 직접 넘기는 `Push(float[])` 와 인자
+없는 `Push()` 는 수동 API 로 남겨 두었습니다. 다만 `Push()` 를 타이머로
+돌리는 통합은 여전히 "부른 횟수 = 채점 횟수" 이므로, 청크 크기와 무관한
+동일성을 원하면 `TryPush` 로 옮겨야 합니다. hop 을 웹과 맞추려면 기본
+0.5초를 그대로 쓰세요.
+
+보장 범위는 **동일한 정규화 16 kHz 모노 PCM** 입니다. 다른 샘플레이트를
+청크로 나눠 넣을 때의 리샘플링은 이번에 손대지 않았고, 그 경우까지
+동일하다고 주장하지 않습니다.
 
 앱에 오디오 캡처가 없으면 `PronunciationListener` 컴포넌트가 마이크까지
 맡습니다.
@@ -660,12 +784,26 @@ split(457발화) 만 받으면 60MB 입니다.
 
 ## 10. 테스트
 
+새로 받은 소스에서는 Git에 저장된 배포 카탈로그를 테스트 입력으로 복사합니다.
+`shared/targets*.json`은 생성 파일이므로 Git에서 제외됩니다.
+
 ```powershell
-python -m pytest python/tests -v           # Python 201개
-dotnet test csharp/PhonemeMatching.Tests    # C# 46개 (Unity 불필요)
+Copy-Item unity/Assets/StreamingAssets/targets.json shared/targets.json
+Copy-Item unity/Assets/StreamingAssets/targets_child.json shared/targets_child.json
+python -m python.build.build_music_presentation  # 발표용 카탈로그 동기화
+python -m pytest python/tests -v
+dotnet test csharp/PhonemeMatching.Tests    # Unity 불필요
 ```
 
-2026-09-06 기준 Python CPU/GPU 환경에서 각각 201개가 통과했습니다.
+이번 커밋 대상 파일만 별도 경로에 꺼내 위 절차로 확인한 결과는 **Python 550개·C# 216개 통과**입니다.
+별도로 진행하던 모델 학습 실험 변경은 이 커밋에 포함하지 않았습니다.
+
+2026-09-10의 0.8.5 배포 검증에서는 당시 전체 작업 트리의 Python 621개,
+C# 216개와 Unity 2022.3.62f2 EditMode 42개가 통과했습니다.
+실제 사용자 녹음 7개를 28개 시작 조건·139개 창으로 재생해 Unity와 Python 결과를 확인했습니다.
+[최신 현황](docs/MUSIC_DEMO_STATUS_2026-09-10.md)과 [실제 음성 검증](docs/GRAB_REAL_VOICE_2026-09-10.md)을 참고하세요.
+
+아래는 2026-09-06의 이전 검증 기록입니다. 당시 Python CPU/GPU 환경에서 각각 201개가 통과했습니다.
 Unity 2022.3.62f2와 6000.3.18f1에서는 각각 Editor 27개, PlayMode 47개가 통과했습니다.
 Editor는 기존 JSON 보존·모델별 설정을, PlayMode는 공통 코어와 Listener 이벤트 순서·초기화를 검사합니다.
 공통 JSON 결과, 24개 한글 설명 사례, 전체 한글 11,172음절, Session의 확정 스냅샷을
@@ -704,7 +842,7 @@ Unity 대조는 [python/tools/sentis_parity/](python/tools/sentis_parity/) 에
 | 한계 | 원인 | 영향 |
 |---|---|---|
 | **짧은 단어 검출 실패** | 음소 하나가 틀리면 점수가 크게 떨어짐 | 성인 모델에서 아동 3음소 21%. 아동 모델 + 단어별 임계값으로 대부분 해소됐고(`빵` 4%→98%, `책` 10%→92%), 성인 모델 경로에는 그대로 남음 |
-| **`놔`·`놔요` 인식 불가** | 음절 `놔` 가 모델 어휘 1205개에 없음 | 정확히 발음해도 전사될 수 없음. 다른 단어로 바꿔야 함 |
+| **`놔`·`놔요` 정확한 전사 불가** | 음절 `놔` 가 배포 어휘 1205개에 없음 | 정확히 발음해도 그 글자로는 전사되지 않음. 확정 자체는 IPA 매칭이 결정하므로 실측 필요. 어휘를 1206으로 넓힌 **학습 전** 후보가 `runs/child-vocab-0906-c4e7/init` 에 있고, 배포본은 그대로 1205 |
 | **아동에서 점수 분포가 겹침** | 발음 편차가 큼 | 임계값만으로 검출·오확정을 나눌 수 없음 |
 | Confusion Matrix 미검증 | 문헌 기반 + 합성음 튜닝 | 아동 정렬 935건으로 재학습해도 1쌍만 바뀌어, 손으로 넣은 값이 그대로 남아 있음 |
 | 경음(ㄲ/ㄸ/ㅃ/ㅆ/ㅉ) 약함 | 음향적으로 미세 | 토끼·빵·아빠 |
@@ -716,9 +854,18 @@ Unity 대조는 [python/tools/sentis_parity/](python/tools/sentis_parity/) 에
 
 ### 알려진 이슈
 
-- **추론 엔진 설치 전 예제 임포트** — 기본 패키지는 엔진 없이 컴파일되지만,
-  `LessonExample` 샘플은 `SentisPhonemeRecognizer` 참조로 오류가 납니다. 엔진을 먼저
-  설치한 뒤 샘플을 가져오세요. 이 샘플의 무엔진 경로 수정은 보류했습니다.
+- **악기놀이 0.8.5의 남은 실패** — 실제 잡아 녹음 47번은 실패하며 45번은 시작 시점에 따른
+  변동이 있습니다. 잡아먹/잡아당 포함 문장을 오답으로 검사하면 앞부분에서 먼저 확정하는
+  문제가 각각 21/30, 25/30 남아 있습니다. [단계별 오확정률과 측정 범위](docs/MUSIC_DEMO_STATUS_2026-09-10.md).
+
+- **짧은 발화의 연속 2회 확정 누락 — 미해결** — 아동 모델에서도 한 번만
+  통과하는 사례가 있습니다. 샘플 기준 hop 수정 전후를 비교하면 0.5초 입력은
+  동일했지만, 더 짧거나 불규칙한 입력을 가정하면 기존에 통과하던 `책`이
+  수정 후 실패했습니다. 입력 간격 문제의 해결과 짧은 단어 검출 개선은
+  별개이며, 일부 조건의 기존 통과 사례 손실을 확인했습니다.
+  [실측 결과·Unity 검증 범위·남은 작업](docs/SHORT_WORD_CONFIRMATION_2026-09-06.md)을 참고하세요.
+- **추론 엔진 설치 전 사용** — 패키지와 `LessonExample`은 0.8.0에서 엔진 없이도
+  컴파일되도록 수정했습니다. 실제 음성 인식에는 추론 엔진과 모델 설치가 필요합니다.
 - **Unity 6 Editor 추론 종료 경고** — Inference Engine 2.6.1의 정적 GPU 버퍼에서
   Persistent 할당 경고를 확인했습니다. 검사한 Windows Player에는 같은 경고가 없었습니다.
 - **Windows MeCab** — g2pkk 비교 경로는 `mecab-ko` 어댑터를 사용하며 실행 중 자동 설치하지 않습니다. 기본 인식·판정 경로는 mecab-free 한국어 규칙을 씁니다.
@@ -756,9 +903,12 @@ Unity 대조는 [python/tools/sentis_parity/](python/tools/sentis_parity/) 에
 
 ### 막고 있는 것
 
-1. **`놔`·`놔요` 교체** — `놔` 가 모델 어휘 1205음절에 없어 정확히 발음해도
-   전사되지 않습니다. 어떤 임계값으로도 안 됩니다. `올려요`/`올려` 를
-   권합니다 (7·5음소, 오확정 0.00%·0.24%)
+1. **출력 어휘·IPA 통합 — 보류** — `놔` 한 글자뿐 아니라 아동 전사의 누락
+   철자와 동일 발음 문제까지 분석했습니다. 523종 중 110종은 기존 글자와
+   단독 IPA가 같지만 문맥에서도 같다는 보장은 없습니다. 사용자 요청으로
+   문서만 정리했으며, 새 어휘·라벨 방식·추가 학습 범위는 미정입니다.
+   `놔`를 추가한 1206 출력 후보는 미학습 상태로 보존하고 배포본은 유지합니다.
+   [어휘·IPA 분석 기록](docs/VOCABULARY_IPA_COVERAGE_2026-09-06.md)
 2. **아이 1명이 29단어를 한 번씩** — 근거 발화가 0~2건인 단어가 9개입니다
    (`쳐`·`실로폰`·`흔들어요` 등). 구조적으로 불가능한 단어는 1명으로
    드러납니다 — `놔` 가 그렇게 발견됐습니다. 5분이면 됩니다

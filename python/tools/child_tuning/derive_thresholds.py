@@ -49,6 +49,11 @@ from python.runtime.matching.matcher import Matcher  # noqa: E402
 SESSION_S = 10.0
 CANDIDATES = [round(0.50 + 0.025 * i, 3) for i in range(21)]
 
+# The opt-in escape is searched on a finer grid than the ordinary pass
+# mark, because it only ever needs to move a hair: it buys back the
+# budget that one exact-1.0 frame spends.
+FINE_STEP = 0.001
+
 # An error seen once in 700 utterances is not evidence of anything. Below
 # this it is ignored and the hand-written matrix decides instead.
 MIN_OBSERVATIONS = 2
@@ -79,6 +84,65 @@ def lower_bound(matcher, phonemes, word, reference, seconds, budget,
 
     fired = sum(fires(s, CANDIDATES[-1], consecutive) for s in scored)
     return CANDIDATES[-1], fired / max(seconds, 1e-9) * SESSION_S
+
+
+def negative_scores(matcher, phonemes, word, reference):
+    """Frame scores for every utterance that is not this word."""
+    return [
+        [matcher.score_against(f, phonemes)[1] if f else 0.0
+         for f in item["frames"]]
+        for item in reference if word not in item["text"]]
+
+
+def lower_bound_status(matcher, phonemes, word, reference, seconds, budget,
+                       consecutive):
+    """`lower_bound`, plus whether a candidate was actually found.
+
+    The bare function folds "1.0 is the lowest value inside budget" and
+    "nothing was inside budget" into the same number, and the caller
+    cannot tell them apart afterwards. This says which happened. Only
+    this script's own reporting is fixed here; other callers of
+    `lower_bound` keep the two-value contract.
+    """
+    scored = negative_scores(matcher, phonemes, word, reference)
+    for candidate in CANDIDATES:
+        fired = sum(fires(s, candidate, consecutive) for s in scored)
+        rate = fired / max(seconds, 1e-9) * SESSION_S
+        if rate <= budget:
+            return {"threshold": candidate, "fired": fired, "rate": rate,
+                    "feasible": True}
+    fired = sum(fires(s, CANDIDATES[-1], consecutive) for s in scored)
+    return {"threshold": CANDIDATES[-1], "fired": fired,
+            "rate": fired / max(seconds, 1e-9) * SESSION_S, "feasible": False}
+
+
+def exact_single_frame_policy(scored, base, seconds, budget, consecutive):
+    """Can this word confirm on one exact-1.0 frame, and at what cost?
+
+    A frame scoring exactly 1.0 means the recogniser produced the target
+    sequence with nothing left over. Letting one such frame confirm adds
+    false accepts, so the word only earns it when the combined rule still
+    fits the SAME budget - found by tightening the ordinary pass mark on
+    a 0.001 grid, never by relaxing the budget.
+
+    Returns (threshold, allowed, fired, rate). When the exact frames
+    alone already exceed the budget, no threshold can help and the word
+    keeps its ordinary pass mark with the escape switched off.
+    """
+    exact_alone = sum(1 for s in scored if any(v >= 1.0 for v in s))
+    if exact_alone / max(seconds, 1e-9) * SESSION_S > budget:
+        return base, False, exact_alone, exact_alone / max(seconds, 1e-9) * SESSION_S
+
+    steps = int(round((1.0 - base) / FINE_STEP))
+    for i in range(steps + 1):
+        candidate = round(base + FINE_STEP * i, 3)
+        fired = sum(
+            1 for s in scored
+            if fires(s, candidate, consecutive) or any(v >= 1.0 for v in s))
+        rate = fired / max(seconds, 1e-9) * SESSION_S
+        if rate <= budget:
+            return candidate, True, fired, rate
+    return base, False, None, None
 
 
 def likely_errors(errors):
@@ -134,7 +198,15 @@ def main():
     ap.add_argument("--consecutive", type=int, default=2,
                     help="확정에 필요한 연속 프레임. 앱과 같아야 합니다")
     ap.add_argument("--out", default="shared/thresholds_child.json")
+    ap.add_argument("--exact-single-frame", action="store_true",
+                    help="한 프레임이 정확히 1.0 이면 확정하는 예외를 "
+                         "단어별로 보정합니다. 같은 예산 안에 들어오는 "
+                         "단어만 켜집니다")
     args = ap.parse_args()
+    if args.exact_single_frame and args.consecutive != 2:
+        raise SystemExit(
+            "--exact-single-frame 는 연속 2회에서만 보정됩니다 "
+            f"(--consecutive {args.consecutive}).")
 
     matrix = ConfusionMatrix.from_json(args.matrix)
     profile = matrix.streaming_profile
@@ -161,6 +233,17 @@ def main():
               file=sys.stderr)
         print(f"  기준 {reference.get('streaming_profile')}", file=sys.stderr)
         print(f"  지금 {dict(profile)}", file=sys.stderr)
+        if args.exact_single_frame:
+            # The escape is calibrated against this reference under this
+            # profile. Publishing it from a mismatched pair would be a
+            # measurement of something else.
+            raise SystemExit(
+                "--exact-single-frame 는 기준 데이터와 프로필이 같아야 "
+                "합니다. 기준 데이터를 다시 만들거나 프로필을 맞추세요.")
+    if args.exact_single_frame and reference.get("matrix_id") != matrix.matrix_id:
+        raise SystemExit(
+            f"기준 데이터는 {reference.get('matrix_id')} 용인데 "
+            f"{matrix.matrix_id} 로 보정하려 합니다.")
 
     items = reference["items"]
     seconds = sum(i["seconds"] for i in items)
@@ -176,14 +259,41 @@ def main():
           f"  {'가장 흔한 오류':16}판정")
 
     thresholds = {}
+    policy = {}
     warnings = []
     for answer in answers:
         word = answer["text"]
         phonemes = answer["phonemes"]
-        low, rate = lower_bound(matcher, phonemes, word, items, seconds,
-                                args.budget, args.consecutive)
+        status = lower_bound_status(matcher, phonemes, word, items, seconds,
+                                    args.budget, args.consecutive)
+        low, rate = status["threshold"], status["rate"]
         high, error_rate, label = upper_bound(matcher, phonemes, observed)
         thresholds[word] = low
+        record = {
+            "threshold": low,
+            "false_accepts": status["fired"],
+            "rate_per_10s": round(rate, 6),
+            "feasible": status["feasible"],
+            "allow_exact_single_frame": False,
+            "text": word,
+            "phonemes": list(phonemes),
+        }
+        if args.exact_single_frame and status["feasible"]:
+            scored = negative_scores(matcher, phonemes, word, items)
+            tightened, allowed, fired, exact_rate = exact_single_frame_policy(
+                scored, low, seconds, args.budget, args.consecutive)
+            record["allow_exact_single_frame"] = allowed
+            if allowed:
+                thresholds[word] = record["threshold"] = tightened
+                record["false_accepts"] = fired
+                # Feasibility now describes the COMBINED policy actually
+                # published, not the ordinary path it started from.
+                record["rate_per_10s"] = round(exact_rate, 6)
+                record["feasible"] = exact_rate <= args.budget
+            else:
+                record["exact_single_frame_rejected_rate"] = (
+                    None if exact_rate is None else round(exact_rate, 6))
+        policy[word] = record
 
         if high is None:
             gap, verdict = None, "오류 미관측"
@@ -207,11 +317,18 @@ def main():
         "_comment": ("python/tools/child_tuning/derive_thresholds.py 산출물. "
                      "단어별 임계값 - build_targets.py --thresholds 로 씁니다."),
         "matrix_id": matrix.matrix_id,
-        "reference": {"utterances": len(items), "seconds": round(seconds, 1)},
+        "reference": {"utterances": len(items), "seconds": round(seconds, 1),
+                      # Full precision, because the budget check divides by it.
+                      "seconds_exact": seconds},
         "budget": args.budget,
         "consecutive": args.consecutive,
         "streaming_profile": dict(profile),
         "thresholds": thresholds,
+        # Per word: the measured false-accept count and rate, whether a
+        # candidate was actually found, and whether the one-exact-frame
+        # escape was calibrated. A threshold with "feasible": false is a
+        # fallback, not a value that met the budget.
+        "policy": policy,
     }
     with open(args.out, "w", encoding="utf-8") as handle:
         json.dump(payload, handle, ensure_ascii=False, indent=2)

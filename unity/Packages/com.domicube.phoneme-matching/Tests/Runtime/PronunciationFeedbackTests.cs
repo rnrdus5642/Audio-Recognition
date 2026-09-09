@@ -91,12 +91,12 @@ namespace DomiCube.PhonemeMatching.Tests
                         (string)step[0], (string)step[1], operations[(string)step[2]]));
                 var feedback = PronunciationFeedback.FromMatch(result, 2, 2);
                 var expected = item["expected"].ToObject<KoreanFeedback>();
-                Assert.That(JsonConvert.SerializeObject(feedback.KoreanFeedback),
+                Assert.That(JsonConvert.SerializeObject(feedback.RawKoreanFeedback),
                     Is.EqualTo(JsonConvert.SerializeObject(expected)), (string)item["name"]);
-                var explained = feedback.KoreanFeedback.Items.SelectMany(hint => hint.AlignmentIndices).OrderBy(i => i);
+                var explained = feedback.RawKoreanFeedback.Items.SelectMany(hint => hint.AlignmentIndices).OrderBy(i => i);
                 var differences = Enumerable.Range(0, alignment.Count).Where(i => (string)alignment[i][2] != "match");
                 Assert.That(explained, Is.EqualTo(differences), (string)item["name"]);
-                Assert.That(feedback.SchemaVersion, Is.EqualTo(2));
+                Assert.That(feedback.SchemaVersion, Is.EqualTo(3));
             }
         }
 
@@ -138,7 +138,8 @@ namespace DomiCube.PhonemeMatching.Tests
             Assert.That(feedback.UserPhonemes[0], Is.EqualTo("t"));
             Assert.That(feedback.TargetPhonemes[0], Is.EqualTo("s"));
             Assert.That(feedback.Alignment.Count, Is.EqualTo(5));
-            Assert.That(feedback.KoreanFeedback.Items[0].HeardSyllable, Is.EqualTo("다"));
+            Assert.That(feedback.RawKoreanFeedback.Items[0].HeardSyllable, Is.EqualTo("다"));
+            Assert.That(feedback.KoreanFeedback.Items, Is.Empty);
         }
 
         [Test]

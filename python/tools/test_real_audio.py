@@ -70,6 +70,7 @@ import numpy as np
 from python.build.build_targets import auto_threshold, syllable_spans
 from python.runtime.audio import load_audio_16k_mono
 from python.runtime.matching import ConfusionMatrix, Matcher
+from python.runtime.matching.matcher import validate_catalog
 # NOTE: scoring now goes through Matcher.score_against, which dispatches
 # to substring or exact edit distance based on mode. The lower-level
 # functions are not needed here anymore.
@@ -210,6 +211,8 @@ def _print_candidates(
         )
     if target_text:
         print(f"  ('*' marks the intended target: '{target_text}')")
+    print("  (raw per-candidate scores; a live session may still refuse a "
+          "PASS when another action fits the whole utterance better)")
 
 
 def _print_test_result(result: TestResult) -> None:
@@ -291,6 +294,11 @@ class AudioTester:
             if targets_path is not None
             else {"answers": []}
         )
+        # A catalog Unity would refuse must not half-work here. Checked
+        # once, on load, and for every row rather than only the one that
+        # happens to win a frame - so the error names the build that went
+        # wrong instead of surfacing mid-session, or not at all.
+        validate_catalog(self.targets["answers"])
         # Korean's matrix is the default for backwards compatibility.
         # Other languages can ship their own ko_child_v1.json siblings.
         self._default_matrix_path = matrix_path
@@ -385,6 +393,14 @@ class AudioTester:
         get the table unconditionally: 싫어요 was handed 0.65, where 187
         of 600 unrelated utterances confirm it, and 좋아요 duly passed.
         Measuring says 0.75, where two do.
+
+        A word the loaded catalog already knows is a different case: it
+        has a configured threshold and, possibly, a calibrated
+        one-exact-frame escape. Re-measuring it here would quietly answer
+        a slightly different question than the one the device will ask, so
+        the configured entry is inherited instead - but only when the
+        catalog really is describing the same thing: same language, same
+        phonemes and the same matrix the catalog was built for.
         """
         from python.build.g2p import get_g2p
 
@@ -394,6 +410,9 @@ class AudioTester:
             raise ValueError(
                 f"G2P produced empty phoneme list for {text!r}"
             )
+        configured = self._configured_answer(text, language, phonemes)
+        if configured is not None:
+            return ("__custom__", configured)
         threshold, source = self._measured_threshold(phonemes, text)
         # Same grouping the build writes into targets.json, from the same
         # helper, so a typed word and a curriculum word give feedback the
@@ -411,6 +430,36 @@ class AudioTester:
                 "threshold_source": source,
             },
         )
+
+    def _configured_answer(
+        self, text: str, language: str, phonemes: list[str]
+    ) -> dict | None:
+        """The catalog's own entry for this word, when it truly matches.
+
+        Returns None for an unknown word, a different language, a
+        different pronunciation, or a catalog built for another matrix -
+        all of which keep the ordinary measured path and the strict
+        two-frame rule.
+        """
+        catalog = self.targets.get("answers") or []
+        if not catalog:
+            return None
+        built_for = self.targets.get("confusion_matrix_id")
+        if built_for and built_for != self._matrix_for(language).matrix_id:
+            return None
+        for answer in catalog:
+            if answer.get("text") != text:
+                continue
+            if answer.get("language", "ko") != language:
+                continue
+            if answer.get("phonemes") != phonemes:
+                continue
+            entry = dict(answer)
+            entry["id"] = "custom_target"
+            # Not a fresh measurement: this is the shipped value.
+            entry["threshold_source"] = "configured"
+            return entry
+        return None
 
     def _measured_threshold(
         self, phonemes: list[str], text: str
@@ -508,6 +557,15 @@ class AudioTester:
 
         Uses the language's Matcher (substring by default) so noise
         outside the matched window does not count against the score.
+
+        A raw per-candidate table, not a session decision. `would_pass`
+        is "this score cleared this pass mark" and nothing else: the live
+        and Unity paths run `Matcher.best_match`, which can still refuse
+        a passing answer when the catalog says another ACTION fits the
+        whole utterance better. So a row here may read PASS where a real
+        confirmation would not happen. Reporting the runner-up instead
+        would be worse - it would invent a decision this listing never
+        made - so the two stay honestly different and the caller is told.
         """
         matcher = self._matcher_for(language)
         rows: list[CandidateScore] = []

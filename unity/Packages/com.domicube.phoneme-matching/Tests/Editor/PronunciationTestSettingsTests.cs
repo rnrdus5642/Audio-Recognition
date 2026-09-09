@@ -123,5 +123,38 @@ namespace DomiCube.PhonemeMatching.Editor.Tests
             foreach (string file in files)
                 File.Copy(Path.Combine(_source, file), Path.Combine(_scratch, file));
         }
+
+        [Test]
+        public void ChildModelCanOptIntoMusicDemoWithoutChangingOrdinaryChildSettings()
+        {
+            Assert.That(PronunciationTestSettings.Resolve("Assets/wav2vec2_ko_child.onnx", TestDataChoice.MusicDemo),
+                Is.SameAs(PronunciationTestSettings.MusicDemo));
+            Assert.That(PronunciationTestSettings.Resolve("Assets/wav2vec2_ko_child.onnx", TestDataChoice.Unspecified),
+                Is.SameAs(PronunciationTestSettings.Child));
+            Assert.That(PronunciationTestSettings.Resolve("Assets/wav2vec2_ko.onnx", TestDataChoice.MusicDemo), Is.Null);
+            PronunciationTestSettings.MusicDemo.Load(_scratch, out _, out var catalog, out _);
+            Assert.That(catalog.Answers.Count, Is.EqualTo(12));
+            Assert.That(catalog.Find("북"), Is.Null);
+            Assert.That(catalog.Find("잡아").ConfirmationFrames, Is.EqualTo(2));
+            Assert.That(catalog.Find("잡아").ShortUtterancePolicy.Threshold, Is.EqualTo(.85));
+            Assert.That(catalog.Find("쳐").ContextPrefixes.Count, Is.EqualTo(4));
+        }
+
+        [Test]
+        public void MusicDemoUsesPackageResourcesAndLeavesOldProjectDataUntouched()
+        {
+            var path = Path.Combine(_scratch, "targets_music_demo.json");
+            const string old = "old project customization";
+            File.WriteAllText(path, old);
+            PronunciationTestSettings.MusicDemo.Load(_scratch, out var matrix, out var catalog, out var vocab);
+            Assert.That(matrix.MatrixId, Is.EqualTo("ko_child_v2"));
+            Assert.That(catalog.Find("흔들어").ConfirmationFrames, Is.EqualTo(1));
+            Assert.That(catalog.Find("들어").ContrastMargin, Is.EqualTo(0.08));
+            Assert.That(vocab, Is.Not.Null);
+            Assert.That(File.ReadAllText(path), Is.EqualTo(old));
+            Assert.That(Directory.GetFiles(_scratch).Length, Is.EqualTo(1));
+            PronunciationTestSettings.MusicDemo.Load(Path.Combine(_scratch, "not-installed"), out _, out _, out _);
+            Assert.That(Directory.Exists(Path.Combine(_scratch, "not-installed")), Is.False);
+        }
     }
 }

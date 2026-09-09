@@ -4,6 +4,8 @@
     "references": [
         "DomiCube.PhonemeMatching.Editor",
         "DomiCube.PhonemeMatching",
+        "DomiCube.PhonemeMatching.Unity",
+        "DomiCube.PhonemeMatching.Music",
         "UnityEngine.TestRunner",
         "UnityEditor.TestRunner"
     ],

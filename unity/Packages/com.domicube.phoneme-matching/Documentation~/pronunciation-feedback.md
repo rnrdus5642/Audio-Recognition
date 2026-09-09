@@ -1,8 +1,31 @@
 # 정답 확정 시 쉬운 발음 설명과 음소 비교 데이터
 
-현재 개발 소스의 기능이다. 기존 배포 태그 `v0.7.0`에는 없으므로 변경한 패키지를 프로젝트에 반영해야 한다. 별도 서버나 Python을 Unity에 추가할 필요는 없다.
+0.8.1부터 포함된 기능이며, 아래 안내는 0.8.5 기준이다. 별도 서버나 Python을 Unity에 추가할 필요는 없다.
 
-문서 기준: 2026-09-06, 결과 계약 `schema_version: 2`. 패키지의 배포 버전과 결과 계약 버전은 별개다.
+문서 기준: 2026-09-10, 결과 계약 `schema_version: 3`. 패키지의 배포 버전과 결과 계약 버전은 별개다.
+
+`KoreanFeedback`은 모델 오류 가능성을 검토한 **표시용 안내**다. 정답 `놔`가 `와`로
+인식되어 통과한 경우, ㄴ 누락을 아동의 잘못으로 지적하지 않고 내부적으로 보류한다.
+0.8.3에서는 표시할 지적이 없으면 `발음에 문제 없어요.`라고 안내하고, 웹의 보류 음절도
+초록색 `문제 없음`으로 표시한다. 일부 지적이 남으면 `아래 부분만 조금 더 또렷하게 말해 보세요.`와
+해당 안내를 표시한다. 이는 발표용 표시 정책이며, 내부 검토 상태를 `matched`로 바꾸지는 않는다.
+원본 인식 차이는
+`RawKoreanFeedback`·`Alignment`·교체/누락/추가 개수에 남으며 디버깅 용도로만 사용한다.
+
+모델 오류표의 해당 차이가 2회 이상 관측됐고 비율이 2% 미만인 경우에만 소리 설명을
+남긴다. 잦은 모델 혼동, 기록이 없는 차이, 관측 2회 미만, 측정되지 않은 삽입은 보류한다.
+오류표가 없거나 모델 ID가 다를 때도 차이에 대한 지적을 보류한다. 이 기준은 표시용
+보수적 규칙이며, 드물게 관측된 차이도 실제 아동 발음 오류임을 증명하지는 않는다.
+같은 음절의 설명에 보류 대상 차이가 섞이면 해당 음절 설명 전체를 보류한다.
+
+0.8.5에서 잡아가 CTC 후보 점수 보조 판정으로 확정되면 해당 인식 차이는 모두 안내에서
+보류한다. 내부 사유는 `acoustic_keyword_recovery`이며 원래 인식 음소와 정렬은 남는다.
+CTC 점수는 정답 판정의 보조 근거이고 발음 오류 진단의 근거가 아니다.
+
+`PronunciationListener`와 `MusicPresentation.Load().CreateSession(...)`은 패키지의
+아동 오류표를 자동으로 연결한다. 직접 `PronunciationSession`이나 `StreamingMatcher`를
+구성하는 코드는 `feedbackErrors` 인자에 `ModelErrorProfile.FromJson(...)`을 전달할 수 있다.
+오류표는 정답 점수·임계값·통과 여부·확정 시점에 영향을 주지 않는다.
 
 ## 결과를 받는 방법
 
@@ -52,17 +75,20 @@ Listener의 호출 순서는 **청취 중단 → LastConfirmation 설정 → OnC
 
 이 문서의 snake_case JSON은 위 예제의 `Newtonsoft.Json` 직렬화를 기준으로 한다. Unity 화면에서 C# 객체를 직접 읽을 때는 `KoreanFeedback`, `TargetText` 등 C# 필드명을 그대로 사용한다.
 
-이 계약은 **인식 결과의 원본 비교**다. 웹은 별도로 기존 `ModelErrors/explain`을 사용해
-인식기가 자주 혼동하는 차이의 안내를 보류한다. 그 화면 정책은 아직 C#에 포팅되지
-않았으며, JSON과 C# DTO의 원본 차이를 제거하거나 점수를 바꾸지는 않는다.
+웹 화면과 Unity 이벤트는 같은 보류 규칙을 사용한다. `FeedbackReview.Status`는
+`matched`(비교 음소 일치), `review`(소리 설명 있음), `withheld`(설명 보류),
+`partial`(일부 설명 보류), `unavailable`(비교 불가)이다. `Withheld`에는 원본 정렬 인덱스와
+보류 이유·관측 수·표본 수·모델 차이 비율이 있다. 이 비율은 개별 발화의 신뢰도가 아니다.
 
-## 데이터 계약 (schema_version 2)
+## 데이터 계약 (schema_version 3)
 
-버전 2는 기존 필드를 유지하면서 `korean_feedback`을 추가한다. 이전 결과 파일(버전 1)에는 이 설명이 없다. 이전 버전의 소비자가 알 수 없는 JSON 필드를 무시하면 원래 음소 비교 필드는 계속 사용할 수 있다. 버전 값을 엄격히 검사하는 소비자는 2도 허용해야 한다.
+버전 3은 `raw_korean_feedback`과 `feedback_review`를 추가하고 기존 `korean_feedback`을
+표시용으로 검토한 안내로 바꾼다. 점수와 원본 정렬 필드는 유지한다. 버전 값을 엄격히 검사하는
+소비자는 3을 허용해야 한다. 기존 버전 2 결과 파일을 다시 읽는 것만으로 보류 규칙이 적용되지는 않는다.
 
 | C# 필드 | JSON 키 | 의미 |
 |---|---|---|
-| `SchemaVersion` | `schema_version` | 계약 버전, 현재 2 |
+| `SchemaVersion` | `schema_version` | 계약 버전, 현재 3 |
 | `TargetId`, `TargetText` | `target_id`, `target_text` | 확정한 후보 |
 | `Score`, `Distance`, `Threshold`, `Passed` | `score`, `distance`, `threshold`, `passed` | 확정 프레임의 가중 점수·거리·임계값·통과 여부 |
 | `Frames`, `Streak` | `frames`, `streak` | 확정까지 채점한 횟수, 동일 후보 연속 통과 횟수 |
@@ -71,7 +97,9 @@ Listener의 호출 순서는 **청취 중단 → LastConfirmation 설정 → OnC
 | `AlignmentAvailable` | `alignment_available` | 정렬 정보 제공 여부. `false`를 ‘차이 없음’으로 표시하지 않음 |
 | `Alignment` | `alignment` | 순서대로 정렬된 `PhonemeComparison` 목록 |
 | `MatchCount`, `SubstitutionCount`, `DeletionCount`, `InsertionCount` | `match_count`, `substitution_count`, `deletion_count`, `insertion_count` | 비교 구간 안의 일치·교체·누락·추가 개수 |
-| `KoreanFeedback` | `korean_feedback` | 바로 표시할 수 있는 한글 설명과 글자별 소리 예시 |
+| `KoreanFeedback` | `korean_feedback` | 보류 규칙 적용 후 표시할 한글 설명·소리 예시 |
+| `RawKoreanFeedback` | `raw_korean_feedback` | 보류 전 원본 한글 설명, 개발·디버깅용 |
+| `FeedbackReview` | `feedback_review` | 보류 상태·이유와 참고한 모델 자료 |
 
 각 `PhonemeComparison`에는 `Operation`, `TargetPhoneme`, `UserPhoneme`, `TargetIndex`, `UserIndex`가 있다. JSON 키는 각각 `operation`, `target_phoneme`, `user_phoneme`, `target_index`, `user_index`이다.
 
@@ -86,7 +114,12 @@ Listener의 호출 순서는 **청취 중단 → LastConfirmation 설정 → OnC
 
 ## 한글 설명 사용하기
 
-`KoreanFeedback`은 `Summary`(`summary`), `SyllableMappingAvailable`(`syllable_mapping_available`), `Items`(`items`)를 제공한다. 웹은 이 데이터로 쉬운 설명을 먼저 표시하고 기존 IPA 표는 접힌 상세 보기에 둔다. 같은 점수 정렬을 설명하는 규칙 기반 변환이며, 별도 음성 인식·LLM·웹 API 호출은 없다.
+`KoreanFeedback`과 `RawKoreanFeedback`은 `Summary`(`summary`),
+`SyllableMappingAvailable`(`syllable_mapping_available`), `Items`(`items`)를 제공한다.
+웹은 표시용 안내를 먼저 표시하고 원본 한글·IPA는 접힌 상세 보기에 둔다.
+별도 음성 인식·LLM·웹 API 호출은 없다. 사용자 화면은 `Summary`와 `Items`를 표시한다.
+`FeedbackReview`의 보류 상태와 이유는 개발·검증용이며, 사용자 화면에 함께 표시하지 않는다.
+`문제 없음` 문구가 내부 관측을 정확한 발음의 증거로 바꾸지는 않는다.
 
 각 `PronunciationHint`의 필드는 다음과 같다.
 
@@ -99,7 +132,9 @@ Listener의 호출 순서는 **청취 중단 → LastConfirmation 설정 → OnC
 | `Message` | `message` | UI에 바로 표시할 한국어 문장 |
 | `AlignmentIndices` | `alignment_indices` | 이 설명이 다루는 차이들의 `Alignment` 내 인덱스. 모두 0부터 시작 |
 
-예를 들어 `사과`의 확정 정렬에 `target=s`, `user=tʰ`, `operation=sub`가 있으면 다음 설명이 된다.
+예를 들어 `사과`의 확정 정렬에 `target=s`, `user=tʰ`, `operation=sub`가 있으면
+**원본 `RawKoreanFeedback`**에는 다음 설명이 생긴다. 표시용 `KoreanFeedback`에는
+이 차이의 모델 자료가 충분하고 보류 조건에 해당하지 않을 때만 남는다.
 
 ```json
 {

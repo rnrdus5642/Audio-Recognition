@@ -11,8 +11,10 @@ porting to C# for Unity is mechanical.
 from __future__ import annotations
 
 from dataclasses import dataclass
+import math
 
 from .confusion_matrix import ConfusionMatrix
+from .acoustic import AcousticEvidence, validate_acoustic_policy
 
 
 @dataclass
@@ -25,7 +27,7 @@ class MatchResult:
     target_text: str | None     # matched target text (if any)
     target_phonemes: list[str] | None
     user_phonemes: list[str]
-    passed: bool                # score >= target's threshold
+    passed: bool                # threshold met AND not vetoed by another action
     # Substring matching: the slice of user_phonemes that actually matched
     # the target. For exact mode this is [0, len(user_phonemes)].
     window_start: int = 0
@@ -33,6 +35,170 @@ class MatchResult:
     # Per-step alignment (user_ph, target_ph, op) within the window.
     alignment: list[tuple[str, str, str]] | None = None
     threshold: float = 0.0
+    # Set when a passing answer was refused because a DIFFERENT action
+    # explains the same speech better (see `Matcher.best_match`). False
+    # for every answer that ships no contrast set, which is every answer
+    # in a catalog built before contrasts existed - so a caller that
+    # never reads these fields behaves exactly as it did.
+    competitor_rejected: bool = False
+    competitor_reason: str = ""
+    competitor_text: str | None = None
+    competitor_score: float | None = None
+    accepted_whole_score: float | None = None
+    whole_rejected: bool = False
+    used_short_utterance_policy: bool = False
+    acoustic_evidence: AcousticEvidence | None = None
+
+
+#: `MatchResult.competitor_reason` when another action scored higher.
+OTHER_ACTION_SCORED_HIGHER = "other_action_scored_higher"
+CONTEXT_PREFIX_MIN_SCORE = 0.80
+
+
+REBUILD = ("rebuild targets.json with "
+           "python -m python.build.build_targets")
+
+
+def _named(owner: object) -> str:
+    """How to refer to the answer an error came from."""
+    text = owner.get("text") if isinstance(owner, dict) else None
+    return f"'{text}'" if text else "an answer"
+
+
+def check_action_group(value: object, owner: object = None) -> str | None:
+    """The answer's action group, or None when it has none.
+
+    Absent and null are legacy data: no group, no contrast, judged the
+    way every answer was judged before groups existed. Anything else has
+    to be a name - a non-empty string with no whitespace - because groups
+    are compared for equality, and " lift" is a group of one that
+    protects nothing. The C# loader and runtime refuse the same values.
+    """
+    if value is None:
+        return None
+    if (not isinstance(value, str) or not value
+            or any(ch.isspace() for ch in value)):
+        raise ValueError(
+            f"{_named(owner)} has an action_group that is not a name: "
+            f"{value!r}; {REBUILD}")
+    return value
+
+
+def check_alternatives(
+    value: object, owner: object = None
+) -> list[tuple[str, list[str], str]] | None:
+    """The embedded action alternatives as (text, phonemes, group).
+
+    None for absent or null - legacy data, nothing to compare against.
+    An empty list is allowed and says the build found nothing to embed.
+    Every other non-list - False, 0, "", {} - is a file claiming to
+    configure the protection while switching it off, which is exactly the
+    failure this must not read as "absent". Elements are checked the same
+    way here and in C#, so one bad file cannot load in the web tool and
+    throw in Unity.
+    """
+    if value is None:
+        return None
+    if not isinstance(value, list):
+        raise ValueError(
+            f"{_named(owner)} has contrastive_alternatives that are not a "
+            f"list: {value!r}; {REBUILD}")
+
+    out: list[tuple[str, list[str], str]] = []
+    for entry in value:
+        if not isinstance(entry, dict):
+            raise ValueError(
+                f"{_named(owner)} has a contrastive alternative that is "
+                f"not an object: {entry!r}; {REBUILD}")
+        text = entry.get("text")
+        phonemes = entry.get("phonemes")
+        if (not isinstance(text, str) or not text
+                or not isinstance(phonemes, list) or not phonemes
+                or not all(isinstance(p, str) and p for p in phonemes)):
+            raise ValueError(
+                f"{_named(owner)} has a contrastive alternative missing "
+                f"text or phonemes; {REBUILD}")
+        group = check_action_group(entry.get("action_group"), owner)
+        if group is None:
+            raise ValueError(
+                f"{_named(owner)} has a contrastive alternative with no "
+                f"action_group; {REBUILD}")
+        out.append((text, list(phonemes), group))
+    return out
+
+
+def validate_contrast_metadata(
+    answer: dict,
+) -> tuple[str | None, list[tuple[str, list[str], str]] | None]:
+    """Refuse an answer whose contrast metadata cannot be honoured.
+
+    Alternatives without a group name nothing to be told apart from and
+    nothing to anchor against, so they are a build error rather than a
+    quiet no-op. A group on its own is fine: it says which action this
+    answer is, and a catalog may hold only one.
+
+    Returns the parsed `(action_group, alternatives)` so the scorer reads
+    the metadata once and reads it the same way this check did.
+    """
+    group = check_action_group(answer.get("action_group"), answer)
+    alternatives = check_alternatives(
+        answer.get("contrastive_alternatives"), answer)
+    if alternatives is not None and group is None:
+        raise ValueError(
+            f"{_named(answer)} ships contrastive alternatives but no "
+            f"action_group, so nothing says which action it is; {REBUILD}")
+    return group, alternatives
+
+
+def validate_catalog(answers: list[dict]) -> list[dict]:
+    """Every answer's contrast metadata, checked at load.
+
+    Called where a catalog is read rather than only where it is scored,
+    so a file that Unity would refuse cannot quietly half-work in the web
+    tool - and so the error names the build, not the child's frame.
+    """
+    for answer in answers:
+        validate_contrast_metadata(answer)
+        validate_word_policy(answer)
+    return answers
+
+
+def validate_word_policy(answer: dict) -> None:
+    """Optional presentation tuning; absent fields preserve the old policy."""
+    validate_acoustic_policy(answer)
+    frames = answer.get("confirmation_frames")
+    if frames is not None and (
+        type(frames) is not int or not 1 <= frames <= 6
+    ):
+        raise ValueError(f"{_named(answer)} confirmation_frames must be an integer in [1, 6]")
+    for key in ("min_whole_score", "contrast_margin"):
+        value = answer.get(key, 0.0)
+        if (isinstance(value, bool) or not isinstance(value, (int, float))
+                or not math.isfinite(value) or not 0.0 <= value <= 1.0):
+            raise ValueError(f"{_named(answer)} {key} must be a finite number in [0, 1]")
+    contexts = answer.get("context_prefixes")
+    if contexts is not None:
+        if not isinstance(contexts, list):
+            raise ValueError(f"{_named(answer)} context_prefixes must be a list")
+        for context in contexts:
+            if (not isinstance(context, dict)
+                    or not isinstance(context.get("text"), str) or not context["text"].strip()
+                    or any(not isinstance(context.get(key), list) or not context[key]
+                           or not all(isinstance(p, str) and p.strip() for p in context[key])
+                           for key in ("phonemes",))):
+                raise ValueError(f"{_named(answer)} context_prefixes requires text and phonemes")
+    short = answer.get("short_utterance_policy")
+    if short is not None:
+        if not isinstance(short, dict):
+            raise ValueError(f"{_named(answer)} short_utterance_policy must be an object")
+        for key in ("threshold", "min_whole_score"):
+            value = short.get(key)
+            if (isinstance(value, bool) or not isinstance(value, (int, float))
+                    or not math.isfinite(value) or not 0.0 < value <= 1.0):
+                raise ValueError(f"{_named(answer)} short_utterance_policy {key} must be in (0, 1]")
+        extra = short.get("max_extra_phonemes")
+        if type(extra) is not int or not 0 <= extra <= 6:
+            raise ValueError(f"{_named(answer)} short_utterance_policy max_extra_phonemes must be an integer in [0, 6]")
 
 
 def substring_edit_distance(
@@ -408,6 +574,7 @@ class Matcher:
         self,
         user: list[str],
         candidates: list[dict],
+        acoustic_evidence: dict[str, AcousticEvidence] | None = None,
     ) -> MatchResult:
         """Return the highest-scoring candidate that passes its own threshold.
 
@@ -418,6 +585,11 @@ class Matcher:
 
         Each candidate dict must have keys:
             id (str), text (str), phonemes (list[str]), threshold (float)
+
+        A candidate may also carry `action_group` and the
+        `contrastive_alternatives` the build embedded for it. Those
+        change nothing about who wins or what they score - they can only
+        take a pass away afterwards, see `_veto_by_other_action`.
         """
         if not candidates:
             return MatchResult(
@@ -440,11 +612,39 @@ class Matcher:
         best_ws = 0
         best_we = len(user)
         best_ops: list[tuple[str, str, str]] = []
+        best_whole = None
+        best_whole_rejected = False
+        best_threshold = float(best.get("threshold", 0.6))
+        best_short = False
+        best_acoustic = None
         for cand in candidates:
+            validate_word_policy(cand)
             d, s, ws, we, ops = self.score_against(
                 user, cand["phonemes"]
             )
-            passed = s >= float(cand.get("threshold", 0.6))
+            threshold = float(cand.get("threshold", 0.6))
+            passed = s >= threshold
+            used_short = False
+            used_acoustic = None
+            whole = None
+            whole_rejected = False
+            if passed and cand.get("min_whole_score", 0.0) > 0.0:
+                whole = self.accepted_whole_score(user, candidates, cand)
+                whole_rejected = whole < cand["min_whole_score"]
+                passed = not whole_rejected
+            short = cand.get("short_utterance_policy")
+            if not passed and short and s >= short["threshold"]:
+                short_whole = self.short_utterance_score(user, cand)
+                if short_whole >= short["min_whole_score"]:
+                    passed, used_short, whole_rejected = True, True, False
+                    threshold, whole = short["threshold"], short_whole
+            evidence = (acoustic_evidence or {}).get(cand["text"])
+            if not passed and evidence and evidence.permits(cand, len(user), s):
+                whole = self.accepted_whole_score(user, candidates, cand)
+                if whole >= cand.get("min_whole_score", 0.0):
+                    passed, whole_rejected = True, False
+                    threshold = cand["acoustic_keyword_policy"]["min_score"]
+                    used_acoustic = evidence
             if ((passed and not best_passed)
                     or (passed == best_passed and s > best_score)):
                 best_score = s
@@ -454,8 +654,12 @@ class Matcher:
                 best_ws = ws
                 best_we = we
                 best_ops = ops
+                best_whole = whole
+                best_whole_rejected = whole_rejected
+                best_threshold, best_short = threshold, used_short
+                best_acoustic = used_acoustic
 
-        return MatchResult(
+        result = MatchResult(
             score=best_score,
             distance=best_dist,
             target_id=best["id"],
@@ -466,5 +670,148 @@ class Matcher:
             window_start=best_ws,
             window_end=best_we,
             alignment=best_ops,
-            threshold=float(best.get("threshold", 0.6)),
+            threshold=best_threshold,
+            accepted_whole_score=best_whole,
+            whole_rejected=best_whole_rejected,
+            used_short_utterance_policy=best_short,
+            acoustic_evidence=best_acoustic,
         )
+        self._veto_by_other_action(result, user, candidates, best)
+        return result
+
+    def whole_score(self, user: list[str], target: list[str]) -> float:
+        """`user` against `target`, whole against whole.
+
+        No window and no context limit: every phoneme the recogniser
+        produced is paid for. This is the existing exact-mode arithmetic,
+        used only to compare an answer against the actions it has to be
+        told apart from. It never accepts anything and is never reported
+        as an answer's score.
+        """
+        d = weighted_edit_distance(user, target, self.matrix)
+        return similarity_score(d, len(target), user_length=len(user))
+
+    def accepted_whole_score(self, user: list[str], candidates: list[dict],
+                             winner: dict) -> float:
+        """Whole utterance against this answer and aliases of its own group.
+
+        A minimum here complements the substring threshold: a fragment in
+        a long unrelated sentence cannot pass just because its local match
+        is good. Ungrouped candidates never borrow another answer's score.
+        """
+        group, alternatives = validate_contrast_metadata(winner)
+        validate_word_policy(winner)
+        sounds = [winner["phonemes"]]
+        if group is not None:
+            sounds += [c["phonemes"] for c in candidates
+                       if c.get("action_group") == group]
+            sounds += [p for _, p, g in alternatives or [] if g == group]
+        best = max(self.whole_score(user, p) for p in sounds)
+        for tail in self.context_tails(user, winner):
+            best = max(best, *(self.whole_score(tail, p) for p in sounds))
+        return best
+
+    def context_tails(self, user: list[str], winner: dict) -> list[list[str]]:
+        """Verb evidence following a configured, independently matched prefix.
+
+        Only the remainder is compared with accepted and rival actions. The
+        many phonemes in an object name must not inflate a weak verb's score.
+        """
+        tails = []
+        contexts = winner.get("context_prefixes") or []
+        if contexts:
+            _, _, word_start, word_end, _ = self.score_against(user, winner["phonemes"])
+            if word_end > word_start:
+                for context in contexts:
+                    _, prefix_score, start, end, _ = self.score_against(user, context["phonemes"])
+                    # A noun's final syllable must not double as the verb:
+                    # prefix evidence and answer evidence cannot overlap.
+                    if prefix_score >= CONTEXT_PREFIX_MIN_SCORE and start < end <= word_start:
+                        tails.append(user[end:])
+        return tails
+
+    def short_utterance_score(self, user: list[str], winner: dict) -> float:
+        """Whole-word evidence for the optional short-input fallback, never an alias."""
+        limit = len(winner["phonemes"]) + winner["short_utterance_policy"]["max_extra_phonemes"]
+        return max((self.whole_score(u, winner["phonemes"])
+                    for u in [user, *self.context_tails(user, winner)] if 0 < len(u) <= limit), default=-1.0)
+
+    def _veto_by_other_action(
+        self,
+        result: MatchResult,
+        user: list[str],
+        candidates: list[dict],
+        winner: dict,
+    ) -> None:
+        """Take the pass back when another ACTION explains this better.
+
+        The decision above is left exactly as it was - same winner, same
+        score, same window, same alignment. This can only refuse it, and
+        it never promotes a rival: the rivals are not answers to the
+        question that was asked, and confirming one would answer a
+        question nobody asked. There is no second ranking pass.
+
+        Why it is needed: substring scoring may start its window
+        anywhere, so a short answer whose phonemes are the tail of a
+        longer word passes on the longer word (들기 inside 흔들기, 0.997).
+        Whole-sequence scoring sees the difference, but as a THRESHOLD it
+        creates the mirror failure - the long word passing on the short
+        one - so it is used here only as a comparison between two
+        readings of the same speech: if a word this question does not
+        accept fits everything the child said better than anything it
+        does accept, the pass is not earned.
+
+        The anchor is what the ACTION that won is worth, read whole: the
+        winner, the aliases of its group the question accepted, AND the
+        aliases it did not ask for, which the build embedded for exactly
+        this. A lesson may ask for 두드려 alone while the child says
+        두드리기 - the same instruction - and without the unrequested
+        alias in the anchor the winner is measured on a form nobody said
+        and any passing rival takes the answer away. Another accepted
+        action never raises the anchor: a good score for a different
+        instruction is not evidence that this one was said, and letting
+        it in would defend a poor winner with the wrong word.
+
+        Skipped rivals, both decided by catalog data rather than by any
+        word this code knows:
+
+          * an action the question already accepts - asking for 흔들기
+            and hearing 흔들어 is a right answer, not a competitor;
+          * a rival whose phonemes an accepted answer already has, which
+            is the same sound arriving under another name.
+
+        Ties never veto: equal scores are not evidence that the other
+        action was meant.
+        """
+        # Read before the early return, so metadata a caller built by
+        # hand cannot switch the protection off by being unreadable.
+        own_group, alternatives = validate_contrast_metadata(winner)
+        if not result.passed or not alternatives:
+            return
+        accepted_groups = {check_action_group(c.get("action_group"), c)
+                           for c in candidates}
+        accepted_groups.discard(None)
+        accepted_sounds = {tuple(c.get("phonemes") or ()) for c in candidates}
+        best_accepted = self.accepted_whole_score(user, candidates, winner)
+        tails = self.context_tails(user, winner)
+        margin = winner.get("contrast_margin", 0.0)
+
+        challenger: tuple[str, float] | None = None
+        for text, phonemes, group in alternatives:
+            if group in accepted_groups or tuple(phonemes) in accepted_sounds:
+                continue
+            score = self.whole_score(user, phonemes)
+            for tail in tails:
+                score = max(score, self.whole_score(tail, phonemes))
+            if score > best_accepted + margin and (challenger is None
+                                          or score > challenger[1]):
+                challenger = (text, score)
+
+        if challenger is None:
+            return
+        result.passed = False
+        result.competitor_rejected = True
+        result.competitor_reason = OTHER_ACTION_SCORED_HIGHER
+        result.competitor_text = challenger[0]
+        result.competitor_score = challenger[1]
+        result.accepted_whole_score = best_accepted

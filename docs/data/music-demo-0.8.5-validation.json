@@ -1,0 +1,641 @@
+{
+  "package_version": "0.8.5",
+  "profile_id": "music_demo_2026_09_10",
+  "catalog_sha256": "ce8f72cdf57ec558691bb7d027c2ca2b77512cdfc08daa045e9f31831fd8b367",
+  "metric": "A negative recording is counted once if any frame sequence confirms during replay.",
+  "limitations": [
+    "Tuning data, not independent unseen-speaker accuracy.",
+    "Recordings are reused between stages; do not pool denominators.",
+    "Zero observed failures does not imply zero deployment risk.",
+    "Reference and separately collected child sources are reported separately."
+  ],
+  "current_version_method": "0.8.4 full replay; 0.8.5 modifies only the grab policy, rechecked for grab and stages 1/4/8. Other policies are unchanged.",
+  "words": [
+    {
+      "id": "silophone_mallet",
+      "answers": [
+        "실로폰채"
+      ],
+      "sources": {
+        "reference": {
+          "negative_recordings": 4998,
+          "v0_8_3_false_accepts": 0,
+          "v0_8_4_false_accepts": 0,
+          "v0_8_5_false_accepts": 0
+        },
+        "child_sentence": {
+          "negative_recordings": 750,
+          "v0_8_3_false_accepts": 0,
+          "v0_8_4_false_accepts": 0,
+          "v0_8_5_false_accepts": 0
+        },
+        "child_single": {
+          "negative_recordings": 24,
+          "v0_8_3_false_accepts": 0,
+          "v0_8_4_false_accepts": 0,
+          "v0_8_5_false_accepts": 0
+        }
+      }
+    },
+    {
+      "id": "lift_plain",
+      "answers": [
+        "들어"
+      ],
+      "sources": {
+        "reference": {
+          "negative_recordings": 4838,
+          "v0_8_3_false_accepts": 1,
+          "v0_8_4_false_accepts": 1,
+          "v0_8_5_false_accepts": 1
+        },
+        "child_sentence": {
+          "negative_recordings": 524,
+          "v0_8_3_false_accepts": 0,
+          "v0_8_4_false_accepts": 0,
+          "v0_8_5_false_accepts": 0
+        },
+        "child_single": {
+          "negative_recordings": 16,
+          "v0_8_3_false_accepts": 0,
+          "v0_8_4_false_accepts": 0,
+          "v0_8_5_false_accepts": 0
+        }
+      }
+    },
+    {
+      "id": "grab_plain",
+      "answers": [
+        "잡아"
+      ],
+      "sources": {
+        "reference": {
+          "negative_recordings": 4995,
+          "v0_8_3_false_accepts": 0,
+          "v0_8_4_false_accepts": 1,
+          "v0_8_5_false_accepts": 1
+        },
+        "child_sentence": {
+          "negative_recordings": 674,
+          "v0_8_3_false_accepts": 13,
+          "v0_8_4_false_accepts": 14,
+          "v0_8_5_false_accepts": 14
+        },
+        "child_single": {
+          "negative_recordings": 24,
+          "v0_8_3_false_accepts": 0,
+          "v0_8_4_false_accepts": 0,
+          "v0_8_5_false_accepts": 0
+        }
+      }
+    },
+    {
+      "id": "hit_plain",
+      "answers": [
+        "쳐"
+      ],
+      "sources": {
+        "reference": {
+          "negative_recordings": 4986,
+          "v0_8_3_false_accepts": 6,
+          "v0_8_4_false_accepts": 3,
+          "v0_8_5_false_accepts": 3
+        },
+        "child_sentence": {
+          "negative_recordings": 647,
+          "v0_8_3_false_accepts": 0,
+          "v0_8_4_false_accepts": 0,
+          "v0_8_5_false_accepts": 0
+        },
+        "child_single": {
+          "negative_recordings": 17,
+          "v0_8_3_false_accepts": 0,
+          "v0_8_4_false_accepts": 0,
+          "v0_8_5_false_accepts": 0
+        }
+      }
+    },
+    {
+      "id": "beat_plain",
+      "answers": [
+        "때려"
+      ],
+      "sources": {
+        "reference": {
+          "negative_recordings": 4994,
+          "v0_8_3_false_accepts": 0,
+          "v0_8_4_false_accepts": 3,
+          "v0_8_5_false_accepts": 3
+        },
+        "child_sentence": {
+          "negative_recordings": 578,
+          "v0_8_3_false_accepts": 0,
+          "v0_8_4_false_accepts": 1,
+          "v0_8_5_false_accepts": 1
+        },
+        "child_single": {
+          "negative_recordings": 21,
+          "v0_8_3_false_accepts": 0,
+          "v0_8_4_false_accepts": 1,
+          "v0_8_5_false_accepts": 1
+        }
+      }
+    },
+    {
+      "id": "play_plain",
+      "answers": [
+        "연주해"
+      ],
+      "sources": {
+        "reference": {
+          "negative_recordings": 4996,
+          "v0_8_3_false_accepts": 0,
+          "v0_8_4_false_accepts": 1,
+          "v0_8_5_false_accepts": 1
+        },
+        "child_sentence": {
+          "negative_recordings": 718,
+          "v0_8_3_false_accepts": 0,
+          "v0_8_4_false_accepts": 0,
+          "v0_8_5_false_accepts": 0
+        },
+        "child_single": {
+          "negative_recordings": 24,
+          "v0_8_3_false_accepts": 0,
+          "v0_8_4_false_accepts": 0,
+          "v0_8_5_false_accepts": 0
+        }
+      }
+    },
+    {
+      "id": "put_uncontracted",
+      "answers": [
+        "놓아"
+      ],
+      "sources": {
+        "reference": {
+          "negative_recordings": 4950,
+          "v0_8_3_false_accepts": 0,
+          "v0_8_4_false_accepts": 0,
+          "v0_8_5_false_accepts": 0
+        },
+        "child_sentence": {
+          "negative_recordings": 603,
+          "v0_8_3_false_accepts": 0,
+          "v0_8_4_false_accepts": 0,
+          "v0_8_5_false_accepts": 0
+        },
+        "child_single": {
+          "negative_recordings": 18,
+          "v0_8_3_false_accepts": 0,
+          "v0_8_4_false_accepts": 0,
+          "v0_8_5_false_accepts": 0
+        }
+      }
+    },
+    {
+      "id": "put_plain",
+      "answers": [
+        "놔"
+      ],
+      "sources": {
+        "reference": {
+          "negative_recordings": 4950,
+          "v0_8_3_false_accepts": 4,
+          "v0_8_4_false_accepts": 4,
+          "v0_8_5_false_accepts": 4
+        },
+        "child_sentence": {
+          "negative_recordings": 603,
+          "v0_8_3_false_accepts": 0,
+          "v0_8_4_false_accepts": 0,
+          "v0_8_5_false_accepts": 0
+        },
+        "child_single": {
+          "negative_recordings": 18,
+          "v0_8_3_false_accepts": 0,
+          "v0_8_4_false_accepts": 0,
+          "v0_8_5_false_accepts": 0
+        }
+      }
+    },
+    {
+      "id": "put_lower",
+      "answers": [
+        "내려놔"
+      ],
+      "sources": {
+        "reference": {
+          "negative_recordings": 4950,
+          "v0_8_3_false_accepts": 0,
+          "v0_8_4_false_accepts": 5,
+          "v0_8_5_false_accepts": 5
+        },
+        "child_sentence": {
+          "negative_recordings": 603,
+          "v0_8_3_false_accepts": 0,
+          "v0_8_4_false_accepts": 2,
+          "v0_8_5_false_accepts": 2
+        },
+        "child_single": {
+          "negative_recordings": 18,
+          "v0_8_3_false_accepts": 0,
+          "v0_8_4_false_accepts": 0,
+          "v0_8_5_false_accepts": 0
+        }
+      }
+    },
+    {
+      "id": "shake_plain",
+      "answers": [
+        "흔들어"
+      ],
+      "sources": {
+        "reference": {
+          "negative_recordings": 4990,
+          "v0_8_3_false_accepts": 0,
+          "v0_8_4_false_accepts": 0,
+          "v0_8_5_false_accepts": 0
+        },
+        "child_sentence": {
+          "negative_recordings": 643,
+          "v0_8_3_false_accepts": 0,
+          "v0_8_4_false_accepts": 0,
+          "v0_8_5_false_accepts": 0
+        },
+        "child_single": {
+          "negative_recordings": 20,
+          "v0_8_3_false_accepts": 0,
+          "v0_8_4_false_accepts": 0,
+          "v0_8_5_false_accepts": 0
+        }
+      }
+    },
+    {
+      "id": "drumstick",
+      "answers": [
+        "북채"
+      ],
+      "sources": {
+        "reference": {
+          "negative_recordings": 4954,
+          "v0_8_3_false_accepts": 0,
+          "v0_8_4_false_accepts": 0,
+          "v0_8_5_false_accepts": 0
+        },
+        "child_sentence": {
+          "negative_recordings": 704,
+          "v0_8_3_false_accepts": 0,
+          "v0_8_4_false_accepts": 0,
+          "v0_8_5_false_accepts": 0
+        },
+        "child_single": {
+          "negative_recordings": 24,
+          "v0_8_3_false_accepts": 0,
+          "v0_8_4_false_accepts": 0,
+          "v0_8_5_false_accepts": 0
+        }
+      }
+    },
+    {
+      "id": "knock_plain",
+      "answers": [
+        "두드려"
+      ],
+      "sources": {
+        "reference": {
+          "negative_recordings": 4994,
+          "v0_8_3_false_accepts": 0,
+          "v0_8_4_false_accepts": 0,
+          "v0_8_5_false_accepts": 0
+        },
+        "child_sentence": {
+          "negative_recordings": 578,
+          "v0_8_3_false_accepts": 0,
+          "v0_8_4_false_accepts": 0,
+          "v0_8_5_false_accepts": 0
+        },
+        "child_single": {
+          "negative_recordings": 21,
+          "v0_8_3_false_accepts": 0,
+          "v0_8_4_false_accepts": 0,
+          "v0_8_5_false_accepts": 0
+        }
+      }
+    }
+  ],
+  "stages": [
+    {
+      "id": "1",
+      "answers": [
+        "실로폰채",
+        "들어",
+        "잡아"
+      ],
+      "sources": {
+        "reference": {
+          "negative_recordings": 4835,
+          "v0_8_3_false_accepts": 1,
+          "v0_8_4_false_accepts": 2,
+          "v0_8_5_false_accepts": 2
+        },
+        "child_sentence": {
+          "negative_recordings": 446,
+          "v0_8_3_false_accepts": 13,
+          "v0_8_4_false_accepts": 14,
+          "v0_8_5_false_accepts": 14
+        },
+        "child_single": {
+          "negative_recordings": 16,
+          "v0_8_3_false_accepts": 0,
+          "v0_8_4_false_accepts": 0,
+          "v0_8_5_false_accepts": 0
+        }
+      }
+    },
+    {
+      "id": "2",
+      "answers": [
+        "쳐",
+        "때려",
+        "연주해"
+      ],
+      "sources": {
+        "reference": {
+          "negative_recordings": 4980,
+          "v0_8_3_false_accepts": 6,
+          "v0_8_4_false_accepts": 7,
+          "v0_8_5_false_accepts": 7
+        },
+        "child_sentence": {
+          "negative_recordings": 441,
+          "v0_8_3_false_accepts": 0,
+          "v0_8_4_false_accepts": 1,
+          "v0_8_5_false_accepts": 1
+        },
+        "child_single": {
+          "negative_recordings": 14,
+          "v0_8_3_false_accepts": 0,
+          "v0_8_4_false_accepts": 1,
+          "v0_8_5_false_accepts": 1
+        }
+      }
+    },
+    {
+      "id": "3",
+      "answers": [
+        "놓아",
+        "놔",
+        "내려놔"
+      ],
+      "sources": {
+        "reference": {
+          "negative_recordings": 4950,
+          "v0_8_3_false_accepts": 4,
+          "v0_8_4_false_accepts": 9,
+          "v0_8_5_false_accepts": 9
+        },
+        "child_sentence": {
+          "negative_recordings": 603,
+          "v0_8_3_false_accepts": 0,
+          "v0_8_4_false_accepts": 2,
+          "v0_8_5_false_accepts": 2
+        },
+        "child_single": {
+          "negative_recordings": 18,
+          "v0_8_3_false_accepts": 0,
+          "v0_8_4_false_accepts": 0,
+          "v0_8_5_false_accepts": 0
+        }
+      }
+    },
+    {
+      "id": "4",
+      "answers": [
+        "들어",
+        "잡아"
+      ],
+      "sources": {
+        "reference": {
+          "negative_recordings": 4835,
+          "v0_8_3_false_accepts": 1,
+          "v0_8_4_false_accepts": 2,
+          "v0_8_5_false_accepts": 2
+        },
+        "child_sentence": {
+          "negative_recordings": 447,
+          "v0_8_3_false_accepts": 13,
+          "v0_8_4_false_accepts": 14,
+          "v0_8_5_false_accepts": 14
+        },
+        "child_single": {
+          "negative_recordings": 16,
+          "v0_8_3_false_accepts": 0,
+          "v0_8_4_false_accepts": 0,
+          "v0_8_5_false_accepts": 0
+        }
+      }
+    },
+    {
+      "id": "5",
+      "answers": [
+        "쳐",
+        "때려"
+      ],
+      "sources": {
+        "reference": {
+          "negative_recordings": 4982,
+          "v0_8_3_false_accepts": 6,
+          "v0_8_4_false_accepts": 6,
+          "v0_8_5_false_accepts": 6
+        },
+        "child_sentence": {
+          "negative_recordings": 474,
+          "v0_8_3_false_accepts": 0,
+          "v0_8_4_false_accepts": 1,
+          "v0_8_5_false_accepts": 1
+        },
+        "child_single": {
+          "negative_recordings": 14,
+          "v0_8_3_false_accepts": 0,
+          "v0_8_4_false_accepts": 1,
+          "v0_8_5_false_accepts": 1
+        }
+      }
+    },
+    {
+      "id": "6",
+      "answers": [
+        "흔들어"
+      ],
+      "sources": {
+        "reference": {
+          "negative_recordings": 4990,
+          "v0_8_3_false_accepts": 0,
+          "v0_8_4_false_accepts": 0,
+          "v0_8_5_false_accepts": 0
+        },
+        "child_sentence": {
+          "negative_recordings": 643,
+          "v0_8_3_false_accepts": 0,
+          "v0_8_4_false_accepts": 0,
+          "v0_8_5_false_accepts": 0
+        },
+        "child_single": {
+          "negative_recordings": 20,
+          "v0_8_3_false_accepts": 0,
+          "v0_8_4_false_accepts": 0,
+          "v0_8_5_false_accepts": 0
+        }
+      }
+    },
+    {
+      "id": "7",
+      "answers": [
+        "놓아",
+        "놔",
+        "내려놔"
+      ],
+      "sources": {
+        "reference": {
+          "negative_recordings": 4950,
+          "v0_8_3_false_accepts": 4,
+          "v0_8_4_false_accepts": 9,
+          "v0_8_5_false_accepts": 9
+        },
+        "child_sentence": {
+          "negative_recordings": 603,
+          "v0_8_3_false_accepts": 0,
+          "v0_8_4_false_accepts": 2,
+          "v0_8_5_false_accepts": 2
+        },
+        "child_single": {
+          "negative_recordings": 18,
+          "v0_8_3_false_accepts": 0,
+          "v0_8_4_false_accepts": 0,
+          "v0_8_5_false_accepts": 0
+        }
+      }
+    },
+    {
+      "id": "8",
+      "answers": [
+        "북채",
+        "들어",
+        "잡아"
+      ],
+      "sources": {
+        "reference": {
+          "negative_recordings": 4791,
+          "v0_8_3_false_accepts": 1,
+          "v0_8_4_false_accepts": 2,
+          "v0_8_5_false_accepts": 2
+        },
+        "child_sentence": {
+          "negative_recordings": 400,
+          "v0_8_3_false_accepts": 13,
+          "v0_8_4_false_accepts": 14,
+          "v0_8_5_false_accepts": 14
+        },
+        "child_single": {
+          "negative_recordings": 16,
+          "v0_8_3_false_accepts": 0,
+          "v0_8_4_false_accepts": 0,
+          "v0_8_5_false_accepts": 0
+        }
+      }
+    },
+    {
+      "id": "9",
+      "answers": [
+        "두드려",
+        "때려",
+        "쳐"
+      ],
+      "sources": {
+        "reference": {
+          "negative_recordings": 4982,
+          "v0_8_3_false_accepts": 6,
+          "v0_8_4_false_accepts": 6,
+          "v0_8_5_false_accepts": 6
+        },
+        "child_sentence": {
+          "negative_recordings": 474,
+          "v0_8_3_false_accepts": 0,
+          "v0_8_4_false_accepts": 1,
+          "v0_8_5_false_accepts": 1
+        },
+        "child_single": {
+          "negative_recordings": 14,
+          "v0_8_3_false_accepts": 0,
+          "v0_8_4_false_accepts": 1,
+          "v0_8_5_false_accepts": 1
+        }
+      }
+    }
+  ],
+  "grab_near_controls": [
+    {
+      "label": "서랍",
+      "negative_recordings": 30,
+      "v0_8_4_false_accepts": 0,
+      "v0_8_5_false_accepts": 0
+    },
+    {
+      "label": "작아",
+      "negative_recordings": 30,
+      "v0_8_4_false_accepts": 0,
+      "v0_8_5_false_accepts": 0
+    },
+    {
+      "label": "잡아당",
+      "negative_recordings": 30,
+      "v0_8_4_false_accepts": 25,
+      "v0_8_5_false_accepts": 25
+    },
+    {
+      "label": "잡아먹",
+      "negative_recordings": 30,
+      "v0_8_4_false_accepts": 21,
+      "v0_8_5_false_accepts": 21
+    },
+    {
+      "label": "잡지",
+      "negative_recordings": 30,
+      "v0_8_4_false_accepts": 0,
+      "v0_8_5_false_accepts": 0
+    },
+    {
+      "label": "접어",
+      "negative_recordings": 30,
+      "v0_8_4_false_accepts": 1,
+      "v0_8_5_false_accepts": 1
+    }
+  ],
+  "supplied_user_recordings": {
+    "independent_positive_recordings": 5,
+    "independent_negative_recordings": 2,
+    "basic_timing_positive_accepted": 4,
+    "basic_timing_false_accepts": 0,
+    "onset_offsets_ms": [
+      0,
+      125,
+      250,
+      375
+    ],
+    "positive_replays_accepted": 15,
+    "positive_replays": 20,
+    "negative_replays_false_accepts": 0,
+    "negative_replays": 8,
+    "remaining_failures": [
+      "recording 47 at every tested offset",
+      "recording 45 at 250 ms offset"
+    ]
+  },
+  "validated_desktop_package": {
+    "filename": "com.domicube.phoneme-matching-0.8.5.tgz",
+    "sha256": "fd2f15370c979a78bff1e6d9d362d60ef263670482a1ec5939da0628c4586a9c",
+    "bytes": 202996,
+    "note": "Archive validated and delivered before this documentation update; not regenerated by the documentation commit."
+  }
+}

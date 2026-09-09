@@ -34,9 +34,9 @@ def test_known_model_error_is_withheld_but_raw_contract_is_preserved():
     result = feedback()
     before = result.to_dict()
     html = confirmed_feedback_html(tester, result, candidate(), "ko")
-    primary = html.split("<details>", 1)[0]
-    assert "판단 보류" in primary
-    assert "발음 지적을 보류" in primary
+    primary = html.split("<details", 1)[0]
+    assert "발음에 문제 없어요." in primary
+    assert "보류" not in primary
     assert "빠’가 ‘바" not in primary
     assert "빠 → 바" in html  # original comparison remains in closed details
     assert result.to_dict() == before
@@ -45,9 +45,26 @@ def test_known_model_error_is_withheld_but_raw_contract_is_preserved():
 def test_child_error_table_is_not_used_for_adult_profile():
     tester = AudioTester(targets_path=None, matrix_path=ROOT / "shared/confusion_matrices/ko_child_v1.json")
     html = confirmed_feedback_html(tester, feedback(), candidate(), "ko")
-    primary = html.split("<details>", 1)[0]
-    assert "모델 오류표가 없습니다" in primary
-    assert "빠’가 ‘바" in primary
+    primary = html.split("<details", 1)[0]
+    assert "모델 오류표가 없습니다" not in primary
+    assert "빠’가 ‘바" not in primary
+    assert "발음에 문제 없어요." in primary
+    assert "보류" not in primary
+
+
+def test_mixed_syllable_card_does_not_criticize_a_withheld_hint():
+    tester = AudioTester(targets_path=None, matrix_path=ROOT / "shared/confusion_matrices/ko_child_v2.json")
+    result = MatchResult(
+        target_id="mixed", target_text="노", score=.9, threshold=.7, passed=True, distance=.2,
+        target_phonemes=["n", "o"], user_phonemes=["ɾ", "ʌ"], window_end=2,
+        alignment=[("ɾ", "n", "sub"), ("ʌ", "o", "sub")])
+    html = confirmed_feedback_html(tester, PronunciationFeedback.from_match(result, 2, 2),
+        {"syllables": [{"text": "노", "span": [0, 2]}]}, "ko")
+    primary = html.split("<details", 1)[0]
+    assert "발음에 문제 없어요." in primary
+    assert "보류" not in primary
+    assert "노 → 러" not in primary
+    assert "흐림" not in primary
 
 
 def test_report_text_is_escaped():

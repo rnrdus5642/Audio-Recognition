@@ -32,7 +32,7 @@ namespace DomiCube.PhonemeMatching
     [JsonObject(NamingStrategyType = typeof(SnakeCaseNamingStrategy))]
     public sealed class PronunciationFeedback
     {
-        public int SchemaVersion = 2;
+        public int SchemaVersion = 3;
         public string TargetId;
         public string TargetText;
         public double Score;
@@ -52,6 +52,9 @@ namespace DomiCube.PhonemeMatching
         public int DeletionCount;
         public int InsertionCount;
         public KoreanFeedback KoreanFeedback = new KoreanFeedback();
+        public KoreanFeedback RawKoreanFeedback = new KoreanFeedback();
+        public FeedbackReview FeedbackReview = new FeedbackReview();
+        [JsonIgnore] internal bool AcousticRecovery;
 
         /// <summary>
         /// Preserve full-input indices even when context limiting moved
@@ -59,11 +62,12 @@ namespace DomiCube.PhonemeMatching
         /// reported as inserted sounds in the answer.
         /// </summary>
         public static PronunciationFeedback FromMatch(
-            MatchResult result, int frames, int streak)
+            MatchResult result, int frames, int streak, string matrixId = null, ModelErrorProfile modelErrors = null)
         {
             if (result == null) throw new ArgumentNullException(nameof(result));
             var feedback = new PronunciationFeedback
             {
+                AcousticRecovery = result.AcousticEvidence != null,
                 TargetId = result.TargetId,
                 TargetText = result.TargetText,
                 Score = result.Score,
@@ -118,9 +122,14 @@ namespace DomiCube.PhonemeMatching
             // Exact mode currently emits no trace. Missing alignment
             // must not be displayed as "no pronunciation differences".
             feedback.AlignmentAvailable = feedback.Alignment.Count > 0;
-            feedback.KoreanFeedback = KoreanFeedbackBuilder.Build(feedback);
+            feedback.RawKoreanFeedback = KoreanFeedbackBuilder.Build(feedback);
+            feedback.ApplyModelErrors(matrixId, modelErrors);
             return feedback;
         }
+
+        /// <summary>Only changes learner guidance; scoring and raw comparisons stay intact.</summary>
+        public void ApplyModelErrors(string matrixId, ModelErrorProfile modelErrors = null) =>
+            ModelFeedback.Apply(this, matrixId, modelErrors);
     }
 
     /// <summary>Korean UI-ready explanations; the raw alignment remains authoritative.</summary>

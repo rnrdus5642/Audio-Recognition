@@ -17,12 +17,34 @@ namespace DomiCube.PhonemeMatching
 
         /// <summary>Consecutive windows the leader has held.</summary>
         public int Streak;
+        /// <summary>Required windows for the selected word, including its override.</summary>
+        public int RequiredFrames;
 
         /// <summary>The answer is confirmed and the session has ended.</summary>
         public bool Confirmed;
 
         /// <summary>Confirmation snapshot, or null before confirmation.</summary>
         public PronunciationFeedback Feedback;
+
+        /// <summary>
+        /// Which 16 kHz sample this window ended on, or -1 when the
+        /// window was handed over directly and the session has no idea
+        /// where it came from.
+        /// </summary>
+        public long EndSampleIndex = -1;
+
+        /// <summary>Unmodified input window levels, before model preprocessing.</summary>
+        public double AudioRms;
+        public double AudioPeak;
+
+        /// <summary>Why this frame did or did not confirm; never a pronunciation diagnosis.</summary>
+        public string DecisionReason => Confirmed ? "confirmed"
+            : Phonemes == null || Phonemes.Count == 0 ? "no_recognized_phonemes"
+            : Best == null || Best.TargetId == null ? "no_candidate"
+            : Best.Score < Best.Threshold ? "below_threshold"
+            : Best.WholeRejected ? "whole_utterance_rejected"
+            : Best.CompetitorRejected ? "other_action_scored_higher"
+            : Best.Passed ? "waiting_for_confirmation" : "rejected";
     }
 
     /// <summary>
@@ -43,6 +65,16 @@ namespace DomiCube.PhonemeMatching
     ///     var frame = session.Push(window);
     ///     if (frame.Confirmed) { ... }   // session is over
     ///
+    /// When the audio arrives in chunks instead, give the constructor an
+    /// <see cref="AudioWindowBuffer"/> built with a hop and drain whole
+    /// frames - then how often the capture callback fires cannot change
+    /// when the answer confirms:
+    ///
+    ///     var buffer = new AudioWindowBuffer(2.5f, 0.5f);
+    ///     var session = new PronunciationSession(m, c, r, 2, buffer);
+    ///     buffer.Append(chunk, rate);
+    ///     while (session.TryPush(out var frame)) { ... }
+    ///
     /// Feed the most recent window each time, NOT successive chunks:
     /// wav2vec2 is a context model and short isolated fragments come back
     /// garbled (measured on a 4.4 s utterance, 0.5 s chunks lost a
@@ -58,6 +90,7 @@ namespace DomiCube.PhonemeMatching
         private readonly IPhonemeRecognizer _recognizer;
         private readonly int _consecutive;
         private readonly AudioWindowBuffer _buffer;
+        private readonly ModelErrorProfile _feedbackErrors;
 
         private Matcher _matcher;
         private StreamingMatcher _streaming;
@@ -74,9 +107,10 @@ namespace DomiCube.PhonemeMatching
             TargetCatalog catalog,
             IPhonemeRecognizer recognizer,
             int consecutive = 2,
-            AudioWindowBuffer buffer = null)
+            AudioWindowBuffer buffer = null, ModelErrorProfile feedbackErrors = null)
         {
             _buffer = buffer;
+            _feedbackErrors = feedbackErrors;
             _matrix = matrix ?? throw new ArgumentNullException(nameof(matrix));
             _catalog = catalog ?? throw new ArgumentNullException(nameof(catalog));
             _recognizer = recognizer
@@ -160,7 +194,7 @@ namespace DomiCube.PhonemeMatching
         {
             _matcher = Matcher.ForStreaming(_matrix);
             _streaming = new StreamingMatcher(
-                _matcher, _candidates, _consecutive);
+                _matcher, _candidates, _consecutive, _feedbackErrors);
 
             // Whatever is still in the window belongs to the last
             // question - usually the answer just confirmed, which would
@@ -169,8 +203,29 @@ namespace DomiCube.PhonemeMatching
             IsActive = true;
         }
 
-        /// <summary>Stop without a confirmation.</summary>
+        /// <summary>
+        /// Stop without a confirmation.
+        ///
+        /// Empties the buffer this session was given, if it has one: an
+        /// unread frame and a half-finished hop both belong to the
+        /// question that just ended, and either one carried into the next
+        /// question would put audio nobody asked for at the front of it.
+        ///
+        /// <see cref="LastConfirmation"/> survives. It is the record of
+        /// what happened, and callers read it after ending.
+        /// </summary>
         public void End()
+        {
+            IsActive = false;
+            _streaming = null;
+            _buffer?.Reset();
+        }
+
+        /// <summary>
+        /// Abandon the session without touching the buffer, so a framing
+        /// fault stays readable on the buffer that raised it.
+        /// </summary>
+        private void Invalidate()
         {
             IsActive = false;
             _streaming = null;
@@ -198,11 +253,12 @@ namespace DomiCube.PhonemeMatching
             _recognizer.RecognizeWithText(
                 audioWindow16kMono, out string text, out var phonemes);
 
-            var hit = _streaming.Push(phonemes);
+            var evidence = AcousticEvidence.Collect(_recognizer, _candidates);
+            var hit = _streaming.Push(phonemes, evidence);
 
             // Scored again for reporting: the streak only tells us
             // whether the leader held, not who led or by how much.
-            var best = _matcher.BestMatch(phonemes, _candidates);
+            var best = _matcher.BestMatch(phonemes, _candidates, evidence);
 
             var frame = new FrameScore
             {
@@ -210,8 +266,18 @@ namespace DomiCube.PhonemeMatching
                 Phonemes = phonemes ?? new List<string>(),
                 Best = best,
                 Streak = _streaming.Streak,
+                RequiredFrames = _streaming.RequiredFrames(best.TargetId),
                 Confirmed = hit != null
             };
+            double energy = 0.0;
+            foreach (float sample in audioWindow16kMono)
+            {
+                double absolute = Math.Abs((double)sample);
+                frame.AudioPeak = Math.Max(frame.AudioPeak, absolute);
+                energy += (double)sample * sample;
+            }
+            frame.AudioRms = audioWindow16kMono.Length == 0 ? 0.0
+                : Math.Sqrt(energy / audioWindow16kMono.Length);
 
             if (hit != null)
             {
@@ -225,8 +291,13 @@ namespace DomiCube.PhonemeMatching
         }
 
         /// <summary>
-        /// Score the buffer this session was constructed with. Same as
-        /// <c>Push(buffer.Snapshot())</c>.
+        /// Score whatever is in the buffer right now. Exactly
+        /// <c>Push(buffer.Snapshot())</c>, and manual in the same way:
+        /// it scores on being asked, not on new audio, so calling it on a
+        /// timer makes the frame count follow the timer. It is kept for
+        /// callers who already drive their own clock and want that.
+        ///
+        /// Prefer <see cref="TryPush"/> when the buffer has a hop.
         /// </summary>
         public FrameScore Push()
         {
@@ -238,6 +309,87 @@ namespace DomiCube.PhonemeMatching
             }
 
             return Push(_buffer.Snapshot());
+        }
+
+        /// <summary>
+        /// Score the next whole hop of new audio, if one has arrived.
+        ///
+        /// Returns false - and runs no inference - when the buffer holds
+        /// only part of a hop, so a caller may poll as often as it likes
+        /// without changing what gets scored. Drain in a loop; the frames
+        /// come out in the order the audio did:
+        ///
+        ///     while (session.TryPush(out var frame)) { ... }
+        ///
+        /// False once the session has confirmed or ended, which stops the
+        /// loop on the confirming frame rather than scoring audio that
+        /// arrived in the same chunk after the answer was already in.
+        ///
+        /// Requires a buffer built with a hop; throws otherwise rather
+        /// than quietly behaving like the polling API.
+        /// </summary>
+        public bool TryPush(out FrameScore frame)
+        {
+            frame = null;
+            if (_buffer == null)
+            {
+                throw new InvalidOperationException(
+                    "no AudioWindowBuffer was given to the constructor; "
+                    + "pass the window to Push(float[]) instead");
+            }
+
+            if (_candidates == null)
+            {
+                // Never begun is a caller mistake and reads the same as
+                // "nothing to score" unless it is said out loud.
+                throw new InvalidOperationException(
+                    "call Begin() before TryPush()");
+            }
+
+            if (!IsActive)
+            {
+                return false;
+            }
+
+            HopFrame hop;
+            try
+            {
+                if (!_buffer.TryReadFrame(out hop))
+                {
+                    return false;
+                }
+            }
+            catch
+            {
+                // Frames were lost, so the streak has stopped meaning
+                // "consecutive windows of audio" and a confirmation built
+                // on it would be unreproducible. Throw the session away
+                // and make the caller Begin() again - clearing the buffer
+                // is not enough to make the old streak trustworthy.
+                Invalidate();
+                throw;
+            }
+
+            // Read before scoring: confirming ends the session, which
+            // clears the buffer the frame came from.
+            long endSample = hop.EndSampleIndex;
+            try
+            {
+                frame = Push(hop.Window);
+            }
+            catch
+            {
+                // The hop is spent either way. A caller that catches this
+                // and carries on would otherwise join the frame before it
+                // to the frame after it and call them consecutive, so the
+                // streak goes with the frame that failed.
+                frame = null;
+                Invalidate();
+                throw;
+            }
+
+            frame.EndSampleIndex = endSample;
+            return true;
         }
 
         private Answer FindAnswer(string text)

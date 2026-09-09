@@ -21,7 +21,16 @@ python python/tools/child_tuning/frames.py --model <체크포인트> --tag child
 python python/tools/child_tuning/frames.py --isolated --neg 0 --tag child-iso
 python python/tools/child_tuning/build_reference.py     # 기준 데이터 두 파일
 python python/tools/child_tuning/fit_streaming.py       # 프로필 탐색
-python python/tools/child_tuning/derive_thresholds.py   # 단어별 임계값
+python python/tools/child_tuning/derive_thresholds.py --exact-single-frame \
+    --out shared/thresholds_child.json                  # 단어별 임계값 + 확정 정책
+# 세 개의 아동용 카탈로그 사본을 같은 정책으로 다시 만든다
+python -m python.build.build_targets --thresholds shared/thresholds_child.json \
+    --matrix-id ko_child_v2 --output shared/targets_child.json
+python -m python.build.build_targets --thresholds shared/thresholds_child.json \
+    --matrix-id ko_child_v2 --output unity/Assets/StreamingAssets/targets_child.json
+python -m python.build.build_targets --thresholds shared/thresholds_child.json \
+    --matrix-id ko_child_v2 \
+    --output "unity/Packages/com.domicube.phoneme-matching/Samples~/KoreanData/targets_child.json"
 python python/tools/child_tuning/compare.py base child  # 비교
 ```
 
@@ -250,11 +259,17 @@ catastrophic forgetting 을 막으려고 성인 데이터를 섞는 것이 표�
 ```
 놔    어휘에 없음 → 어떤 발음을 해도 전사 불가
       커리큘럼 `놔`·`놔요` 가 여기 걸림
-      코퍼스에도 64건뿐이라 어휘를 늘려도 제대로 안 배움
 ```
 
-29단어 중 이 둘만 해당되고, 이건 어휘 문제가 아니라 **단어 선정 문제**입니다.
-다른 동사로 바꾸는 것이 맞습니다.
+29단어 중 이 둘만 해당됩니다.
+
+> **2026-09-06 정정.** 원래 여기 "코퍼스에도 64건뿐이라 어휘를 늘려도 제대로
+> 안 배움" 과 "단어 선정 문제이므로 다른 동사로 바꾸는 것이 맞다"가 적혀
+> 있었습니다. 앞의 수치는 틀렸습니다 — 분할에 배정된 전사 기준으로 다시
+> 세니 train 235발화 · 화자 179명입니다. 뒤의 결론은 그 수치에 기대고
+> 있었으므로 함께 보류합니다. 자세한 것은
+> `python/tools/child_finetune/validation-vocab-2026-09-06.md` 를 보세요.
+> 위 2026-08-18 결정 자체(배포 어휘를 그대로 둔다)는 지금도 유효합니다.
 
 ### 앱에서 고르는 방법
 
