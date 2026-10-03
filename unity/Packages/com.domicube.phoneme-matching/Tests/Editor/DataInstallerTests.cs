@@ -10,7 +10,7 @@ namespace DomiCube.PhonemeMatching.Editor.Tests
         private static readonly string[] FileNames =
         {
             "ko_child_v1.json", "targets.json", "ko_child_v2.json",
-            "targets_child.json", "targets_music_demo.json", "wav2vec2_ko_vocab.json"
+            "targets_child.json", "wav2vec2_ko_vocab.json"
         };
         private string _root;
         private string _source;
@@ -42,12 +42,12 @@ namespace DomiCube.PhonemeMatching.Editor.Tests
         }
 
         [Test]
-        public void FreshSetupInstallsAllSixFilesWithoutAnOverwritePrompt()
+        public void FreshSetupInstallsAllFiveFilesWithoutAnOverwritePrompt()
         {
             bool ok = DataInstaller.InstallFiles(_source, _destination, false,
                 _ => throw new Exception("Missing-only setup must not prompt"), out int copied);
             Assert.That(ok, Is.True);
-            Assert.That(copied, Is.EqualTo(6));
+            Assert.That(copied, Is.EqualTo(5));
             AssertDefaults();
         }
 
@@ -64,14 +64,14 @@ namespace DomiCube.PhonemeMatching.Editor.Tests
             });
             Assert.That(DataInstaller.InstallFiles(_source, _destination, false,
                 _ => throw new Exception("Existing data must be preserved"), out int copied), Is.True);
-            Assert.That(copied, Is.EqualTo(3));
+            Assert.That(copied, Is.EqualTo(2));
             foreach (string file in adultFiles)
             {
                 string path = Path.Combine(_destination, file);
                 Assert.That(File.ReadAllText(path), Is.EqualTo("custom word / threshold / data: " + file));
                 Assert.That(File.GetLastWriteTimeUtc(path), Is.EqualTo(timestamps[file]));
             }
-            foreach (string file in new[] { "ko_child_v2.json", "targets_child.json", "targets_music_demo.json" })
+            foreach (string file in new[] { "ko_child_v2.json", "targets_child.json" })
                 Assert.That(File.ReadAllBytes(Path.Combine(_destination, file)),
                     Is.EqualTo(File.ReadAllBytes(Path.Combine(_source, file))));
         }
@@ -104,7 +104,7 @@ namespace DomiCube.PhonemeMatching.Editor.Tests
             }, out int copied);
             Assert.That(ok, Is.True);
             Assert.That(prompts, Is.EqualTo(1));
-            Assert.That(copied, Is.EqualTo(6));
+            Assert.That(copied, Is.EqualTo(5));
             AssertDefaults();
         }
 

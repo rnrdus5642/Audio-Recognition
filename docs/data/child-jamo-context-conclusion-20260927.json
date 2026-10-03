@@ -1,0 +1,476 @@
+{
+  "complete": true,
+  "outcome": "No demonstrated incremental benefit from either tested silence/gain policy over matched original-only fine-tuning; original diagnostic failures remain.",
+  "configuration": {
+    "training_clips": 4096,
+    "epochs": 2,
+    "seeds": [
+      92801,
+      92802
+    ],
+    "stride_ms": 20,
+    "trainable_transformer_layers": 8,
+    "trained_models": 6,
+    "full_encoder_experiment_executed": false
+  },
+  "primary_models": [
+    {
+      "experiment": "context-variation-20260927",
+      "seed": null,
+      "arm": "parent",
+      "clean_errors": 979,
+      "clean_reference_jamo": 33182,
+      "stress_errors": 1165,
+      "stress_reference_jamo": 34650,
+      "stress_output_changes": 179,
+      "personal_original_exact": 2
+    },
+    {
+      "experiment": "context-variation-20260927",
+      "seed": 92801,
+      "arm": "control",
+      "clean_errors": 990,
+      "clean_reference_jamo": 33182,
+      "stress_errors": 1162,
+      "stress_reference_jamo": 34650,
+      "stress_output_changes": 161,
+      "personal_original_exact": 3
+    },
+    {
+      "experiment": "context-variation-20260927",
+      "seed": 92801,
+      "arm": "combined",
+      "clean_errors": 982,
+      "clean_reference_jamo": 33182,
+      "stress_errors": 1157,
+      "stress_reference_jamo": 34650,
+      "stress_output_changes": 170,
+      "personal_original_exact": 3
+    },
+    {
+      "experiment": "context-variation-20260927",
+      "seed": 92802,
+      "arm": "control",
+      "clean_errors": 982,
+      "clean_reference_jamo": 33182,
+      "stress_errors": 1179,
+      "stress_reference_jamo": 34650,
+      "stress_output_changes": 175,
+      "personal_original_exact": 3
+    },
+    {
+      "experiment": "context-variation-20260927",
+      "seed": 92802,
+      "arm": "combined",
+      "clean_errors": 986,
+      "clean_reference_jamo": 33182,
+      "stress_errors": 1180,
+      "stress_reference_jamo": 34650,
+      "stress_output_changes": 171,
+      "personal_original_exact": 2
+    },
+    {
+      "experiment": "context-span-20260927",
+      "seed": 92801,
+      "arm": "combined",
+      "clean_errors": 981,
+      "clean_reference_jamo": 33182,
+      "stress_errors": 1167,
+      "stress_reference_jamo": 34650,
+      "stress_output_changes": 166,
+      "personal_original_exact": 2
+    },
+    {
+      "experiment": "context-span-20260927",
+      "seed": 92802,
+      "arm": "combined",
+      "clean_errors": 986,
+      "clean_reference_jamo": 33182,
+      "stress_errors": 1181,
+      "stress_reference_jamo": 34650,
+      "stress_output_changes": 161,
+      "personal_original_exact": 2
+    }
+  ],
+  "all_candidates_passed_primary_gates": false,
+  "source_reports": {
+    "child-jamo-context-variation-20260927.json": "a662dc26394a415c3a43c97378c4f45c8559d793a34f75fb2b5c9a14f29dbdb1",
+    "child-jamo-context-span-20260927.json": "921d8523ee47b085a60e767c1970b7eae95948fb7bda3187dcca02caa75580c3",
+    "child-jamo-context-input-audit-20260927.json": "2ba48db9f34a7df21add10fa8c5fcef2ae9f380a08f6923940821fae4e955fb0",
+    "child-jamo-context-phase-probe-20260927.json": "092a3e5430d254b3552094ea4e9462dee7ccb4a56f92da7dcd533abd34f9c7c8",
+    "child-jamo-context-span-probe-20260927.json": "88bec939cd39a5ad34e9a9214732ca7bc2d0ab8fead7ea3c36189a23e08aae6b"
+  },
+  "shortening_probe": {
+    "complete": true,
+    "input_audit": {
+      "human_verified_training": {
+        "clips": 6,
+        "shortened_clips": 2,
+        "original_under_1_5s": 0,
+        "shortened_under_1_5s": 0,
+        "ctc_length_fallbacks": 0
+      },
+      "inline_train": {
+        "clips": 6,
+        "shortened_clips": 5,
+        "original_under_1_5s": 0,
+        "shortened_under_1_5s": 2,
+        "ctc_length_fallbacks": 0
+      },
+      "inline_valid": {
+        "clips": 4,
+        "shortened_clips": 4,
+        "original_under_1_5s": 0,
+        "shortened_under_1_5s": 3,
+        "ctc_length_fallbacks": 0
+      },
+      "personal_diagnostic": {
+        "clips": 11,
+        "shortened_clips": 0,
+        "original_under_1_5s": 10,
+        "shortened_under_1_5s": 10,
+        "ctc_length_fallbacks": 0
+      },
+      "validation": {
+        "clips": 256,
+        "shortened_clips": 174,
+        "original_under_1_5s": 0,
+        "shortened_under_1_5s": 4,
+        "ctc_length_fallbacks": 0
+      }
+    },
+    "changed_validation_only": {
+      "parent": {
+        "original": {
+          "recordings": 174,
+          "exact": 132,
+          "errors": 116,
+          "reference_jamo": 4053,
+          "jer": 0.028620774734764372,
+          "changed_from_original": 0,
+          "original_correct_lost": 0
+        },
+        "shortened": {
+          "recordings": 174,
+          "exact": 132,
+          "errors": 122,
+          "reference_jamo": 4053,
+          "jer": 0.030101159634838393,
+          "changed_from_original": 23,
+          "original_correct_lost": 3
+        },
+        "transformed_total": {
+          "recordings": 174,
+          "exact": 132,
+          "errors": 122,
+          "reference_jamo": 4053,
+          "jer": 0.030101159634838393,
+          "changed_from_original": 23
+        }
+      },
+      "92801/control": {
+        "original": {
+          "recordings": 174,
+          "exact": 132,
+          "errors": 116,
+          "reference_jamo": 4053,
+          "jer": 0.028620774734764372,
+          "changed_from_original": 0,
+          "original_correct_lost": 0
+        },
+        "shortened": {
+          "recordings": 174,
+          "exact": 134,
+          "errors": 122,
+          "reference_jamo": 4053,
+          "jer": 0.030101159634838393,
+          "changed_from_original": 18,
+          "original_correct_lost": 2
+        },
+        "transformed_total": {
+          "recordings": 174,
+          "exact": 134,
+          "errors": 122,
+          "reference_jamo": 4053,
+          "jer": 0.030101159634838393,
+          "changed_from_original": 18
+        }
+      },
+      "92801/added_silence": {
+        "original": {
+          "recordings": 174,
+          "exact": 132,
+          "errors": 116,
+          "reference_jamo": 4053,
+          "jer": 0.028620774734764372,
+          "changed_from_original": 0,
+          "original_correct_lost": 0
+        },
+        "shortened": {
+          "recordings": 174,
+          "exact": 132,
+          "errors": 122,
+          "reference_jamo": 4053,
+          "jer": 0.030101159634838393,
+          "changed_from_original": 18,
+          "original_correct_lost": 2
+        },
+        "transformed_total": {
+          "recordings": 174,
+          "exact": 132,
+          "errors": 122,
+          "reference_jamo": 4053,
+          "jer": 0.030101159634838393,
+          "changed_from_original": 18
+        }
+      },
+      "92801/existing_margin": {
+        "original": {
+          "recordings": 174,
+          "exact": 132,
+          "errors": 117,
+          "reference_jamo": 4053,
+          "jer": 0.028867505551443375,
+          "changed_from_original": 0,
+          "original_correct_lost": 0
+        },
+        "shortened": {
+          "recordings": 174,
+          "exact": 132,
+          "errors": 123,
+          "reference_jamo": 4053,
+          "jer": 0.030347890451517395,
+          "changed_from_original": 21,
+          "original_correct_lost": 2
+        },
+        "transformed_total": {
+          "recordings": 174,
+          "exact": 132,
+          "errors": 123,
+          "reference_jamo": 4053,
+          "jer": 0.030347890451517395,
+          "changed_from_original": 21
+        }
+      },
+      "92802/control": {
+        "original": {
+          "recordings": 174,
+          "exact": 131,
+          "errors": 121,
+          "reference_jamo": 4053,
+          "jer": 0.02985442881815939,
+          "changed_from_original": 0,
+          "original_correct_lost": 0
+        },
+        "shortened": {
+          "recordings": 174,
+          "exact": 132,
+          "errors": 125,
+          "reference_jamo": 4053,
+          "jer": 0.0308413520848754,
+          "changed_from_original": 20,
+          "original_correct_lost": 2
+        },
+        "transformed_total": {
+          "recordings": 174,
+          "exact": 132,
+          "errors": 125,
+          "reference_jamo": 4053,
+          "jer": 0.0308413520848754,
+          "changed_from_original": 20
+        }
+      },
+      "92802/added_silence": {
+        "original": {
+          "recordings": 174,
+          "exact": 130,
+          "errors": 122,
+          "reference_jamo": 4053,
+          "jer": 0.030101159634838393,
+          "changed_from_original": 0,
+          "original_correct_lost": 0
+        },
+        "shortened": {
+          "recordings": 174,
+          "exact": 129,
+          "errors": 127,
+          "reference_jamo": 4053,
+          "jer": 0.031334813718233406,
+          "changed_from_original": 22,
+          "original_correct_lost": 3
+        },
+        "transformed_total": {
+          "recordings": 174,
+          "exact": 129,
+          "errors": 127,
+          "reference_jamo": 4053,
+          "jer": 0.031334813718233406,
+          "changed_from_original": 22
+        }
+      },
+      "92802/existing_margin": {
+        "original": {
+          "recordings": 174,
+          "exact": 132,
+          "errors": 118,
+          "reference_jamo": 4053,
+          "jer": 0.029114236368122378,
+          "changed_from_original": 0,
+          "original_correct_lost": 0
+        },
+        "shortened": {
+          "recordings": 174,
+          "exact": 131,
+          "errors": 125,
+          "reference_jamo": 4053,
+          "jer": 0.0308413520848754,
+          "changed_from_original": 19,
+          "original_correct_lost": 3
+        },
+        "transformed_total": {
+          "recordings": 174,
+          "exact": 131,
+          "errors": 125,
+          "reference_jamo": 4053,
+          "jer": 0.0308413520848754,
+          "changed_from_original": 19
+        }
+      }
+    },
+    "uncertainty": {
+      "92801_versus_parent_all": {
+        "candidate_minus_comparator_jer": 0.00017316017316017316,
+        "speaker_cluster_bootstrap_95ci": [
+          -0.0011069023952198552,
+          0.0015006635759617626
+        ],
+        "speakers": 150,
+        "resamples": 10000,
+        "scope": "Exploratory interval on the fixed validation subset; repeated variants are not independent samples."
+      },
+      "92801_versus_parent_changed_only": {
+        "candidate_minus_comparator_jer": 0.0002467308166790032,
+        "speaker_cluster_bootstrap_95ci": [
+          -0.0012231219248999962,
+          0.0017857598861812337
+        ],
+        "speakers": 114,
+        "resamples": 10000,
+        "scope": "Exploratory interval on the fixed validation subset; repeated variants are not independent samples."
+      },
+      "92801_versus_92801/control_all": {
+        "candidate_minus_comparator_jer": 0.00017316017316017316,
+        "speaker_cluster_bootstrap_95ci": [
+          -0.0007109910348165068,
+          0.0010509951807104597
+        ],
+        "speakers": 150,
+        "resamples": 10000,
+        "scope": "Exploratory interval on the fixed validation subset; repeated variants are not independent samples."
+      },
+      "92801_versus_92801/control_changed_only": {
+        "candidate_minus_comparator_jer": 0.0002467308166790032,
+        "speaker_cluster_bootstrap_95ci": [
+          -0.0008006565508817309,
+          0.0013181164178527973
+        ],
+        "speakers": 114,
+        "resamples": 10000,
+        "scope": "Exploratory interval on the fixed validation subset; repeated variants are not independent samples."
+      },
+      "92801_versus_92801/added_silence_all": {
+        "candidate_minus_comparator_jer": 0.0,
+        "speaker_cluster_bootstrap_95ci": [
+          -0.0009829193382899478,
+          0.000891587427525253
+        ],
+        "speakers": 150,
+        "resamples": 10000,
+        "scope": "Exploratory interval on the fixed validation subset; repeated variants are not independent samples."
+      },
+      "92801_versus_92801/added_silence_changed_only": {
+        "candidate_minus_comparator_jer": 0.0002467308166790032,
+        "speaker_cluster_bootstrap_95ci": [
+          -0.0007961942040754181,
+          0.001293033833267913
+        ],
+        "speakers": 114,
+        "resamples": 10000,
+        "scope": "Exploratory interval on the fixed validation subset; repeated variants are not independent samples."
+      },
+      "92802_versus_parent_all": {
+        "candidate_minus_comparator_jer": 0.0006926406926406926,
+        "speaker_cluster_bootstrap_95ci": [
+          -0.0007053523062462799,
+          0.002139129982574265
+        ],
+        "speakers": 150,
+        "resamples": 10000,
+        "scope": "Exploratory interval on the fixed validation subset; repeated variants are not independent samples."
+      },
+      "92802_versus_parent_changed_only": {
+        "candidate_minus_comparator_jer": 0.0007401924500370096,
+        "speaker_cluster_bootstrap_95ci": [
+          -0.0009869476412101277,
+          0.002536799450957946
+        ],
+        "speakers": 114,
+        "resamples": 10000,
+        "scope": "Exploratory interval on the fixed validation subset; repeated variants are not independent samples."
+      },
+      "92802_versus_92802/control_all": {
+        "candidate_minus_comparator_jer": -0.00017316017316017316,
+        "speaker_cluster_bootstrap_95ci": [
+          -0.0010842705451544312,
+          0.0006938451602884909
+        ],
+        "speakers": 150,
+        "resamples": 10000,
+        "scope": "Exploratory interval on the fixed validation subset; repeated variants are not independent samples."
+      },
+      "92802_versus_92802/control_changed_only": {
+        "candidate_minus_comparator_jer": 0.0,
+        "speaker_cluster_bootstrap_95ci": [
+          -0.0012174558982880463,
+          0.0012109616315548774
+        ],
+        "speakers": 114,
+        "resamples": 10000,
+        "scope": "Exploratory interval on the fixed validation subset; repeated variants are not independent samples."
+      },
+      "92802_versus_92802/added_silence_all": {
+        "candidate_minus_comparator_jer": -0.0005194805194805195,
+        "speaker_cluster_bootstrap_95ci": [
+          -0.001459361389649211,
+          0.0003491650600905016
+        ],
+        "speakers": 150,
+        "resamples": 10000,
+        "scope": "Exploratory interval on the fixed validation subset; repeated variants are not independent samples."
+      },
+      "92802_versus_92802/added_silence_changed_only": {
+        "candidate_minus_comparator_jer": -0.0004934616333580064,
+        "speaker_cluster_bootstrap_95ci": [
+          -0.0017430822086870667,
+          0.000673295000056558
+        ],
+        "speakers": 114,
+        "resamples": 10000,
+        "scope": "Exploratory interval on the fixed validation subset; repeated variants are not independent samples."
+      }
+    },
+    "reload_parity_clips_per_model": 27
+  },
+  "original_model_unchanged": true,
+  "original_model_sha256": "5a330f1bea3a17d1d063fdfd71a0cc25394695b0b797de01b293f6f688257aa7",
+  "candidate_promoted": false,
+  "original_problem_solved": false,
+  "test_split_used": false,
+  "related_unit_tests_passed": 13,
+  "human_labels_are_provisional": true,
+  "new_human_questions": 0,
+  "recommendation": "Prioritize explicitly verified short-utterance sound contrasts and evaluation on separate speakers before scaling training; do not extend the same augmentation-only configuration as if it had shown benefit.",
+  "report": "docs/CHILD_JAMO_CONTEXT_CONCLUSION_2026-09-27.md",
+  "any_candidate_passed_primary_gates": false,
+  "report_sha256": "7312226521e7f8810d2f1cce0d5c8612f360928f44cec06e757e027112859d37"
+}

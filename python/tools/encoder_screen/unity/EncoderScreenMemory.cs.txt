@@ -1,0 +1,85 @@
+using System;
+using System.Collections.Generic;
+using System.Runtime.InteropServices;
+
+// Native Windows counters are needed because the Mono Process/Profiler fields
+// returned zero in a release player. These values belong to this process.
+public static class EncoderScreenMemory
+{
+    [StructLayout(LayoutKind.Sequential)] struct ProcessCounters
+    {
+        public uint cb, pageFaultCount;
+        public UIntPtr peakWorkingSet, workingSet, peakPagedPool, pagedPool,
+            peakNonPagedPool, nonPagedPool, pagefileUsage, peakPagefileUsage, privateUsage;
+    }
+    [StructLayout(LayoutKind.Sequential, CharSet=CharSet.Unicode)] struct AdapterDesc
+    {
+        [MarshalAs(UnmanagedType.ByValTStr,SizeConst=128)] public string description;
+        public uint vendorId, deviceId, subSysId, revision;
+        public UIntPtr dedicatedVideoMemory, dedicatedSystemMemory, sharedSystemMemory;
+        public long luid; public uint flags;
+    }
+    [StructLayout(LayoutKind.Sequential)] struct VideoInfo
+    { public ulong budget, currentUsage, availableReservation, currentReservation; }
+    [DllImport("kernel32.dll")] static extern IntPtr GetCurrentProcess();
+    [DllImport("psapi.dll",SetLastError=true)] static extern bool GetProcessMemoryInfo(IntPtr process,out ProcessCounters counters,uint size);
+    [DllImport("dxgi.dll")] static extern int CreateDXGIFactory1(ref Guid iid,out IntPtr factory);
+    [UnmanagedFunctionPointer(CallingConvention.StdCall)] delegate int EnumAdapters(IntPtr self,uint index,out IntPtr adapter);
+    [UnmanagedFunctionPointer(CallingConvention.StdCall)] delegate int GetDesc(IntPtr self,out AdapterDesc desc);
+    [UnmanagedFunctionPointer(CallingConvention.StdCall)] delegate int QueryMemory(IntPtr self,uint node,uint segment,out VideoInfo info);
+    static T Method<T>(IntPtr obj,int slot) where T:class
+    {
+        var address=Marshal.ReadIntPtr(Marshal.ReadIntPtr(obj),slot*IntPtr.Size);
+        return Marshal.GetDelegateForFunctionPointer(address,typeof(T)) as T;
+    }
+    public static Dictionary<string,object> Capture(string adapterName)
+    {
+        var result=new Dictionary<string,object>();
+        ProcessCounters counters;
+        if(GetProcessMemoryInfo(GetCurrentProcess(),out counters,(uint)Marshal.SizeOf(typeof(ProcessCounters))))
+        {
+            result["working_set_bytes"]=counters.workingSet.ToUInt64();
+            result["peak_working_set_bytes"]=counters.peakWorkingSet.ToUInt64();
+            result["private_commit_bytes"]=counters.privateUsage.ToUInt64();
+            result["peak_private_commit_bytes"]=counters.peakPagefileUsage.ToUInt64();
+        }
+        else result["process_memory_error"]=Marshal.GetLastWin32Error();
+        IntPtr factory=IntPtr.Zero;
+        try
+        {
+            var factoryId=new Guid("770aae78-f26f-4dba-a829-253c83d1b387");
+            Marshal.ThrowExceptionForHR(CreateDXGIFactory1(ref factoryId,out factory));
+            var enumerate=Method<EnumAdapters>(factory,12);
+            for(uint i=0;i<16;i++)
+            {
+                IntPtr adapter;
+                if(enumerate(factory,i,out adapter)!=0)break;
+                try
+                {
+                    AdapterDesc desc;Marshal.ThrowExceptionForHR(Method<GetDesc>(adapter,10)(adapter,out desc));
+                    if(desc.description.Trim()!=adapterName.Trim())continue;
+                    result["adapter"]=desc.description.Trim();
+                    var adapter3Id=new Guid("645967a4-1392-4310-a798-8053ce3e93fd");
+                    IntPtr adapter3;Marshal.ThrowExceptionForHR(Marshal.QueryInterface(adapter,ref adapter3Id,out adapter3));
+                    try
+                    {
+                        var query=Method<QueryMemory>(adapter3,14);VideoInfo local,shared;
+                        Marshal.ThrowExceptionForHR(query(adapter3,0,0,out local));
+                        Marshal.ThrowExceptionForHR(query(adapter3,0,1,out shared));
+                        result["gpu_local_usage_bytes"]=local.currentUsage;
+                        result["gpu_local_budget_bytes"]=local.budget;
+                        result["gpu_nonlocal_usage_bytes"]=shared.currentUsage;
+                        result["gpu_nonlocal_budget_bytes"]=shared.budget;
+                    }
+                    finally {Marshal.Release(adapter3);}
+                    break;
+                }
+                finally {Marshal.Release(adapter);}
+            }
+            if(!result.ContainsKey("adapter"))result["dxgi_error"]="Requested Unity adapter not found";
+        }
+        catch(Exception ex){result["dxgi_error"]=ex.ToString();}
+        finally {if(factory!=IntPtr.Zero)Marshal.Release(factory);}
+        return result;
+    }
+}

@@ -48,9 +48,7 @@ public sealed class LessonExample : MonoBehaviour
     public string[] Words = { "사과", "엄마", "토끼" };
 
     private PronunciationListener _listener;
-#if DOMICUBE_INFERENCE_ENGINE || DOMICUBE_SENTIS_1
     private SentisPhonemeRecognizer _recognizer;
-#endif
     private int _index;
     private string _status = "준비 중...";
     private string _live = string.Empty;
@@ -106,7 +104,6 @@ public sealed class LessonExample : MonoBehaviour
 
     private IEnumerator Start()
     {
-#if DOMICUBE_INFERENCE_ENGINE || DOMICUBE_SENTIS_1
         if (_recognizer != null)
         {
             // ~2 s of shader compilation and weight upload. Do it here,
@@ -115,17 +112,13 @@ public sealed class LessonExample : MonoBehaviour
             yield return null;
             _recognizer.Warmup(_listener.WindowSeconds);
         }
-#endif
 
         _status = "시작을 누르세요";
-        yield break;
     }
 
     private void OnDestroy()
     {
-#if DOMICUBE_INFERENCE_ENGINE || DOMICUBE_SENTIS_1
         _recognizer?.Dispose();
-#endif
     }
 
     /// <summary>Ask the current word and open the microphone.</summary>

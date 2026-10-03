@@ -26,16 +26,12 @@ namespace DomiCube.PhonemeMatching.Unity
     /// GPUCompute, 390 ms on CPU, phoneme ids identical to Python across
     /// all 124 frames of the golden clips.
     /// </summary>
-    public sealed class SentisPhonemeRecognizer : IPhonemeRecognizer, IAcousticEvidenceRecognizer, IDisposable
+    public sealed class SentisPhonemeRecognizer : IPhonemeRecognizer, IDisposable
     {
         private readonly CtcVocabulary _vocab;
         private readonly IWorker _worker;
         private float[] _normalized = new float[0];
         private bool _disposed;
-        private float[] _lastLogits;
-        private int _lastFrames, _lastClasses;
-        private string _lastText = "";
-        private CtcSequenceScorer _lastScorer;
 
         public string Language => "ko";
 
@@ -76,9 +72,6 @@ namespace DomiCube.PhonemeMatching.Unity
         public void RecognizeWithText(
             float[] audio16kMono, out string text, out List<string> phonemes)
         {
-            _lastLogits = null;
-            _lastText = "";
-            _lastScorer = null;
             if (audio16kMono == null || audio16kMono.Length == 0)
             {
                 text = string.Empty;
@@ -88,27 +81,9 @@ namespace DomiCube.PhonemeMatching.Unity
 
             Infer(audio16kMono, out var logits, out var shape);
             text = CtcDecoder.Decode(logits, shape.frames, shape.classes, _vocab);
-            _lastLogits = logits;
-            _lastFrames = shape.frames;
-            _lastClasses = shape.classes;
-            _lastText = text;
             phonemes = text.Length == 0
                 ? new List<string>()
                 : Korean.JamoIpa.ToPhonemes(Korean.Rules.Apply(text));
-        }
-
-        public AcousticEvidence GetAcousticEvidence(string targetText, string contrastText)
-        {
-            if (_lastLogits == null || string.IsNullOrEmpty(_lastText)) return null;
-            if (_lastScorer == null)
-                _lastScorer = new CtcSequenceScorer(_lastLogits, _lastFrames, _lastClasses, _vocab);
-            return new AcousticEvidence
-            {
-                TargetText = targetText, ContrastText = contrastText,
-                LogProbability = _lastScorer.Score(targetText),
-                GreedyLogProbability = _lastScorer.Score(_lastText),
-                ContrastLogProbability = _lastScorer.Score(contrastText)
-            };
         }
 
         private void Infer(
@@ -217,9 +192,6 @@ namespace DomiCube.PhonemeMatching.Unity
             }
 
             _disposed = true;
-            _lastLogits = null;
-            _lastScorer = null;
-            _lastText = "";
             _worker.Dispose();
         }
     }

@@ -14,11 +14,6 @@ namespace DomiCube.PhonemeMatching.Unity
     /// each new chunk on its own: wav2vec2 is a context model and short
     /// isolated fragments come back garbled (measured on a 4.4s
     /// utterance, 0.5s chunks lost a quarter of the phonemes).
-    ///
-    /// Give the constructor a hop and <see cref="Pump"/> queues one frame
-    /// per hop of captured samples, which <see cref="TryReadFrame"/>
-    /// hands out in order. Then how often the caller pumps decides only
-    /// how promptly a frame appears, never how many there are.
     /// </summary>
     public sealed class MicrophoneRollingBuffer : IDisposable
     {
@@ -57,8 +52,7 @@ namespace DomiCube.PhonemeMatching.Unity
         public MicrophoneRollingBuffer(
             float windowSeconds = 2.5f,
             int deviceSampleRate = 16000,
-            int clipSeconds = 10,
-            float hopSeconds = 0f)
+            int clipSeconds = 10)
         {
             if (windowSeconds <= 0f)
             {
@@ -69,14 +63,8 @@ namespace DomiCube.PhonemeMatching.Unity
             _requestedSampleRate = deviceSampleRate;
             _deviceSampleRate = deviceSampleRate;
             _clipSeconds = clipSeconds;
-            _buffer = new AudioWindowBuffer(windowSeconds, hopSeconds);
+            _buffer = new AudioWindowBuffer(windowSeconds);
         }
-
-        /// <summary>
-        /// The rolling window itself, to hand to a
-        /// <see cref="PronunciationSession"/> so it can drain frames.
-        /// </summary>
-        public AudioWindowBuffer Buffer => _buffer;
 
         /// <summary>Begin capture. Pass null for the default device.</summary>
         public void Start(string device = null)
@@ -187,15 +175,6 @@ namespace DomiCube.PhonemeMatching.Unity
         public float[] Snapshot()
         {
             return _buffer.Snapshot();
-        }
-
-        /// <summary>
-        /// Take the next whole hop of captured audio, if one is ready.
-        /// Requires a hop; see the constructor.
-        /// </summary>
-        public bool TryReadFrame(out HopFrame frame)
-        {
-            return _buffer.TryReadFrame(out frame);
         }
 
         public void Dispose()

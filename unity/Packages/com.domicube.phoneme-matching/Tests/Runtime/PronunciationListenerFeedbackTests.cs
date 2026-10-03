@@ -42,8 +42,7 @@ namespace DomiCube.PhonemeMatching.Tests
                     Assert.That(listener.IsListening, Is.False);
                     Assert.That(listener.LastConfirmation, Is.SameAs(feedback));
                     Assert.That(feedback.SubstitutionCount, Is.EqualTo(1));
-                    Assert.That(feedback.KoreanFeedback.Items, Is.Empty);
-                    Assert.That(feedback.RawKoreanFeedback.Items[0].Message,
+                    Assert.That(feedback.KoreanFeedback.Items[0].Message,
                         Is.EqualTo("‘사과’의 ‘사’가 ‘타’에 가까운 소리로 인식됐어요."));
                     order.Add("detailed");
                 });

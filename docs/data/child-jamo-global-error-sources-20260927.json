@@ -1,0 +1,628 @@
+{
+  "complete": true,
+  "prediction_source_sha256": "6f22c7a6cf9d29caec17a9a284711311ab7401940f7c224a9f332b54a4ae7425",
+  "quality_audit_sha256": "ac4e995072c4851ff640265182b398c37dba882633865e8e37e46294dec1b11f",
+  "scope": "All original 1500 validation rows. Reuses the full-source PCM and file identity audit; no new listening or model training.",
+  "label_recalculation_matches": 1500,
+  "rendering_reproduction_matches": 1500,
+  "rendering_dropped_or_changed_tokens": 0,
+  "by_source_crop": {
+    "whole_original": {
+      "recordings": 728,
+      "speakers": 183,
+      "exact": 542,
+      "errors": 584,
+      "reference_jamo": 16866,
+      "jer": 0.03462587454049567
+    },
+    "cropped": {
+      "recordings": 772,
+      "speakers": 182,
+      "exact": 622,
+      "errors": 394,
+      "reference_jamo": 16316,
+      "jer": 0.024148075508703112
+    }
+  },
+  "by_screening_flags": {
+    "screening_flags": {
+      "recordings": 1,
+      "speakers": 1,
+      "exact": 1,
+      "errors": 0,
+      "reference_jamo": 14,
+      "jer": 0.0
+    },
+    "no_screening_flags": {
+      "recordings": 1499,
+      "speakers": 224,
+      "exact": 1163,
+      "errors": 978,
+      "reference_jamo": 33168,
+      "jer": 0.029486251808972505
+    }
+  },
+  "flagged_rows": [
+    {
+      "id": "valid:K0001A597-BFG20-L1N2D1-E-K0KK-05301112.wav",
+      "speaker": "98bae97a473a",
+      "age": "7",
+      "seconds": 4.532,
+      "duration_bucket": "3_or_more",
+      "surface": "동생이 봐써요",
+      "transcript": "동생이 봤어요",
+      "reference_ids": [
+        5,
+        29,
+        13,
+        11,
+        22,
+        13,
+        13,
+        41,
+        1,
+        9,
+        30,
+        12,
+        25,
+        13,
+        33
+      ],
+      "ids": [
+        5,
+        29,
+        13,
+        11,
+        22,
+        13,
+        13,
+        41,
+        1,
+        9,
+        30,
+        12,
+        25,
+        13,
+        33
+      ],
+      "text": "동생이 봐써요",
+      "word_count": 2,
+      "has_unseen_surface_word": false,
+      "g2p_changed_text": true,
+      "pcm_sha256": "0ab477d7b12342b5ae802e0c6abe1f4d3a816605b5725e221fe9e500be4562ce",
+      "events": [],
+      "errors": 0,
+      "reference_jamo": 14,
+      "whole_original_audio": false,
+      "quality": {
+        "id": "valid:K0001A597-BFG20-L1N2D1-E-K0KK-05301112.wav",
+        "split": "valid",
+        "speaker": "98bae97a473a",
+        "seconds": 4.532,
+        "reference_jamo": 14,
+        "full_seconds": 4.672,
+        "crop_start_seconds": 0.14,
+        "crop_end_seconds": 4.672,
+        "crop": {
+          "rms_dbfs": -51.58670750354006,
+          "peak": 0.021484375,
+          "peak_frame_dbfs": -38.19619544166423,
+          "peak_frame_seconds": 1.22,
+          "energy": 0.5031982632353902
+        },
+        "full": {
+          "rms_dbfs": -51.7188368326699,
+          "peak": 0.021484375,
+          "peak_frame_dbfs": -38.19619544166423,
+          "peak_frame_seconds": 1.36,
+          "energy": 0.5031982632353902
+        },
+        "crop_energy_share": 1.0,
+        "peak_frame_gap_db": 0.0,
+        "flags": [
+          "low_crop_rms_below_minus50_dbfs",
+          "low_source_rms_below_minus50_dbfs"
+        ],
+        "source_and_pcm_verified": true,
+        "legacy_zero_peak_silence_check_would_reject": false
+      },
+      "renderer_preserves_all_tokens": true
+    }
+  ],
+  "highest_error_speaker": {
+    "speaker": "4d934fe9163e",
+    "metrics": {
+      "recordings": 13,
+      "speakers": 1,
+      "exact": 1,
+      "errors": 118,
+      "reference_jamo": 255,
+      "jer": 0.4627450980392157
+    },
+    "whole_original_audio_rows": 13,
+    "rows": [
+      {
+        "id": "valid:K00473077-AFG10-L1N2D1-E-K0KK-01402217.wav",
+        "transcript": "멋진 바다거북이 나옵니다",
+        "surface": "먿찐 바다거부기 나옴니다",
+        "text": "먿찐 바다거부기가 나옴니다찌 받ㄱ부기내가 그러케 마",
+        "errors": 24,
+        "whole_original_audio": true,
+        "quality": {
+          "id": "valid:K00473077-AFG10-L1N2D1-E-K0KK-01402217.wav",
+          "split": "valid",
+          "speaker": "4d934fe9163e",
+          "seconds": 10.048,
+          "reference_jamo": 25,
+          "full_seconds": 10.048,
+          "crop_start_seconds": 0.0,
+          "crop_end_seconds": 10.048,
+          "crop": {
+            "rms_dbfs": -15.687880386212116,
+            "peak": 0.921142578125,
+            "peak_frame_dbfs": -7.9282464506639325,
+            "peak_frame_seconds": 1.08,
+            "energy": 4339.219009405002
+          },
+          "full": {
+            "rms_dbfs": -15.687880386212116,
+            "peak": 0.921142578125,
+            "peak_frame_dbfs": -7.9282464506639325,
+            "peak_frame_seconds": 1.08,
+            "energy": 4339.219009405002
+          },
+          "crop_energy_share": 1.0,
+          "peak_frame_gap_db": 0.0,
+          "flags": [],
+          "source_and_pcm_verified": true,
+          "legacy_zero_peak_silence_check_would_reject": false
+        }
+      },
+      {
+        "id": "valid:K00583077-AFG10-L1N2D1-E-K0KK-01402347.wav",
+        "transcript": "거북을 만났어요",
+        "surface": "거부글 만나써요",
+        "text": "가부늘 발라써요",
+        "errors": 5,
+        "whole_original_audio": true,
+        "quality": {
+          "id": "valid:K00583077-AFG10-L1N2D1-E-K0KK-01402347.wav",
+          "split": "valid",
+          "speaker": "4d934fe9163e",
+          "seconds": 3.968,
+          "reference_jamo": 16,
+          "full_seconds": 3.968,
+          "crop_start_seconds": 0.0,
+          "crop_end_seconds": 3.968,
+          "crop": {
+            "rms_dbfs": -16.27638435020507,
+            "peak": 0.829071044921875,
+            "peak_frame_dbfs": -9.867801765425607,
+            "peak_frame_seconds": 1.16,
+            "energy": 1496.4189907955006
+          },
+          "full": {
+            "rms_dbfs": -16.27638435020507,
+            "peak": 0.829071044921875,
+            "peak_frame_dbfs": -9.867801765425607,
+            "peak_frame_seconds": 1.16,
+            "energy": 1496.4189907955006
+          },
+          "crop_energy_share": 1.0,
+          "peak_frame_gap_db": 0.0,
+          "flags": [],
+          "source_and_pcm_verified": true,
+          "legacy_zero_peak_silence_check_would_reject": false
+        }
+      },
+      {
+        "id": "valid:K00613077-AFG10-L1N2D1-E-K0KK-01402369.wav",
+        "transcript": "아기곰은 말해요",
+        "surface": "아기고믄 말해요",
+        "text": "아기 고낭가 말해요",
+        "errors": 5,
+        "whole_original_audio": true,
+        "quality": {
+          "id": "valid:K00613077-AFG10-L1N2D1-E-K0KK-01402369.wav",
+          "split": "valid",
+          "speaker": "4d934fe9163e",
+          "seconds": 3.84,
+          "reference_jamo": 16,
+          "full_seconds": 3.84,
+          "crop_start_seconds": 0.0,
+          "crop_end_seconds": 3.84,
+          "crop": {
+            "rms_dbfs": -20.27374064567259,
+            "peak": 0.8331298828125,
+            "peak_frame_dbfs": -9.058179764267484,
+            "peak_frame_seconds": 0.64,
+            "energy": 576.8689218284562
+          },
+          "full": {
+            "rms_dbfs": -20.27374064567259,
+            "peak": 0.8331298828125,
+            "peak_frame_dbfs": -9.058179764267484,
+            "peak_frame_seconds": 0.64,
+            "energy": 576.8689218284562
+          },
+          "crop_energy_share": 1.0,
+          "peak_frame_gap_db": 0.0,
+          "flags": [],
+          "source_and_pcm_verified": true,
+          "legacy_zero_peak_silence_check_would_reject": false
+        }
+      },
+      {
+        "id": "valid:K01093077-AFG10-L1N2D1-E-K0KK-01579985.wav",
+        "transcript": "친구들은 고개를 저었어요",
+        "surface": "친구드른 고개를 저어써요",
+        "text": "친구드른 고개를 저어써요",
+        "errors": 0,
+        "whole_original_audio": true,
+        "quality": {
+          "id": "valid:K01093077-AFG10-L1N2D1-E-K0KK-01579985.wav",
+          "split": "valid",
+          "speaker": "4d934fe9163e",
+          "seconds": 4.224,
+          "reference_jamo": 25,
+          "full_seconds": 4.224,
+          "crop_start_seconds": 0.0,
+          "crop_end_seconds": 4.224,
+          "crop": {
+            "rms_dbfs": -15.334667632327248,
+            "peak": 0.80126953125,
+            "peak_frame_dbfs": -6.685709799633028,
+            "peak_frame_seconds": 0.3,
+            "energy": 1978.687129797414
+          },
+          "full": {
+            "rms_dbfs": -15.334667632327248,
+            "peak": 0.80126953125,
+            "peak_frame_dbfs": -6.685709799633028,
+            "peak_frame_seconds": 0.3,
+            "energy": 1978.687129797414
+          },
+          "crop_energy_share": 1.0,
+          "peak_frame_gap_db": 0.0,
+          "flags": [],
+          "source_and_pcm_verified": true,
+          "legacy_zero_peak_silence_check_would_reject": false
+        }
+      },
+      {
+        "id": "valid:K01133077-AFG10-L1N2D1-E-K0KK-01579993.wav",
+        "transcript": "생각만 하면 그때가 슬퍼요",
+        "surface": "생강만 하면 그때가 슬퍼요",
+        "text": "햄드때는 슬퍼요",
+        "errors": 16,
+        "whole_original_audio": true,
+        "quality": {
+          "id": "valid:K01133077-AFG10-L1N2D1-E-K0KK-01579993.wav",
+          "split": "valid",
+          "speaker": "4d934fe9163e",
+          "seconds": 5.888,
+          "reference_jamo": 27,
+          "full_seconds": 5.888,
+          "crop_start_seconds": 0.0,
+          "crop_end_seconds": 5.888,
+          "crop": {
+            "rms_dbfs": -20.238344145218168,
+            "peak": 0.721160888671875,
+            "peak_frame_dbfs": -9.434663601050076,
+            "peak_frame_seconds": 3.2800000000000002,
+            "energy": 891.7710498673841
+          },
+          "full": {
+            "rms_dbfs": -20.238344145218168,
+            "peak": 0.721160888671875,
+            "peak_frame_dbfs": -9.434663601050076,
+            "peak_frame_seconds": 3.2800000000000002,
+            "energy": 891.7710498673841
+          },
+          "crop_energy_share": 1.0,
+          "peak_frame_gap_db": 0.0,
+          "flags": [],
+          "source_and_pcm_verified": true,
+          "legacy_zero_peak_silence_check_would_reject": false
+        }
+      },
+      {
+        "id": "valid:K01243077-AFG10-L1N2D1-E-K0KK-02869143.wav",
+        "transcript": "멋진 선물을 준비해요",
+        "surface": "먿찐 선무를 준비해요",
+        "text": "술 기ㅣ다",
+        "errors": 19,
+        "whole_original_audio": true,
+        "quality": {
+          "id": "valid:K01243077-AFG10-L1N2D1-E-K0KK-02869143.wav",
+          "split": "valid",
+          "speaker": "4d934fe9163e",
+          "seconds": 2.816,
+          "reference_jamo": 23,
+          "full_seconds": 2.816,
+          "crop_start_seconds": 0.0,
+          "crop_end_seconds": 2.816,
+          "crop": {
+            "rms_dbfs": -17.650919136274386,
+            "peak": 0.73565673828125,
+            "peak_frame_dbfs": -10.515111869883015,
+            "peak_frame_seconds": 0.1,
+            "energy": 773.8570073023438
+          },
+          "full": {
+            "rms_dbfs": -17.650919136274386,
+            "peak": 0.73565673828125,
+            "peak_frame_dbfs": -10.515111869883015,
+            "peak_frame_seconds": 0.1,
+            "energy": 773.8570073023438
+          },
+          "crop_energy_share": 1.0,
+          "peak_frame_gap_db": 0.0,
+          "flags": [],
+          "source_and_pcm_verified": true,
+          "legacy_zero_peak_silence_check_would_reject": false
+        }
+      },
+      {
+        "id": "valid:K01353077-AFG10-L1N2D1-E-K0KK-02869294.wav",
+        "transcript": "선물은 양말이에요",
+        "surface": "선무르 냥마리에요",
+        "text": "오느른 창무르 량뽀해요",
+        "errors": 14,
+        "whole_original_audio": true,
+        "quality": {
+          "id": "valid:K01353077-AFG10-L1N2D1-E-K0KK-02869294.wav",
+          "split": "valid",
+          "speaker": "4d934fe9163e",
+          "seconds": 4.416,
+          "reference_jamo": 18,
+          "full_seconds": 4.416,
+          "crop_start_seconds": 0.0,
+          "crop_end_seconds": 4.416,
+          "crop": {
+            "rms_dbfs": -18.729558331467352,
+            "peak": 0.845184326171875,
+            "peak_frame_dbfs": -10.936422168853577,
+            "peak_frame_seconds": 0.64,
+            "energy": 946.6582285622135
+          },
+          "full": {
+            "rms_dbfs": -18.729558331467352,
+            "peak": 0.845184326171875,
+            "peak_frame_dbfs": -10.936422168853577,
+            "peak_frame_seconds": 0.64,
+            "energy": 946.6582285622135
+          },
+          "crop_energy_share": 1.0,
+          "peak_frame_gap_db": 0.0,
+          "flags": [],
+          "source_and_pcm_verified": true,
+          "legacy_zero_peak_silence_check_would_reject": false
+        }
+      },
+      {
+        "id": "valid:K01513077-AFG10-L1N2D1-E-K0KK-02869577.wav",
+        "transcript": "소똥구리",
+        "surface": "소똥구리",
+        "text": "또 그래",
+        "errors": 5,
+        "whole_original_audio": true,
+        "quality": {
+          "id": "valid:K01513077-AFG10-L1N2D1-E-K0KK-02869577.wav",
+          "split": "valid",
+          "speaker": "4d934fe9163e",
+          "seconds": 2.24,
+          "reference_jamo": 9,
+          "full_seconds": 2.24,
+          "crop_start_seconds": 0.0,
+          "crop_end_seconds": 2.24,
+          "crop": {
+            "rms_dbfs": -17.574799349449936,
+            "peak": 0.83575439453125,
+            "peak_frame_dbfs": -7.9406893420777,
+            "peak_frame_seconds": 0.46,
+            "energy": 626.4523836197332
+          },
+          "full": {
+            "rms_dbfs": -17.574799349449936,
+            "peak": 0.83575439453125,
+            "peak_frame_dbfs": -7.9406893420777,
+            "peak_frame_seconds": 0.46,
+            "energy": 626.4523836197332
+          },
+          "crop_energy_share": 1.0,
+          "peak_frame_gap_db": 0.0,
+          "flags": [],
+          "source_and_pcm_verified": true,
+          "legacy_zero_peak_silence_check_would_reject": false
+        }
+      },
+      {
+        "id": "valid:K01523077-AFG10-L1N2D1-E-K0KK-02869593.wav",
+        "transcript": "엄마가 찾아왔어여",
+        "surface": "엄마가 차자와써여",
+        "text": "ㅇ마가 차자와써요",
+        "errors": 3,
+        "whole_original_audio": true,
+        "quality": {
+          "id": "valid:K01523077-AFG10-L1N2D1-E-K0KK-02869593.wav",
+          "split": "valid",
+          "speaker": "4d934fe9163e",
+          "seconds": 2.752,
+          "reference_jamo": 17,
+          "full_seconds": 2.752,
+          "crop_start_seconds": 0.0,
+          "crop_end_seconds": 2.752,
+          "crop": {
+            "rms_dbfs": -14.58006670883372,
+            "peak": 0.84649658203125,
+            "peak_frame_dbfs": -7.371767048045871,
+            "peak_frame_seconds": 0.7000000000000001,
+            "energy": 1533.775306172669
+          },
+          "full": {
+            "rms_dbfs": -14.58006670883372,
+            "peak": 0.84649658203125,
+            "peak_frame_dbfs": -7.371767048045871,
+            "peak_frame_seconds": 0.7000000000000001,
+            "energy": 1533.775306172669
+          },
+          "crop_energy_share": 1.0,
+          "peak_frame_gap_db": 0.0,
+          "flags": [],
+          "source_and_pcm_verified": true,
+          "legacy_zero_peak_silence_check_would_reject": false
+        }
+      },
+      {
+        "id": "valid:K01533077-AFG10-L1N2D1-E-K0KK-02869610.wav",
+        "transcript": "에어컨을 켭니다",
+        "surface": "에어커늘 켬니다",
+        "text": "에어커늘 킴니다",
+        "errors": 1,
+        "whole_original_audio": true,
+        "quality": {
+          "id": "valid:K01533077-AFG10-L1N2D1-E-K0KK-02869610.wav",
+          "split": "valid",
+          "speaker": "4d934fe9163e",
+          "seconds": 2.944,
+          "reference_jamo": 16,
+          "full_seconds": 2.944,
+          "crop_start_seconds": 0.0,
+          "crop_end_seconds": 2.944,
+          "crop": {
+            "rms_dbfs": -29.19045472484663,
+            "peak": 0.4381103515625,
+            "peak_frame_dbfs": -15.375236342391197,
+            "peak_frame_seconds": 0.5,
+            "energy": 56.75607002153993
+          },
+          "full": {
+            "rms_dbfs": -29.19045472484663,
+            "peak": 0.4381103515625,
+            "peak_frame_dbfs": -15.375236342391197,
+            "peak_frame_seconds": 0.5,
+            "energy": 56.75607002153993
+          },
+          "crop_energy_share": 1.0,
+          "peak_frame_gap_db": 0.0,
+          "flags": [],
+          "source_and_pcm_verified": true,
+          "legacy_zero_peak_silence_check_would_reject": false
+        }
+      },
+      {
+        "id": "valid:K01583077-AFG10-L1N2D1-E-K0KK-02869705.wav",
+        "transcript": "집으로 가요",
+        "surface": "지브로 가요",
+        "text": "ㅇㅇㄹ로 가요",
+        "errors": 4,
+        "whole_original_audio": true,
+        "quality": {
+          "id": "valid:K01583077-AFG10-L1N2D1-E-K0KK-02869705.wav",
+          "split": "valid",
+          "speaker": "4d934fe9163e",
+          "seconds": 2.304,
+          "reference_jamo": 10,
+          "full_seconds": 2.304,
+          "crop_start_seconds": 0.0,
+          "crop_end_seconds": 2.304,
+          "crop": {
+            "rms_dbfs": -21.15588364894386,
+            "peak": 0.781097412109375,
+            "peak_frame_dbfs": -11.572702880580065,
+            "peak_frame_seconds": 0.9,
+            "energy": 282.4971641525626
+          },
+          "full": {
+            "rms_dbfs": -21.15588364894386,
+            "peak": 0.781097412109375,
+            "peak_frame_dbfs": -11.572702880580065,
+            "peak_frame_seconds": 0.9,
+            "energy": 282.4971641525626
+          },
+          "crop_energy_share": 1.0,
+          "peak_frame_gap_db": 0.0,
+          "flags": [],
+          "source_and_pcm_verified": true,
+          "legacy_zero_peak_silence_check_would_reject": false
+        }
+      },
+      {
+        "id": "valid:K01603077-AFG10-L1N2D1-E-K0KK-02869741.wav",
+        "transcript": "오늘은 김밥을 만들어요",
+        "surface": "오느른 김바블 만드러요",
+        "text": "소라기빠믈 만드러요",
+        "errors": 8,
+        "whole_original_audio": true,
+        "quality": {
+          "id": "valid:K01603077-AFG10-L1N2D1-E-K0KK-02869741.wav",
+          "split": "valid",
+          "speaker": "4d934fe9163e",
+          "seconds": 3.328,
+          "reference_jamo": 24,
+          "full_seconds": 3.328,
+          "crop_start_seconds": 0.0,
+          "crop_end_seconds": 3.328,
+          "crop": {
+            "rms_dbfs": -24.614341132452807,
+            "peak": 0.67840576171875,
+            "peak_frame_dbfs": -11.754820610195907,
+            "peak_frame_seconds": 0.76,
+            "energy": 184.0217629717663
+          },
+          "full": {
+            "rms_dbfs": -24.614341132452807,
+            "peak": 0.67840576171875,
+            "peak_frame_dbfs": -11.754820610195907,
+            "peak_frame_seconds": 0.76,
+            "energy": 184.0217629717663
+          },
+          "crop_energy_share": 1.0,
+          "peak_frame_gap_db": 0.0,
+          "flags": [],
+          "source_and_pcm_verified": true,
+          "legacy_zero_peak_silence_check_would_reject": false
+        }
+      },
+      {
+        "id": "valid:K01613077-AFG10-L1N2D1-E-K0KK-02869778.wav",
+        "transcript": "늑대 할아버지가 집을 만들어요",
+        "surface": "늑때 하라버지가 지블 만드러요",
+        "text": "차근 지블 만드러요",
+        "errors": 14,
+        "whole_original_audio": true,
+        "quality": {
+          "id": "valid:K01613077-AFG10-L1N2D1-E-K0KK-02869778.wav",
+          "split": "valid",
+          "speaker": "4d934fe9163e",
+          "seconds": 3.008,
+          "reference_jamo": 29,
+          "full_seconds": 3.008,
+          "crop_start_seconds": 0.0,
+          "crop_end_seconds": 3.008,
+          "crop": {
+            "rms_dbfs": -36.39991524050337,
+            "peak": 0.2366943359375,
+            "peak_frame_dbfs": -21.96410651434863,
+            "peak_frame_seconds": 1.4000000000000001,
+            "energy": 11.025703021325171
+          },
+          "full": {
+            "rms_dbfs": -36.39991524050337,
+            "peak": 0.2366943359375,
+            "peak_frame_dbfs": -21.96410651434863,
+            "peak_frame_seconds": 1.4000000000000001,
+            "energy": 11.025703021325171
+          },
+          "crop_energy_share": 1.0,
+          "peak_frame_gap_db": 0.0,
+          "flags": [],
+          "source_and_pcm_verified": true,
+          "legacy_zero_peak_silence_check_would_reject": false
+        }
+      }
+    ]
+  },
+  "interpretation": "Reference discrepancies in whole-original rows cannot be due to our crop omitting samples. Source recording/label defects and human pronunciation uncertainty remain possible. Low energy/energy loss flags are screening evidence, not confirmed missing speech. Recalculating the same rules verifies consistency, not linguistic correctness."
+}

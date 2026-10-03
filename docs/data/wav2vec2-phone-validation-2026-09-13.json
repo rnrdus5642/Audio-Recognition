@@ -1,0 +1,2221 @@
+{
+  "metadata": {
+    "date": "2026-09-13",
+    "purpose": "Pre-child-finetuning candidate output baseline; not a ranking of post-finetuning suitability, product acceptance, or clinically annotated phone accuracy",
+    "selection_objective": "Select a jamo/phone backbone, fine-tune on owned child speech, then assess deployment suitability",
+    "adaptation_status": {
+      "child": "Already fine-tuned on owned child training data",
+      "native_phone": "Public checkpoint; no owned child fine-tuning performed",
+      "foreign_phone": "Public checkpoint; no owned child fine-tuning performed"
+    },
+    "input_counts": {
+      "two_speakers": 46,
+      "previous_user": 7,
+      "external_child": 83,
+      "aihub_test": 148
+    },
+    "total_recordings": 284,
+    "music_unique_windows": 289,
+    "inferences": 1722,
+    "models": {
+      "child": {
+        "torch": "2.13.0+cu130",
+        "transformers": "5.15.0",
+        "gpu": "NVIDIA GeForce RTX 5060 Ti",
+        "dtype": "torch.float32",
+        "parameters": 316673845,
+        "vocab_size": 1205,
+        "load_seconds": 0.7471910000313073,
+        "weight_sha256": "ea5d9d9ebc70efe2a4fc5be03e8dfbb6a74f90b9514563a3ae25fcf23c447373",
+        "total_seconds": 11.847963500011247
+      },
+      "native_phone": {
+        "torch": "2.13.0+cu130",
+        "transformers": "5.15.0",
+        "gpu": "NVIDIA GeForce RTX 5060 Ti",
+        "dtype": "torch.float32",
+        "parameters": 315484845,
+        "vocab_size": 45,
+        "load_seconds": 0.9109598999493755,
+        "weight_sha256": "b2ec663558606d651a718fa1eaa20c6d504df173725ecbc66df74c22267e2d68",
+        "total_seconds": 12.143029299972113
+      },
+      "foreign_phone": {
+        "torch": "2.13.0+cu130",
+        "transformers": "5.15.0",
+        "gpu": "NVIDIA GeForce RTX 5060 Ti",
+        "dtype": "torch.float32",
+        "parameters": 315524820,
+        "vocab_size": 84,
+        "load_seconds": 0.7603926999727264,
+        "weight_sha256": "a7d4d56b7436c37080404b86bfa0f88d22e2c9d03cb7d6c7ab81d65fe2ad73f0",
+        "total_seconds": 11.56226749997586
+      }
+    },
+    "public_models": [
+      {
+        "key": "native_phone",
+        "model_id": "slplab/wav2vec2-xls-r-300m_phone-mfa_korean",
+        "revision": "e26ff9dfb62169acf445d0060ef56863c018b20e",
+        "weight_sha256": "b2ec663558606d651a718fa1eaa20c6d504df173725ecbc66df74c22267e2d68",
+        "weight_bytes": 1262083185
+      },
+      {
+        "key": "foreign_phone",
+        "model_id": "slplab/wav2vec2-XLSR-300m_KoreanPhonene_spoken_by_foreigners",
+        "revision": "8c340790793e9b09f53882c2451bc5cef3764db2",
+        "weight_sha256": "a7d4d56b7436c37080404b86bfa0f88d22e2c9d03cb7d6c7ab81d65fe2ad73f0",
+        "weight_bytes": 1262151880
+      }
+    ],
+    "selection": "AIHub speaker test split; sha256 sort; first 20 per available music keyword; union deduplicated",
+    "normalization": [
+      "Intended/supplied transcript -> unchanged project g2pkk -> IPA; child ASR text through same pipeline",
+      "Native MFA phones -> table adapter; foreign mixed NFD/compat jamo -> position-aware phone adapter, no second G2P",
+      "ae/e -> e for every model and reference, matching the native 40-phone inventory; not a claim all speakers merge them",
+      "coda l followed by onset tap -> l l for every model and reference",
+      "ng retained in foreign compatibility-jamo labels even before a vowel; silent explicit NFD initial ieung omitted",
+      "Only CTC blank and boundaries/special BOS/EOS ignored; unknown labels remain errors"
+    ],
+    "limitations": [
+      "Reference labels are transcripts/intended words, not expert phone annotations",
+      "External child 83 clips include one whole phrase and manually unreviewed boundaries; supplied transcription retained",
+      "Age of music two-speaker recordings not independently verified",
+      "Test speaker/file exclusion verified against current child train and dev manifests; public model pretraining overlap unknown",
+      "Same 2.5-second windows/0.5-second hop/zero onset offset, frozen preprocessing and no thresholds tuned",
+      "No actual wa-only negative audio tested; two jak-a negatives are too few for a stable false-acceptance estimate",
+      "GPU Python inference only; no ONNX, Unity, or deployment validation"
+    ]
+  },
+  "groups": {
+    "music_all_53": {
+      "recordings": 53,
+      "speakers": 3,
+      "models": {
+        "child": {
+          "exact": 16,
+          "exact_rate": 0.3018867924528302,
+          "phone_edits": 65,
+          "reference_phones": 246,
+          "reference_phone_edit_rate": 0.26422764227642276,
+          "any_exact_frame": 14,
+          "two_exact_frames": 12
+        },
+        "native_phone": {
+          "exact": 17,
+          "exact_rate": 0.32075471698113206,
+          "phone_edits": 60,
+          "reference_phones": 246,
+          "reference_phone_edit_rate": 0.24390243902439024,
+          "any_exact_frame": 27,
+          "two_exact_frames": 22
+        },
+        "foreign_phone": {
+          "exact": 1,
+          "exact_rate": 0.018867924528301886,
+          "phone_edits": 156,
+          "reference_phones": 246,
+          "reference_phone_edit_rate": 0.6341463414634146,
+          "any_exact_frame": 5,
+          "two_exact_frames": 1
+        }
+      }
+    },
+    "music_answers_51": {
+      "recordings": 51,
+      "speakers": 3,
+      "models": {
+        "child": {
+          "exact": 14,
+          "exact_rate": 0.27450980392156865,
+          "phone_edits": 65,
+          "reference_phones": 238,
+          "reference_phone_edit_rate": 0.27310924369747897,
+          "any_exact_frame": 12,
+          "two_exact_frames": 11
+        },
+        "native_phone": {
+          "exact": 15,
+          "exact_rate": 0.29411764705882354,
+          "phone_edits": 60,
+          "reference_phones": 238,
+          "reference_phone_edit_rate": 0.25210084033613445,
+          "any_exact_frame": 25,
+          "two_exact_frames": 20
+        },
+        "foreign_phone": {
+          "exact": 1,
+          "exact_rate": 0.0196078431372549,
+          "phone_edits": 152,
+          "reference_phones": 238,
+          "reference_phone_edit_rate": 0.6386554621848739,
+          "any_exact_frame": 5,
+          "two_exact_frames": 1
+        }
+      }
+    },
+    "near_negative_jak_a_2": {
+      "recordings": 2,
+      "speakers": 1,
+      "models": {
+        "child": {
+          "exact": 2,
+          "exact_rate": 1.0,
+          "phone_edits": 0,
+          "reference_phones": 8,
+          "reference_phone_edit_rate": 0.0,
+          "any_exact_frame": 2,
+          "two_exact_frames": 1
+        },
+        "native_phone": {
+          "exact": 2,
+          "exact_rate": 1.0,
+          "phone_edits": 0,
+          "reference_phones": 8,
+          "reference_phone_edit_rate": 0.0,
+          "any_exact_frame": 2,
+          "two_exact_frames": 2
+        },
+        "foreign_phone": {
+          "exact": 0,
+          "exact_rate": 0.0,
+          "phone_edits": 4,
+          "reference_phones": 8,
+          "reference_phone_edit_rate": 0.5,
+          "any_exact_frame": 0,
+          "two_exact_frames": 0
+        }
+      }
+    },
+    "two_speakers": {
+      "recordings": 46,
+      "speakers": 2,
+      "models": {
+        "child": {
+          "exact": 14,
+          "exact_rate": 0.30434782608695654,
+          "phone_edits": 57,
+          "reference_phones": 218,
+          "reference_phone_edit_rate": 0.26146788990825687,
+          "any_exact_frame": 12,
+          "two_exact_frames": 11
+        },
+        "native_phone": {
+          "exact": 13,
+          "exact_rate": 0.2826086956521739,
+          "phone_edits": 57,
+          "reference_phones": 218,
+          "reference_phone_edit_rate": 0.26146788990825687,
+          "any_exact_frame": 22,
+          "two_exact_frames": 17
+        },
+        "foreign_phone": {
+          "exact": 1,
+          "exact_rate": 0.021739130434782608,
+          "phone_edits": 136,
+          "reference_phones": 218,
+          "reference_phone_edit_rate": 0.6238532110091743,
+          "any_exact_frame": 5,
+          "two_exact_frames": 1
+        }
+      }
+    },
+    "previous_user": {
+      "recordings": 7,
+      "speakers": 1,
+      "models": {
+        "child": {
+          "exact": 2,
+          "exact_rate": 0.2857142857142857,
+          "phone_edits": 8,
+          "reference_phones": 28,
+          "reference_phone_edit_rate": 0.2857142857142857,
+          "any_exact_frame": 2,
+          "two_exact_frames": 1
+        },
+        "native_phone": {
+          "exact": 4,
+          "exact_rate": 0.5714285714285714,
+          "phone_edits": 3,
+          "reference_phones": 28,
+          "reference_phone_edit_rate": 0.10714285714285714,
+          "any_exact_frame": 5,
+          "two_exact_frames": 5
+        },
+        "foreign_phone": {
+          "exact": 0,
+          "exact_rate": 0.0,
+          "phone_edits": 20,
+          "reference_phones": 28,
+          "reference_phone_edit_rate": 0.7142857142857143,
+          "any_exact_frame": 0,
+          "two_exact_frames": 0
+        }
+      }
+    },
+    "external_child": {
+      "recordings": 83,
+      "speakers": 2,
+      "models": {
+        "child": {
+          "exact": 31,
+          "exact_rate": 0.37349397590361444,
+          "phone_edits": 122,
+          "reference_phones": 447,
+          "reference_phone_edit_rate": 0.27293064876957496
+        },
+        "native_phone": {
+          "exact": 3,
+          "exact_rate": 0.03614457831325301,
+          "phone_edits": 299,
+          "reference_phones": 447,
+          "reference_phone_edit_rate": 0.668903803131991
+        },
+        "foreign_phone": {
+          "exact": 4,
+          "exact_rate": 0.04819277108433735,
+          "phone_edits": 303,
+          "reference_phones": 447,
+          "reference_phone_edit_rate": 0.6778523489932886
+        }
+      }
+    },
+    "aihub_test": {
+      "recordings": 148,
+      "speakers": 87,
+      "models": {
+        "child": {
+          "exact": 65,
+          "exact_rate": 0.4391891891891892,
+          "phone_edits": 377,
+          "reference_phones": 3512,
+          "reference_phone_edit_rate": 0.10734624145785877
+        },
+        "native_phone": {
+          "exact": 0,
+          "exact_rate": 0.0,
+          "phone_edits": 1152,
+          "reference_phones": 3512,
+          "reference_phone_edit_rate": 0.32801822323462415
+        },
+        "foreign_phone": {
+          "exact": 0,
+          "exact_rate": 0.0,
+          "phone_edits": 2369,
+          "reference_phones": 3512,
+          "reference_phone_edit_rate": 0.6745444191343963
+        }
+      }
+    }
+  },
+  "music_words": {
+    "실로폰채": {
+      "recordings": 2,
+      "speakers": 2,
+      "models": {
+        "child": {
+          "exact": 1,
+          "exact_rate": 0.5,
+          "phone_edits": 1,
+          "reference_phones": 20,
+          "reference_phone_edit_rate": 0.05,
+          "any_exact_frame": 1,
+          "two_exact_frames": 1
+        },
+        "native_phone": {
+          "exact": 1,
+          "exact_rate": 0.5,
+          "phone_edits": 1,
+          "reference_phones": 20,
+          "reference_phone_edit_rate": 0.05,
+          "any_exact_frame": 1,
+          "two_exact_frames": 1
+        },
+        "foreign_phone": {
+          "exact": 0,
+          "exact_rate": 0.0,
+          "phone_edits": 11,
+          "reference_phones": 20,
+          "reference_phone_edit_rate": 0.55,
+          "any_exact_frame": 0,
+          "two_exact_frames": 0
+        }
+      }
+    },
+    "들어": {
+      "recordings": 6,
+      "speakers": 2,
+      "models": {
+        "child": {
+          "exact": 3,
+          "exact_rate": 0.5,
+          "phone_edits": 10,
+          "reference_phones": 24,
+          "reference_phone_edit_rate": 0.4166666666666667,
+          "any_exact_frame": 3,
+          "two_exact_frames": 3
+        },
+        "native_phone": {
+          "exact": 1,
+          "exact_rate": 0.16666666666666666,
+          "phone_edits": 13,
+          "reference_phones": 24,
+          "reference_phone_edit_rate": 0.5416666666666666,
+          "any_exact_frame": 3,
+          "two_exact_frames": 3
+        },
+        "foreign_phone": {
+          "exact": 0,
+          "exact_rate": 0.0,
+          "phone_edits": 20,
+          "reference_phones": 24,
+          "reference_phone_edit_rate": 0.8333333333333334,
+          "any_exact_frame": 0,
+          "two_exact_frames": 0
+        }
+      }
+    },
+    "잡아": {
+      "recordings": 11,
+      "speakers": 3,
+      "models": {
+        "child": {
+          "exact": 2,
+          "exact_rate": 0.18181818181818182,
+          "phone_edits": 14,
+          "reference_phones": 44,
+          "reference_phone_edit_rate": 0.3181818181818182,
+          "any_exact_frame": 1,
+          "two_exact_frames": 1
+        },
+        "native_phone": {
+          "exact": 4,
+          "exact_rate": 0.36363636363636365,
+          "phone_edits": 11,
+          "reference_phones": 44,
+          "reference_phone_edit_rate": 0.25,
+          "any_exact_frame": 6,
+          "two_exact_frames": 5
+        },
+        "foreign_phone": {
+          "exact": 0,
+          "exact_rate": 0.0,
+          "phone_edits": 30,
+          "reference_phones": 44,
+          "reference_phone_edit_rate": 0.6818181818181818,
+          "any_exact_frame": 1,
+          "two_exact_frames": 0
+        }
+      }
+    },
+    "쳐": {
+      "recordings": 6,
+      "speakers": 2,
+      "models": {
+        "child": {
+          "exact": 0,
+          "exact_rate": 0.0,
+          "phone_edits": 6,
+          "reference_phones": 12,
+          "reference_phone_edit_rate": 0.5,
+          "any_exact_frame": 0,
+          "two_exact_frames": 0
+        },
+        "native_phone": {
+          "exact": 3,
+          "exact_rate": 0.5,
+          "phone_edits": 4,
+          "reference_phones": 12,
+          "reference_phone_edit_rate": 0.3333333333333333,
+          "any_exact_frame": 5,
+          "two_exact_frames": 4
+        },
+        "foreign_phone": {
+          "exact": 0,
+          "exact_rate": 0.0,
+          "phone_edits": 9,
+          "reference_phones": 12,
+          "reference_phone_edit_rate": 0.75,
+          "any_exact_frame": 0,
+          "two_exact_frames": 0
+        }
+      }
+    },
+    "때려": {
+      "recordings": 6,
+      "speakers": 2,
+      "models": {
+        "child": {
+          "exact": 2,
+          "exact_rate": 0.3333333333333333,
+          "phone_edits": 7,
+          "reference_phones": 30,
+          "reference_phone_edit_rate": 0.23333333333333334,
+          "any_exact_frame": 1,
+          "two_exact_frames": 1
+        },
+        "native_phone": {
+          "exact": 0,
+          "exact_rate": 0.0,
+          "phone_edits": 13,
+          "reference_phones": 30,
+          "reference_phone_edit_rate": 0.43333333333333335,
+          "any_exact_frame": 1,
+          "two_exact_frames": 0
+        },
+        "foreign_phone": {
+          "exact": 1,
+          "exact_rate": 0.16666666666666666,
+          "phone_edits": 8,
+          "reference_phones": 30,
+          "reference_phone_edit_rate": 0.26666666666666666,
+          "any_exact_frame": 4,
+          "two_exact_frames": 1
+        }
+      }
+    },
+    "연주해": {
+      "recordings": 2,
+      "speakers": 2,
+      "models": {
+        "child": {
+          "exact": 1,
+          "exact_rate": 0.5,
+          "phone_edits": 2,
+          "reference_phones": 14,
+          "reference_phone_edit_rate": 0.14285714285714285,
+          "any_exact_frame": 1,
+          "two_exact_frames": 0
+        },
+        "native_phone": {
+          "exact": 0,
+          "exact_rate": 0.0,
+          "phone_edits": 2,
+          "reference_phones": 14,
+          "reference_phone_edit_rate": 0.14285714285714285,
+          "any_exact_frame": 0,
+          "two_exact_frames": 0
+        },
+        "foreign_phone": {
+          "exact": 0,
+          "exact_rate": 0.0,
+          "phone_edits": 9,
+          "reference_phones": 14,
+          "reference_phone_edit_rate": 0.6428571428571429,
+          "any_exact_frame": 0,
+          "two_exact_frames": 0
+        }
+      }
+    },
+    "놓아": {
+      "recordings": 4,
+      "speakers": 2,
+      "models": {
+        "child": {
+          "exact": 1,
+          "exact_rate": 0.25,
+          "phone_edits": 6,
+          "reference_phones": 12,
+          "reference_phone_edit_rate": 0.5,
+          "any_exact_frame": 1,
+          "two_exact_frames": 1
+        },
+        "native_phone": {
+          "exact": 1,
+          "exact_rate": 0.25,
+          "phone_edits": 3,
+          "reference_phones": 12,
+          "reference_phone_edit_rate": 0.25,
+          "any_exact_frame": 2,
+          "two_exact_frames": 1
+        },
+        "foreign_phone": {
+          "exact": 0,
+          "exact_rate": 0.0,
+          "phone_edits": 12,
+          "reference_phones": 12,
+          "reference_phone_edit_rate": 1.0,
+          "any_exact_frame": 0,
+          "two_exact_frames": 0
+        }
+      }
+    },
+    "놔": {
+      "recordings": 4,
+      "speakers": 2,
+      "models": {
+        "child": {
+          "exact": 0,
+          "exact_rate": 0.0,
+          "phone_edits": 6,
+          "reference_phones": 12,
+          "reference_phone_edit_rate": 0.5,
+          "any_exact_frame": 0,
+          "two_exact_frames": 0
+        },
+        "native_phone": {
+          "exact": 2,
+          "exact_rate": 0.5,
+          "phone_edits": 2,
+          "reference_phones": 12,
+          "reference_phone_edit_rate": 0.16666666666666666,
+          "any_exact_frame": 3,
+          "two_exact_frames": 3
+        },
+        "foreign_phone": {
+          "exact": 0,
+          "exact_rate": 0.0,
+          "phone_edits": 12,
+          "reference_phones": 12,
+          "reference_phone_edit_rate": 1.0,
+          "any_exact_frame": 0,
+          "two_exact_frames": 0
+        }
+      }
+    },
+    "내려놔": {
+      "recordings": 4,
+      "speakers": 2,
+      "models": {
+        "child": {
+          "exact": 0,
+          "exact_rate": 0.0,
+          "phone_edits": 9,
+          "reference_phones": 32,
+          "reference_phone_edit_rate": 0.28125,
+          "any_exact_frame": 0,
+          "two_exact_frames": 0
+        },
+        "native_phone": {
+          "exact": 2,
+          "exact_rate": 0.5,
+          "phone_edits": 3,
+          "reference_phones": 32,
+          "reference_phone_edit_rate": 0.09375,
+          "any_exact_frame": 3,
+          "two_exact_frames": 2
+        },
+        "foreign_phone": {
+          "exact": 0,
+          "exact_rate": 0.0,
+          "phone_edits": 19,
+          "reference_phones": 32,
+          "reference_phone_edit_rate": 0.59375,
+          "any_exact_frame": 0,
+          "two_exact_frames": 0
+        }
+      }
+    },
+    "흔들어": {
+      "recordings": 2,
+      "speakers": 2,
+      "models": {
+        "child": {
+          "exact": 2,
+          "exact_rate": 1.0,
+          "phone_edits": 0,
+          "reference_phones": 14,
+          "reference_phone_edit_rate": 0.0,
+          "any_exact_frame": 2,
+          "two_exact_frames": 2
+        },
+        "native_phone": {
+          "exact": 0,
+          "exact_rate": 0.0,
+          "phone_edits": 4,
+          "reference_phones": 14,
+          "reference_phone_edit_rate": 0.2857142857142857,
+          "any_exact_frame": 0,
+          "two_exact_frames": 0
+        },
+        "foreign_phone": {
+          "exact": 0,
+          "exact_rate": 0.0,
+          "phone_edits": 6,
+          "reference_phones": 14,
+          "reference_phone_edit_rate": 0.42857142857142855,
+          "any_exact_frame": 0,
+          "two_exact_frames": 0
+        }
+      }
+    },
+    "북채": {
+      "recordings": 2,
+      "speakers": 2,
+      "models": {
+        "child": {
+          "exact": 0,
+          "exact_rate": 0.0,
+          "phone_edits": 4,
+          "reference_phones": 10,
+          "reference_phone_edit_rate": 0.4,
+          "any_exact_frame": 0,
+          "two_exact_frames": 0
+        },
+        "native_phone": {
+          "exact": 1,
+          "exact_rate": 0.5,
+          "phone_edits": 1,
+          "reference_phones": 10,
+          "reference_phone_edit_rate": 0.1,
+          "any_exact_frame": 1,
+          "two_exact_frames": 1
+        },
+        "foreign_phone": {
+          "exact": 0,
+          "exact_rate": 0.0,
+          "phone_edits": 7,
+          "reference_phones": 10,
+          "reference_phone_edit_rate": 0.7,
+          "any_exact_frame": 0,
+          "two_exact_frames": 0
+        }
+      }
+    },
+    "두드려": {
+      "recordings": 2,
+      "speakers": 2,
+      "models": {
+        "child": {
+          "exact": 2,
+          "exact_rate": 1.0,
+          "phone_edits": 0,
+          "reference_phones": 14,
+          "reference_phone_edit_rate": 0.0,
+          "any_exact_frame": 2,
+          "two_exact_frames": 2
+        },
+        "native_phone": {
+          "exact": 0,
+          "exact_rate": 0.0,
+          "phone_edits": 3,
+          "reference_phones": 14,
+          "reference_phone_edit_rate": 0.21428571428571427,
+          "any_exact_frame": 0,
+          "two_exact_frames": 0
+        },
+        "foreign_phone": {
+          "exact": 0,
+          "exact_rate": 0.0,
+          "phone_edits": 9,
+          "reference_phones": 14,
+          "reference_phone_edit_rate": 0.6428571428571429,
+          "any_exact_frame": 0,
+          "two_exact_frames": 0
+        }
+      }
+    },
+    "작아": {
+      "recordings": 2,
+      "speakers": 1,
+      "models": {
+        "child": {
+          "exact": 2,
+          "exact_rate": 1.0,
+          "phone_edits": 0,
+          "reference_phones": 8,
+          "reference_phone_edit_rate": 0.0,
+          "any_exact_frame": 2,
+          "two_exact_frames": 1
+        },
+        "native_phone": {
+          "exact": 2,
+          "exact_rate": 1.0,
+          "phone_edits": 0,
+          "reference_phones": 8,
+          "reference_phone_edit_rate": 0.0,
+          "any_exact_frame": 2,
+          "two_exact_frames": 2
+        },
+        "foreign_phone": {
+          "exact": 0,
+          "exact_rate": 0.0,
+          "phone_edits": 4,
+          "reference_phones": 8,
+          "reference_phone_edit_rate": 0.5,
+          "any_exact_frame": 0,
+          "two_exact_frames": 0
+        }
+      }
+    }
+  },
+  "external_child_words": {
+    "아빠": {
+      "recordings": 2,
+      "speakers": 2,
+      "models": {
+        "child": {
+          "exact": 2,
+          "exact_rate": 1.0,
+          "phone_edits": 0,
+          "reference_phones": 6,
+          "reference_phone_edit_rate": 0.0
+        },
+        "native_phone": {
+          "exact": 0,
+          "exact_rate": 0.0,
+          "phone_edits": 3,
+          "reference_phones": 6,
+          "reference_phone_edit_rate": 0.5
+        },
+        "foreign_phone": {
+          "exact": 0,
+          "exact_rate": 0.0,
+          "phone_edits": 10,
+          "reference_phones": 6,
+          "reference_phone_edit_rate": 1.6666666666666667
+        }
+      }
+    },
+    "엄마": {
+      "recordings": 2,
+      "speakers": 2,
+      "models": {
+        "child": {
+          "exact": 2,
+          "exact_rate": 1.0,
+          "phone_edits": 0,
+          "reference_phones": 8,
+          "reference_phone_edit_rate": 0.0
+        },
+        "native_phone": {
+          "exact": 0,
+          "exact_rate": 0.0,
+          "phone_edits": 9,
+          "reference_phones": 8,
+          "reference_phone_edit_rate": 1.125
+        },
+        "foreign_phone": {
+          "exact": 0,
+          "exact_rate": 0.0,
+          "phone_edits": 8,
+          "reference_phones": 8,
+          "reference_phone_edit_rate": 1.0
+        }
+      }
+    },
+    "할아버지": {
+      "recordings": 2,
+      "speakers": 2,
+      "models": {
+        "child": {
+          "exact": 1,
+          "exact_rate": 0.5,
+          "phone_edits": 2,
+          "reference_phones": 16,
+          "reference_phone_edit_rate": 0.125
+        },
+        "native_phone": {
+          "exact": 0,
+          "exact_rate": 0.0,
+          "phone_edits": 9,
+          "reference_phones": 16,
+          "reference_phone_edit_rate": 0.5625
+        },
+        "foreign_phone": {
+          "exact": 0,
+          "exact_rate": 0.0,
+          "phone_edits": 10,
+          "reference_phones": 16,
+          "reference_phone_edit_rate": 0.625
+        }
+      }
+    },
+    "할머니": {
+      "recordings": 2,
+      "speakers": 2,
+      "models": {
+        "child": {
+          "exact": 2,
+          "exact_rate": 1.0,
+          "phone_edits": 0,
+          "reference_phones": 14,
+          "reference_phone_edit_rate": 0.0
+        },
+        "native_phone": {
+          "exact": 0,
+          "exact_rate": 0.0,
+          "phone_edits": 5,
+          "reference_phones": 14,
+          "reference_phone_edit_rate": 0.35714285714285715
+        },
+        "foreign_phone": {
+          "exact": 0,
+          "exact_rate": 0.0,
+          "phone_edits": 8,
+          "reference_phones": 14,
+          "reference_phone_edit_rate": 0.5714285714285714
+        }
+      }
+    },
+    "강아지": {
+      "recordings": 2,
+      "speakers": 2,
+      "models": {
+        "child": {
+          "exact": 2,
+          "exact_rate": 1.0,
+          "phone_edits": 0,
+          "reference_phones": 12,
+          "reference_phone_edit_rate": 0.0
+        },
+        "native_phone": {
+          "exact": 0,
+          "exact_rate": 0.0,
+          "phone_edits": 5,
+          "reference_phones": 12,
+          "reference_phone_edit_rate": 0.4166666666666667
+        },
+        "foreign_phone": {
+          "exact": 0,
+          "exact_rate": 0.0,
+          "phone_edits": 6,
+          "reference_phones": 12,
+          "reference_phone_edit_rate": 0.5
+        }
+      }
+    },
+    "야옹이": {
+      "recordings": 2,
+      "speakers": 2,
+      "models": {
+        "child": {
+          "exact": 0,
+          "exact_rate": 0.0,
+          "phone_edits": 4,
+          "reference_phones": 10,
+          "reference_phone_edit_rate": 0.4
+        },
+        "native_phone": {
+          "exact": 0,
+          "exact_rate": 0.0,
+          "phone_edits": 6,
+          "reference_phones": 10,
+          "reference_phone_edit_rate": 0.6
+        },
+        "foreign_phone": {
+          "exact": 0,
+          "exact_rate": 0.0,
+          "phone_edits": 8,
+          "reference_phones": 10,
+          "reference_phone_edit_rate": 0.8
+        }
+      }
+    },
+    "고양이": {
+      "recordings": 2,
+      "speakers": 2,
+      "models": {
+        "child": {
+          "exact": 2,
+          "exact_rate": 1.0,
+          "phone_edits": 0,
+          "reference_phones": 12,
+          "reference_phone_edit_rate": 0.0
+        },
+        "native_phone": {
+          "exact": 0,
+          "exact_rate": 0.0,
+          "phone_edits": 6,
+          "reference_phones": 12,
+          "reference_phone_edit_rate": 0.5
+        },
+        "foreign_phone": {
+          "exact": 0,
+          "exact_rate": 0.0,
+          "phone_edits": 7,
+          "reference_phones": 12,
+          "reference_phone_edit_rate": 0.5833333333333334
+        }
+      }
+    },
+    "토끼": {
+      "recordings": 2,
+      "speakers": 2,
+      "models": {
+        "child": {
+          "exact": 2,
+          "exact_rate": 1.0,
+          "phone_edits": 0,
+          "reference_phones": 8,
+          "reference_phone_edit_rate": 0.0
+        },
+        "native_phone": {
+          "exact": 0,
+          "exact_rate": 0.0,
+          "phone_edits": 4,
+          "reference_phones": 8,
+          "reference_phone_edit_rate": 0.5
+        },
+        "foreign_phone": {
+          "exact": 0,
+          "exact_rate": 0.0,
+          "phone_edits": 5,
+          "reference_phones": 8,
+          "reference_phone_edit_rate": 0.625
+        }
+      }
+    },
+    "나비": {
+      "recordings": 2,
+      "speakers": 2,
+      "models": {
+        "child": {
+          "exact": 1,
+          "exact_rate": 0.5,
+          "phone_edits": 1,
+          "reference_phones": 8,
+          "reference_phone_edit_rate": 0.125
+        },
+        "native_phone": {
+          "exact": 0,
+          "exact_rate": 0.0,
+          "phone_edits": 6,
+          "reference_phones": 8,
+          "reference_phone_edit_rate": 0.75
+        },
+        "foreign_phone": {
+          "exact": 0,
+          "exact_rate": 0.0,
+          "phone_edits": 3,
+          "reference_phones": 8,
+          "reference_phone_edit_rate": 0.375
+        }
+      }
+    },
+    "사과": {
+      "recordings": 2,
+      "speakers": 2,
+      "models": {
+        "child": {
+          "exact": 1,
+          "exact_rate": 0.5,
+          "phone_edits": 3,
+          "reference_phones": 10,
+          "reference_phone_edit_rate": 0.3
+        },
+        "native_phone": {
+          "exact": 0,
+          "exact_rate": 0.0,
+          "phone_edits": 11,
+          "reference_phones": 10,
+          "reference_phone_edit_rate": 1.1
+        },
+        "foreign_phone": {
+          "exact": 0,
+          "exact_rate": 0.0,
+          "phone_edits": 6,
+          "reference_phones": 10,
+          "reference_phone_edit_rate": 0.6
+        }
+      }
+    },
+    "바나나": {
+      "recordings": 2,
+      "speakers": 2,
+      "models": {
+        "child": {
+          "exact": 1,
+          "exact_rate": 0.5,
+          "phone_edits": 2,
+          "reference_phones": 12,
+          "reference_phone_edit_rate": 0.16666666666666666
+        },
+        "native_phone": {
+          "exact": 0,
+          "exact_rate": 0.0,
+          "phone_edits": 7,
+          "reference_phones": 12,
+          "reference_phone_edit_rate": 0.5833333333333334
+        },
+        "foreign_phone": {
+          "exact": 0,
+          "exact_rate": 0.0,
+          "phone_edits": 9,
+          "reference_phones": 12,
+          "reference_phone_edit_rate": 0.75
+        }
+      }
+    },
+    "우유": {
+      "recordings": 2,
+      "speakers": 2,
+      "models": {
+        "child": {
+          "exact": 0,
+          "exact_rate": 0.0,
+          "phone_edits": 3,
+          "reference_phones": 6,
+          "reference_phone_edit_rate": 0.5
+        },
+        "native_phone": {
+          "exact": 0,
+          "exact_rate": 0.0,
+          "phone_edits": 8,
+          "reference_phones": 6,
+          "reference_phone_edit_rate": 1.3333333333333333
+        },
+        "foreign_phone": {
+          "exact": 0,
+          "exact_rate": 0.0,
+          "phone_edits": 4,
+          "reference_phones": 6,
+          "reference_phone_edit_rate": 0.6666666666666666
+        }
+      }
+    },
+    "빵": {
+      "recordings": 2,
+      "speakers": 2,
+      "models": {
+        "child": {
+          "exact": 2,
+          "exact_rate": 1.0,
+          "phone_edits": 0,
+          "reference_phones": 6,
+          "reference_phone_edit_rate": 0.0
+        },
+        "native_phone": {
+          "exact": 0,
+          "exact_rate": 0.0,
+          "phone_edits": 7,
+          "reference_phones": 6,
+          "reference_phone_edit_rate": 1.1666666666666667
+        },
+        "foreign_phone": {
+          "exact": 0,
+          "exact_rate": 0.0,
+          "phone_edits": 6,
+          "reference_phones": 6,
+          "reference_phone_edit_rate": 1.0
+        }
+      }
+    },
+    "학교": {
+      "recordings": 2,
+      "speakers": 2,
+      "models": {
+        "child": {
+          "exact": 1,
+          "exact_rate": 0.5,
+          "phone_edits": 1,
+          "reference_phones": 12,
+          "reference_phone_edit_rate": 0.08333333333333333
+        },
+        "native_phone": {
+          "exact": 0,
+          "exact_rate": 0.0,
+          "phone_edits": 4,
+          "reference_phones": 12,
+          "reference_phone_edit_rate": 0.3333333333333333
+        },
+        "foreign_phone": {
+          "exact": 0,
+          "exact_rate": 0.0,
+          "phone_edits": 6,
+          "reference_phones": 12,
+          "reference_phone_edit_rate": 0.5
+        }
+      }
+    },
+    "친구들": {
+      "recordings": 1,
+      "speakers": 1,
+      "models": {
+        "child": {
+          "exact": 1,
+          "exact_rate": 1.0,
+          "phone_edits": 0,
+          "reference_phones": 8,
+          "reference_phone_edit_rate": 0.0
+        },
+        "native_phone": {
+          "exact": 0,
+          "exact_rate": 0.0,
+          "phone_edits": 4,
+          "reference_phones": 8,
+          "reference_phone_edit_rate": 0.5
+        },
+        "foreign_phone": {
+          "exact": 0,
+          "exact_rate": 0.0,
+          "phone_edits": 5,
+          "reference_phones": 8,
+          "reference_phone_edit_rate": 0.625
+        }
+      }
+    },
+    "친구": {
+      "recordings": 2,
+      "speakers": 2,
+      "models": {
+        "child": {
+          "exact": 2,
+          "exact_rate": 1.0,
+          "phone_edits": 0,
+          "reference_phones": 10,
+          "reference_phone_edit_rate": 0.0
+        },
+        "native_phone": {
+          "exact": 0,
+          "exact_rate": 0.0,
+          "phone_edits": 2,
+          "reference_phones": 10,
+          "reference_phone_edit_rate": 0.2
+        },
+        "foreign_phone": {
+          "exact": 2,
+          "exact_rate": 1.0,
+          "phone_edits": 0,
+          "reference_phones": 10,
+          "reference_phone_edit_rate": 0.0
+        }
+      }
+    },
+    "책": {
+      "recordings": 3,
+      "speakers": 2,
+      "models": {
+        "child": {
+          "exact": 0,
+          "exact_rate": 0.0,
+          "phone_edits": 7,
+          "reference_phones": 9,
+          "reference_phone_edit_rate": 0.7777777777777778
+        },
+        "native_phone": {
+          "exact": 0,
+          "exact_rate": 0.0,
+          "phone_edits": 13,
+          "reference_phones": 9,
+          "reference_phone_edit_rate": 1.4444444444444444
+        },
+        "foreign_phone": {
+          "exact": 0,
+          "exact_rate": 0.0,
+          "phone_edits": 12,
+          "reference_phones": 9,
+          "reference_phone_edit_rate": 1.3333333333333333
+        }
+      }
+    },
+    "실로폰": {
+      "recordings": 3,
+      "speakers": 2,
+      "models": {
+        "child": {
+          "exact": 0,
+          "exact_rate": 0.0,
+          "phone_edits": 13,
+          "reference_phones": 24,
+          "reference_phone_edit_rate": 0.5416666666666666
+        },
+        "native_phone": {
+          "exact": 0,
+          "exact_rate": 0.0,
+          "phone_edits": 20,
+          "reference_phones": 24,
+          "reference_phone_edit_rate": 0.8333333333333334
+        },
+        "foreign_phone": {
+          "exact": 0,
+          "exact_rate": 0.0,
+          "phone_edits": 21,
+          "reference_phones": 24,
+          "reference_phone_edit_rate": 0.875
+        }
+      }
+    },
+    "걸어": {
+      "recordings": 1,
+      "speakers": 1,
+      "models": {
+        "child": {
+          "exact": 0,
+          "exact_rate": 0.0,
+          "phone_edits": 3,
+          "reference_phones": 4,
+          "reference_phone_edit_rate": 0.75
+        },
+        "native_phone": {
+          "exact": 0,
+          "exact_rate": 0.0,
+          "phone_edits": 1,
+          "reference_phones": 4,
+          "reference_phone_edit_rate": 0.25
+        },
+        "foreign_phone": {
+          "exact": 0,
+          "exact_rate": 0.0,
+          "phone_edits": 3,
+          "reference_phones": 4,
+          "reference_phone_edit_rate": 0.75
+        }
+      }
+    },
+    "가요": {
+      "recordings": 3,
+      "speakers": 2,
+      "models": {
+        "child": {
+          "exact": 2,
+          "exact_rate": 0.6666666666666666,
+          "phone_edits": 2,
+          "reference_phones": 12,
+          "reference_phone_edit_rate": 0.16666666666666666
+        },
+        "native_phone": {
+          "exact": 0,
+          "exact_rate": 0.0,
+          "phone_edits": 5,
+          "reference_phones": 12,
+          "reference_phone_edit_rate": 0.4166666666666667
+        },
+        "foreign_phone": {
+          "exact": 0,
+          "exact_rate": 0.0,
+          "phone_edits": 3,
+          "reference_phones": 12,
+          "reference_phone_edit_rate": 0.25
+        }
+      }
+    },
+    "뛰어가요": {
+      "recordings": 1,
+      "speakers": 1,
+      "models": {
+        "child": {
+          "exact": 0,
+          "exact_rate": 0.0,
+          "phone_edits": 2,
+          "reference_phones": 8,
+          "reference_phone_edit_rate": 0.25
+        },
+        "native_phone": {
+          "exact": 0,
+          "exact_rate": 0.0,
+          "phone_edits": 3,
+          "reference_phones": 8,
+          "reference_phone_edit_rate": 0.375
+        },
+        "foreign_phone": {
+          "exact": 0,
+          "exact_rate": 0.0,
+          "phone_edits": 5,
+          "reference_phones": 8,
+          "reference_phone_edit_rate": 0.625
+        }
+      }
+    },
+    "먹어요": {
+      "recordings": 3,
+      "speakers": 2,
+      "models": {
+        "child": {
+          "exact": 2,
+          "exact_rate": 0.6666666666666666,
+          "phone_edits": 2,
+          "reference_phones": 18,
+          "reference_phone_edit_rate": 0.1111111111111111
+        },
+        "native_phone": {
+          "exact": 1,
+          "exact_rate": 0.3333333333333333,
+          "phone_edits": 5,
+          "reference_phones": 18,
+          "reference_phone_edit_rate": 0.2777777777777778
+        },
+        "foreign_phone": {
+          "exact": 0,
+          "exact_rate": 0.0,
+          "phone_edits": 8,
+          "reference_phones": 18,
+          "reference_phone_edit_rate": 0.4444444444444444
+        }
+      }
+    },
+    "상자": {
+      "recordings": 1,
+      "speakers": 1,
+      "models": {
+        "child": {
+          "exact": 1,
+          "exact_rate": 1.0,
+          "phone_edits": 0,
+          "reference_phones": 5,
+          "reference_phone_edit_rate": 0.0
+        },
+        "native_phone": {
+          "exact": 0,
+          "exact_rate": 0.0,
+          "phone_edits": 8,
+          "reference_phones": 5,
+          "reference_phone_edit_rate": 1.6
+        },
+        "foreign_phone": {
+          "exact": 0,
+          "exact_rate": 0.0,
+          "phone_edits": 4,
+          "reference_phones": 5,
+          "reference_phone_edit_rate": 0.8
+        }
+      }
+    },
+    "택배": {
+      "recordings": 1,
+      "speakers": 1,
+      "models": {
+        "child": {
+          "exact": 0,
+          "exact_rate": 0.0,
+          "phone_edits": 2,
+          "reference_phones": 5,
+          "reference_phone_edit_rate": 0.4
+        },
+        "native_phone": {
+          "exact": 0,
+          "exact_rate": 0.0,
+          "phone_edits": 5,
+          "reference_phones": 5,
+          "reference_phone_edit_rate": 1.0
+        },
+        "foreign_phone": {
+          "exact": 0,
+          "exact_rate": 0.0,
+          "phone_edits": 4,
+          "reference_phones": 5,
+          "reference_phone_edit_rate": 0.8
+        }
+      }
+    },
+    "내려놔요": {
+      "recordings": 1,
+      "speakers": 1,
+      "models": {
+        "child": {
+          "exact": 0,
+          "exact_rate": 0.0,
+          "phone_edits": 4,
+          "reference_phones": 10,
+          "reference_phone_edit_rate": 0.4
+        },
+        "native_phone": {
+          "exact": 0,
+          "exact_rate": 0.0,
+          "phone_edits": 3,
+          "reference_phones": 10,
+          "reference_phone_edit_rate": 0.3
+        },
+        "foreign_phone": {
+          "exact": 0,
+          "exact_rate": 0.0,
+          "phone_edits": 10,
+          "reference_phones": 10,
+          "reference_phone_edit_rate": 1.0
+        }
+      }
+    },
+    "놔요": {
+      "recordings": 3,
+      "speakers": 2,
+      "models": {
+        "child": {
+          "exact": 0,
+          "exact_rate": 0.0,
+          "phone_edits": 5,
+          "reference_phones": 15,
+          "reference_phone_edit_rate": 0.3333333333333333
+        },
+        "native_phone": {
+          "exact": 0,
+          "exact_rate": 0.0,
+          "phone_edits": 9,
+          "reference_phones": 15,
+          "reference_phone_edit_rate": 0.6
+        },
+        "foreign_phone": {
+          "exact": 0,
+          "exact_rate": 0.0,
+          "phone_edits": 6,
+          "reference_phones": 15,
+          "reference_phone_edit_rate": 0.4
+        }
+      }
+    },
+    "탱글탱글": {
+      "recordings": 1,
+      "speakers": 1,
+      "models": {
+        "child": {
+          "exact": 0,
+          "exact_rate": 0.0,
+          "phone_edits": 5,
+          "reference_phones": 12,
+          "reference_phone_edit_rate": 0.4166666666666667
+        },
+        "native_phone": {
+          "exact": 0,
+          "exact_rate": 0.0,
+          "phone_edits": 11,
+          "reference_phones": 12,
+          "reference_phone_edit_rate": 0.9166666666666666
+        },
+        "foreign_phone": {
+          "exact": 0,
+          "exact_rate": 0.0,
+          "phone_edits": 9,
+          "reference_phones": 12,
+          "reference_phone_edit_rate": 0.75
+        }
+      }
+    },
+    "딸랑딸랑": {
+      "recordings": 1,
+      "speakers": 1,
+      "models": {
+        "child": {
+          "exact": 0,
+          "exact_rate": 0.0,
+          "phone_edits": 2,
+          "reference_phones": 12,
+          "reference_phone_edit_rate": 0.16666666666666666
+        },
+        "native_phone": {
+          "exact": 0,
+          "exact_rate": 0.0,
+          "phone_edits": 10,
+          "reference_phones": 12,
+          "reference_phone_edit_rate": 0.8333333333333334
+        },
+        "foreign_phone": {
+          "exact": 0,
+          "exact_rate": 0.0,
+          "phone_edits": 11,
+          "reference_phones": 12,
+          "reference_phone_edit_rate": 0.9166666666666666
+        }
+      }
+    },
+    "딩동댕": {
+      "recordings": 1,
+      "speakers": 1,
+      "models": {
+        "child": {
+          "exact": 0,
+          "exact_rate": 0.0,
+          "phone_edits": 4,
+          "reference_phones": 9,
+          "reference_phone_edit_rate": 0.4444444444444444
+        },
+        "native_phone": {
+          "exact": 0,
+          "exact_rate": 0.0,
+          "phone_edits": 6,
+          "reference_phones": 9,
+          "reference_phone_edit_rate": 0.6666666666666666
+        },
+        "foreign_phone": {
+          "exact": 0,
+          "exact_rate": 0.0,
+          "phone_edits": 8,
+          "reference_phones": 9,
+          "reference_phone_edit_rate": 0.8888888888888888
+        }
+      }
+    },
+    "쳐요": {
+      "recordings": 4,
+      "speakers": 2,
+      "models": {
+        "child": {
+          "exact": 0,
+          "exact_rate": 0.0,
+          "phone_edits": 4,
+          "reference_phones": 16,
+          "reference_phone_edit_rate": 0.25
+        },
+        "native_phone": {
+          "exact": 0,
+          "exact_rate": 0.0,
+          "phone_edits": 15,
+          "reference_phones": 16,
+          "reference_phone_edit_rate": 0.9375
+        },
+        "foreign_phone": {
+          "exact": 0,
+          "exact_rate": 0.0,
+          "phone_edits": 11,
+          "reference_phones": 16,
+          "reference_phone_edit_rate": 0.6875
+        }
+      }
+    },
+    "북": {
+      "recordings": 1,
+      "speakers": 1,
+      "models": {
+        "child": {
+          "exact": 0,
+          "exact_rate": 0.0,
+          "phone_edits": 2,
+          "reference_phones": 3,
+          "reference_phone_edit_rate": 0.6666666666666666
+        },
+        "native_phone": {
+          "exact": 0,
+          "exact_rate": 0.0,
+          "phone_edits": 2,
+          "reference_phones": 3,
+          "reference_phone_edit_rate": 0.6666666666666666
+        },
+        "foreign_phone": {
+          "exact": 0,
+          "exact_rate": 0.0,
+          "phone_edits": 2,
+          "reference_phones": 3,
+          "reference_phone_edit_rate": 0.6666666666666666
+        }
+      }
+    },
+    "북을 쳐요": {
+      "recordings": 1,
+      "speakers": 1,
+      "models": {
+        "child": {
+          "exact": 0,
+          "exact_rate": 0.0,
+          "phone_edits": 2,
+          "reference_phones": 9,
+          "reference_phone_edit_rate": 0.2222222222222222
+        },
+        "native_phone": {
+          "exact": 0,
+          "exact_rate": 0.0,
+          "phone_edits": 4,
+          "reference_phones": 9,
+          "reference_phone_edit_rate": 0.4444444444444444
+        },
+        "foreign_phone": {
+          "exact": 0,
+          "exact_rate": 0.0,
+          "phone_edits": 5,
+          "reference_phones": 9,
+          "reference_phone_edit_rate": 0.5555555555555556
+        }
+      }
+    },
+    "와요": {
+      "recordings": 2,
+      "speakers": 2,
+      "models": {
+        "child": {
+          "exact": 2,
+          "exact_rate": 1.0,
+          "phone_edits": 0,
+          "reference_phones": 8,
+          "reference_phone_edit_rate": 0.0
+        },
+        "native_phone": {
+          "exact": 1,
+          "exact_rate": 0.5,
+          "phone_edits": 1,
+          "reference_phones": 8,
+          "reference_phone_edit_rate": 0.125
+        },
+        "foreign_phone": {
+          "exact": 1,
+          "exact_rate": 0.5,
+          "phone_edits": 1,
+          "reference_phones": 8,
+          "reference_phone_edit_rate": 0.125
+        }
+      }
+    },
+    "먹어": {
+      "recordings": 3,
+      "speakers": 2,
+      "models": {
+        "child": {
+          "exact": 0,
+          "exact_rate": 0.0,
+          "phone_edits": 6,
+          "reference_phones": 12,
+          "reference_phone_edit_rate": 0.5
+        },
+        "native_phone": {
+          "exact": 0,
+          "exact_rate": 0.0,
+          "phone_edits": 14,
+          "reference_phones": 12,
+          "reference_phone_edit_rate": 1.1666666666666667
+        },
+        "foreign_phone": {
+          "exact": 0,
+          "exact_rate": 0.0,
+          "phone_edits": 13,
+          "reference_phones": 12,
+          "reference_phone_edit_rate": 1.0833333333333333
+        }
+      }
+    },
+    "들어요": {
+      "recordings": 2,
+      "speakers": 2,
+      "models": {
+        "child": {
+          "exact": 0,
+          "exact_rate": 0.0,
+          "phone_edits": 9,
+          "reference_phones": 12,
+          "reference_phone_edit_rate": 0.75
+        },
+        "native_phone": {
+          "exact": 0,
+          "exact_rate": 0.0,
+          "phone_edits": 11,
+          "reference_phones": 12,
+          "reference_phone_edit_rate": 0.9166666666666666
+        },
+        "foreign_phone": {
+          "exact": 1,
+          "exact_rate": 0.5,
+          "phone_edits": 4,
+          "reference_phones": 12,
+          "reference_phone_edit_rate": 0.3333333333333333
+        }
+      }
+    },
+    "들어": {
+      "recordings": 2,
+      "speakers": 2,
+      "models": {
+        "child": {
+          "exact": 0,
+          "exact_rate": 0.0,
+          "phone_edits": 7,
+          "reference_phones": 8,
+          "reference_phone_edit_rate": 0.875
+        },
+        "native_phone": {
+          "exact": 0,
+          "exact_rate": 0.0,
+          "phone_edits": 10,
+          "reference_phones": 8,
+          "reference_phone_edit_rate": 1.25
+        },
+        "foreign_phone": {
+          "exact": 0,
+          "exact_rate": 0.0,
+          "phone_edits": 10,
+          "reference_phones": 8,
+          "reference_phone_edit_rate": 1.25
+        }
+      }
+    },
+    "놔": {
+      "recordings": 2,
+      "speakers": 2,
+      "models": {
+        "child": {
+          "exact": 0,
+          "exact_rate": 0.0,
+          "phone_edits": 4,
+          "reference_phones": 6,
+          "reference_phone_edit_rate": 0.6666666666666666
+        },
+        "native_phone": {
+          "exact": 0,
+          "exact_rate": 0.0,
+          "phone_edits": 4,
+          "reference_phones": 6,
+          "reference_phone_edit_rate": 0.6666666666666666
+        },
+        "foreign_phone": {
+          "exact": 0,
+          "exact_rate": 0.0,
+          "phone_edits": 5,
+          "reference_phones": 6,
+          "reference_phone_edit_rate": 0.8333333333333334
+        }
+      }
+    },
+    "흔들어요": {
+      "recordings": 2,
+      "speakers": 2,
+      "models": {
+        "child": {
+          "exact": 0,
+          "exact_rate": 0.0,
+          "phone_edits": 4,
+          "reference_phones": 18,
+          "reference_phone_edit_rate": 0.2222222222222222
+        },
+        "native_phone": {
+          "exact": 0,
+          "exact_rate": 0.0,
+          "phone_edits": 9,
+          "reference_phones": 18,
+          "reference_phone_edit_rate": 0.5
+        },
+        "foreign_phone": {
+          "exact": 0,
+          "exact_rate": 0.0,
+          "phone_edits": 9,
+          "reference_phones": 18,
+          "reference_phone_edit_rate": 0.5
+        }
+      }
+    },
+    "흔들어": {
+      "recordings": 2,
+      "speakers": 2,
+      "models": {
+        "child": {
+          "exact": 1,
+          "exact_rate": 0.5,
+          "phone_edits": 2,
+          "reference_phones": 14,
+          "reference_phone_edit_rate": 0.14285714285714285
+        },
+        "native_phone": {
+          "exact": 0,
+          "exact_rate": 0.0,
+          "phone_edits": 8,
+          "reference_phones": 14,
+          "reference_phone_edit_rate": 0.5714285714285714
+        },
+        "foreign_phone": {
+          "exact": 0,
+          "exact_rate": 0.0,
+          "phone_edits": 5,
+          "reference_phones": 14,
+          "reference_phone_edit_rate": 0.35714285714285715
+        }
+      }
+    },
+    "쳐": {
+      "recordings": 2,
+      "speakers": 2,
+      "models": {
+        "child": {
+          "exact": 0,
+          "exact_rate": 0.0,
+          "phone_edits": 4,
+          "reference_phones": 4,
+          "reference_phone_edit_rate": 1.0
+        },
+        "native_phone": {
+          "exact": 1,
+          "exact_rate": 0.5,
+          "phone_edits": 3,
+          "reference_phones": 4,
+          "reference_phone_edit_rate": 0.75
+        },
+        "foreign_phone": {
+          "exact": 0,
+          "exact_rate": 0.0,
+          "phone_edits": 4,
+          "reference_phones": 4,
+          "reference_phone_edit_rate": 1.0
+        }
+      }
+    },
+    "두드려요": {
+      "recordings": 2,
+      "speakers": 2,
+      "models": {
+        "child": {
+          "exact": 0,
+          "exact_rate": 0.0,
+          "phone_edits": 5,
+          "reference_phones": 18,
+          "reference_phone_edit_rate": 0.2777777777777778
+        },
+        "native_phone": {
+          "exact": 0,
+          "exact_rate": 0.0,
+          "phone_edits": 10,
+          "reference_phones": 18,
+          "reference_phone_edit_rate": 0.5555555555555556
+        },
+        "foreign_phone": {
+          "exact": 0,
+          "exact_rate": 0.0,
+          "phone_edits": 12,
+          "reference_phones": 18,
+          "reference_phone_edit_rate": 0.6666666666666666
+        }
+      }
+    },
+    "두르려": {
+      "recordings": 1,
+      "speakers": 1,
+      "models": {
+        "child": {
+          "exact": 0,
+          "exact_rate": 0.0,
+          "phone_edits": 1,
+          "reference_phones": 7,
+          "reference_phone_edit_rate": 0.14285714285714285
+        },
+        "native_phone": {
+          "exact": 0,
+          "exact_rate": 0.0,
+          "phone_edits": 5,
+          "reference_phones": 7,
+          "reference_phone_edit_rate": 0.7142857142857143
+        },
+        "foreign_phone": {
+          "exact": 0,
+          "exact_rate": 0.0,
+          "phone_edits": 5,
+          "reference_phones": 7,
+          "reference_phone_edit_rate": 0.7142857142857143
+        }
+      }
+    },
+    "가": {
+      "recordings": 1,
+      "speakers": 1,
+      "models": {
+        "child": {
+          "exact": 0,
+          "exact_rate": 0.0,
+          "phone_edits": 1,
+          "reference_phones": 2,
+          "reference_phone_edit_rate": 0.5
+        },
+        "native_phone": {
+          "exact": 0,
+          "exact_rate": 0.0,
+          "phone_edits": 3,
+          "reference_phones": 2,
+          "reference_phone_edit_rate": 1.5
+        },
+        "foreign_phone": {
+          "exact": 0,
+          "exact_rate": 0.0,
+          "phone_edits": 3,
+          "reference_phones": 2,
+          "reference_phone_edit_rate": 1.5
+        }
+      }
+    },
+    "와": {
+      "recordings": 1,
+      "speakers": 1,
+      "models": {
+        "child": {
+          "exact": 1,
+          "exact_rate": 1.0,
+          "phone_edits": 0,
+          "reference_phones": 2,
+          "reference_phone_edit_rate": 0.0
+        },
+        "native_phone": {
+          "exact": 0,
+          "exact_rate": 0.0,
+          "phone_edits": 1,
+          "reference_phones": 2,
+          "reference_phone_edit_rate": 0.5
+        },
+        "foreign_phone": {
+          "exact": 0,
+          "exact_rate": 0.0,
+          "phone_edits": 2,
+          "reference_phones": 2,
+          "reference_phone_edit_rate": 1.0
+        }
+      }
+    },
+    "두드려": {
+      "recordings": 1,
+      "speakers": 1,
+      "models": {
+        "child": {
+          "exact": 0,
+          "exact_rate": 0.0,
+          "phone_edits": 4,
+          "reference_phones": 7,
+          "reference_phone_edit_rate": 0.5714285714285714
+        },
+        "native_phone": {
+          "exact": 0,
+          "exact_rate": 0.0,
+          "phone_edits": 4,
+          "reference_phones": 7,
+          "reference_phone_edit_rate": 0.5714285714285714
+        },
+        "foreign_phone": {
+          "exact": 0,
+          "exact_rate": 0.0,
+          "phone_edits": 7,
+          "reference_phones": 7,
+          "reference_phone_edit_rate": 1.0
+        }
+      }
+    }
+  },
+  "contrast_recordings": {
+    "child": {
+      "grab_correct_whole": 0,
+      "grab_recordings": 5,
+      "jak_recognized_as_grab_whole": 0,
+      "jak_recognized_as_grab_any_frame": 0,
+      "jak_recordings": 2
+    },
+    "native_phone": {
+      "grab_correct_whole": 2,
+      "grab_recordings": 5,
+      "jak_recognized_as_grab_whole": 0,
+      "jak_recognized_as_grab_any_frame": 0,
+      "jak_recordings": 2
+    },
+    "foreign_phone": {
+      "grab_correct_whole": 0,
+      "grab_recordings": 5,
+      "jak_recognized_as_grab_whole": 0,
+      "jak_recognized_as_grab_any_frame": 0,
+      "jak_recordings": 2
+    }
+  },
+  "explicit_negative_transcriptions": [
+    {
+      "id": "child1_06",
+      "spoken_label": "야옹이",
+      "wrong_answer_target": "고양이",
+      "models": {
+        "child": {
+          "raw_text": "영이",
+          "spoken_label_exact": false,
+          "incorrectly_equal_to_target": false
+        },
+        "native_phone": {
+          "raw_text": "iA EU I",
+          "spoken_label_exact": false,
+          "incorrectly_equal_to_target": false
+        },
+        "foreign_phone": {
+          "raw_text": "ㅣ ㄹ ㅡ ㅁ ㅣ",
+          "spoken_label_exact": false,
+          "incorrectly_equal_to_target": false
+        }
+      }
+    },
+    {
+      "id": "child1_20",
+      "spoken_label": "걸어",
+      "wrong_answer_target": "가요",
+      "models": {
+        "child": {
+          "raw_text": "더랑",
+          "spoken_label_exact": false,
+          "incorrectly_equal_to_target": false
+        },
+        "native_phone": {
+          "raw_text": "G EO N EO",
+          "spoken_label_exact": false,
+          "incorrectly_equal_to_target": false
+        },
+        "foreign_phone": {
+          "raw_text": "ㄱ ㅕ ㄴ ㅕ",
+          "spoken_label_exact": false,
+          "incorrectly_equal_to_target": false
+        }
+      }
+    },
+    {
+      "id": "child1_22",
+      "spoken_label": "뛰어가요",
+      "wrong_answer_target": "가요",
+      "models": {
+        "child": {
+          "raw_text": "이어가요",
+          "spoken_label_exact": false,
+          "incorrectly_equal_to_target": false
+        },
+        "native_phone": {
+          "raw_text": "S I EO G A NG iO",
+          "spoken_label_exact": false,
+          "incorrectly_equal_to_target": false
+        },
+        "foreign_phone": {
+          "raw_text": "ㅣ ㅏ ㅋ ㅛ",
+          "spoken_label_exact": false,
+          "incorrectly_equal_to_target": false
+        }
+      }
+    },
+    {
+      "id": "child1_24",
+      "spoken_label": "상자",
+      "wrong_answer_target": "놔요",
+      "models": {
+        "child": {
+          "raw_text": "상자",
+          "spoken_label_exact": true,
+          "incorrectly_equal_to_target": false
+        },
+        "native_phone": {
+          "raw_text": "R A NG S S E NG oA N G",
+          "spoken_label_exact": false,
+          "incorrectly_equal_to_target": false
+        },
+        "foreign_phone": {
+          "raw_text": "ㅏ ㅎ ㅏ ㄴ ㄷ ㅏ",
+          "spoken_label_exact": false,
+          "incorrectly_equal_to_target": false
+        }
+      }
+    },
+    {
+      "id": "child1_25",
+      "spoken_label": "택배",
+      "wrong_answer_target": "놔요",
+      "models": {
+        "child": {
+          "raw_text": "햇배",
+          "spoken_label_exact": false,
+          "incorrectly_equal_to_target": false
+        },
+        "native_phone": {
+          "raw_text": "Kh EU I B E NG",
+          "spoken_label_exact": false,
+          "incorrectly_equal_to_target": false
+        },
+        "foreign_phone": {
+          "raw_text": "ㅍ ㅜ ㅃ ㅜ",
+          "spoken_label_exact": false,
+          "incorrectly_equal_to_target": false
+        }
+      }
+    },
+    {
+      "id": "child1_28",
+      "spoken_label": "탱글탱글",
+      "wrong_answer_target": "흔들어",
+      "models": {
+        "child": {
+          "raw_text": "청긋팀글",
+          "spoken_label_exact": false,
+          "incorrectly_equal_to_target": false
+        },
+        "native_phone": {
+          "raw_text": "Kh A NG B I k DD oE N D oE L",
+          "spoken_label_exact": false,
+          "incorrectly_equal_to_target": false
+        },
+        "foreign_phone": {
+          "raw_text": "ㄱ ㅐ ㄱ ㅡ ㄷ ㅏ",
+          "spoken_label_exact": false,
+          "incorrectly_equal_to_target": false
+        }
+      }
+    },
+    {
+      "id": "child1_29",
+      "spoken_label": "딸랑딸랑",
+      "wrong_answer_target": "흔들어",
+      "models": {
+        "child": {
+          "raw_text": "빨랑달랑",
+          "spoken_label_exact": false,
+          "incorrectly_equal_to_target": false
+        },
+        "native_phone": {
+          "raw_text": "S A I M A N G U DD A L R I N EU N",
+          "spoken_label_exact": false,
+          "incorrectly_equal_to_target": false
+        },
+        "foreign_phone": {
+          "raw_text": "ㅃ ㄷ ㅏ",
+          "spoken_label_exact": false,
+          "incorrectly_equal_to_target": false
+        }
+      }
+    },
+    {
+      "id": "child1_30",
+      "spoken_label": "딩동댕",
+      "wrong_answer_target": "흔들어",
+      "models": {
+        "child": {
+          "raw_text": "빙동님",
+          "spoken_label_exact": false,
+          "incorrectly_equal_to_target": false
+        },
+        "native_phone": {
+          "raw_text": "B I N D O L R A",
+          "spoken_label_exact": false,
+          "incorrectly_equal_to_target": false
+        },
+        "foreign_phone": {
+          "raw_text": "ㅎ ㅡ ㄹ ㄹ ㄷ ㅏ",
+          "spoken_label_exact": false,
+          "incorrectly_equal_to_target": false
+        }
+      }
+    }
+  ],
+  "silence_sanity": {
+    "child": [],
+    "native_phone": [],
+    "foreign_phone": []
+  },
+  "loading_validation": {
+    "transformers": "4.48.1",
+    "unique_audio_cases": 12,
+    "models": {
+      "native_phone": {
+        "loading_info": {
+          "missing_keys": [],
+          "unexpected_keys": [],
+          "mismatched_keys": [],
+          "error_msgs": []
+        },
+        "cases": 12,
+        "same_eager_without_mask": 12,
+        "same_eager_with_mask": 12
+      },
+      "foreign_phone": {
+        "loading_info": {
+          "missing_keys": [],
+          "unexpected_keys": [],
+          "mismatched_keys": [],
+          "error_msgs": []
+        },
+        "cases": 12,
+        "same_eager_without_mask": 12,
+        "same_eager_with_mask": 12
+      }
+    },
+    "baseline_replay_agreement": {
+      "whole_files": 53,
+      "whole_same": 53,
+      "windows": 289,
+      "windows_same": 289
+    }
+  },
+  "local_reproduction": {
+    "compare.py": {
+      "path": ".venv/slplab-validation-0913/compare.py",
+      "sha256": "a5019e85e3fe6416d3d3b0bb5e6a5e5876b75d01655cee90ec789a662dfa508f"
+    },
+    "analyze.py": {
+      "path": ".venv/slplab-validation-0913/analyze.py",
+      "sha256": "bc4a233ba12526655d845f6b9c40efd9379a49daf7f1cbfb22701068782a3925"
+    },
+    "check_loading.py": {
+      "path": ".venv/slplab-validation-0913/check_loading.py",
+      "sha256": "f0f6b7963dc7004fe94ca8c7b3c3e6ac84adf70a71c6441231cdf4350d597e34"
+    },
+    "inputs.json": {
+      "path": ".venv/slplab-validation-0913/inputs.json",
+      "sha256": "f017dd0e6422763e9274d6115e5a4182bc11329c77504659ba8e87069c1d1dcb"
+    }
+  },
+  "project_g2p_hashes": {
+    "python/build/g2p/ko/g2p.py": "9671f00164c3d3a94cd56d9fa41adf391c09d49017dc63f442b35f151f5f46e4",
+    "python/build/g2p/ko/jamo_ipa.py": "24d4d6bb4193305f0b464eaeb63394980495d65d355518ee6e30f935a63befe0"
+  }
+}

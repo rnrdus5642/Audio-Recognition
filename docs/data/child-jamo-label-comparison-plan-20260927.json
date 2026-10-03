@@ -1,0 +1,55 @@
+{
+  "version": "child-jamo-label-comparison-20260927-v1",
+  "created_at_utc": "2026-09-27T09:12:16.663635+00:00",
+  "selection_sha256": "d95d7e3da128cb9610031731b505ae1b6cb048de1c010bbd276a6dd6b1c6d584",
+  "parent_checkpoint_sha256": "5a330f1bea3a17d1d063fdfd71a0cc25394695b0b797de01b293f6f688257aa7",
+  "seed": 92727,
+  "arms": [
+    "canonical",
+    "realized"
+  ],
+  "updates_each": 72,
+  "last_layers": 8,
+  "encoder_lr": 1e-05,
+  "head_lr": 5e-05,
+  "weight_decay": 0.01,
+  "grad_clip": 1.0,
+  "warmup_updates": 8,
+  "schedule": "same warmup and cosine decay with 0.1 floor in both arms",
+  "utterances_per_update": 4,
+  "microbatch_size": 1,
+  "reviewed_training_recordings": 6,
+  "changed_training_labels": 4,
+  "heldout_reviewed_recordings": 4,
+  "changed_heldout_labels": 4,
+  "replay_recordings": 216,
+  "replay_exposures": 216,
+  "reviewed_exposures": 72,
+  "acoustic_transforms": null,
+  "spec_augment": false,
+  "dropout_policy": "Standard train-mode dropout, same seed and audio order in both arms.",
+  "training_precision": "BF16 encoder; FP32 head and length-normalized CTC loss",
+  "evaluation_precision": "FP32, eval mode, no augmentation",
+  "evaluation": [
+    "The six training items against human-selected labels (fit only)",
+    "Four held-out-speaker human-selected labels (exploratory)",
+    "All 1500 original validation recordings for regression",
+    "Existing personal diagnostics and human-verified training diagnostics"
+  ],
+  "fixed_final_update": true,
+  "hyperparameter_or_checkpoint_search": false,
+  "checks_before_considering_expansion": [
+    "Realized-label arm has lower human-selected jamo error and fewer canonical rewrites on held-out four than both parent and canonical arm.",
+    "At least one additional exact held-out match, without regressing an existing exact held-out match.",
+    "Original 1500-validation JER no more than 0.001 absolute above the paired parent.",
+    "No loss of previously correct personal or verified-training diagnostics; do not turn human 쌕 into 책."
+  ],
+  "original_problem_solved_requires": "Additional correct original error diagnostics, preserved controls and stronger independent validation; the four-item outcome alone is insufficient.",
+  "deployed_automatically": false,
+  "limitations": [
+    "Only six human training utterances and four held-out utterances, one seed; not evidence of population-level improvement.",
+    "The label comparator is a counterfactual on previously excluded recordings, not a reconstruction proving what originally caused the model errors.",
+    "All labels are provisional single-listener choices; unresolved choices and free text are not promoted to truth.",
+    "No automatic new listening batch. Interpret this bounded pilot before planning more work."
+  ]
+}

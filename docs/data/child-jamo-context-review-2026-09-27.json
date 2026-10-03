@@ -1,0 +1,610 @@
+{
+  "complete": true,
+  "captured_at_utc": "2026-09-27T06:09:07.106812+00:00",
+  "source_answers_modified": false,
+  "history": [
+    {
+      "revision": 1,
+      "item_id": "1",
+      "binding": "5ea67a7338ba4674e3e3e111b3f54b0f9d2ae3c61960de7ebdc6b10312f7986e",
+      "choice": "same",
+      "heard": "",
+      "note": "",
+      "at": "2026-09-27 06:04:59"
+    },
+    {
+      "revision": 2,
+      "item_id": "2",
+      "binding": "641e1b2ffac191141c806b658d422c6a8a7e67a0f5aec2ceee56980bb02b6b87",
+      "choice": "same",
+      "heard": "",
+      "note": "",
+      "at": "2026-09-27 06:05:04"
+    },
+    {
+      "revision": 3,
+      "item_id": "3",
+      "binding": "7f55e44116cab6d4c744b45d9439f02a7c4d8935845f912fd5b6b8ca15103cbd",
+      "choice": "same",
+      "heard": "",
+      "note": "",
+      "at": "2026-09-27 06:05:12"
+    },
+    {
+      "revision": 4,
+      "item_id": "4",
+      "binding": "e7c0c967743d580a58743392113afa73e12784a2bb8b10cf6fb0752bbf10a464",
+      "choice": "same",
+      "heard": "",
+      "note": "",
+      "at": "2026-09-27 06:05:17"
+    },
+    {
+      "revision": 5,
+      "item_id": "5",
+      "binding": "00aa93cc359e64a256e4771051d5a48ddfd7feafdbf4d71d4bc6b52defe5f91c",
+      "choice": "same",
+      "heard": "",
+      "note": "",
+      "at": "2026-09-27 06:05:23"
+    },
+    {
+      "revision": 6,
+      "item_id": "6",
+      "binding": "2b228726104dbf0645cca015ed9d16f1aa917b00fa32dcda6e4a2ef129221cd4",
+      "choice": "same",
+      "heard": "",
+      "note": "",
+      "at": "2026-09-27 06:05:30"
+    }
+  ],
+  "findings": [
+    {
+      "number": 1,
+      "identity": {
+        "source_id": "personal:child1_18",
+        "source_pcm_sha256": "820c72500a561f6d12b5e2ce9e10a0c8ed8fd387159b0a2fc8f05cd5fb314a50",
+        "reference": "책",
+        "variant": "rate_down_2_semitones",
+        "overshoot_attenuation": 1.0,
+        "clips": [
+          {
+            "key": "original",
+            "label": "A · 원래 소리",
+            "audio": "1-original.wav",
+            "seconds": 0.87,
+            "audio_sha256": "1de5688c5d1b4b62846ff3d4750a11d691e887a6f19f56cc9fba95b708148ad8",
+            "pcm_sha256": "820c72500a561f6d12b5e2ce9e10a0c8ed8fd387159b0a2fc8f05cd5fb314a50"
+          },
+          {
+            "key": "changed",
+            "label": "B · 비교할 소리",
+            "audio": "1-changed.wav",
+            "seconds": 0.9765625,
+            "audio_sha256": "d79e7c8699e3826683497ffa331969da84a35f66c72d763393f454e2c821a1d1",
+            "pcm_sha256": "74c4fab76a5e1d8751d58db73e4b37f5551a77f781b66df391c682ce1823a531"
+          }
+        ],
+        "question": "A와 B를 비교해 주세요. 음높이·빠르기 차이는 제외하고, 자음과 모음의 발음이 그대로인지 골라 주세요.",
+        "choices": [
+          {
+            "value": "same",
+            "label": "같은 발음으로 들림 — 음높이·빠르기 차이는 있어도 됨"
+          },
+          {
+            "value": "different",
+            "label": "자음·모음이나 들리는 말이 달라짐 — 아래에 적어 주세요"
+          },
+          {
+            "value": "ambiguous",
+            "label": "같게도 다르게도 들려 확정하기 어려움"
+          },
+          {
+            "value": "unusable",
+            "label": "소리가 깨지거나 왜곡되어 비교하기 어려움"
+          }
+        ]
+      },
+      "answer": {
+        "revision": 1,
+        "item_id": "1",
+        "binding": "5ea67a7338ba4674e3e3e111b3f54b0f9d2ae3c61960de7ebdc6b10312f7986e",
+        "choice": "same",
+        "heard": "",
+        "note": "",
+        "at": "2026-09-27 06:04:59"
+      },
+      "served_predictions": {
+        "original": {
+          "ids": [
+            11,
+            22,
+            9
+          ],
+          "text": "샙",
+          "jamo": "ㅅㅐㅂ",
+          "float_input_text": "샙",
+          "changed_by_pcm16_roundtrip": false
+        },
+        "changed": {
+          "ids": [
+            16,
+            22,
+            2
+          ],
+          "text": "책",
+          "jamo": "ㅊㅐㄱ",
+          "float_input_text": "책",
+          "changed_by_pcm16_roundtrip": false
+        }
+      },
+      "played_audio_and_binding_verified": true,
+      "pronunciation_preserved_by_human": true,
+      "original_matches_human": false,
+      "changed_matches_human": true,
+      "classification": "same_pronunciation_wrong_to_correct"
+    },
+    {
+      "number": 2,
+      "identity": {
+        "source_id": "personal:child1_09",
+        "source_pcm_sha256": "d1645736547afdb4a37493b34a7b3c7e613824ad2ea2fb8a32c2a78f78f2770e",
+        "reference": "나비",
+        "variant": "rate_down_2_semitones",
+        "overshoot_attenuation": 1.0,
+        "clips": [
+          {
+            "key": "original",
+            "label": "A · 원래 소리",
+            "audio": "2-original.wav",
+            "seconds": 1.19,
+            "audio_sha256": "3a534478288ec58cd9f6c4b32f6680f540068be6a54db72bfe7ff22561e6a770",
+            "pcm_sha256": "d1645736547afdb4a37493b34a7b3c7e613824ad2ea2fb8a32c2a78f78f2770e"
+          },
+          {
+            "key": "changed",
+            "label": "B · 비교할 소리",
+            "audio": "2-changed.wav",
+            "seconds": 1.33575,
+            "audio_sha256": "6663ee757ab86e6a874227de4e5135c50d5ccad7ee20eae9a3581d2f556d4a24",
+            "pcm_sha256": "288fdb6d1518028cae57c66651de22149fc869798f8684c4a15afd440ccb8269"
+          }
+        ],
+        "question": "A와 B를 비교해 주세요. 음높이·빠르기 차이는 제외하고, 자음과 모음의 발음이 그대로인지 골라 주세요.",
+        "choices": [
+          {
+            "value": "same",
+            "label": "같은 발음으로 들림 — 음높이·빠르기 차이는 있어도 됨"
+          },
+          {
+            "value": "different",
+            "label": "자음·모음이나 들리는 말이 달라짐 — 아래에 적어 주세요"
+          },
+          {
+            "value": "ambiguous",
+            "label": "같게도 다르게도 들려 확정하기 어려움"
+          },
+          {
+            "value": "unusable",
+            "label": "소리가 깨지거나 왜곡되어 비교하기 어려움"
+          }
+        ]
+      },
+      "answer": {
+        "revision": 2,
+        "item_id": "2",
+        "binding": "641e1b2ffac191141c806b658d422c6a8a7e67a0f5aec2ceee56980bb02b6b87",
+        "choice": "same",
+        "heard": "",
+        "note": "",
+        "at": "2026-09-27 06:05:04"
+      },
+      "served_predictions": {
+        "original": {
+          "ids": [
+            4,
+            21,
+            7,
+            41
+          ],
+          "text": "나리",
+          "jamo": "ㄴㅏㄹㅣ",
+          "float_input_text": "나리",
+          "changed_by_pcm16_roundtrip": false
+        },
+        "changed": {
+          "ids": [
+            4,
+            21,
+            9,
+            41
+          ],
+          "text": "나비",
+          "jamo": "ㄴㅏㅂㅣ",
+          "float_input_text": "나비",
+          "changed_by_pcm16_roundtrip": false
+        }
+      },
+      "played_audio_and_binding_verified": true,
+      "pronunciation_preserved_by_human": true,
+      "original_matches_human": false,
+      "changed_matches_human": true,
+      "classification": "same_pronunciation_wrong_to_correct"
+    },
+    {
+      "number": 3,
+      "identity": {
+        "source_id": "personal:child1_22",
+        "source_pcm_sha256": "ceb99e9dbd8ba2e20c62dc2318f6de6d78d57e2b145673cf1b9d5b2a5b8c1ade",
+        "reference": "뛰어가요",
+        "variant": "tempo_0.65",
+        "overshoot_attenuation": 1.0,
+        "clips": [
+          {
+            "key": "original",
+            "label": "A · 원래 소리",
+            "audio": "3-original.wav",
+            "seconds": 1.69,
+            "audio_sha256": "f53155dee29f708f332b8f5109e6e79291de07fa72ffe2127c5847bc3e7b7d73",
+            "pcm_sha256": "ceb99e9dbd8ba2e20c62dc2318f6de6d78d57e2b145673cf1b9d5b2a5b8c1ade"
+          },
+          {
+            "key": "changed",
+            "label": "B · 비교할 소리",
+            "audio": "3-changed.wav",
+            "seconds": 2.6,
+            "audio_sha256": "85edfdb6c58229020e14a3f3a497de49a92ddb2dd5b4c962f2e0ab34f770f057",
+            "pcm_sha256": "64dacd86235c03017ea05550ecbdcedc46ab1759c2c99743a03ef6417e28fb17"
+          }
+        ],
+        "question": "A와 B를 비교해 주세요. 음높이·빠르기 차이는 제외하고, 자음과 모음의 발음이 그대로인지 골라 주세요.",
+        "choices": [
+          {
+            "value": "same",
+            "label": "같은 발음으로 들림 — 음높이·빠르기 차이는 있어도 됨"
+          },
+          {
+            "value": "different",
+            "label": "자음·모음이나 들리는 말이 달라짐 — 아래에 적어 주세요"
+          },
+          {
+            "value": "ambiguous",
+            "label": "같게도 다르게도 들려 확정하기 어려움"
+          },
+          {
+            "value": "unusable",
+            "label": "소리가 깨지거나 왜곡되어 비교하기 어려움"
+          }
+        ]
+      },
+      "answer": {
+        "revision": 3,
+        "item_id": "3",
+        "binding": "7f55e44116cab6d4c744b45d9439f02a7c4d8935845f912fd5b6b8ca15103cbd",
+        "choice": "same",
+        "heard": "",
+        "note": "",
+        "at": "2026-09-27 06:05:12"
+      },
+      "served_predictions": {
+        "original": {
+          "ids": [
+            2,
+            37,
+            13,
+            25,
+            1,
+            2,
+            21,
+            13,
+            33
+          ],
+          "text": "귀어 가요",
+          "jamo": "ㄱㅟㅇㅓ|ㄱㅏㅇㅛ",
+          "float_input_text": "귀어 가요",
+          "changed_by_pcm16_roundtrip": false
+        },
+        "changed": {
+          "ids": [
+            6,
+            37,
+            13,
+            25,
+            2,
+            21,
+            13,
+            33
+          ],
+          "text": "뛰어가요",
+          "jamo": "ㄸㅟㅇㅓㄱㅏㅇㅛ",
+          "float_input_text": "뛰어가요",
+          "changed_by_pcm16_roundtrip": false
+        }
+      },
+      "played_audio_and_binding_verified": true,
+      "pronunciation_preserved_by_human": true,
+      "original_matches_human": false,
+      "changed_matches_human": true,
+      "classification": "same_pronunciation_wrong_to_correct"
+    },
+    {
+      "number": 4,
+      "identity": {
+        "source_id": "personal:child1_17",
+        "source_pcm_sha256": "431d8ac5383cca89be4c8730dc5ba0cff46a89df8bdccaa796b1f60fc685b4b1",
+        "reference": "쌕",
+        "variant": "rate_down_2_semitones",
+        "overshoot_attenuation": 1.0,
+        "clips": [
+          {
+            "key": "original",
+            "label": "A · 원래 소리",
+            "audio": "4-original.wav",
+            "seconds": 1.09,
+            "audio_sha256": "65c62a62c0e36fe51b827bd452de329b8d64f9e9cafbe64a08da3fe4e7b66abd",
+            "pcm_sha256": "431d8ac5383cca89be4c8730dc5ba0cff46a89df8bdccaa796b1f60fc685b4b1"
+          },
+          {
+            "key": "changed",
+            "label": "B · 비교할 소리",
+            "audio": "4-changed.wav",
+            "seconds": 1.2235,
+            "audio_sha256": "b1d3cce6aa82b605710ea077d3d2e17531761182151da407dc43c07fdcbe09a6",
+            "pcm_sha256": "4866f4e2009f17d2f03294ed56133e97e64415a822043fe94d4b6421b147ce0a"
+          }
+        ],
+        "question": "A와 B를 비교해 주세요. 음높이·빠르기 차이는 제외하고, 자음과 모음의 발음이 그대로인지 골라 주세요.",
+        "choices": [
+          {
+            "value": "same",
+            "label": "같은 발음으로 들림 — 음높이·빠르기 차이는 있어도 됨"
+          },
+          {
+            "value": "different",
+            "label": "자음·모음이나 들리는 말이 달라짐 — 아래에 적어 주세요"
+          },
+          {
+            "value": "ambiguous",
+            "label": "같게도 다르게도 들려 확정하기 어려움"
+          },
+          {
+            "value": "unusable",
+            "label": "소리가 깨지거나 왜곡되어 비교하기 어려움"
+          }
+        ]
+      },
+      "answer": {
+        "revision": 4,
+        "item_id": "4",
+        "binding": "e7c0c967743d580a58743392113afa73e12784a2bb8b10cf6fb0752bbf10a464",
+        "choice": "same",
+        "heard": "",
+        "note": "",
+        "at": "2026-09-27 06:05:17"
+      },
+      "served_predictions": {
+        "original": {
+          "ids": [
+            22,
+            2
+          ],
+          "text": "ㅐㄱ",
+          "jamo": "ㅐㄱ",
+          "float_input_text": "ㅐㄱ",
+          "changed_by_pcm16_roundtrip": false
+        },
+        "changed": {
+          "ids": [
+            16,
+            22,
+            2
+          ],
+          "text": "책",
+          "jamo": "ㅊㅐㄱ",
+          "float_input_text": "책",
+          "changed_by_pcm16_roundtrip": false
+        }
+      },
+      "played_audio_and_binding_verified": true,
+      "pronunciation_preserved_by_human": true,
+      "original_matches_human": false,
+      "changed_matches_human": false,
+      "classification": "same_pronunciation_both_wrong"
+    },
+    {
+      "number": 5,
+      "identity": {
+        "source_id": "training_review:4",
+        "source_pcm_sha256": "680900111d2f9fe1bef4e298e3a3fe3c92ee3ecfc10aed8bc5322cb57ec64fb1",
+        "reference": "예쁜 나비",
+        "variant": "pitch_+2_semitones",
+        "overshoot_attenuation": 0.9409301144281311,
+        "clips": [
+          {
+            "key": "original",
+            "label": "A · 원래 소리",
+            "audio": "5-original.wav",
+            "seconds": 2.176,
+            "audio_sha256": "6f819db59b7dd1a13bc15674df2d884c7923ed630bd7e0aeeaaffd4895dbb643",
+            "pcm_sha256": "680900111d2f9fe1bef4e298e3a3fe3c92ee3ecfc10aed8bc5322cb57ec64fb1"
+          },
+          {
+            "key": "changed",
+            "label": "B · 비교할 소리",
+            "audio": "5-changed.wav",
+            "seconds": 2.176,
+            "audio_sha256": "247024b59ca7e645600b0d77e49ede19b6c88f42590fd910c6a58469fc137694",
+            "pcm_sha256": "093532f342daace667c5d37d81f917cec6e0c44ff8d7a2d5f2aa3df4e98449cd"
+          }
+        ],
+        "question": "A와 B를 비교해 주세요. 음높이·빠르기 차이는 제외하고, 자음과 모음의 발음이 그대로인지 골라 주세요.",
+        "choices": [
+          {
+            "value": "same",
+            "label": "같은 발음으로 들림 — 음높이·빠르기 차이는 있어도 됨"
+          },
+          {
+            "value": "different",
+            "label": "자음·모음이나 들리는 말이 달라짐 — 아래에 적어 주세요"
+          },
+          {
+            "value": "ambiguous",
+            "label": "같게도 다르게도 들려 확정하기 어려움"
+          },
+          {
+            "value": "unusable",
+            "label": "소리가 깨지거나 왜곡되어 비교하기 어려움"
+          }
+        ]
+      },
+      "answer": {
+        "revision": 5,
+        "item_id": "5",
+        "binding": "00aa93cc359e64a256e4771051d5a48ddfd7feafdbf4d71d4bc6b52defe5f91c",
+        "choice": "same",
+        "heard": "",
+        "note": "",
+        "at": "2026-09-27 06:05:23"
+      },
+      "served_predictions": {
+        "original": {
+          "ids": [
+            13,
+            28,
+            10,
+            39,
+            4,
+            1,
+            4,
+            21,
+            9,
+            41
+          ],
+          "text": "예쁜 나비",
+          "jamo": "ㅇㅖㅃㅡㄴ|ㄴㅏㅂㅣ",
+          "float_input_text": "예쁜 나비",
+          "changed_by_pcm16_roundtrip": false
+        },
+        "changed": {
+          "ids": [
+            13,
+            28,
+            10,
+            39,
+            4,
+            1,
+            4,
+            21,
+            7,
+            41
+          ],
+          "text": "예쁜 나리",
+          "jamo": "ㅇㅖㅃㅡㄴ|ㄴㅏㄹㅣ",
+          "float_input_text": "예쁜 나리",
+          "changed_by_pcm16_roundtrip": false
+        }
+      },
+      "played_audio_and_binding_verified": true,
+      "pronunciation_preserved_by_human": true,
+      "original_matches_human": true,
+      "changed_matches_human": false,
+      "classification": "same_pronunciation_correct_to_wrong"
+    },
+    {
+      "number": 6,
+      "identity": {
+        "source_id": "training_review:1",
+        "source_pcm_sha256": "19fe8cfa9fe7d03cd2198087aa1745e2951163517e0e93113b318e89557650ca",
+        "reference": "책",
+        "variant": "pitch_-2_semitones",
+        "overshoot_attenuation": 1.0,
+        "clips": [
+          {
+            "key": "original",
+            "label": "A · 원래 소리",
+            "audio": "6-original.wav",
+            "seconds": 1.658,
+            "audio_sha256": "f551f7b6d0203f5f8811d5b060b243cbf6f66d609786d6c352565cfeb3c7db68",
+            "pcm_sha256": "19fe8cfa9fe7d03cd2198087aa1745e2951163517e0e93113b318e89557650ca"
+          },
+          {
+            "key": "changed",
+            "label": "B · 비교할 소리",
+            "audio": "6-changed.wav",
+            "seconds": 1.658,
+            "audio_sha256": "830a75abeaaeb7461b11cc9030819d2f0c9a6e668e45f6a00586f3079621fb8d",
+            "pcm_sha256": "97ed2db65e5f4ee69ed0504553d75d7791d52703b79b8208cbacfb1176a8d229"
+          }
+        ],
+        "question": "A와 B를 비교해 주세요. 음높이·빠르기 차이는 제외하고, 자음과 모음의 발음이 그대로인지 골라 주세요.",
+        "choices": [
+          {
+            "value": "same",
+            "label": "같은 발음으로 들림 — 음높이·빠르기 차이는 있어도 됨"
+          },
+          {
+            "value": "different",
+            "label": "자음·모음이나 들리는 말이 달라짐 — 아래에 적어 주세요"
+          },
+          {
+            "value": "ambiguous",
+            "label": "같게도 다르게도 들려 확정하기 어려움"
+          },
+          {
+            "value": "unusable",
+            "label": "소리가 깨지거나 왜곡되어 비교하기 어려움"
+          }
+        ]
+      },
+      "answer": {
+        "revision": 6,
+        "item_id": "6",
+        "binding": "2b228726104dbf0645cca015ed9d16f1aa917b00fa32dcda6e4a2ef129221cd4",
+        "choice": "same",
+        "heard": "",
+        "note": "",
+        "at": "2026-09-27 06:05:30"
+      },
+      "served_predictions": {
+        "original": {
+          "ids": [
+            16,
+            22,
+            2
+          ],
+          "text": "책",
+          "jamo": "ㅊㅐㄱ",
+          "float_input_text": "책",
+          "changed_by_pcm16_roundtrip": false
+        },
+        "changed": {
+          "ids": [
+            11,
+            22,
+            2
+          ],
+          "text": "색",
+          "jamo": "ㅅㅐㄱ",
+          "float_input_text": "햅",
+          "changed_by_pcm16_roundtrip": true
+        }
+      },
+      "played_audio_and_binding_verified": true,
+      "pronunciation_preserved_by_human": true,
+      "original_matches_human": true,
+      "changed_matches_human": false,
+      "classification": "same_pronunciation_correct_to_wrong"
+    }
+  ],
+  "counts": {
+    "same_pronunciation_wrong_to_correct": 3,
+    "same_pronunciation_both_wrong": 1,
+    "same_pronunciation_correct_to_wrong": 2
+  },
+  "limitations": [
+    "Six selected diagnostic pairs rated by one listener, not a population error rate.",
+    "Same pronunciation applies to these pairs, not every transformation of every recording.",
+    "This establishes model sensitivity, not biological age or recording-device causation.",
+    "No personal diagnostic waveform or target is authorized as a training example."
+  ]
+}

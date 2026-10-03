@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>발음 확인</title>
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<header class="top">
+  <div class="top-inner">
+    <div>
+      <h1>발음 확인</h1>
+      <p class="sub">녹음을 듣고 <b>실제로 어떻게 들리는지</b> 알려 주세요. 모델이 맞았는지 채점하는 화면이 아닙니다.</p>
+    </div>
+    <div id="review-progress" class="status status-ready">
+      <span class="dot"></span><span id="progress-text">불러오는 중…</span>
+    </div>
+  </div>
+  <nav class="tabs" aria-label="음성 출처">
+    <a class="tab" href="/aihub">AIHub 데이터</a>
+    <a class="tab" href="/recordings">직접 녹음한 아동 음성</a>
+    <a class="tab" href="/review" aria-current="page">발음 확인</a>
+  </nav>
+</header>
+
+<main class="layout">
+  <!-- 왼쪽: 확인할 목록 -->
+  <section class="panel browse" aria-label="확인할 음성">
+    <h2>확인할 음성</h2>
+
+    <div class="field">
+      <label for="scope">목록</label>
+      <select id="scope">
+        <option value="priority">우선 확인 (먼저 이것만 봐 주세요)</option>
+        <option value="flagged">그 밖에 차이가 난 녹음 (선택)</option>
+      </select>
+      <p class="hint" id="scope-hint"></p>
+    </div>
+
+    <div class="filters">
+      <label>출처
+        <select id="source">
+          <option value="">전체</option>
+          <option value="personal">직접 녹음</option>
+          <option value="valid">말뭉치 (AIHub)</option>
+        </select>
+      </label>
+    </div>
+
+    <div class="listhead">
+      <span id="queue-count" class="count">불러오는 중…</span>
+    </div>
+
+    <ol id="queue" class="samples" aria-live="polite"></ol>
+
+    <nav class="pager" id="flagged-pager" hidden>
+      <button id="prev-page" class="ghost" type="button">이전</button>
+      <span id="page-label">-</span>
+      <button id="next-page" class="ghost" type="button">다음</button>
+    </nav>
+
+    <div class="review-summary" id="summary"></div>
+  </section>
+
+  <!-- 오른쪽: 듣고 답하기 -->
+  <section class="panel main" aria-label="발음 확인">
+    <div class="selected">
+      <div class="selected-head">
+        <div>
+          <h2 id="item-title">음성을 고르세요</h2>
+          <p id="item-meta" class="meta"></p>
+        </div>
+        <div class="nav-buttons">
+          <button id="prev-item" class="ghost" type="button" title="이전">◀</button>
+          <button id="next-item" class="ghost" type="button" title="다음">▶</button>
+        </div>
+      </div>
+
+      <p class="guide" id="guide">
+        <b>들리는 대로</b> 골라 주세요. 아이가 <b>말하려던 단어</b>가 아니라
+        <b>실제로 낸 소리</b>가 기준입니다. 잘 모르겠으면 그렇게 표시하셔도 됩니다.
+        답을 저장해도 인식 결과나 점수는 달라지지 않습니다.
+      </p>
+
+      <div class="player-block">
+        <p class="player-label">모델이 들은 소리 (이 구간만)</p>
+        <audio id="player" controls preload="metadata"></audio>
+      </div>
+      <div class="player-block" id="context-block" hidden>
+        <p class="player-label">원본 녹음의 앞뒤까지 (참고용, 다른 말이 섞일 수 있습니다)</p>
+        <audio id="context-player" controls preload="metadata"></audio>
+      </div>
+
+      <details class="details" id="reveal">
+        <summary>이 녹음에 대해 적혀 있는 것 (전사 · 기대 발음 · 모델 결과)</summary>
+        <div class="reveal-body">
+          <p class="hint">아래 보기에도 기대 발음과 모델 결과가 그대로 나옵니다.
+            가려 두고 듣는 방식이 아니라, 한곳에 모아 둔 것입니다.</p>
+          <p><span class="tag">전사</span><span id="reveal-transcript"></span></p>
+          <p><span class="tag">기대 발음</span><span id="reveal-expected"></span></p>
+          <p><span class="tag">모델</span><span id="reveal-prediction"></span></p>
+        </div>
+      </details>
+
+      <form id="answer" class="answer">
+        <fieldset class="choices">
+          <legend>어떻게 들리시나요?</legend>
+          <div id="choice-list"></div>
+          <label class="heard-row" id="heard-row" hidden>
+            <span>들린 대로 적어 주세요</span>
+            <input id="heard-text" type="text" autocomplete="off"
+                   placeholder="예: 샙 / ㅅㅐㅂ — 적으신 그대로 저장됩니다">
+          </label>
+        </fieldset>
+
+        <details class="details">
+          <summary>이 녹음 자체에 문제가 있나요? (선택)</summary>
+          <div class="flag-body">
+            <p class="hint">해당하면 표시해 주세요. 발음을 고르지 않아도 됩니다.</p>
+            <div id="flag-list"></div>
+            <label class="heard-row">
+              <span>남기실 말 (선택)</span>
+              <input id="note" type="text" autocomplete="off" placeholder="자유롭게">
+            </label>
+          </div>
+        </details>
+
+        <div class="actions">
+          <button id="save" class="primary" type="submit">저장하고 다음</button>
+          <button id="save-stay" class="ghost" type="button">저장만</button>
+          <button id="unusable" class="ghost" type="button">이 녹음은 쓸 수 없음</button>
+        </div>
+        <div id="answer-note" class="note" role="status"></div>
+      </form>
+
+      <details class="details" id="history-block" hidden>
+        <summary>이 음성에 대한 지난 답</summary>
+        <div id="history" class="history"></div>
+      </details>
+    </div>
+
+    <footer class="foot">
+      <p id="review-foot"></p>
+    </footer>
+  </section>
+</main>
+
+<script src="/review.js"></script>
+</body>
+</html>

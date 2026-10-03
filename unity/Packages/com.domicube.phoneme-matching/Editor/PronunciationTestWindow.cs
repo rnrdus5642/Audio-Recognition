@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using DomiCube.PhonemeMatching.Unity;
 using UnityEditor;
 using UnityEngine;
@@ -20,8 +19,8 @@ namespace DomiCube.PhonemeMatching.Editor
     /// the same way on Unity 2022 and Unity 6 so a project can be
     /// checked without building a scene first.
     ///
-    /// Ordinary profiles use StreamingAssets; the music profile uses
-    /// package Resources. Both need the corresponding imported .onnx model.
+    /// Needs the model's matrix/targets and shared vocabulary JSON in
+    /// StreamingAssets, plus an imported .onnx model; see the package README.
     ///
     /// Tools > Phoneme Matching > 발음 테스트 (마이크)
     /// </summary>
@@ -31,7 +30,7 @@ namespace DomiCube.PhonemeMatching.Editor
         private const string DataChoiceKey = "DomiCube.PhonemeMatching.TestData.";
         private const double Hop = 0.5;
         private static readonly string[] DataChoices =
-            { "선택하세요", "기본 모델용", "아동 파인튜닝 모델용", "악기놀이 발표용 (12단어)" };
+            { "선택하세요", "기본 모델용", "아동 파인튜닝 모델용" };
 
         private string _word = "사과";
         private string _status = "시작을 누르세요";
@@ -48,10 +47,7 @@ namespace DomiCube.PhonemeMatching.Editor
         private SentisPhonemeRecognizer _recognizer;
         private PronunciationSession _session;
         private MicrophoneRollingBuffer _mic;
-        private ConfusionMatrix _matrix;
-        private TargetCatalog _catalog;
-        private MusicPresentationProfile _musicProfile;
-        private int _musicStage = 1;
+        private double _nextScore;
         private double _started;
 #endif
 
@@ -60,14 +56,6 @@ namespace DomiCube.PhonemeMatching.Editor
         {
             GetWindow<PronunciationTestWindow>("발음 테스트").minSize =
                 new Vector2(420, 420);
-        }
-
-        public static void OpenMusicDemo()
-        {
-            Open();
-#if DOMICUBE_INFERENCE_ENGINE || DOMICUBE_SENTIS_1
-            ConfigureMusicDemo();
-#endif
         }
 
 #if !DOMICUBE_INFERENCE_ENGINE && !DOMICUBE_SENTIS_1
@@ -86,30 +74,12 @@ namespace DomiCube.PhonemeMatching.Editor
             ClearPrepared();
         }
 
-        private static void ConfigureMusicDemo()
-        {
-            var window = GetWindow<PronunciationTestWindow>();
-            window.ClearPrepared();
-            window._musicProfile = MusicPresentation.Load();
-            window._model = Resources.Load<ModelAsset>(MusicPresentationProfile.ModelResourcePath);
-            window._dataChoice = TestDataChoice.MusicDemo;
-            window._musicStage = 1;
-            string guid = AssetDatabase.AssetPathToGUID(AssetDatabase.GetAssetPath(window._model));
-            EditorPrefs.SetString(ModelKey, guid);
-            if (!string.IsNullOrEmpty(guid))
-                EditorPrefs.SetInt(DataChoiceKey + guid, (int)TestDataChoice.MusicDemo);
-            window._status = "악기놀이 · 단계를 선택하고 시작을 누르세요";
-            window.Repaint();
-        }
-
         private void ClearPrepared()
         {
             Stop();
             _recognizer?.Dispose();
             _recognizer = null;
             _session = null;
-            _matrix = null;
-            _catalog = null;
             _preparedModel = null;
             _preparedSettings = null;
             _frames.Clear();
@@ -132,7 +102,7 @@ namespace DomiCube.PhonemeMatching.Editor
                 _status = "모델 종류를 자동으로 알 수 없습니다. 채점 설정을 선택하세요.";
                 return false;
             }
-            if (_recognizer != null && _catalog != null
+            if (_recognizer != null && _session != null
                 && _preparedModel == _model && _preparedSettings == settings)
                 return true;
 
@@ -147,11 +117,7 @@ namespace DomiCube.PhonemeMatching.Editor
                 Repaint();
                 _recognizer.Warmup(2.5f);
 
-                // The session is built per attempt in Listen(), because it
-                // drains the microphone buffer and that buffer only exists
-                // while a device is open.
-                _matrix = matrix;
-                _catalog = catalog;
+                _session = new PronunciationSession(matrix, catalog, _recognizer);
                 _preparedModel = _model;
                 _preparedSettings = settings;
                 return true;
@@ -179,42 +145,23 @@ namespace DomiCube.PhonemeMatching.Editor
                 return;
             }
 
+            try
+            {
+                _session.Begin(_word);
+            }
+            catch (System.Exception e)
+            {
+                _status = e.Message;
+                return;
+            }
+
             _frames.Clear();
-            _mic = new MicrophoneRollingBuffer(2.5f, hopSeconds: (float)Hop);
-            _session = new PronunciationSession(
-                _matrix, _catalog, _recognizer, 2, _mic.Buffer, ModelFeedbackResources.Load(_matrix.MatrixId));
-
-            try
-            {
-                var words = _preparedSettings == PronunciationTestSettings.MusicDemo && _musicStage > 0
-                    ? (_musicProfile ?? (_musicProfile = MusicPresentation.Load())).GetStage(_musicStage).Answers.ToArray()
-                    : new[] { _word };
-                _session.Begin(words);
-            }
-            catch (System.Exception e)
-            {
-                _status = e.Message;
-                _mic.Dispose();
-                _mic = null;
-                _session = null;
-                return;
-            }
-
-            try
-            {
-                _mic.Start(devices[_deviceIndex % devices.Length]);
-            }
-            catch (System.Exception e)
-            {
-                _status = e.Message;
-                Stop();
-                return;
-            }
+            _mic = new MicrophoneRollingBuffer(2.5f);
+            _mic.Start(devices[_deviceIndex % devices.Length]);
 
             _started = EditorApplication.timeSinceStartup;
-            _status = _preparedSettings == PronunciationTestSettings.MusicDemo && _musicStage > 0
-                ? _musicProfile.GetStage(_musicStage).Title + " · 듣는 중"
-                : $"듣는 중 — '{_word}' 라고 말해보세요";
+            _nextScore = _started + Hop;
+            _status = $"듣는 중 — '{_word}' 라고 말해보세요";
 
             EditorApplication.update -= Tick;
             EditorApplication.update += Tick;
@@ -235,35 +182,20 @@ namespace DomiCube.PhonemeMatching.Editor
                 return;
             }
 
-            // Editor ticks are irregular, so score captured hops rather
-            // than "whatever is in the window when the editor got round
-            // to us" - the frame numbers then mean the same thing here as
-            // they do in the game and in the Python tool.
-            bool confirmed = false;
+            _mic.Pump();
+
+            double now = EditorApplication.timeSinceStartup;
+            if (now < _nextScore)
+            {
+                return;
+            }
+
+            _nextScore = now + Hop;
+
+            FrameScore frame;
             try
             {
-                _mic.Pump();
-
-                FrameScore frame;
-                while (_session.TryPush(out frame))
-                {
-                    double at = frame.EndSampleIndex
-                        / (double)AudioWindowBuffer.TargetSampleRate;
-                    _frames.Insert(0, string.Format(
-                        "{0,5:F1}s  {1}/{5}  {2,-6} {3:F3}  '{4}'",
-                        at, frame.Streak,
-                        string.IsNullOrEmpty(frame.Best.TargetText)
-                            ? "—" : frame.Best.TargetText,
-                        frame.Best.Score, frame.Text, frame.RequiredFrames));
-
-                    if (frame.Confirmed)
-                    {
-                        _status = $"확정: {frame.Best.TargetText} "
-                            + $"({frame.Best.Score:F3}, {at:F1}초)";
-                        confirmed = true;
-                        break;
-                    }
-                }
+                frame = _session.Push(_mic.Snapshot());
             }
             catch (System.Exception e)
             {
@@ -273,9 +205,17 @@ namespace DomiCube.PhonemeMatching.Editor
                 return;
             }
 
-            double now = EditorApplication.timeSinceStartup;
-            if (confirmed)
+            _frames.Insert(0, string.Format(
+                "{0,5:F1}s  {1}/{5}  {2,-6} {3:F3}  '{4}'",
+                now - _started, frame.Streak,
+                string.IsNullOrEmpty(frame.Best.TargetText)
+                    ? "—" : frame.Best.TargetText,
+                frame.Best.Score, frame.Text, _session.Consecutive));
+
+            if (frame.Confirmed)
             {
+                _status = $"확정: {frame.Best.TargetText} "
+                    + $"({frame.Best.Score:F3}, {now - _started:F1}초)";
                 Stop();
             }
             else if (_timeout > 0f && now - _started > _timeout)
@@ -310,13 +250,6 @@ namespace DomiCube.PhonemeMatching.Editor
         {
             EditorGUILayout.Space();
             EditorGUILayout.LabelField(_status, EditorStyles.boldLabel);
-            if (_session?.LastConfirmation != null)
-            {
-                var feedback = _session.LastConfirmation;
-                EditorGUILayout.HelpBox(feedback.TargetText + " · " + feedback.KoreanFeedback.Summary, MessageType.Info);
-                foreach (var hint in feedback.KoreanFeedback.Items)
-                    EditorGUILayout.LabelField(hint.Message, EditorStyles.wordWrappedLabel);
-            }
             EditorGUILayout.Space();
 
             using (new EditorGUI.DisabledScope(_mic != null))
@@ -337,7 +270,7 @@ namespace DomiCube.PhonemeMatching.Editor
                 }
 
                 string modelPath = AssetDatabase.GetAssetPath(_model);
-                if (_model != null)
+                if (_model != null && PronunciationTestSettings.FromModelPath(modelPath) == null)
                 {
                     var choice = (TestDataChoice)EditorGUILayout.Popup(
                         "채점 설정 (직접 지정)", (int)_dataChoice, DataChoices);
@@ -357,9 +290,7 @@ namespace DomiCube.PhonemeMatching.Editor
                     EditorGUILayout.HelpBox(
                         $"채점 설정: {settings.Label}\n"
                         + $"{settings.MatrixFile} + {settings.TargetsFile}\n"
-                        + $"공통 어휘: {PronunciationTestSettings.VocabularyFile}"
-                        + (settings == PronunciationTestSettings.MusicDemo
-                            ? "\n패키지에 포함된 발표 설정이 적용됩니다." : ""), MessageType.Info);
+                        + $"공통 어휘: {PronunciationTestSettings.VocabularyFile}", MessageType.Info);
                 }
                 else if (_model != null)
                 {
@@ -368,18 +299,7 @@ namespace DomiCube.PhonemeMatching.Editor
                         + "위에서 모델에 맞는 채점 설정을 선택하세요.", MessageType.Warning);
                 }
 
-                if (settings == PronunciationTestSettings.MusicDemo)
-                {
-                    _musicProfile = _musicProfile ?? MusicPresentation.Load();
-                    var stages = new[] { "직접 단어 입력" }.Concat(
-                        _musicProfile.Stages.Select(s => $"{s.Id}. {s.Title}")).ToArray();
-                    _musicStage = EditorGUILayout.Popup("악기놀이 단계", _musicStage, stages);
-                    if (_musicStage > 0)
-                        EditorGUILayout.LabelField("정답 표현",
-                            string.Join(" / ", _musicProfile.GetStage(_musicStage).Answers));
-                }
-                if (settings != PronunciationTestSettings.MusicDemo || _musicStage == 0)
-                    _word = EditorGUILayout.TextField("정답 단어", _word);
+                _word = EditorGUILayout.TextField("정답 단어", _word);
 
                 var devices = Microphone.devices;
                 if (devices.Length > 0)

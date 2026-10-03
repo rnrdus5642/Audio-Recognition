@@ -39,13 +39,8 @@ namespace DomiCube.PhonemeMatching.Tests
         {
             Assert.That(_vocab.Size, Is.EqualTo((int)_vectors["vocab_size"]),
                 "vocabulary and vectors came from different exports");
-            // True of the export that ships today, and worth noticing if
-            // it changes - but it is a fact about this vocabulary, not a
-            // rule the decoder relies on. A vocabulary with a syllable
-            // appended after the blank decodes just as well; see
-            // AppendedTokenCtcDecoderTests.
             Assert.That(_vocab.BlankId, Is.EqualTo(_vocab.Size - 1),
-                "the shipped export puts blank last");
+                "blank is expected last; ArgMax indexes assume nothing else");
             Assert.That(_vocab.Normalize, Is.True,
                 "recognizer normalizes input on the strength of this flag");
         }
@@ -126,116 +121,6 @@ namespace DomiCube.PhonemeMatching.Tests
                 "vocabulary looks truncated");
             Assert.That(_vocab.WordDelimiterId, Is.Not.EqualTo(_vocab.BlankId));
             Assert.That(string.IsNullOrEmpty(_vocab.Tokens[0]), Is.False);
-        }
-    }
-
-    /// <summary>
-    /// The decoder against a vocabulary that has grown a syllable.
-    ///
-    /// Widening a CTC head appends to the end, so a syllable added after
-    /// the fact sits past the blank and the blank stops being the last
-    /// token. Nothing in the decoder should care, and this is where that
-    /// is checked - deliberately against a hand-built vocabulary rather
-    /// than the shipped one, because the shipped model still emits 1205
-    /// classes and its export must keep saying so.
-    /// </summary>
-    [TestFixture]
-    public sealed class AppendedTokenCtcDecoderTests
-    {
-        private const int Ga = 0;
-        private const int Yo = 1;
-        private const int Delimiter = 2;
-        private const int Unk = 3;
-        private const int Blank = 4;
-        private const int Nwa = 5;
-
-        private static CtcVocabulary Widened()
-        {
-            return new CtcVocabulary
-            {
-                Tokens = new[] { "가", "요", "|", "[UNK]", "[PAD]", "놔" },
-                BlankId = Blank,
-                UnkId = Unk,
-                WordDelimiterId = Delimiter,
-                Normalize = true,
-                SamplingRate = 16000
-            };
-        }
-
-        [Test]
-        public void TheBlankIsNoLongerLast()
-        {
-            var vocab = Widened();
-            Assert.That(vocab.BlankId, Is.Not.EqualTo(vocab.Size - 1));
-            Assert.That(vocab.Tokens[vocab.Size - 1], Is.EqualTo("놔"));
-        }
-
-        [Test]
-        public void AnAppendedSyllableDecodesLikeAnyOther()
-        {
-            Assert.That(
-                CtcDecoder.Decode(new List<int> { Nwa, Yo }, Widened()),
-                Is.EqualTo("놔요"));
-        }
-
-        [Test]
-        public void RepeatsOfAnAppendedSyllableCollapse()
-        {
-            Assert.That(
-                CtcDecoder.Decode(new List<int> { Nwa, Nwa, Nwa }, Widened()),
-                Is.EqualTo("놔"));
-        }
-
-        [Test]
-        public void ABlankBetweenTwoAppendedSyllablesKeepsBoth()
-        {
-            // The only way CTC can say the same syllable twice.
-            Assert.That(
-                CtcDecoder.Decode(new List<int> { Nwa, Blank, Nwa }, Widened()),
-                Is.EqualTo("놔놔"));
-        }
-
-        [Test]
-        public void BlanksAroundAnAppendedSyllableAreStillDropped()
-        {
-            Assert.That(
-                CtcDecoder.Decode(
-                    new List<int> { Blank, Blank, Nwa, Yo, Blank }, Widened()),
-                Is.EqualTo("놔요"));
-        }
-
-        [Test]
-        public void TheDelimiterStillBecomesASpace()
-        {
-            Assert.That(
-                CtcDecoder.Decode(
-                    new List<int> { Nwa, Delimiter, Ga }, Widened()),
-                Is.EqualTo("놔 가"));
-        }
-
-        [Test]
-        public void ArgMaxFindsAnAppendedTokenInTheWidenedFrame()
-        {
-            // Two frames of six classes; the appended column wins the
-            // second one, which is the column a 1205-wide vocabulary
-            // would not have had.
-            var logits = new[]
-            {
-                0.1f, 0.2f, 0.0f, 0.0f, 0.9f, 0.3f,
-                0.1f, 0.2f, 0.0f, 0.0f, 0.4f, 1.7f
-            };
-
-            var ids = CtcDecoder.ArgMax(logits, 2, 6);
-
-            Assert.That(ids, Is.EqualTo(new[] { Blank, Nwa }));
-            Assert.That(CtcDecoder.Decode(ids, Widened()), Is.EqualTo("놔"));
-        }
-
-        [Test]
-        public void AnIdPastTheWidenedVocabularyIsStillRejected()
-        {
-            Assert.Throws<System.ArgumentOutOfRangeException>(
-                () => CtcDecoder.Decode(new List<int> { 6 }, Widened()));
         }
     }
 

@@ -1,0 +1,1962 @@
+{
+  "checked_at": "2026-09-13T15:58:00.187537+09:00",
+  "scope": "Public model discovery; pinned metadata and token mappings; local AutoProcessor checks only. No acoustic weights downloaded, audio inference, fine-tuning, ONNX export, Unity build, or deployed-model change. HTTP HEAD downloads no weight body.",
+  "transformers_version": "5.15.0",
+  "models": [
+    {
+      "model_id": "Kkonjeong/wav2vec2-base-korean",
+      "url": "https://huggingface.co/Kkonjeong/wav2vec2-base-korean",
+      "revision": "fa03d1a7138f1900131393cc7cb74f77926f177a",
+      "last_modified": "2024-06-20T16:03:03.000Z",
+      "gated": false,
+      "private": false,
+      "license": null,
+      "safetensors": {
+        "parameters": {
+          "F32": 94414776
+        },
+        "total": 94414776
+      },
+      "root_weight_files": [
+        {
+          "path": "model.safetensors",
+          "bytes": 377684952
+        }
+      ],
+      "config": {
+        "model_type": "wav2vec2",
+        "architectures": [
+          "Wav2Vec2ForCTC"
+        ],
+        "vocab_size": 56,
+        "hidden_size": 768,
+        "num_hidden_layers": 12,
+        "pad_token_id": 53,
+        "bos_token_id": 1,
+        "eos_token_id": 2,
+        "feat_extract_norm": "group",
+        "do_stable_layer_norm": false,
+        "auto_map": null
+      },
+      "vocab_entries": 54,
+      "compatibility_jamo": [
+        "ㄱ",
+        "ㄲ",
+        "ㄳ",
+        "ㄴ",
+        "ㄵ",
+        "ㄶ",
+        "ㄷ",
+        "ㄸ",
+        "ㄹ",
+        "ㄺ",
+        "ㄻ",
+        "ㄼ",
+        "ㄽ",
+        "ㄾ",
+        "ㄿ",
+        "ㅀ",
+        "ㅁ",
+        "ㅂ",
+        "ㅃ",
+        "ㅄ",
+        "ㅅ",
+        "ㅆ",
+        "ㅇ",
+        "ㅈ",
+        "ㅉ",
+        "ㅊ",
+        "ㅋ",
+        "ㅌ",
+        "ㅍ",
+        "ㅎ",
+        "ㅏ",
+        "ㅐ",
+        "ㅑ",
+        "ㅒ",
+        "ㅓ",
+        "ㅔ",
+        "ㅕ",
+        "ㅖ",
+        "ㅗ",
+        "ㅘ",
+        "ㅙ",
+        "ㅚ",
+        "ㅛ",
+        "ㅜ",
+        "ㅝ",
+        "ㅞ",
+        "ㅟ",
+        "ㅠ",
+        "ㅡ",
+        "ㅢ",
+        "ㅣ"
+      ],
+      "conjoining_jamo": [],
+      "unmapped_output_ids_with_added_tokens": [],
+      "errors": [],
+      "hangul_syllable_count": 0,
+      "processor_check": {
+        "model_id": "Kkonjeong/wav2vec2-base-korean",
+        "revision": "fa03d1a7138f1900131393cc7cb74f77926f177a",
+        "errors": [],
+        "processor_load": "passed",
+        "tokenizer_class": "Wav2Vec2CTCTokenizer",
+        "blank_id": 53,
+        "declared_mapping_mismatches": [],
+        "raw_gap_handling": [],
+        "decoder_errors": [],
+        "missing_output_mappings": [],
+        "coverage_convention": "Orthographic compatibility jamo, compound final consonants kept as single symbols; this is NOT an assertion of undocumented Miniijune training preprocessing.",
+        "music_word_symbol_coverage": {
+          "실로폰채": {
+            "symbols": "ㅅㅣㄹㄹㅗㅍㅗㄴㅊㅐ",
+            "ids": [
+              9,
+              39,
+              5,
+              5,
+              27,
+              17,
+              27,
+              2,
+              14,
+              20
+            ],
+            "has_unk": false,
+            "outside_output": []
+          },
+          "들어": {
+            "symbols": "ㄷㅡㄹㅇㅓ",
+            "ids": [
+              3,
+              37,
+              5,
+              11,
+              23
+            ],
+            "has_unk": false,
+            "outside_output": []
+          },
+          "잡아": {
+            "symbols": "ㅈㅏㅂㅇㅏ",
+            "ids": [
+              12,
+              19,
+              7,
+              11,
+              19
+            ],
+            "has_unk": false,
+            "outside_output": []
+          },
+          "쳐": {
+            "symbols": "ㅊㅕ",
+            "ids": [
+              14,
+              25
+            ],
+            "has_unk": false,
+            "outside_output": []
+          },
+          "때려": {
+            "symbols": "ㄸㅐㄹㅕ",
+            "ids": [
+              4,
+              20,
+              5,
+              25
+            ],
+            "has_unk": false,
+            "outside_output": []
+          },
+          "연주해": {
+            "symbols": "ㅇㅕㄴㅈㅜㅎㅐ",
+            "ids": [
+              11,
+              25,
+              2,
+              12,
+              32,
+              18,
+              20
+            ],
+            "has_unk": false,
+            "outside_output": []
+          },
+          "놓아": {
+            "symbols": "ㄴㅗㅎㅇㅏ",
+            "ids": [
+              2,
+              27,
+              18,
+              11,
+              19
+            ],
+            "has_unk": false,
+            "outside_output": []
+          },
+          "놔": {
+            "symbols": "ㄴㅘ",
+            "ids": [
+              2,
+              28
+            ],
+            "has_unk": false,
+            "outside_output": []
+          },
+          "내려놔": {
+            "symbols": "ㄴㅐㄹㅕㄴㅘ",
+            "ids": [
+              2,
+              20,
+              5,
+              25,
+              2,
+              28
+            ],
+            "has_unk": false,
+            "outside_output": []
+          },
+          "흔들어": {
+            "symbols": "ㅎㅡㄴㄷㅡㄹㅇㅓ",
+            "ids": [
+              18,
+              37,
+              2,
+              3,
+              37,
+              5,
+              11,
+              23
+            ],
+            "has_unk": false,
+            "outside_output": []
+          },
+          "북채": {
+            "symbols": "ㅂㅜㄱㅊㅐ",
+            "ids": [
+              7,
+              32,
+              0,
+              14,
+              20
+            ],
+            "has_unk": false,
+            "outside_output": []
+          },
+          "두드려": {
+            "symbols": "ㄷㅜㄷㅡㄹㅕ",
+            "ids": [
+              3,
+              32,
+              3,
+              37,
+              5,
+              25
+            ],
+            "has_unk": false,
+            "outside_output": []
+          }
+        },
+        "missing_symbols_for_all_modern_hangul": []
+      },
+      "weight_http_head": {
+        "model_id": "Kkonjeong/wav2vec2-base-korean",
+        "revision": "fa03d1a7138f1900131393cc7cb74f77926f177a",
+        "weight": "model.safetensors",
+        "http_status": 200,
+        "api_bytes": 377684952,
+        "read_body": false
+      },
+      "source_files": {
+        "config.json": {
+          "url": "https://huggingface.co/Kkonjeong/wav2vec2-base-korean/blob/fa03d1a7138f1900131393cc7cb74f77926f177a/config.json",
+          "sha256": "472413b0c06a29a8d87a514bd40eeb1ebc11df785b962b6a85aa257f0076e446"
+        },
+        "vocab.json": {
+          "url": "https://huggingface.co/Kkonjeong/wav2vec2-base-korean/blob/fa03d1a7138f1900131393cc7cb74f77926f177a/vocab.json",
+          "sha256": "584663a04009a01e179b6cf48ca50b1dff8ed73f19934cfb228e03906a3e13db"
+        },
+        "tokenizer_config.json": {
+          "url": "https://huggingface.co/Kkonjeong/wav2vec2-base-korean/blob/fa03d1a7138f1900131393cc7cb74f77926f177a/tokenizer_config.json",
+          "sha256": "de72460705faa73ddf153a59dc9d9553ce74a14cba1c6cb90770c76db59d080d"
+        },
+        "preprocessor_config.json": {
+          "url": "https://huggingface.co/Kkonjeong/wav2vec2-base-korean/blob/fa03d1a7138f1900131393cc7cb74f77926f177a/preprocessor_config.json",
+          "sha256": "efc8c209c2123dbd1713cecc7a9b426e138158291a3ba04e7e3cbe6bf5b95748"
+        },
+        "added_tokens.json": {
+          "url": "https://huggingface.co/Kkonjeong/wav2vec2-base-korean/blob/fa03d1a7138f1900131393cc7cb74f77926f177a/added_tokens.json",
+          "sha256": "706a22769533a51ff2d52ecd3cd09414b1af378a066c2e9ba108d26a808fb618"
+        },
+        "README.md": {
+          "url": "https://huggingface.co/Kkonjeong/wav2vec2-base-korean/blob/fa03d1a7138f1900131393cc7cb74f77926f177a/README.md",
+          "sha256": "a333fc171cf831cb8f6b56acddddbbcdd6e8cb26613656933928d2b0993fec31"
+        }
+      }
+    },
+    {
+      "model_id": "Miniijune/wav2vec2-xls-r-300m-Korean-children-pronunciation-jamo-based-V2",
+      "url": "https://huggingface.co/Miniijune/wav2vec2-xls-r-300m-Korean-children-pronunciation-jamo-based-V2",
+      "revision": "448e988f77d2e95cc0636bf0eb98132b4a544849",
+      "last_modified": "2026-01-22T15:40:32.000Z",
+      "gated": false,
+      "private": false,
+      "license": "apache-2.0",
+      "safetensors": {
+        "parameters": {
+          "F32": 315483820
+        },
+        "total": 315483820
+      },
+      "root_weight_files": [
+        {
+          "path": "model.safetensors",
+          "bytes": 1261987880
+        }
+      ],
+      "config": {
+        "model_type": "wav2vec2",
+        "architectures": [
+          "Wav2Vec2ForCTC"
+        ],
+        "vocab_size": 44,
+        "hidden_size": 1024,
+        "num_hidden_layers": 24,
+        "pad_token_id": 43,
+        "bos_token_id": 43,
+        "eos_token_id": 44,
+        "feat_extract_norm": "layer",
+        "do_stable_layer_norm": true,
+        "auto_map": null
+      },
+      "vocab_entries": 43,
+      "compatibility_jamo": [
+        "ㄱ",
+        "ㄲ",
+        "ㄴ",
+        "ㄷ",
+        "ㄸ",
+        "ㄹ",
+        "ㅁ",
+        "ㅂ",
+        "ㅃ",
+        "ㅅ",
+        "ㅆ",
+        "ㅇ",
+        "ㅈ",
+        "ㅉ",
+        "ㅊ",
+        "ㅋ",
+        "ㅌ",
+        "ㅍ",
+        "ㅎ",
+        "ㅏ",
+        "ㅐ",
+        "ㅑ",
+        "ㅒ",
+        "ㅓ",
+        "ㅔ",
+        "ㅕ",
+        "ㅖ",
+        "ㅗ",
+        "ㅘ",
+        "ㅙ",
+        "ㅚ",
+        "ㅛ",
+        "ㅜ",
+        "ㅝ",
+        "ㅞ",
+        "ㅟ",
+        "ㅠ",
+        "ㅡ",
+        "ㅢ",
+        "ㅣ"
+      ],
+      "conjoining_jamo": [],
+      "unmapped_output_ids_with_added_tokens": [
+        41
+      ],
+      "errors": [],
+      "hangul_syllable_count": 0,
+      "processor_check": {
+        "model_id": "Miniijune/wav2vec2-xls-r-300m-Korean-children-pronunciation-jamo-based-V2",
+        "revision": "448e988f77d2e95cc0636bf0eb98132b4a544849",
+        "errors": [],
+        "processor_load": "passed",
+        "tokenizer_class": "Wav2Vec2CTCTokenizer",
+        "blank_id": 43,
+        "declared_mapping_mismatches": [],
+        "raw_gap_handling": [
+          {
+            "id": 41,
+            "loaded_token": "[UNK]",
+            "decoded": "[UNK]"
+          }
+        ],
+        "decoder_errors": [],
+        "missing_output_mappings": [],
+        "coverage_convention": "Orthographic compatibility jamo, compound final consonants kept as single symbols; this is NOT an assertion of undocumented Miniijune training preprocessing.",
+        "music_word_symbol_coverage": {
+          "실로폰채": {
+            "symbols": "ㅅㅣㄹㄹㅗㅍㅗㄴㅊㅐ",
+            "ids": [
+              10,
+              40,
+              6,
+              6,
+              28,
+              18,
+              28,
+              3,
+              15,
+              21
+            ],
+            "has_unk": false,
+            "outside_output": []
+          },
+          "들어": {
+            "symbols": "ㄷㅡㄹㅇㅓ",
+            "ids": [
+              4,
+              38,
+              6,
+              12,
+              24
+            ],
+            "has_unk": false,
+            "outside_output": []
+          },
+          "잡아": {
+            "symbols": "ㅈㅏㅂㅇㅏ",
+            "ids": [
+              13,
+              20,
+              8,
+              12,
+              20
+            ],
+            "has_unk": false,
+            "outside_output": []
+          },
+          "쳐": {
+            "symbols": "ㅊㅕ",
+            "ids": [
+              15,
+              26
+            ],
+            "has_unk": false,
+            "outside_output": []
+          },
+          "때려": {
+            "symbols": "ㄸㅐㄹㅕ",
+            "ids": [
+              5,
+              21,
+              6,
+              26
+            ],
+            "has_unk": false,
+            "outside_output": []
+          },
+          "연주해": {
+            "symbols": "ㅇㅕㄴㅈㅜㅎㅐ",
+            "ids": [
+              12,
+              26,
+              3,
+              13,
+              33,
+              19,
+              21
+            ],
+            "has_unk": false,
+            "outside_output": []
+          },
+          "놓아": {
+            "symbols": "ㄴㅗㅎㅇㅏ",
+            "ids": [
+              3,
+              28,
+              19,
+              12,
+              20
+            ],
+            "has_unk": false,
+            "outside_output": []
+          },
+          "놔": {
+            "symbols": "ㄴㅘ",
+            "ids": [
+              3,
+              29
+            ],
+            "has_unk": false,
+            "outside_output": []
+          },
+          "내려놔": {
+            "symbols": "ㄴㅐㄹㅕㄴㅘ",
+            "ids": [
+              3,
+              21,
+              6,
+              26,
+              3,
+              29
+            ],
+            "has_unk": false,
+            "outside_output": []
+          },
+          "흔들어": {
+            "symbols": "ㅎㅡㄴㄷㅡㄹㅇㅓ",
+            "ids": [
+              19,
+              38,
+              3,
+              4,
+              38,
+              6,
+              12,
+              24
+            ],
+            "has_unk": false,
+            "outside_output": []
+          },
+          "북채": {
+            "symbols": "ㅂㅜㄱㅊㅐ",
+            "ids": [
+              8,
+              33,
+              1,
+              15,
+              21
+            ],
+            "has_unk": false,
+            "outside_output": []
+          },
+          "두드려": {
+            "symbols": "ㄷㅜㄷㅡㄹㅕ",
+            "ids": [
+              4,
+              33,
+              4,
+              38,
+              6,
+              26
+            ],
+            "has_unk": false,
+            "outside_output": []
+          }
+        },
+        "missing_symbols_for_all_modern_hangul": [
+          "ㄳ",
+          "ㄵ",
+          "ㄶ",
+          "ㄺ",
+          "ㄻ",
+          "ㄼ",
+          "ㄽ",
+          "ㄾ",
+          "ㄿ",
+          "ㅀ",
+          "ㅄ"
+        ]
+      },
+      "weight_http_head": {
+        "model_id": "Miniijune/wav2vec2-xls-r-300m-Korean-children-pronunciation-jamo-based-V2",
+        "revision": "448e988f77d2e95cc0636bf0eb98132b4a544849",
+        "weight": "model.safetensors",
+        "http_status": 200,
+        "api_bytes": 1261987880,
+        "read_body": false
+      },
+      "source_files": {
+        "config.json": {
+          "url": "https://huggingface.co/Miniijune/wav2vec2-xls-r-300m-Korean-children-pronunciation-jamo-based-V2/blob/448e988f77d2e95cc0636bf0eb98132b4a544849/config.json",
+          "sha256": "4c5ff1a2e366325be11c0579ae8e9d14ee4002dfcf5b86a2bf7d8fdb8b6a9e28"
+        },
+        "vocab.json": {
+          "url": "https://huggingface.co/Miniijune/wav2vec2-xls-r-300m-Korean-children-pronunciation-jamo-based-V2/blob/448e988f77d2e95cc0636bf0eb98132b4a544849/vocab.json",
+          "sha256": "b526696b3b0786e02f7a99788e3dd10d9c0fc34cf25dd276c0149f51861d7b9c"
+        },
+        "tokenizer_config.json": {
+          "url": "https://huggingface.co/Miniijune/wav2vec2-xls-r-300m-Korean-children-pronunciation-jamo-based-V2/blob/448e988f77d2e95cc0636bf0eb98132b4a544849/tokenizer_config.json",
+          "sha256": "e885496776bf49b5fd703e15121f74181d6f72bf624172043622c54125e9e652"
+        },
+        "preprocessor_config.json": {
+          "url": "https://huggingface.co/Miniijune/wav2vec2-xls-r-300m-Korean-children-pronunciation-jamo-based-V2/blob/448e988f77d2e95cc0636bf0eb98132b4a544849/preprocessor_config.json",
+          "sha256": "d046b7926f6e51e6e7da7b997c86326af0cd8675119192c427d3cd9388595b3d"
+        },
+        "added_tokens.json": {
+          "url": "https://huggingface.co/Miniijune/wav2vec2-xls-r-300m-Korean-children-pronunciation-jamo-based-V2/blob/448e988f77d2e95cc0636bf0eb98132b4a544849/added_tokens.json",
+          "sha256": "54ce4a760b4a8313fc153bb33a53e00eceecdf9fcc775f9dd4930f34a0103f58"
+        },
+        "README.md": {
+          "url": "https://huggingface.co/Miniijune/wav2vec2-xls-r-300m-Korean-children-pronunciation-jamo-based-V2/blob/448e988f77d2e95cc0636bf0eb98132b4a544849/README.md",
+          "sha256": "76f7c8bf8119b8fbe5591ad259d6a2262570e9f26b353b545baf5c6b527b0db6"
+        }
+      }
+    },
+    {
+      "model_id": "Miniijune/wav2vec2-xls-r-300m-Korean-children-pronunciation-jamo-based-semi-supervised_V2",
+      "url": "https://huggingface.co/Miniijune/wav2vec2-xls-r-300m-Korean-children-pronunciation-jamo-based-semi-supervised_V2",
+      "revision": "ee3027345a97f4559dbd1b270f303202306f1c38",
+      "last_modified": "2026-01-28T09:15:35.000Z",
+      "gated": false,
+      "private": false,
+      "license": "apache-2.0",
+      "safetensors": {
+        "parameters": {
+          "F32": 315484845
+        },
+        "total": 315484845
+      },
+      "root_weight_files": [
+        {
+          "path": "model.safetensors",
+          "bytes": 1261991980
+        }
+      ],
+      "config": {
+        "model_type": "wav2vec2",
+        "architectures": [
+          "Wav2Vec2ForCTC"
+        ],
+        "vocab_size": 45,
+        "hidden_size": 1024,
+        "num_hidden_layers": 24,
+        "pad_token_id": 42,
+        "bos_token_id": 43,
+        "eos_token_id": 44,
+        "feat_extract_norm": "layer",
+        "do_stable_layer_norm": true,
+        "auto_map": null
+      },
+      "vocab_entries": 43,
+      "compatibility_jamo": [
+        "ㄱ",
+        "ㄲ",
+        "ㄴ",
+        "ㄷ",
+        "ㄸ",
+        "ㄹ",
+        "ㅁ",
+        "ㅂ",
+        "ㅃ",
+        "ㅅ",
+        "ㅆ",
+        "ㅇ",
+        "ㅈ",
+        "ㅉ",
+        "ㅊ",
+        "ㅋ",
+        "ㅌ",
+        "ㅍ",
+        "ㅎ",
+        "ㅏ",
+        "ㅐ",
+        "ㅑ",
+        "ㅒ",
+        "ㅓ",
+        "ㅔ",
+        "ㅕ",
+        "ㅖ",
+        "ㅗ",
+        "ㅘ",
+        "ㅙ",
+        "ㅚ",
+        "ㅛ",
+        "ㅜ",
+        "ㅝ",
+        "ㅞ",
+        "ㅟ",
+        "ㅠ",
+        "ㅡ",
+        "ㅢ",
+        "ㅣ"
+      ],
+      "conjoining_jamo": [],
+      "unmapped_output_ids_with_added_tokens": [],
+      "errors": [],
+      "hangul_syllable_count": 0,
+      "processor_check": {
+        "model_id": "Miniijune/wav2vec2-xls-r-300m-Korean-children-pronunciation-jamo-based-semi-supervised_V2",
+        "revision": "ee3027345a97f4559dbd1b270f303202306f1c38",
+        "errors": [],
+        "processor_load": "passed",
+        "tokenizer_class": "Wav2Vec2CTCTokenizer",
+        "blank_id": 42,
+        "declared_mapping_mismatches": [],
+        "raw_gap_handling": [],
+        "decoder_errors": [],
+        "missing_output_mappings": [],
+        "coverage_convention": "Orthographic compatibility jamo, compound final consonants kept as single symbols; this is NOT an assertion of undocumented Miniijune training preprocessing.",
+        "music_word_symbol_coverage": {
+          "실로폰채": {
+            "symbols": "ㅅㅣㄹㄹㅗㅍㅗㄴㅊㅐ",
+            "ids": [
+              9,
+              39,
+              5,
+              5,
+              27,
+              17,
+              27,
+              2,
+              14,
+              20
+            ],
+            "has_unk": false,
+            "outside_output": []
+          },
+          "들어": {
+            "symbols": "ㄷㅡㄹㅇㅓ",
+            "ids": [
+              3,
+              37,
+              5,
+              11,
+              23
+            ],
+            "has_unk": false,
+            "outside_output": []
+          },
+          "잡아": {
+            "symbols": "ㅈㅏㅂㅇㅏ",
+            "ids": [
+              12,
+              19,
+              7,
+              11,
+              19
+            ],
+            "has_unk": false,
+            "outside_output": []
+          },
+          "쳐": {
+            "symbols": "ㅊㅕ",
+            "ids": [
+              14,
+              25
+            ],
+            "has_unk": false,
+            "outside_output": []
+          },
+          "때려": {
+            "symbols": "ㄸㅐㄹㅕ",
+            "ids": [
+              4,
+              20,
+              5,
+              25
+            ],
+            "has_unk": false,
+            "outside_output": []
+          },
+          "연주해": {
+            "symbols": "ㅇㅕㄴㅈㅜㅎㅐ",
+            "ids": [
+              11,
+              25,
+              2,
+              12,
+              32,
+              18,
+              20
+            ],
+            "has_unk": false,
+            "outside_output": []
+          },
+          "놓아": {
+            "symbols": "ㄴㅗㅎㅇㅏ",
+            "ids": [
+              2,
+              27,
+              18,
+              11,
+              19
+            ],
+            "has_unk": false,
+            "outside_output": []
+          },
+          "놔": {
+            "symbols": "ㄴㅘ",
+            "ids": [
+              2,
+              28
+            ],
+            "has_unk": false,
+            "outside_output": []
+          },
+          "내려놔": {
+            "symbols": "ㄴㅐㄹㅕㄴㅘ",
+            "ids": [
+              2,
+              20,
+              5,
+              25,
+              2,
+              28
+            ],
+            "has_unk": false,
+            "outside_output": []
+          },
+          "흔들어": {
+            "symbols": "ㅎㅡㄴㄷㅡㄹㅇㅓ",
+            "ids": [
+              18,
+              37,
+              2,
+              3,
+              37,
+              5,
+              11,
+              23
+            ],
+            "has_unk": false,
+            "outside_output": []
+          },
+          "북채": {
+            "symbols": "ㅂㅜㄱㅊㅐ",
+            "ids": [
+              7,
+              32,
+              0,
+              14,
+              20
+            ],
+            "has_unk": false,
+            "outside_output": []
+          },
+          "두드려": {
+            "symbols": "ㄷㅜㄷㅡㄹㅕ",
+            "ids": [
+              3,
+              32,
+              3,
+              37,
+              5,
+              25
+            ],
+            "has_unk": false,
+            "outside_output": []
+          }
+        },
+        "missing_symbols_for_all_modern_hangul": [
+          "ㄳ",
+          "ㄵ",
+          "ㄶ",
+          "ㄺ",
+          "ㄻ",
+          "ㄼ",
+          "ㄽ",
+          "ㄾ",
+          "ㄿ",
+          "ㅀ",
+          "ㅄ"
+        ]
+      },
+      "weight_http_head": {
+        "model_id": "Miniijune/wav2vec2-xls-r-300m-Korean-children-pronunciation-jamo-based-semi-supervised_V2",
+        "revision": "ee3027345a97f4559dbd1b270f303202306f1c38",
+        "weight": "model.safetensors",
+        "http_status": 200,
+        "api_bytes": 1261991980,
+        "read_body": false
+      },
+      "source_files": {
+        "config.json": {
+          "url": "https://huggingface.co/Miniijune/wav2vec2-xls-r-300m-Korean-children-pronunciation-jamo-based-semi-supervised_V2/blob/ee3027345a97f4559dbd1b270f303202306f1c38/config.json",
+          "sha256": "55ddeb80501c7e79d36477fc8662ca24e999eb510bc37f8b98f59adcfce76dd4"
+        },
+        "vocab.json": {
+          "url": "https://huggingface.co/Miniijune/wav2vec2-xls-r-300m-Korean-children-pronunciation-jamo-based-semi-supervised_V2/blob/ee3027345a97f4559dbd1b270f303202306f1c38/vocab.json",
+          "sha256": "b2d67f7d41768f0856a0215b4933314e231fa3b36e40c4a2f5ff0003f07189ec"
+        },
+        "tokenizer_config.json": {
+          "url": "https://huggingface.co/Miniijune/wav2vec2-xls-r-300m-Korean-children-pronunciation-jamo-based-semi-supervised_V2/blob/ee3027345a97f4559dbd1b270f303202306f1c38/tokenizer_config.json",
+          "sha256": "24689405c59386d2a86801c5939cdeb3ad30f70df6eba33ff4fee1e8c97b6dea"
+        },
+        "preprocessor_config.json": {
+          "url": "https://huggingface.co/Miniijune/wav2vec2-xls-r-300m-Korean-children-pronunciation-jamo-based-semi-supervised_V2/blob/ee3027345a97f4559dbd1b270f303202306f1c38/preprocessor_config.json",
+          "sha256": "d046b7926f6e51e6e7da7b997c86326af0cd8675119192c427d3cd9388595b3d"
+        },
+        "added_tokens.json": {
+          "url": "https://huggingface.co/Miniijune/wav2vec2-xls-r-300m-Korean-children-pronunciation-jamo-based-semi-supervised_V2/blob/ee3027345a97f4559dbd1b270f303202306f1c38/added_tokens.json",
+          "sha256": "f3d8c3ed7408c1e290361c5215c04ded652683af126bc4b6b76389355df7b4ae"
+        },
+        "README.md": {
+          "url": "https://huggingface.co/Miniijune/wav2vec2-xls-r-300m-Korean-children-pronunciation-jamo-based-semi-supervised_V2/blob/ee3027345a97f4559dbd1b270f303202306f1c38/README.md",
+          "sha256": "1ce17f155a844416888697e61570e604790e52fde596b32c29d14ae7f2a039c3"
+        }
+      }
+    },
+    {
+      "model_id": "raniczan/wav2vec2-xls-r-300m-korean-english",
+      "url": "https://huggingface.co/raniczan/wav2vec2-xls-r-300m-korean-english",
+      "revision": "3bb93c058fd07c71c53636aa178c8e581b45593c",
+      "last_modified": "2026-06-17T01:56:12.000Z",
+      "gated": false,
+      "private": false,
+      "license": "apache-2.0",
+      "safetensors": {
+        "parameters": {
+          "F32": 315861020
+        },
+        "total": 315861020
+      },
+      "root_weight_files": [
+        {
+          "path": "model.safetensors",
+          "bytes": 1263496696
+        }
+      ],
+      "config": {
+        "model_type": "wav2vec2",
+        "architectures": [
+          "Wav2Vec2ForCTC"
+        ],
+        "vocab_size": 412,
+        "hidden_size": 1024,
+        "num_hidden_layers": 24,
+        "pad_token_id": 409,
+        "bos_token_id": 1,
+        "eos_token_id": 2,
+        "feat_extract_norm": "layer",
+        "do_stable_layer_norm": true,
+        "auto_map": null
+      },
+      "vocab_entries": 410,
+      "compatibility_jamo": [
+        "ㅋ",
+        "ㅑ",
+        "ㅗ"
+      ],
+      "conjoining_jamo": [
+        "ᄀ",
+        "ᄁ",
+        "ᄂ",
+        "ᄃ",
+        "ᄄ",
+        "ᄅ",
+        "ᄆ",
+        "ᄇ",
+        "ᄈ",
+        "ᄉ",
+        "ᄊ",
+        "ᄋ",
+        "ᄌ",
+        "ᄍ",
+        "ᄎ",
+        "ᄏ",
+        "ᄐ",
+        "ᄑ",
+        "ᄒ",
+        "ᅡ",
+        "ᅢ",
+        "ᅣ",
+        "ᅤ",
+        "ᅥ",
+        "ᅦ",
+        "ᅧ",
+        "ᅨ",
+        "ᅩ",
+        "ᅪ",
+        "ᅫ",
+        "ᅬ",
+        "ᅭ",
+        "ᅮ",
+        "ᅯ",
+        "ᅰ",
+        "ᅱ",
+        "ᅲ",
+        "ᅳ",
+        "ᅴ",
+        "ᅵ",
+        "ᆨ",
+        "ᆩ",
+        "ᆫ",
+        "ᆬ",
+        "ᆭ",
+        "ᆮ",
+        "ᆯ",
+        "ᆰ",
+        "ᆱ",
+        "ᆲ",
+        "ᆶ",
+        "ᆷ",
+        "ᆸ",
+        "ᆹ",
+        "ᆺ",
+        "ᆻ",
+        "ᆼ",
+        "ᆽ",
+        "ᆾ",
+        "ᇀ",
+        "ᇁ",
+        "ᇂ"
+      ],
+      "unmapped_output_ids_with_added_tokens": [],
+      "errors": [],
+      "hangul_syllable_count": 0,
+      "processor_check": {
+        "model_id": "raniczan/wav2vec2-xls-r-300m-korean-english",
+        "revision": "3bb93c058fd07c71c53636aa178c8e581b45593c",
+        "errors": [],
+        "processor_load": "passed",
+        "tokenizer_class": "Wav2Vec2CTCTokenizer",
+        "blank_id": 409,
+        "declared_mapping_mismatches": [],
+        "raw_gap_handling": [],
+        "decoder_errors": [],
+        "missing_output_mappings": [],
+        "coverage_convention": "NFD, as specified in model card.",
+        "music_word_symbol_coverage": {
+          "실로폰채": {
+            "symbols": "실로폰채",
+            "ids": [
+              72,
+              102,
+              109,
+              68,
+              90,
+              80,
+              90,
+              105,
+              77,
+              83
+            ],
+            "has_unk": false,
+            "outside_output": []
+          },
+          "들어": {
+            "symbols": "들어",
+            "ids": [
+              66,
+              100,
+              109,
+              74,
+              86
+            ],
+            "has_unk": false,
+            "outside_output": []
+          },
+          "잡아": {
+            "symbols": "잡아",
+            "ids": [
+              75,
+              82,
+              115,
+              74,
+              82
+            ],
+            "has_unk": false,
+            "outside_output": []
+          },
+          "쳐": {
+            "symbols": "쳐",
+            "ids": [
+              77,
+              88
+            ],
+            "has_unk": false,
+            "outside_output": []
+          },
+          "때려": {
+            "symbols": "때려",
+            "ids": [
+              67,
+              83,
+              68,
+              88
+            ],
+            "has_unk": false,
+            "outside_output": []
+          },
+          "연주해": {
+            "symbols": "연주해",
+            "ids": [
+              74,
+              88,
+              105,
+              75,
+              95,
+              81,
+              83
+            ],
+            "has_unk": false,
+            "outside_output": []
+          },
+          "놓아": {
+            "symbols": "놓아",
+            "ids": [
+              65,
+              90,
+              124,
+              74,
+              82
+            ],
+            "has_unk": false,
+            "outside_output": []
+          },
+          "놔": {
+            "symbols": "놔",
+            "ids": [
+              65,
+              91
+            ],
+            "has_unk": false,
+            "outside_output": []
+          },
+          "내려놔": {
+            "symbols": "내려놔",
+            "ids": [
+              65,
+              83,
+              68,
+              88,
+              65,
+              91
+            ],
+            "has_unk": false,
+            "outside_output": []
+          },
+          "흔들어": {
+            "symbols": "흔들어",
+            "ids": [
+              81,
+              100,
+              105,
+              66,
+              100,
+              109,
+              74,
+              86
+            ],
+            "has_unk": false,
+            "outside_output": []
+          },
+          "북채": {
+            "symbols": "북채",
+            "ids": [
+              70,
+              95,
+              103,
+              77,
+              83
+            ],
+            "has_unk": false,
+            "outside_output": []
+          },
+          "두드려": {
+            "symbols": "두드려",
+            "ids": [
+              66,
+              95,
+              66,
+              100,
+              68,
+              88
+            ],
+            "has_unk": false,
+            "outside_output": []
+          }
+        },
+        "missing_symbols_for_all_modern_hangul": [
+          "ᆪ",
+          "ᆳ",
+          "ᆴ",
+          "ᆵ",
+          "ᆿ"
+        ]
+      },
+      "weight_http_head": {
+        "model_id": "raniczan/wav2vec2-xls-r-300m-korean-english",
+        "revision": "3bb93c058fd07c71c53636aa178c8e581b45593c",
+        "weight": "model.safetensors",
+        "http_status": 200,
+        "api_bytes": 1263496696,
+        "read_body": false
+      },
+      "source_files": {
+        "config.json": {
+          "url": "https://huggingface.co/raniczan/wav2vec2-xls-r-300m-korean-english/blob/3bb93c058fd07c71c53636aa178c8e581b45593c/config.json",
+          "sha256": "ee5e7c5fa6deb2db57ed325dccc1fbaa6ab3b8e1518f7cc2825568845d3cf06d"
+        },
+        "vocab.json": {
+          "url": "https://huggingface.co/raniczan/wav2vec2-xls-r-300m-korean-english/blob/3bb93c058fd07c71c53636aa178c8e581b45593c/vocab.json",
+          "sha256": "38c3435e685655ace3f579fd05055a807160d94783af3dd64a43cb4345411f16"
+        },
+        "tokenizer_config.json": {
+          "url": "https://huggingface.co/raniczan/wav2vec2-xls-r-300m-korean-english/blob/3bb93c058fd07c71c53636aa178c8e581b45593c/tokenizer_config.json",
+          "sha256": "087986ff5e2f72259934a8f8b1fe92a512f25964b1fa7f0545e18c26bf3fdab2"
+        },
+        "preprocessor_config.json": {
+          "url": "https://huggingface.co/raniczan/wav2vec2-xls-r-300m-korean-english/blob/3bb93c058fd07c71c53636aa178c8e581b45593c/preprocessor_config.json",
+          "sha256": "cabc254be8fb60f02a911e26f731e9221c4de7c6949fcfea31ab9119bfd073a6"
+        },
+        "added_tokens.json": {
+          "url": "https://huggingface.co/raniczan/wav2vec2-xls-r-300m-korean-english/blob/3bb93c058fd07c71c53636aa178c8e581b45593c/added_tokens.json",
+          "sha256": "fcf9f1aa6d37845b1d63bacac9cab4ab238d9ac1db7c01ecfd25ca95f1f90676"
+        },
+        "README.md": {
+          "url": "https://huggingface.co/raniczan/wav2vec2-xls-r-300m-korean-english/blob/3bb93c058fd07c71c53636aa178c8e581b45593c/README.md",
+          "sha256": "6a017509efe8fc6762b100eaf6d4f4798c5cae3189afc1eec0c349d7a81b4d34"
+        }
+      }
+    },
+    {
+      "model_id": "slplab/wav2vec2-xls-r-300m_phone-mfa_korean",
+      "url": "https://huggingface.co/slplab/wav2vec2-xls-r-300m_phone-mfa_korean",
+      "revision": "e26ff9dfb62169acf445d0060ef56863c018b20e",
+      "last_modified": "2023-09-08T07:19:37.000Z",
+      "gated": false,
+      "private": false,
+      "license": "apache-2.0",
+      "safetensors": null,
+      "root_weight_files": [
+        {
+          "path": "pytorch_model.bin",
+          "bytes": 1262083185
+        }
+      ],
+      "config": {
+        "model_type": "wav2vec2",
+        "architectures": [
+          "Wav2Vec2ForCTC"
+        ],
+        "vocab_size": 45,
+        "hidden_size": 1024,
+        "num_hidden_layers": 24,
+        "pad_token_id": 42,
+        "bos_token_id": 1,
+        "eos_token_id": 2,
+        "feat_extract_norm": "layer",
+        "do_stable_layer_norm": true,
+        "auto_map": null
+      },
+      "vocab_entries": 43,
+      "compatibility_jamo": [],
+      "conjoining_jamo": [],
+      "unmapped_output_ids_with_added_tokens": [],
+      "errors": [],
+      "hangul_syllable_count": 0,
+      "processor_check": {
+        "model_id": "slplab/wav2vec2-xls-r-300m_phone-mfa_korean",
+        "revision": "e26ff9dfb62169acf445d0060ef56863c018b20e",
+        "errors": [],
+        "processor_load": "passed",
+        "tokenizer_class": "Wav2Vec2PhonemeCTCTokenizer",
+        "blank_id": 42,
+        "declared_mapping_mismatches": [],
+        "raw_gap_handling": [],
+        "decoder_errors": [],
+        "missing_output_mappings": []
+      },
+      "weight_http_head": {
+        "model_id": "slplab/wav2vec2-xls-r-300m_phone-mfa_korean",
+        "revision": "e26ff9dfb62169acf445d0060ef56863c018b20e",
+        "weight": "pytorch_model.bin",
+        "http_status": 200,
+        "api_bytes": 1262083185,
+        "read_body": false
+      },
+      "source_files": {
+        "config.json": {
+          "url": "https://huggingface.co/slplab/wav2vec2-xls-r-300m_phone-mfa_korean/blob/e26ff9dfb62169acf445d0060ef56863c018b20e/config.json",
+          "sha256": "db913fc6692ca5ccb059439c4452925d51796c391a2386b99a95c52156a207fd"
+        },
+        "vocab.json": {
+          "url": "https://huggingface.co/slplab/wav2vec2-xls-r-300m_phone-mfa_korean/blob/e26ff9dfb62169acf445d0060ef56863c018b20e/vocab.json",
+          "sha256": "8858661a71c6b30b2b888d5ea40a92f9989258f990f9399e9f588d4f33db6b6c"
+        },
+        "tokenizer_config.json": {
+          "url": "https://huggingface.co/slplab/wav2vec2-xls-r-300m_phone-mfa_korean/blob/e26ff9dfb62169acf445d0060ef56863c018b20e/tokenizer_config.json",
+          "sha256": "1db72977bf49875d783723d80332ebd76956ea4689db1ff0bcaad84fdb8b38bf"
+        },
+        "preprocessor_config.json": {
+          "url": "https://huggingface.co/slplab/wav2vec2-xls-r-300m_phone-mfa_korean/blob/e26ff9dfb62169acf445d0060ef56863c018b20e/preprocessor_config.json",
+          "sha256": "a3afe98d837ade76cac58693a676d954b9bd1c7afba6cca2e59b064e935620b9"
+        },
+        "added_tokens.json": {
+          "url": "https://huggingface.co/slplab/wav2vec2-xls-r-300m_phone-mfa_korean/blob/e26ff9dfb62169acf445d0060ef56863c018b20e/added_tokens.json",
+          "sha256": "345372990b28586981edfa2df80304928cb4181dc2e44dc24c583ce9f1048a01"
+        },
+        "README.md": {
+          "url": "https://huggingface.co/slplab/wav2vec2-xls-r-300m_phone-mfa_korean/blob/e26ff9dfb62169acf445d0060ef56863c018b20e/README.md",
+          "sha256": "221e2136f0770ed3f7551da2eeec18ee75aa6203002d7d1b0674339459292da2"
+        }
+      }
+    },
+    {
+      "model_id": "Hyuk/wav2vec2-korean-v2",
+      "url": "https://huggingface.co/Hyuk/wav2vec2-korean-v2",
+      "revision": "fa35fca0e72cb4f529eb6e1de87a4adefc6897f1",
+      "last_modified": "2022-12-19T10:15:22.000Z",
+      "gated": false,
+      "private": false,
+      "license": null,
+      "safetensors": null,
+      "root_weight_files": [
+        {
+          "path": "pytorch_model.bin",
+          "bytes": 1267762161
+        }
+      ],
+      "config": {
+        "model_type": "wav2vec2",
+        "architectures": [
+          "Wav2Vec2ForCTC"
+        ],
+        "vocab_size": 1424,
+        "hidden_size": 1024,
+        "num_hidden_layers": 24,
+        "pad_token_id": 1421,
+        "bos_token_id": 1,
+        "eos_token_id": 2,
+        "feat_extract_norm": "layer",
+        "do_stable_layer_norm": true,
+        "auto_map": null
+      },
+      "vocab_entries": 1422,
+      "compatibility_jamo": [],
+      "conjoining_jamo": [],
+      "unmapped_output_ids_with_added_tokens": [],
+      "errors": [],
+      "hangul_syllable_count": 1403,
+      "processor_check": {
+        "model_id": "Hyuk/wav2vec2-korean-v2",
+        "revision": "fa35fca0e72cb4f529eb6e1de87a4adefc6897f1",
+        "errors": [],
+        "processor_load": "passed",
+        "tokenizer_class": "Wav2Vec2CTCTokenizer",
+        "blank_id": 1421,
+        "declared_mapping_mismatches": [],
+        "raw_gap_handling": [],
+        "decoder_errors": [],
+        "missing_output_mappings": []
+      },
+      "weight_http_head": null,
+      "source_files": {
+        "config.json": {
+          "url": "https://huggingface.co/Hyuk/wav2vec2-korean-v2/blob/fa35fca0e72cb4f529eb6e1de87a4adefc6897f1/config.json",
+          "sha256": "671a131465a1b324202f58e244d32f479d7c14382e957e2ad29f6cf9f2f78a7c"
+        },
+        "vocab.json": {
+          "url": "https://huggingface.co/Hyuk/wav2vec2-korean-v2/blob/fa35fca0e72cb4f529eb6e1de87a4adefc6897f1/vocab.json",
+          "sha256": "0be469b2d6cc5448aabab563c405ddfa033c24881651653566d84494e28935d2"
+        },
+        "tokenizer_config.json": {
+          "url": "https://huggingface.co/Hyuk/wav2vec2-korean-v2/blob/fa35fca0e72cb4f529eb6e1de87a4adefc6897f1/tokenizer_config.json",
+          "sha256": "c327ab50fbefdaf6bdab7ed27270d27dc92e18f8e922e836a2a516b90a2d8078"
+        },
+        "preprocessor_config.json": {
+          "url": "https://huggingface.co/Hyuk/wav2vec2-korean-v2/blob/fa35fca0e72cb4f529eb6e1de87a4adefc6897f1/preprocessor_config.json",
+          "sha256": "b015262597dff1db8490155c0bad03ea69c024bf1564d670c65391f9090038d7"
+        },
+        "added_tokens.json": {
+          "url": "https://huggingface.co/Hyuk/wav2vec2-korean-v2/blob/fa35fca0e72cb4f529eb6e1de87a4adefc6897f1/added_tokens.json",
+          "sha256": "e06e331a25b90a9055ce158f6ec90a8068e819dc0c7715d693a3cc801cfa33e8"
+        },
+        "README.md": {
+          "url": "https://huggingface.co/Hyuk/wav2vec2-korean-v2/blob/fa35fca0e72cb4f529eb6e1de87a4adefc6897f1/README.md",
+          "sha256": "ef8f45df514dbe3042f16b41b970006051e4590fcd8672a5aa4790330a63c182"
+        }
+      }
+    },
+    {
+      "model_id": "rosicast/1205-wav2vec2-large-xlsr-53-korean-zeroth-char",
+      "url": "https://huggingface.co/rosicast/1205-wav2vec2-large-xlsr-53-korean-zeroth-char",
+      "revision": "60b44851f700c4dba123a5a3d733f41180aa2f9c",
+      "last_modified": "2022-12-19T04:04:12.000Z",
+      "gated": false,
+      "private": false,
+      "license": null,
+      "safetensors": null,
+      "root_weight_files": [
+        {
+          "path": "pytorch_model.bin",
+          "bytes": 1307743793
+        }
+      ],
+      "config": {
+        "model_type": "wav2vec2",
+        "architectures": [
+          "Wav2Vec2ForCTC"
+        ],
+        "vocab_size": 11175,
+        "hidden_size": 1024,
+        "num_hidden_layers": 24,
+        "pad_token_id": 11174,
+        "bos_token_id": 1,
+        "eos_token_id": 2,
+        "feat_extract_norm": "layer",
+        "do_stable_layer_norm": true,
+        "auto_map": null
+      },
+      "vocab_entries": 11175,
+      "compatibility_jamo": [],
+      "conjoining_jamo": [],
+      "unmapped_output_ids_with_added_tokens": [],
+      "errors": [],
+      "hangul_syllable_count": 11172,
+      "processor_check": {
+        "model_id": "rosicast/1205-wav2vec2-large-xlsr-53-korean-zeroth-char",
+        "revision": "60b44851f700c4dba123a5a3d733f41180aa2f9c",
+        "errors": [],
+        "processor_load": "passed",
+        "tokenizer_class": "Wav2Vec2CTCTokenizer",
+        "blank_id": 11174,
+        "declared_mapping_mismatches": [],
+        "raw_gap_handling": [],
+        "decoder_errors": [],
+        "missing_output_mappings": []
+      },
+      "weight_http_head": null,
+      "source_files": {
+        "config.json": {
+          "url": "https://huggingface.co/rosicast/1205-wav2vec2-large-xlsr-53-korean-zeroth-char/blob/60b44851f700c4dba123a5a3d733f41180aa2f9c/config.json",
+          "sha256": "4475e09f211b7931aa5db5d3e61da14a246f19dfea9e13c807a2e581741f0620"
+        },
+        "vocab.json": {
+          "url": "https://huggingface.co/rosicast/1205-wav2vec2-large-xlsr-53-korean-zeroth-char/blob/60b44851f700c4dba123a5a3d733f41180aa2f9c/vocab.json",
+          "sha256": "30b1ec68242be9be386d6a5e32c6c061ae1e5366f0b670375fa2336385bfba51"
+        },
+        "tokenizer_config.json": {
+          "url": "https://huggingface.co/rosicast/1205-wav2vec2-large-xlsr-53-korean-zeroth-char/blob/60b44851f700c4dba123a5a3d733f41180aa2f9c/tokenizer_config.json",
+          "sha256": "1d608675e6837809e5d58a2524d355ce07aa4bf31ffa60ef0a6fed69de6c5f0b"
+        },
+        "preprocessor_config.json": {
+          "url": "https://huggingface.co/rosicast/1205-wav2vec2-large-xlsr-53-korean-zeroth-char/blob/60b44851f700c4dba123a5a3d733f41180aa2f9c/preprocessor_config.json",
+          "sha256": "efc8c209c2123dbd1713cecc7a9b426e138158291a3ba04e7e3cbe6bf5b95748"
+        }
+      }
+    },
+    {
+      "model_id": "ppparkker/wav2vec2-xls-r-300m-S2P-korean",
+      "url": "https://huggingface.co/ppparkker/wav2vec2-xls-r-300m-S2P-korean",
+      "revision": "1ef31825d1ffa70fcedc7ac8da6a9b348414c995",
+      "last_modified": "2024-11-15T02:09:11.000Z",
+      "gated": false,
+      "private": false,
+      "license": "apache-2.0",
+      "safetensors": {
+        "parameters": {
+          "F32": 315484845
+        },
+        "total": 315484845
+      },
+      "root_weight_files": [
+        {
+          "path": "model.safetensors",
+          "bytes": 1261991980
+        }
+      ],
+      "config": {
+        "model_type": "wav2vec2",
+        "architectures": [
+          "Wav2Vec2ForCTC"
+        ],
+        "vocab_size": 45,
+        "hidden_size": 1024,
+        "num_hidden_layers": 24,
+        "pad_token_id": 42,
+        "bos_token_id": 1,
+        "eos_token_id": 2,
+        "feat_extract_norm": "layer",
+        "do_stable_layer_norm": true,
+        "auto_map": null
+      },
+      "vocab_entries": 43,
+      "compatibility_jamo": [
+        "ㄱ",
+        "ㄲ",
+        "ㄴ",
+        "ㄷ",
+        "ㄸ",
+        "ㄹ",
+        "ㅁ",
+        "ㅂ",
+        "ㅃ",
+        "ㅅ",
+        "ㅆ",
+        "ㅇ",
+        "ㅈ",
+        "ㅉ",
+        "ㅊ",
+        "ㅋ",
+        "ㅌ",
+        "ㅍ",
+        "ㅎ",
+        "ㅏ",
+        "ㅐ",
+        "ㅑ",
+        "ㅒ",
+        "ㅓ",
+        "ㅔ",
+        "ㅕ",
+        "ㅖ",
+        "ㅗ",
+        "ㅘ",
+        "ㅙ",
+        "ㅚ",
+        "ㅛ",
+        "ㅜ",
+        "ㅝ",
+        "ㅞ",
+        "ㅟ",
+        "ㅠ",
+        "ㅡ",
+        "ㅢ",
+        "ㅣ"
+      ],
+      "conjoining_jamo": [],
+      "unmapped_output_ids_with_added_tokens": [
+        0
+      ],
+      "errors": [],
+      "hangul_syllable_count": 0,
+      "processor_check": {
+        "model_id": "ppparkker/wav2vec2-xls-r-300m-S2P-korean",
+        "revision": "1ef31825d1ffa70fcedc7ac8da6a9b348414c995",
+        "errors": [],
+        "processor_load": "passed",
+        "tokenizer_class": "Wav2Vec2PhonemeCTCTokenizer",
+        "blank_id": 42,
+        "declared_mapping_mismatches": [
+          {
+            "id": 41,
+            "declared": "|",
+            "loaded": "[UNK]"
+          }
+        ],
+        "raw_gap_handling": [
+          {
+            "id": 0,
+            "loaded_token": "[UNK]",
+            "decoded": "[UNK]"
+          }
+        ],
+        "decoder_errors": [],
+        "missing_output_mappings": []
+      },
+      "weight_http_head": null,
+      "source_files": {
+        "config.json": {
+          "url": "https://huggingface.co/ppparkker/wav2vec2-xls-r-300m-S2P-korean/blob/1ef31825d1ffa70fcedc7ac8da6a9b348414c995/config.json",
+          "sha256": "00e79b940a45090f439b206bc7052dc3c3f2c4e4c98dacc9e4419f4a971d01be"
+        },
+        "vocab.json": {
+          "url": "https://huggingface.co/ppparkker/wav2vec2-xls-r-300m-S2P-korean/blob/1ef31825d1ffa70fcedc7ac8da6a9b348414c995/vocab.json",
+          "sha256": "6751617ec360109b9056a6f9a362080be219811b4dfe412dc6c65f3e5cfaf0cb"
+        },
+        "tokenizer_config.json": {
+          "url": "https://huggingface.co/ppparkker/wav2vec2-xls-r-300m-S2P-korean/blob/1ef31825d1ffa70fcedc7ac8da6a9b348414c995/tokenizer_config.json",
+          "sha256": "d3d14ac8a81efe37eac89d6017a36c466745d03ae4fd45211980d45d4008845b"
+        },
+        "preprocessor_config.json": {
+          "url": "https://huggingface.co/ppparkker/wav2vec2-xls-r-300m-S2P-korean/blob/1ef31825d1ffa70fcedc7ac8da6a9b348414c995/preprocessor_config.json",
+          "sha256": "97a0f7738ba06ca1ce4f357fd8941de66fa4b646dace797f346517cf5d949590"
+        },
+        "added_tokens.json": {
+          "url": "https://huggingface.co/ppparkker/wav2vec2-xls-r-300m-S2P-korean/blob/1ef31825d1ffa70fcedc7ac8da6a9b348414c995/added_tokens.json",
+          "sha256": "d666dc4193c2e88f61d954b85440c745350febbbb1dafbadc37c011684749db4"
+        },
+        "README.md": {
+          "url": "https://huggingface.co/ppparkker/wav2vec2-xls-r-300m-S2P-korean/blob/1ef31825d1ffa70fcedc7ac8da6a9b348414c995/README.md",
+          "sha256": "4d63b5fd169960a3e1f6afefcc4aee92fe6a202385fe7bd75a8bfa6de624326a"
+        }
+      }
+    },
+    {
+      "model_id": "N03N9/wav2vec2-korean-ipa",
+      "url": "https://huggingface.co/N03N9/wav2vec2-korean-ipa",
+      "revision": "9d5361596adf5922583dc1ad6d66d37f56be6342",
+      "last_modified": "2025-02-13T15:58:10.000Z",
+      "gated": false,
+      "private": false,
+      "license": null,
+      "safetensors": {
+        "parameters": {
+          "F32": 315478695
+        },
+        "total": 315478695
+      },
+      "root_weight_files": [
+        {
+          "path": "model.safetensors",
+          "bytes": 1261967380
+        }
+      ],
+      "config": {
+        "model_type": "wav2vec2",
+        "architectures": [
+          "Wav2Vec2ForCTC"
+        ],
+        "vocab_size": 39,
+        "hidden_size": 1024,
+        "num_hidden_layers": 24,
+        "pad_token_id": 36,
+        "bos_token_id": 1,
+        "eos_token_id": 2,
+        "feat_extract_norm": "layer",
+        "do_stable_layer_norm": true,
+        "auto_map": null
+      },
+      "vocab_entries": 37,
+      "compatibility_jamo": [],
+      "conjoining_jamo": [],
+      "unmapped_output_ids_with_added_tokens": [],
+      "errors": [],
+      "hangul_syllable_count": 0,
+      "processor_check": {
+        "model_id": "N03N9/wav2vec2-korean-ipa",
+        "revision": "9d5361596adf5922583dc1ad6d66d37f56be6342",
+        "errors": [],
+        "processor_load": "passed",
+        "tokenizer_class": "Wav2Vec2CTCTokenizer",
+        "blank_id": 36,
+        "declared_mapping_mismatches": [],
+        "raw_gap_handling": [],
+        "decoder_errors": [],
+        "missing_output_mappings": []
+      },
+      "weight_http_head": null,
+      "source_files": {
+        "config.json": {
+          "url": "https://huggingface.co/N03N9/wav2vec2-korean-ipa/blob/9d5361596adf5922583dc1ad6d66d37f56be6342/config.json",
+          "sha256": "b1cb4f14b38fcd4a6d32beda3c19df76089729cf152a44654fc6d27eeea3f307"
+        },
+        "vocab.json": {
+          "url": "https://huggingface.co/N03N9/wav2vec2-korean-ipa/blob/9d5361596adf5922583dc1ad6d66d37f56be6342/vocab.json",
+          "sha256": "fcb057e1f3301925eb035cf60178391ac876f93c25a44c48b9775c2f5b55c398"
+        },
+        "tokenizer_config.json": {
+          "url": "https://huggingface.co/N03N9/wav2vec2-korean-ipa/blob/9d5361596adf5922583dc1ad6d66d37f56be6342/tokenizer_config.json",
+          "sha256": "2fb27b21859761ceb2c247b5095f65d3eb556dc016b0b437f4d2aa73f928ae78"
+        },
+        "preprocessor_config.json": {
+          "url": "https://huggingface.co/N03N9/wav2vec2-korean-ipa/blob/9d5361596adf5922583dc1ad6d66d37f56be6342/preprocessor_config.json",
+          "sha256": "cabc254be8fb60f02a911e26f731e9221c4de7c6949fcfea31ab9119bfd073a6"
+        },
+        "added_tokens.json": {
+          "url": "https://huggingface.co/N03N9/wav2vec2-korean-ipa/blob/9d5361596adf5922583dc1ad6d66d37f56be6342/added_tokens.json",
+          "sha256": "50d3230105f5f744cf9d05b719871350853f5b63ee258a0dded716a7ecfeef87"
+        },
+        "README.md": {
+          "url": "https://huggingface.co/N03N9/wav2vec2-korean-ipa/blob/9d5361596adf5922583dc1ad6d66d37f56be6342/README.md",
+          "sha256": "2947994dea29bcec851de3892e2e2e10447431fabcf1f50aabd0cce711bae53e"
+        }
+      }
+    },
+    {
+      "model_id": "slplab/wav2vec2_xlsr50k_korean_phoneme_aihub-40m",
+      "url": "https://huggingface.co/slplab/wav2vec2_xlsr50k_korean_phoneme_aihub-40m",
+      "revision": "747fef7a648604d72b28aced923a1f9b8f5a0d5e",
+      "last_modified": "2022-09-15T08:35:16.000Z",
+      "gated": false,
+      "private": false,
+      "license": "apache-2.0",
+      "safetensors": null,
+      "root_weight_files": [
+        {
+          "path": "pytorch_model.bin",
+          "bytes": 1262083287
+        }
+      ],
+      "config": {
+        "model_type": "wav2vec2",
+        "architectures": [
+          "Wav2Vec2ForCTC"
+        ],
+        "vocab_size": 44,
+        "hidden_size": 1024,
+        "num_hidden_layers": 24,
+        "pad_token_id": 43,
+        "bos_token_id": 1,
+        "eos_token_id": 2,
+        "feat_extract_norm": "layer",
+        "do_stable_layer_norm": true,
+        "auto_map": null
+      },
+      "vocab_entries": 44,
+      "compatibility_jamo": [],
+      "conjoining_jamo": [],
+      "unmapped_output_ids_with_added_tokens": [],
+      "errors": [],
+      "hangul_syllable_count": 0,
+      "processor_check": {
+        "model_id": "slplab/wav2vec2_xlsr50k_korean_phoneme_aihub-40m",
+        "revision": "747fef7a648604d72b28aced923a1f9b8f5a0d5e",
+        "errors": [],
+        "processor_load": "passed",
+        "tokenizer_class": "Wav2Vec2CTCTokenizer",
+        "blank_id": 43,
+        "declared_mapping_mismatches": [],
+        "raw_gap_handling": [],
+        "decoder_errors": [],
+        "missing_output_mappings": []
+      },
+      "weight_http_head": null,
+      "source_files": {
+        "config.json": {
+          "url": "https://huggingface.co/slplab/wav2vec2_xlsr50k_korean_phoneme_aihub-40m/blob/747fef7a648604d72b28aced923a1f9b8f5a0d5e/config.json",
+          "sha256": "ac965b6a17677df5aff63ab119142f84d08c6ba7a3ca63da9427cf9da134547a"
+        },
+        "vocab.json": {
+          "url": "https://huggingface.co/slplab/wav2vec2_xlsr50k_korean_phoneme_aihub-40m/blob/747fef7a648604d72b28aced923a1f9b8f5a0d5e/vocab.json",
+          "sha256": "bcb26ed58ee3a7badb3fd24c9dcaddc0fd97a21ec1b660011ea45bc3483abfa6"
+        },
+        "tokenizer_config.json": {
+          "url": "https://huggingface.co/slplab/wav2vec2_xlsr50k_korean_phoneme_aihub-40m/blob/747fef7a648604d72b28aced923a1f9b8f5a0d5e/tokenizer_config.json",
+          "sha256": "41cdc201b26f912e8f81f981f7e1475e841d5f68d3349723f63c64232ef53388"
+        },
+        "preprocessor_config.json": {
+          "url": "https://huggingface.co/slplab/wav2vec2_xlsr50k_korean_phoneme_aihub-40m/blob/747fef7a648604d72b28aced923a1f9b8f5a0d5e/preprocessor_config.json",
+          "sha256": "b015262597dff1db8490155c0bad03ea69c024bf1564d670c65391f9090038d7"
+        },
+        "README.md": {
+          "url": "https://huggingface.co/slplab/wav2vec2_xlsr50k_korean_phoneme_aihub-40m/blob/747fef7a648604d72b28aced923a1f9b8f5a0d5e/README.md",
+          "sha256": "afa78218c6573a02f4dffee6f3237c59890f9605cdbe295f2e2b0177b2b7ee96"
+        }
+      }
+    },
+    {
+      "model_id": "slplab/wav2vec2-XLSR-300m_KoreanPhonene_spoken_by_foreigners",
+      "url": "https://huggingface.co/slplab/wav2vec2-XLSR-300m_KoreanPhonene_spoken_by_foreigners",
+      "revision": "8c340790793e9b09f53882c2451bc5cef3764db2",
+      "last_modified": "2025-03-11T13:50:54.000Z",
+      "gated": false,
+      "private": false,
+      "license": null,
+      "safetensors": {
+        "parameters": {
+          "F32": 315524820
+        },
+        "total": 315524820
+      },
+      "root_weight_files": [
+        {
+          "path": "model.safetensors",
+          "bytes": 1262151880
+        }
+      ],
+      "config": {
+        "model_type": "wav2vec2",
+        "architectures": [
+          "Wav2Vec2ForCTC"
+        ],
+        "vocab_size": 84,
+        "hidden_size": 1024,
+        "num_hidden_layers": 24,
+        "pad_token_id": 79,
+        "bos_token_id": 1,
+        "eos_token_id": 2,
+        "feat_extract_norm": "layer",
+        "do_stable_layer_norm": true,
+        "auto_map": null
+      },
+      "vocab_entries": 82,
+      "compatibility_jamo": [
+        "ㄱ",
+        "ㄲ",
+        "ㄴ",
+        "ㄵ",
+        "ㄷ",
+        "ㄸ",
+        "ㄹ",
+        "ㄺ",
+        "ㄻ",
+        "ㄼ",
+        "ㅁ",
+        "ㅂ",
+        "ㅃ",
+        "ㅄ",
+        "ㅅ",
+        "ㅆ",
+        "ㅇ",
+        "ㅈ",
+        "ㅉ",
+        "ㅊ",
+        "ㅋ",
+        "ㅌ",
+        "ㅍ",
+        "ㅎ",
+        "ㅏ",
+        "ㅐ",
+        "ㅑ",
+        "ㅒ",
+        "ㅓ",
+        "ㅔ",
+        "ㅕ",
+        "ㅖ",
+        "ㅗ",
+        "ㅘ",
+        "ㅙ",
+        "ㅚ",
+        "ㅛ",
+        "ㅜ",
+        "ㅝ",
+        "ㅞ",
+        "ㅟ",
+        "ㅠ",
+        "ㅡ",
+        "ㅢ",
+        "ㅣ"
+      ],
+      "conjoining_jamo": [
+        "ᄀ",
+        "ᄂ",
+        "ᄃ",
+        "ᄄ",
+        "ᄅ",
+        "ᄆ",
+        "ᄇ",
+        "ᄈ",
+        "ᄉ",
+        "ᄊ",
+        "ᄌ",
+        "ᄍ",
+        "ᄏ",
+        "ᄑ",
+        "ᄒ",
+        "ᅡ",
+        "ᅢ",
+        "ᅥ",
+        "ᅦ",
+        "ᅧ",
+        "ᅩ",
+        "ᅫ",
+        "ᅭ",
+        "ᅮ",
+        "ᅯ",
+        "ᅱ",
+        "ᅳ",
+        "ᅵ",
+        "ᆨ",
+        "ᆫ",
+        "ᆮ",
+        "ᆯ",
+        "ᆷ",
+        "ᆸ"
+      ],
+      "unmapped_output_ids_with_added_tokens": [],
+      "errors": [],
+      "hangul_syllable_count": 0,
+      "processor_check": {
+        "model_id": "slplab/wav2vec2-XLSR-300m_KoreanPhonene_spoken_by_foreigners",
+        "revision": "8c340790793e9b09f53882c2451bc5cef3764db2",
+        "errors": [],
+        "processor_load": "passed",
+        "tokenizer_class": "Wav2Vec2PhonemeCTCTokenizer",
+        "blank_id": 79,
+        "declared_mapping_mismatches": [],
+        "raw_gap_handling": [],
+        "decoder_errors": [],
+        "missing_output_mappings": []
+      },
+      "weight_http_head": null,
+      "source_files": {
+        "config.json": {
+          "url": "https://huggingface.co/slplab/wav2vec2-XLSR-300m_KoreanPhonene_spoken_by_foreigners/blob/8c340790793e9b09f53882c2451bc5cef3764db2/config.json",
+          "sha256": "aaf215a1671f21c81b5bd2d791523eee01b3e2a529c001d4fd7bb3a22472ee25"
+        },
+        "vocab.json": {
+          "url": "https://huggingface.co/slplab/wav2vec2-XLSR-300m_KoreanPhonene_spoken_by_foreigners/blob/8c340790793e9b09f53882c2451bc5cef3764db2/vocab.json",
+          "sha256": "470622e5632976828057f234c3f20bbe9a4d760bc63df30db2b58ffaece9b22a"
+        },
+        "tokenizer_config.json": {
+          "url": "https://huggingface.co/slplab/wav2vec2-XLSR-300m_KoreanPhonene_spoken_by_foreigners/blob/8c340790793e9b09f53882c2451bc5cef3764db2/tokenizer_config.json",
+          "sha256": "deb465adf949d3a7403aadd81d1710e23e4a0a24386e7d52bff6d1fb3ad364bf"
+        },
+        "preprocessor_config.json": {
+          "url": "https://huggingface.co/slplab/wav2vec2-XLSR-300m_KoreanPhonene_spoken_by_foreigners/blob/8c340790793e9b09f53882c2451bc5cef3764db2/preprocessor_config.json",
+          "sha256": "27cfe80ab94e2238dff987215558941178ec98ef9be7baa1f335b2d919b5705a"
+        },
+        "README.md": {
+          "url": "https://huggingface.co/slplab/wav2vec2-XLSR-300m_KoreanPhonene_spoken_by_foreigners/blob/8c340790793e9b09f53882c2451bc5cef3764db2/README.md",
+          "sha256": "9b6b6648901fb137eb20fbded1c0556111e3ff904fa424e41b2c65ee98aae482"
+        }
+      }
+    },
+    {
+      "model_id": "kresnik/wav2vec2-large-xls-r-300m-korean",
+      "url": "https://huggingface.co/kresnik/wav2vec2-large-xls-r-300m-korean",
+      "revision": "7008951a7da1c3554d67d66be41dee6fd4f8af00",
+      "last_modified": "2023-10-08T09:11:27.000Z",
+      "gated": false,
+      "private": false,
+      "license": "apache-2.0",
+      "safetensors": null,
+      "root_weight_files": [
+        {
+          "path": "pytorch_model.bin",
+          "bytes": 1266343089
+        }
+      ],
+      "config": {
+        "model_type": "wav2vec2",
+        "architectures": [
+          "Wav2Vec2ForCTC"
+        ],
+        "vocab_size": 1084,
+        "hidden_size": 1024,
+        "num_hidden_layers": 24,
+        "pad_token_id": 1081,
+        "bos_token_id": 1,
+        "eos_token_id": 2,
+        "feat_extract_norm": "layer",
+        "do_stable_layer_norm": true,
+        "auto_map": null
+      },
+      "vocab_entries": 1082,
+      "compatibility_jamo": [
+        "ㆍ"
+      ],
+      "conjoining_jamo": [],
+      "unmapped_output_ids_with_added_tokens": [],
+      "errors": [],
+      "hangul_syllable_count": 1074,
+      "processor_check": {
+        "model_id": "kresnik/wav2vec2-large-xls-r-300m-korean",
+        "revision": "7008951a7da1c3554d67d66be41dee6fd4f8af00",
+        "errors": [],
+        "processor_load": "passed",
+        "tokenizer_class": "Wav2Vec2CTCTokenizer",
+        "blank_id": 1081,
+        "declared_mapping_mismatches": [],
+        "raw_gap_handling": [],
+        "decoder_errors": [],
+        "missing_output_mappings": []
+      },
+      "weight_http_head": null,
+      "source_files": {
+        "config.json": {
+          "url": "https://huggingface.co/kresnik/wav2vec2-large-xls-r-300m-korean/blob/7008951a7da1c3554d67d66be41dee6fd4f8af00/config.json",
+          "sha256": "517f5ef9a4a00aff414db14ad234cdde93e4f8ba702bf42d8656e410f8c74b63"
+        },
+        "vocab.json": {
+          "url": "https://huggingface.co/kresnik/wav2vec2-large-xls-r-300m-korean/blob/7008951a7da1c3554d67d66be41dee6fd4f8af00/vocab.json",
+          "sha256": "0401bbcdacaf011cc5c183cc685e273f533ed08c2613f4ecaa6038ab9142e187"
+        },
+        "tokenizer_config.json": {
+          "url": "https://huggingface.co/kresnik/wav2vec2-large-xls-r-300m-korean/blob/7008951a7da1c3554d67d66be41dee6fd4f8af00/tokenizer_config.json",
+          "sha256": "ec2c0214f59f70aa1e80c4d71d0ef56e83edc983eaa99da69c5f7b349a0f1c75"
+        },
+        "preprocessor_config.json": {
+          "url": "https://huggingface.co/kresnik/wav2vec2-large-xls-r-300m-korean/blob/7008951a7da1c3554d67d66be41dee6fd4f8af00/preprocessor_config.json",
+          "sha256": "b015262597dff1db8490155c0bad03ea69c024bf1564d670c65391f9090038d7"
+        },
+        "added_tokens.json": {
+          "url": "https://huggingface.co/kresnik/wav2vec2-large-xls-r-300m-korean/blob/7008951a7da1c3554d67d66be41dee6fd4f8af00/added_tokens.json",
+          "sha256": "701b81efcf73aa838b202b467601702869f760e5bdbcbb0996b5cec45b6aacaa"
+        },
+        "README.md": {
+          "url": "https://huggingface.co/kresnik/wav2vec2-large-xls-r-300m-korean/blob/7008951a7da1c3554d67d66be41dee6fd4f8af00/README.md",
+          "sha256": "6ad2abde8c2e463b0035b48b3f660bde8591c218569f145422c98c3847a9485c"
+        }
+      }
+    }
+  ]
+}

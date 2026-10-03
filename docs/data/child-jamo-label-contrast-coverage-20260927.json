@@ -1,0 +1,160 @@
+{
+  "complete": true,
+  "scope": "Hangul spelling component contrasts only. No source audio is listened to or newly labeled here; counts are not verified pronunciation-error examples.",
+  "reviewed_training_spelling_changes": {
+    "initial:ㄹ:ㅌ": 1,
+    "initial:ㅆ:ㅅ": 1,
+    "final:ㄴ:ㅇ": 1,
+    "initial:ㅅ:ㅊ": 1,
+    "final:ㄹ:<none>": 1
+  },
+  "heldout_coverage": [
+    {
+      "id": "followup:3",
+      "canonical": "춤춰요",
+      "selected": "춤서요",
+      "spelling_changes": [
+        [
+          "initial",
+          "ㅊ",
+          "ㅅ"
+        ],
+        [
+          "medial",
+          "ㅝ",
+          "ㅓ"
+        ]
+      ],
+      "all_directed_changes_seen_in_six_reviewed_training_items": false,
+      "all_unordered_pairs_seen_in_six_reviewed_training_items": false
+    },
+    {
+      "id": "followup:12",
+      "canonical": "운동화",
+      "selected": "운등화",
+      "spelling_changes": [
+        [
+          "medial",
+          "ㅗ",
+          "ㅡ"
+        ]
+      ],
+      "all_directed_changes_seen_in_six_reviewed_training_items": false,
+      "all_unordered_pairs_seen_in_six_reviewed_training_items": false
+    },
+    {
+      "id": "followup:4",
+      "canonical": "크레용",
+      "selected": "쿠레용",
+      "spelling_changes": [
+        [
+          "medial",
+          "ㅡ",
+          "ㅜ"
+        ]
+      ],
+      "all_directed_changes_seen_in_six_reviewed_training_items": false,
+      "all_unordered_pairs_seen_in_six_reviewed_training_items": false
+    },
+    {
+      "id": "first:5",
+      "canonical": "원숭이",
+      "selected": "웡숭이",
+      "spelling_changes": [
+        [
+          "final",
+          "ㄴ",
+          "ㅇ"
+        ]
+      ],
+      "all_directed_changes_seen_in_six_reviewed_training_items": true,
+      "all_unordered_pairs_seen_in_six_reviewed_training_items": true
+    }
+  ],
+  "heldout_items_fully_covered_by_directed_spelling_changes": 1,
+  "heldout_items_fully_covered_by_unordered_spelling_pairs": 1,
+  "original_diagnostic_contrast_candidate_inventory": {
+    "initial:ㅊ:ㅅ": {
+      "present_in_reviewed_training_pairs": true,
+      "unverified_short_inline_candidates_by_split": {
+        "train": 19,
+        "valid": 7
+      },
+      "unverified_candidate_speakers_by_split": {
+        "train": 17,
+        "valid": 7
+      },
+      "unverified_standalone_candidates_by_split": {
+        "train": 1,
+        "valid": 1
+      },
+      "candidate_wavs": [
+        "K02363151-AFG10-L1N2D1-E-K0KK-01629655.wav",
+        "K00891482-AFG13-L1N2D1-E-K0KK-00281896.wav",
+        "K07751192-AMG11-L4N1D1-E-K0KK-00419955.wav",
+        "K02220420-AFG13-L1N2D1-E-K0KK-00400133.wav",
+        "K07791347-AMG13-L5N1D1-E-K0KK-01020304.wav",
+        "K00090673-AFG10-L4N1D1-E-K0KK-00024462.wav",
+        "K03851083-AMG13-L1N2D1-E-K0KK-01317508.wav",
+        "K00480305-AMG10-L1N2D1-E-K0KK-00128162.wav",
+        "K06715527-AFG10-L1N2D2-E-K0KK-03035862.wav",
+        "K01540843-AFG10-L1N2D1-E-K0KK-00050460.wav",
+        "K06091831-AMG10-L1N2D1-E-K0KK-00727372.wav",
+        "K00590096-AFG10-L4N1D1-E-K0KK-00062540.wav",
+        "K03484348-AFG13-L1N2D2-E-K0KK-01959503.wav",
+        "K02940848-AFG13-L1N2D1-E-K0KK-00106346.wav",
+        "K07206402-AFG10-L1N2D1-E-K0KK-04277301.wav",
+        "K07790311-AMG10-L1N2D1-E-K0KK-00741157.wav",
+        "K06859004-AFG11-L1N2D1-E-K0KK-00211506.wav",
+        "K01370582-AFG13-L4N1D1-E-K0KK-02216808.wav",
+        "K04422425-AFG11-L1N2D1-E-K0KK-01932746.wav",
+        "K08892303-AFG10-L1N2D4-E-K0KK-04309379.wav",
+        "K01255527-AFG10-L1N2D2-E-K0KK-02435563.wav",
+        "K03480848-AFG13-L1N2D1-E-K0KK-00175650.wav",
+        "K02290464-AMG13-L1N2D1-E-K0KK-00069006.wav",
+        "K02961048-AMG10-L5N1D1-E-K0KK-00718140.wav",
+        "K03082273-AFG13-L1N2D1-E-K0KK-01018201.wav",
+        "K03593098-AMG10-L3N1D1-E-K0KK-01597573.wav"
+      ]
+    },
+    "final:ㄱ:ㅂ": {
+      "present_in_reviewed_training_pairs": false,
+      "unverified_short_inline_candidates_by_split": {
+        "train": 2
+      },
+      "unverified_candidate_speakers_by_split": {
+        "train": 2,
+        "valid": 0
+      },
+      "unverified_standalone_candidates_by_split": {
+        "train": 1
+      },
+      "candidate_wavs": [
+        "K09001014-AMG10-L1N2D1-E-K0KK-00612572.wav",
+        "K01131588-AFG20-L1N2D2-E-K0KK-00341861.wav"
+      ]
+    },
+    "initial:ㅂ:ㄹ": {
+      "present_in_reviewed_training_pairs": false,
+      "unverified_short_inline_candidates_by_split": {},
+      "unverified_candidate_speakers_by_split": {
+        "train": 0,
+        "valid": 0
+      },
+      "unverified_standalone_candidates_by_split": {},
+      "candidate_wavs": []
+    },
+    "initial:ㄸ:ㄱ": {
+      "present_in_reviewed_training_pairs": false,
+      "unverified_short_inline_candidates_by_split": {},
+      "unverified_candidate_speakers_by_split": {
+        "train": 0,
+        "valid": 0
+      },
+      "unverified_standalone_candidates_by_split": {},
+      "candidate_wavs": []
+    }
+  },
+  "interpretation": "The six reviewed training items have narrow coverage. This audit does not mean the base model or the 216 replay examples have never learned the listed phonemes. It limits what this small intervention can establish.",
+  "next_recommendation": "Stop arbitrary bracket-word review expansion. Diagnose the two residual training contrasts and design coverage around the original diagnostic consonant distinctions, while preserving normal-speech controls. Candidate inventories are not authorization to auto-label or deploy."
+}

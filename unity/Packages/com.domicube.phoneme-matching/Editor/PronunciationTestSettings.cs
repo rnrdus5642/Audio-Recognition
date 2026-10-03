@@ -7,8 +7,7 @@ namespace DomiCube.PhonemeMatching.Editor
     {
         Unspecified,
         Base,
-        Child,
-        MusicDemo
+        Child
     }
 
     /// <summary>
@@ -22,8 +21,6 @@ namespace DomiCube.PhonemeMatching.Editor
             new PronunciationTestSettings("기본 모델", "ko_child_v1.json", "targets.json");
         internal static readonly PronunciationTestSettings Child =
             new PronunciationTestSettings("아동 파인튜닝 모델", "ko_child_v2.json", "targets_child.json");
-        internal static readonly PronunciationTestSettings MusicDemo =
-            new PronunciationTestSettings("악기놀이 발표 (아동 모델)", "ko_child_v2.json", "targets_music_demo.json");
         internal const string VocabularyFile = "wav2vec2_ko_vocab.json";
 
         internal string Label { get; }
@@ -54,8 +51,6 @@ namespace DomiCube.PhonemeMatching.Editor
             // A saved manual choice for a renamed model must not override a
             // known filename when it is restored to a standard model name.
             var known = FromModelPath(modelPath);
-            if (choice == TestDataChoice.MusicDemo)
-                return known == Base ? null : MusicDemo;
             if (known != null) return known;
             switch (choice)
             {
@@ -68,14 +63,6 @@ namespace DomiCube.PhonemeMatching.Editor
         internal void Load(string directory, out ConfusionMatrix matrix,
             out TargetCatalog catalog, out CtcVocabulary vocabulary)
         {
-            if (this == MusicDemo)
-            {
-                var bundled = DomiCube.PhonemeMatching.Unity.MusicPresentation.Load();
-                matrix = bundled.Matrix;
-                catalog = bundled.Catalog;
-                vocabulary = bundled.Vocabulary;
-                return;
-            }
             // Validate every selected file before model allocation/warmup.
             // Missing child data must never fall back to the base pair, nor
             // trigger an installer that could replace customized JSON files.

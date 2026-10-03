@@ -1,12 +1,16 @@
-"""Model-aware review of differences in an utterance that already passed.
+"""What went soft in an utterance that already passed.
 
 `Matcher` answers one question - did the child say the word - and the
 product needs that answer to stay binary. This module reads the same
 result a second time to answer a different one: which part of the word
 came out unlike the target, and how far off was it.
 
-The alignment records the recognizer's differences, not measured errors
-in the child's articulation. Costs describe the scorer's tolerance only.
+None of this is new measurement. The alignment already records every
+substitution and deletion the scorer paid for, and the confusion matrix
+already prices each one. A cheap substitution is exactly a sound the
+matrix decided to forgive, which is exactly what "통과는 했는데 흐렸다"
+means, so the two together already say where a passing word went soft.
+Reading them costs one walk over the alignment.
 
 The trap is that the alignment describes the *recogniser*, not the
 child. The child model still makes an 8.71% character error, and some
@@ -24,8 +28,8 @@ the table has no insertion counts at all, and a CTC decoder emits
 spurious phonemes often enough that blaming the child for one would be
 guessing.
 
-Missing pairs and insufficient observations also withhold guidance.
-The same review is implemented in Unity's ModelFeedback.cs; scoring is unchanged.
+Pure data in, pure data out - no audio, no model, no I/O beyond loading
+the error table - so it ports to C# the way `matcher.py` did.
 """
 
 from __future__ import annotations
@@ -46,8 +50,10 @@ from .confusion_matrix import ConfusionMatrix
 NEAR_COST = 0.2
 BLURRED_COST = 0.4
 
-# Provisional display threshold. This frequency is not a confidence
-# estimate for an individual child or utterance.
+# Below this rate the recogniser's own confusions are rare enough that
+# the child is the likelier explanation. Provisional: it comes from the
+# shape of the error table, not from labelled recordings of children
+# being right. Raising it reports more and blames more.
 DEFAULT_MUTE_ABOVE = 0.02
 
 # A pair seen once is a coincidence, not a rate. Matches the cut
@@ -111,8 +117,8 @@ class ModelErrors:
     """How often a recogniser mis-transcribes a phoneme by itself.
 
     Built by `child_tuning/build_reference.py` from children reading
-    known text: entries compare model output with reference text. They
-    do not establish the cause of an individual difference. `derive_thresholds.py` reads the same file to
+    known text: every entry is a place the model wrote something other
+    than what was said. `derive_thresholds.py` reads the same file to
     ask whether a word can be passed at all; here it answers the
     opposite question - whether a slip is worth mentioning.
 
@@ -128,14 +134,6 @@ class ModelErrors:
         deletions: dict[str, tuple[int, int]],
         utterances: int,
     ) -> None:
-        if not isinstance(matrix_id, str) or not matrix_id.strip() or matrix_id == "unknown":
-            raise ValueError("Invalid model error profile identity")
-        if type(utterances) is not int or utterances < 0:
-            raise ValueError("Invalid model error utterance count")
-        for count, total in list(substitutions.values()) + list(deletions.values()):
-            if (type(count) is not int or type(total) is not int
-                    or count < 0 or total < 0 or count > total):
-                raise ValueError("Invalid model error observation counts")
         self.matrix_id = matrix_id
         self.utterances = utterances
         self._substitutions = substitutions
@@ -151,12 +149,10 @@ class ModelErrors:
             if key.startswith("_") or "|" not in key:
                 continue
             wanted, said = key.split("|", 1)
-            if not isinstance(value, list) or len(value) != 2:
-                raise ValueError("Model error observations must be [count, total]")
-            substitutions[(wanted, said)] = (value[0], value[1])
+            substitutions[(wanted, said)] = (int(value[0]), int(value[1]))
 
         deletions = {
-            key: tuple(value)
+            key: (int(value[0]), int(value[1]))
             for key, value in data.get("deletions", {}).items()
             if not key.startswith("_")
         }
@@ -165,7 +161,7 @@ class ModelErrors:
             matrix_id=data.get("matrix_id", path.stem),
             substitutions=substitutions,
             deletions=deletions,
-            utterances=data.get("utterances", 0),
+            utterances=int(data.get("utterances", 0)),
         )
 
     def substitution(self, target: str, heard: str) -> tuple[int, float]:
@@ -177,14 +173,6 @@ class ModelErrors:
     def deletion(self, target: str) -> tuple[int, float]:
         """(times observed, rate) for the model dropping `target`."""
         return self._lookup(self._deletions.get(target))
-
-    def statistics(self, operation: str, target: str, heard: str):
-        """Directional counts; None means unmeasured, not zero errors."""
-        if operation == "sub":
-            return self._substitutions.get((target, heard))
-        if operation == "del":
-            return self._deletions.get(target)
-        return None
 
     @staticmethod
     def _lookup(entry: tuple[int, int] | None) -> tuple[int, float]:
@@ -217,11 +205,10 @@ def explain(
     covering the whole target. `syllables` is the target's `syllables`
     entry from targets.json.
 
-    Missing or mismatched evidence withholds guidance. A pair absent from
-    a sparse table has not been measured; it is not proof of a child's error.
+    Without `model_errors` nothing is muted, so every slip is reported as
+    if the recogniser were perfect. That is the right setting for
+    inspecting the matcher and the wrong one for talking to a child.
     """
-    profile_matches = bool(model_errors and model_errors.matrix_id == matrix.matrix_id
-                           and matrix.matrix_id not in ("", "unknown"))
     reports = [
         SyllableReport(
             text=s["text"],
@@ -250,19 +237,25 @@ def explain(
 
         report = owner(consumed)
         if op == "sub":
-            stats = model_errors.statistics("sub", target_ph, user_ph) if profile_matches else None
+            count, rate = (
+                model_errors.substitution(target_ph, user_ph)
+                if model_errors else (0, 0.0)
+            )
             slip = _slip(
                 "sub", target_ph, user_ph,
                 matrix.sub_cost(target_ph, user_ph),
-                stats, profile_matches, mute_above, min_observations,
+                count, rate, mute_above, min_observations,
             )
             consumed += 1
         elif op == "del":
-            stats = model_errors.statistics("del", target_ph, "") if profile_matches else None
+            count, rate = (
+                model_errors.deletion(target_ph)
+                if model_errors else (0, 0.0)
+            )
             slip = _slip(
                 "del", target_ph, "",
                 matrix.del_cost(target_ph),
-                stats, profile_matches, mute_above, min_observations,
+                count, rate, mute_above, min_observations,
             )
             consumed += 1
         else:  # "ins" - consumes no target phoneme
@@ -292,9 +285,7 @@ def explain(
         # strength of noise we have just admitted we cannot read.
         judged = [s for s in report.slips if s.kind != "ins"]
         audible = [s for s in judged if not s.muted]
-        if any(s.muted for s in judged):
-            report.status = "no_comment"
-        elif audible:
+        if audible:
             report.status = max(audible, key=lambda s: s.cost).severity
         elif judged:
             report.status = "no_comment"
@@ -309,16 +300,12 @@ def _slip(
     target: str,
     heard: str,
     cost: float,
-    statistics,
-    profile_matches: bool,
+    count: int,
+    rate: float,
     mute_above: float,
     min_observations: int,
 ) -> Slip:
-    from .model_feedback import withholding_reason
-    count, total = statistics or (0, 0)
-    rate = count / total if total else 0.0
-    reason = withholding_reason(kind, statistics, profile_matches,
-                                mute_above=mute_above, min_observations=min_observations)
+    muted = count >= min_observations and rate >= mute_above
     return Slip(
         kind=kind,
         target=target,
@@ -326,8 +313,11 @@ def _slip(
         cost=cost,
         model_error_rate=rate if count else None,
         observations=count,
-        muted=bool(reason),
-        muted_because=reason,
+        muted=muted,
+        muted_because=(
+            f"이 모델이 혼자서도 {rate * 100:.0f}% ({count}회) 이렇게 틀림"
+            if muted else ""
+        ),
     )
 
 

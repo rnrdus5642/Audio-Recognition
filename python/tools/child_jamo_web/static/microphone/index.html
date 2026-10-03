@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>마이크로 말해 보기</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="/assets/style.css">
+  <script src="/assets/app.js" defer></script>
+</head>
+<body>
+  <main>
+    <header>
+      <div class="eyebrow">음성 인식 테스트</div>
+      <span id="model-status" class="badge" role="status">모델 확인 중</span>
+      <h1>마이크로 말해 보기</h1>
+      <p class="intro">녹음을 시작하고 단어를 말해 보세요.<br>녹음을 끝내면 인식한 텍스트가 나타납니다.</p>
+    </header>
+
+    <section class="recorder" aria-label="마이크 녹음">
+      <div class="record-top"><span id="record-state">마이크를 준비해 주세요</span><span id="timer">0.0 <small>/ 15초</small></span></div>
+      <div class="meter" role="meter" aria-label="마이크 입력 음량" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><span id="meter-fill"></span></div>
+      <button id="record" class="primary" type="button" disabled><span class="record-dot" aria-hidden="true"></span><span id="record-label">녹음 시작</span></button>
+      <p id="hint" class="hint">처음 시작할 때 마이크 사용을 허용해 주세요.</p>
+      <p id="error" class="error" role="alert" hidden></p>
+    </section>
+
+    <section class="result card" aria-labelledby="result-title">
+      <div class="section-top"><h2 id="result-title">인식한 텍스트</h2><span id="result-meta" class="muted"></span></div>
+      <p id="result-text" class="result-text empty" aria-live="polite">여기에 결과가 나타납니다</p>
+      <div id="result-tools" hidden>
+        <audio id="playback" controls preload="metadata" aria-label="인식에 사용한 녹음 다시 듣기"></audio>
+        <div class="result-actions"><a id="download-audio" class="text-link" download="녹음.wav">녹음 저장</a><details><summary>자모 보기</summary><p id="jamo"></p></details></div>
+      </div>
+    </section>
+
+    <section class="history card" aria-labelledby="history-title">
+      <div class="section-top"><h2 id="history-title">최근 테스트 <span id="history-count" class="muted"></span></h2><button id="export" class="text-button" disabled>결과 저장</button></div>
+      <p id="history-empty" class="muted">녹음한 결과를 여기서 다시 확인할 수 있습니다.</p>
+      <ol id="history"></ol>
+    </section>
+    <footer>녹음과 결과는 이 PC에 저장됩니다. 현재 모델의 인식 결과를 그대로 표시합니다.</footer>
+  </main>
+</body>
+</html>

@@ -85,21 +85,15 @@ namespace DomiCube.PhonemeMatching.Editor
                 return;
             }
 
-            DownloadChildFile();
-        }
-
-        /// <summary>The music setup has already confirmed any required download.</summary>
-        internal static bool EnsureChild() => ChildIsInstalled || DownloadChildFile();
-
-        private static bool DownloadChildFile()
-        {
             string temp = Path.Combine(
                 Path.GetTempPath(), "wav2vec2_ko_child.onnx.download");
             try
             {
-                return Fetch(ChildUrl, temp)
-                    && InstallTo(temp, ChildDestination, ChildResourcePath,
-                                 ChildExpectedBytes, ChildExpectedSha256);
+                if (Fetch(ChildUrl, temp))
+                {
+                    InstallTo(temp, ChildDestination, ChildResourcePath,
+                              ChildExpectedBytes, ChildExpectedSha256);
+                }
             }
             finally
             {

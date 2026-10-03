@@ -1,0 +1,200 @@
+{
+  "complete": true,
+  "index_sha256": "e9bb4fe27ba55b63c46443ba7f07273d7b8e88614d3868eefdd4c266c82f0e6d",
+  "scope": "Only speakers already in the train and validation manifests, ages 5-7; no test speakers.",
+  "bracket_notation_rows_by_split": {
+    "train": 3999,
+    "valid": 1182
+  },
+  "rows_with_nonidentical_adjacent_hangul_pairs_by_split": {
+    "train": 3793,
+    "valid": 1107
+  },
+  "examples": [
+    {
+      "wav": "K07750464-AMG13-L1N2D1-E-K0KK-00289582.wav",
+      "speaker": "ac489824750e",
+      "split": "train",
+      "age": "6",
+      "seconds_index": 6.528,
+      "raw_transcript": "물과 설탕을 잘 섞습니다(썩습니다).",
+      "inline_pairs_not_yet_interpreted": [
+        [
+          "섞습니다",
+          "썩습니다"
+        ]
+      ],
+      "automatic_relabeling_allowed": false
+    },
+    {
+      "wav": "K03641177-AFG20-L5N1D1-E-K0KK-00499308.wav",
+      "speaker": "66c2e6dd7fe3",
+      "split": "train",
+      "age": "7",
+      "seconds_index": 4.288,
+      "raw_transcript": "그걸 잊다니(일따니) 저도 참 어리석죠.",
+      "inline_pairs_not_yet_interpreted": [
+        [
+          "잊다니",
+          "일따니"
+        ]
+      ],
+      "automatic_relabeling_allowed": false
+    },
+    {
+      "wav": "K05805264-AMG13-L1N2D2-E-K0KK-02666540.wav",
+      "speaker": "408ae596784e",
+      "split": "train",
+      "age": "5",
+      "seconds_index": 5.12,
+      "raw_transcript": "늑대 할아버지가 일어나요(인어나요).",
+      "inline_pairs_not_yet_interpreted": [
+        [
+          "일어나요",
+          "인어나요"
+        ]
+      ],
+      "automatic_relabeling_allowed": false
+    },
+    {
+      "wav": "K08890311-AMG10-L1N2D1-E-K0KK-00792359.wav",
+      "speaker": "6d0cefe4c0de",
+      "split": "train",
+      "age": "5",
+      "seconds_index": 3.712,
+      "raw_transcript": "꽃을(꼬를) 사다 주셨나요?",
+      "inline_pairs_not_yet_interpreted": [
+        [
+          "꽃을",
+          "꼬를"
+        ]
+      ],
+      "automatic_relabeling_allowed": false
+    },
+    {
+      "wav": "K07170024-AFG23-L1N2D1-E-K0KK-00440321.wav",
+      "speaker": "c966f403ce92",
+      "split": "train",
+      "age": "7",
+      "seconds_index": 6.016,
+      "raw_transcript": "자석에는 엔 극과 에스(에쓰) 극이 있어요.",
+      "inline_pairs_not_yet_interpreted": [
+        [
+          "에스",
+          "에쓰"
+        ]
+      ],
+      "automatic_relabeling_allowed": false
+    },
+    {
+      "wav": "K06200081-AFG10-L1N2D2-E-K0KK-00508581.wav",
+      "speaker": "c7c478df6eda",
+      "split": "train",
+      "age": "6",
+      "seconds_index": 5.12,
+      "raw_transcript": "세(해) 사람은 떠나요.",
+      "inline_pairs_not_yet_interpreted": [
+        [
+          "세",
+          "해"
+        ]
+      ],
+      "automatic_relabeling_allowed": false
+    },
+    {
+      "wav": "K03764026-AFG20-L1N2D1-E-K0KK-02135609.wav",
+      "speaker": "65fa795e579d",
+      "split": "train",
+      "age": "7",
+      "seconds_index": 5.12,
+      "raw_transcript": "검은 오뚝이가(오똑이가) 분한 듯 말했습니다.",
+      "inline_pairs_not_yet_interpreted": [
+        [
+          "오뚝이가",
+          "오똑이가"
+        ]
+      ],
+      "automatic_relabeling_allowed": false
+    },
+    {
+      "wav": "K01710325-AMG13-L1N2D1-E-K0KK-00057078.wav",
+      "speaker": "afbc1b3f2cee",
+      "split": "train",
+      "age": "6",
+      "seconds_index": 8.192,
+      "raw_transcript": "개구리가 팔짝팔짝(팔닥팔짝) 뛰어요.",
+      "inline_pairs_not_yet_interpreted": [
+        [
+          "팔짝팔짝",
+          "팔닥팔짝"
+        ]
+      ],
+      "automatic_relabeling_allowed": false
+    },
+    {
+      "wav": "K04575050-AMG23-L5N1D1-E-K0KK-02201523.wav",
+      "speaker": "3f95b1b8a32c",
+      "split": "train",
+      "age": "7",
+      "seconds_index": 8.192,
+      "raw_transcript": "형의 마음도(미음도) 들썩거렸지.",
+      "inline_pairs_not_yet_interpreted": [
+        [
+          "마음도",
+          "미음도"
+        ]
+      ],
+      "automatic_relabeling_allowed": false
+    },
+    {
+      "wav": "K09500976-AMG10-L1N2D4-E-K0KK-00604644.wav",
+      "speaker": "bb1b6fc37867",
+      "split": "train",
+      "age": "6",
+      "seconds_index": 3.968,
+      "raw_transcript": "사과를(을) 다 먹어요.",
+      "inline_pairs_not_yet_interpreted": [
+        [
+          "사과를",
+          "을"
+        ]
+      ],
+      "automatic_relabeling_allowed": false
+    },
+    {
+      "wav": "K02051383-AFG20-L1N2D2-E-K0KK-00478142.wav",
+      "speaker": "6495da527bb6",
+      "split": "train",
+      "age": "7",
+      "seconds_index": 6.144,
+      "raw_transcript": "하얀 파도는(하얀 파도가) 고통에 시달리며 울부짖었다.",
+      "inline_pairs_not_yet_interpreted": [
+        [
+          "파도는",
+          "하얀 파도가"
+        ]
+      ],
+      "automatic_relabeling_allowed": false
+    },
+    {
+      "wav": "K08490247-AFG20-L1N2D2-E-K0KK-01158190.wav",
+      "speaker": "1da1a28acdcb",
+      "split": "train",
+      "age": "7",
+      "seconds_index": 7.168,
+      "raw_transcript": "임금은 의원을 보내 진료하게(진노하게) 했어요.",
+      "inline_pairs_not_yet_interpreted": [
+        [
+          "진료하게",
+          "진노하게"
+        ]
+      ],
+      "automatic_relabeling_allowed": false
+    }
+  ],
+  "limitations": [
+    "Brackets can mark insertion, correction, repetition or a realization; field shape does not prove actual sound.",
+    "These are index candidates. Source WAV availability and exact annotation semantics still need checking.",
+    "No inferred actual-pronunciation label is used for training or evaluation."
+  ]
+}

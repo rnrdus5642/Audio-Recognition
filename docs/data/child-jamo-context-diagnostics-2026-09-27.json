@@ -1,0 +1,702 @@
+{
+  "recorded_at_utc": "2026-09-27T05:55:34.328751+00:00",
+  "checkpoint_sha256": "5a330f1bea3a17d1d063fdfd71a0cc25394695b0b797de01b293f6f688257aa7",
+  "training_started": false,
+  "model_changed": false,
+  "distinct_source_recordings": 65,
+  "cohorts": {
+    "unused_speaker_single_word": 46,
+    "human_verified_training": 6,
+    "personal_diagnostic": 13
+  },
+  "result_sha256": {
+    "context-generalization.json": "ae4b036251a9cff71f4772d852818bcb4611770f4774d104f2671ae9d3125aab",
+    "acoustic-generalization.json": "797502372b147d02ad7278bee5b248603b6448437892393c9e93a39fc927b819",
+    "acoustic-control-validation.json": "4465f95ec5597996f1d9fd1310404c96f6f0ac3a535dfd8801124e0c751525ea",
+    "source-resampling-validation.json": "735dfa8f4d62280fb60a827a89bb654b9b3249c6c96eb31c4574b354581b4832"
+  },
+  "context_summary": [
+    {
+      "cohort": "human_verified_training",
+      "recordings": 6,
+      "variants": {
+        "baseline": {
+          "reference_exact": 6,
+          "human_evaluable": 6,
+          "human_exact": 6
+        },
+        "zeros_0.4_each_side": {
+          "reference_exact": 6,
+          "human_evaluable": 6,
+          "human_exact": 6
+        },
+        "zeros_right_minimum_2s": {
+          "reference_exact": 6,
+          "human_evaluable": 6,
+          "human_exact": 6
+        },
+        "window_0.16": {
+          "reference_exact": 6,
+          "human_evaluable": 6,
+          "human_exact": 6
+        },
+        "window_0.16_matched_zeros": {
+          "reference_exact": 6,
+          "human_evaluable": 6,
+          "human_exact": 6
+        },
+        "window_0.32": {
+          "reference_exact": 6,
+          "human_evaluable": 6,
+          "human_exact": 6
+        },
+        "window_0.32_matched_zeros": {
+          "reference_exact": 6,
+          "human_evaluable": 6,
+          "human_exact": 6
+        }
+      }
+    },
+    {
+      "cohort": "personal_diagnostic",
+      "recordings": 13,
+      "variants": {
+        "baseline": {
+          "reference_exact": 3,
+          "human_evaluable": 11,
+          "human_exact": 2
+        },
+        "zeros_0.4_each_side": {
+          "reference_exact": 5,
+          "human_evaluable": 11,
+          "human_exact": 3
+        },
+        "zeros_right_minimum_2s": {
+          "reference_exact": 3,
+          "human_evaluable": 11,
+          "human_exact": 2
+        },
+        "window_0.16": {
+          "reference_exact": 4,
+          "human_evaluable": 11,
+          "human_exact": 2
+        },
+        "window_0.16_matched_zeros": {
+          "reference_exact": 4,
+          "human_evaluable": 11,
+          "human_exact": 2
+        },
+        "window_0.32": {
+          "reference_exact": 3,
+          "human_evaluable": 11,
+          "human_exact": 2
+        },
+        "window_0.32_matched_zeros": {
+          "reference_exact": 3,
+          "human_evaluable": 11,
+          "human_exact": 2
+        }
+      }
+    },
+    {
+      "cohort": "unused_speaker_single_word",
+      "recordings": 46,
+      "variants": {
+        "baseline": {
+          "reference_exact": 43,
+          "human_evaluable": 0,
+          "human_exact": 0
+        },
+        "zeros_0.4_each_side": {
+          "reference_exact": 44,
+          "human_evaluable": 0,
+          "human_exact": 0
+        },
+        "zeros_right_minimum_2s": {
+          "reference_exact": 43,
+          "human_evaluable": 0,
+          "human_exact": 0
+        },
+        "window_0.16": {
+          "reference_exact": 45,
+          "human_evaluable": 0,
+          "human_exact": 0
+        },
+        "window_0.16_matched_zeros": {
+          "reference_exact": 43,
+          "human_evaluable": 0,
+          "human_exact": 0
+        },
+        "window_0.32": {
+          "reference_exact": 45,
+          "human_evaluable": 0,
+          "human_exact": 0
+        },
+        "window_0.32_matched_zeros": {
+          "reference_exact": 43,
+          "human_evaluable": 0,
+          "human_exact": 0
+        }
+      }
+    }
+  ],
+  "shortened_holdout_book": {
+    "count": 22,
+    "reference_exact": 22,
+    "under_1_5_seconds": 16,
+    "minimum_retained_energy_fraction": 0.9997056513543983,
+    "minimum_seconds": 0.56,
+    "maximum_seconds": 2.972,
+    "human_verified_boundaries": false
+  },
+  "acoustic_summary": [
+    {
+      "cohort": "human_verified_training",
+      "recordings": 6,
+      "variants": {
+        "baseline": {
+          "reference_exact": 6,
+          "human_exact": 6,
+          "human_evaluable": 6,
+          "regressed_from_reference_match": 0
+        },
+        "pitch_-4_semitones": {
+          "reference_exact": 4,
+          "human_exact": 4,
+          "human_evaluable": 6,
+          "regressed_from_reference_match": 2
+        },
+        "pitch_-2_semitones": {
+          "reference_exact": 5,
+          "human_exact": 5,
+          "human_evaluable": 6,
+          "regressed_from_reference_match": 1
+        },
+        "pitch_+2_semitones": {
+          "reference_exact": 3,
+          "human_exact": 3,
+          "human_evaluable": 6,
+          "regressed_from_reference_match": 3
+        },
+        "pitch_+4_semitones": {
+          "reference_exact": 3,
+          "human_exact": 3,
+          "human_evaluable": 6,
+          "regressed_from_reference_match": 3
+        },
+        "tempo_0.65": {
+          "reference_exact": 3,
+          "human_exact": 3,
+          "human_evaluable": 6,
+          "regressed_from_reference_match": 3
+        },
+        "tempo_0.80": {
+          "reference_exact": 5,
+          "human_exact": 5,
+          "human_evaluable": 6,
+          "regressed_from_reference_match": 1
+        },
+        "tempo_1.25": {
+          "reference_exact": 5,
+          "human_exact": 5,
+          "human_evaluable": 6,
+          "regressed_from_reference_match": 1
+        }
+      }
+    },
+    {
+      "cohort": "personal_diagnostic",
+      "recordings": 13,
+      "variants": {
+        "baseline": {
+          "reference_exact": 3,
+          "human_exact": 2,
+          "human_evaluable": 11,
+          "regressed_from_reference_match": 0
+        },
+        "pitch_-4_semitones": {
+          "reference_exact": 5,
+          "human_exact": 3,
+          "human_evaluable": 11,
+          "regressed_from_reference_match": 0
+        },
+        "pitch_-2_semitones": {
+          "reference_exact": 4,
+          "human_exact": 2,
+          "human_evaluable": 11,
+          "regressed_from_reference_match": 2
+        },
+        "pitch_+2_semitones": {
+          "reference_exact": 0,
+          "human_exact": 0,
+          "human_evaluable": 11,
+          "regressed_from_reference_match": 3
+        },
+        "pitch_+4_semitones": {
+          "reference_exact": 0,
+          "human_exact": 0,
+          "human_evaluable": 11,
+          "regressed_from_reference_match": 3
+        },
+        "tempo_0.65": {
+          "reference_exact": 2,
+          "human_exact": 2,
+          "human_evaluable": 11,
+          "regressed_from_reference_match": 2
+        },
+        "tempo_0.80": {
+          "reference_exact": 3,
+          "human_exact": 2,
+          "human_evaluable": 11,
+          "regressed_from_reference_match": 1
+        },
+        "tempo_1.25": {
+          "reference_exact": 1,
+          "human_exact": 1,
+          "human_evaluable": 11,
+          "regressed_from_reference_match": 2
+        }
+      }
+    },
+    {
+      "cohort": "unused_speaker_single_word",
+      "recordings": 46,
+      "variants": {
+        "baseline": {
+          "reference_exact": 43,
+          "human_exact": 0,
+          "human_evaluable": 0,
+          "regressed_from_reference_match": 0
+        },
+        "pitch_-4_semitones": {
+          "reference_exact": 30,
+          "human_exact": 0,
+          "human_evaluable": 0,
+          "regressed_from_reference_match": 14
+        },
+        "pitch_-2_semitones": {
+          "reference_exact": 34,
+          "human_exact": 0,
+          "human_evaluable": 0,
+          "regressed_from_reference_match": 10
+        },
+        "pitch_+2_semitones": {
+          "reference_exact": 31,
+          "human_exact": 0,
+          "human_evaluable": 0,
+          "regressed_from_reference_match": 12
+        },
+        "pitch_+4_semitones": {
+          "reference_exact": 18,
+          "human_exact": 0,
+          "human_evaluable": 0,
+          "regressed_from_reference_match": 25
+        },
+        "tempo_0.65": {
+          "reference_exact": 31,
+          "human_exact": 0,
+          "human_evaluable": 0,
+          "regressed_from_reference_match": 12
+        },
+        "tempo_0.80": {
+          "reference_exact": 34,
+          "human_exact": 0,
+          "human_evaluable": 0,
+          "regressed_from_reference_match": 9
+        },
+        "tempo_1.25": {
+          "reference_exact": 36,
+          "human_exact": 0,
+          "human_evaluable": 0,
+          "regressed_from_reference_match": 7
+        }
+      }
+    }
+  ],
+  "independent_resampler_summary": [
+    {
+      "cohort": "human_verified_training",
+      "recordings": 6,
+      "variants": {
+        "baseline": {
+          "reference_exact": 6,
+          "human_evaluable": 6,
+          "human_exact": 6
+        },
+        "pitch_zero": {
+          "reference_exact": 6,
+          "human_evaluable": 6,
+          "human_exact": 6
+        },
+        "tempo_one": {
+          "reference_exact": 6,
+          "human_evaluable": 6,
+          "human_exact": 6
+        },
+        "rate_down_2_semitones": {
+          "reference_exact": 6,
+          "human_evaluable": 6,
+          "human_exact": 6
+        },
+        "zeros_match_rate_down_2": {
+          "reference_exact": 6,
+          "human_evaluable": 6,
+          "human_exact": 6
+        },
+        "rate_down_4_semitones": {
+          "reference_exact": 4,
+          "human_evaluable": 6,
+          "human_exact": 4
+        },
+        "zeros_match_rate_down_4": {
+          "reference_exact": 6,
+          "human_evaluable": 6,
+          "human_exact": 6
+        }
+      }
+    },
+    {
+      "cohort": "personal_diagnostic",
+      "recordings": 13,
+      "variants": {
+        "baseline": {
+          "reference_exact": 3,
+          "human_evaluable": 11,
+          "human_exact": 2
+        },
+        "pitch_zero": {
+          "reference_exact": 3,
+          "human_evaluable": 11,
+          "human_exact": 2
+        },
+        "tempo_one": {
+          "reference_exact": 3,
+          "human_evaluable": 11,
+          "human_exact": 2
+        },
+        "rate_down_2_semitones": {
+          "reference_exact": 7,
+          "human_evaluable": 11,
+          "human_exact": 4
+        },
+        "zeros_match_rate_down_2": {
+          "reference_exact": 4,
+          "human_evaluable": 11,
+          "human_exact": 2
+        },
+        "rate_down_4_semitones": {
+          "reference_exact": 6,
+          "human_evaluable": 11,
+          "human_exact": 4
+        },
+        "zeros_match_rate_down_4": {
+          "reference_exact": 3,
+          "human_evaluable": 11,
+          "human_exact": 2
+        }
+      }
+    },
+    {
+      "cohort": "unused_speaker_single_word",
+      "recordings": 46,
+      "variants": {
+        "baseline": {
+          "reference_exact": 43,
+          "human_evaluable": 0,
+          "human_exact": 0
+        },
+        "pitch_zero": {
+          "reference_exact": 43,
+          "human_evaluable": 0,
+          "human_exact": 0
+        },
+        "tempo_one": {
+          "reference_exact": 43,
+          "human_evaluable": 0,
+          "human_exact": 0
+        },
+        "rate_down_2_semitones": {
+          "reference_exact": 43,
+          "human_evaluable": 0,
+          "human_exact": 0
+        },
+        "zeros_match_rate_down_2": {
+          "reference_exact": 44,
+          "human_evaluable": 0,
+          "human_exact": 0
+        },
+        "rate_down_4_semitones": {
+          "reference_exact": 41,
+          "human_evaluable": 0,
+          "human_exact": 0
+        },
+        "zeros_match_rate_down_4": {
+          "reference_exact": 44,
+          "human_evaluable": 0,
+          "human_exact": 0
+        }
+      }
+    }
+  ],
+  "null_control_output_changes": {
+    "pitch_zero": 0,
+    "tempo_one": 0
+  },
+  "original_mp3_resampler_comparison": {
+    "recordings": 13,
+    "same_tokens": 12,
+    "minimum_waveform_correlation": 0.9999218336173278,
+    "changed": [
+      {
+        "id": "personal:child1_09",
+        "baseline": "나리",
+        "alternative": "날비",
+        "ids": [
+          4,
+          21,
+          7,
+          9,
+          41
+        ],
+        "tokens_unchanged": false,
+        "waveform_correlation": 0.9999845288107012,
+        "pcm_sha256": "01575dda5b3dce93ecc4af30ca7fc0aa03323fb12b88f3ef5840ed132c9ece56"
+      }
+    ]
+  },
+  "listening": {
+    "url": "http://127.0.0.1:8771/",
+    "items": 6,
+    "answered_at_recording": 0,
+    "pending_at_recording": 6,
+    "served_audio_hashes_verified": 12,
+    "qa_passed": true,
+    "items_sha256": "c81d62f8be82dfaa07aafee9fa24d81139ffe759697b019137baacb4ad7c605f",
+    "evidence_sha256": "ad117f3bd9ec668e65b1630069c13d83e6d1bbc688f97c9723c5c7b18f4785a4",
+    "comparisons": [
+      {
+        "number": 1,
+        "binding": "5ea67a7338ba4674e3e3e111b3f54b0f9d2ae3c61960de7ebdc6b10312f7986e",
+        "source_id": "personal:child1_18",
+        "original_human_reference": "책",
+        "transform": "rate_down_2_semitones",
+        "served_predictions": {
+          "original": {
+            "ids": [
+              11,
+              22,
+              9
+            ],
+            "text": "샙",
+            "jamo": "ㅅㅐㅂ",
+            "float_input_text": "샙",
+            "changed_by_pcm16_roundtrip": false
+          },
+          "changed": {
+            "ids": [
+              16,
+              22,
+              2
+            ],
+            "text": "책",
+            "jamo": "ㅊㅐㄱ",
+            "float_input_text": "책",
+            "changed_by_pcm16_roundtrip": false
+          }
+        }
+      },
+      {
+        "number": 2,
+        "binding": "641e1b2ffac191141c806b658d422c6a8a7e67a0f5aec2ceee56980bb02b6b87",
+        "source_id": "personal:child1_09",
+        "original_human_reference": "나비",
+        "transform": "rate_down_2_semitones",
+        "served_predictions": {
+          "original": {
+            "ids": [
+              4,
+              21,
+              7,
+              41
+            ],
+            "text": "나리",
+            "jamo": "ㄴㅏㄹㅣ",
+            "float_input_text": "나리",
+            "changed_by_pcm16_roundtrip": false
+          },
+          "changed": {
+            "ids": [
+              4,
+              21,
+              9,
+              41
+            ],
+            "text": "나비",
+            "jamo": "ㄴㅏㅂㅣ",
+            "float_input_text": "나비",
+            "changed_by_pcm16_roundtrip": false
+          }
+        }
+      },
+      {
+        "number": 3,
+        "binding": "7f55e44116cab6d4c744b45d9439f02a7c4d8935845f912fd5b6b8ca15103cbd",
+        "source_id": "personal:child1_22",
+        "original_human_reference": "뛰어가요",
+        "transform": "tempo_0.65",
+        "served_predictions": {
+          "original": {
+            "ids": [
+              2,
+              37,
+              13,
+              25,
+              1,
+              2,
+              21,
+              13,
+              33
+            ],
+            "text": "귀어 가요",
+            "jamo": "ㄱㅟㅇㅓ|ㄱㅏㅇㅛ",
+            "float_input_text": "귀어 가요",
+            "changed_by_pcm16_roundtrip": false
+          },
+          "changed": {
+            "ids": [
+              6,
+              37,
+              13,
+              25,
+              2,
+              21,
+              13,
+              33
+            ],
+            "text": "뛰어가요",
+            "jamo": "ㄸㅟㅇㅓㄱㅏㅇㅛ",
+            "float_input_text": "뛰어가요",
+            "changed_by_pcm16_roundtrip": false
+          }
+        }
+      },
+      {
+        "number": 4,
+        "binding": "e7c0c967743d580a58743392113afa73e12784a2bb8b10cf6fb0752bbf10a464",
+        "source_id": "personal:child1_17",
+        "original_human_reference": "쌕",
+        "transform": "rate_down_2_semitones",
+        "served_predictions": {
+          "original": {
+            "ids": [
+              22,
+              2
+            ],
+            "text": "ㅐㄱ",
+            "jamo": "ㅐㄱ",
+            "float_input_text": "ㅐㄱ",
+            "changed_by_pcm16_roundtrip": false
+          },
+          "changed": {
+            "ids": [
+              16,
+              22,
+              2
+            ],
+            "text": "책",
+            "jamo": "ㅊㅐㄱ",
+            "float_input_text": "책",
+            "changed_by_pcm16_roundtrip": false
+          }
+        }
+      },
+      {
+        "number": 5,
+        "binding": "00aa93cc359e64a256e4771051d5a48ddfd7feafdbf4d71d4bc6b52defe5f91c",
+        "source_id": "training_review:4",
+        "original_human_reference": "예쁜 나비",
+        "transform": "pitch_+2_semitones",
+        "served_predictions": {
+          "original": {
+            "ids": [
+              13,
+              28,
+              10,
+              39,
+              4,
+              1,
+              4,
+              21,
+              9,
+              41
+            ],
+            "text": "예쁜 나비",
+            "jamo": "ㅇㅖㅃㅡㄴ|ㄴㅏㅂㅣ",
+            "float_input_text": "예쁜 나비",
+            "changed_by_pcm16_roundtrip": false
+          },
+          "changed": {
+            "ids": [
+              13,
+              28,
+              10,
+              39,
+              4,
+              1,
+              4,
+              21,
+              7,
+              41
+            ],
+            "text": "예쁜 나리",
+            "jamo": "ㅇㅖㅃㅡㄴ|ㄴㅏㄹㅣ",
+            "float_input_text": "예쁜 나리",
+            "changed_by_pcm16_roundtrip": false
+          }
+        }
+      },
+      {
+        "number": 6,
+        "binding": "2b228726104dbf0645cca015ed9d16f1aa917b00fa32dcda6e4a2ef129221cd4",
+        "source_id": "training_review:1",
+        "original_human_reference": "책",
+        "transform": "pitch_-2_semitones",
+        "served_predictions": {
+          "original": {
+            "ids": [
+              16,
+              22,
+              2
+            ],
+            "text": "책",
+            "jamo": "ㅊㅐㄱ",
+            "float_input_text": "책",
+            "changed_by_pcm16_roundtrip": false
+          },
+          "changed": {
+            "ids": [
+              11,
+              22,
+              2
+            ],
+            "text": "색",
+            "jamo": "ㅅㅐㄱ",
+            "float_input_text": "햅",
+            "changed_by_pcm16_roundtrip": true
+          }
+        }
+      }
+    ]
+  },
+  "limitations": [
+    "Two repaired training defects do not establish the cause of the personal-recording recognition errors.",
+    "Total duration alone is insufficient; interactions with training distribution remain possible.",
+    "Pitch transforms also change spectral/formant properties and may introduce artifacts; rate changes alter both pitch and speed.",
+    "Transformed pronunciations require human validation before treating output changes as improvements.",
+    "Human reference comparison on transforms is provisional until pronunciation preservation is established.",
+    "Multiple variants of one recording are dependent diagnostics, not independent evaluation samples.",
+    "Personal recordings and repeated holdout diagnostics must not be claimed as untouched final evaluation.",
+    "The original MP3 check changes the resampler, not the entire decoder implementation.",
+    "Child ages and recording devices are currently unknown."
+  ]
+}

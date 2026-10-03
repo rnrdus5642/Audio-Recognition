@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="ko">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>들은 소리 확인 · 15개</title>
+<style>
+:root{font:16px/1.65 "Malgun Gothic",system-ui,sans-serif;color:#223630;background:#f2f5f1;color-scheme:light}
+*{box-sizing:border-box}[hidden]{display:none!important}body{margin:0}main{max-width:790px;margin:auto;padding:34px 22px 60px}
+h1{font-size:28px;letter-spacing:-1px;margin:2px 0 12px}h2,legend{font-size:19px;font-weight:700;margin:0 0 12px;padding:0}p{margin:8px 0 16px}.muted{font-size:14px;color:#566960}.eyebrow{font-size:13px;letter-spacing:.07em;font-weight:700;color:#356347}
+.card{background:white;border:1px solid #d8e3d9;border-radius:16px;padding:24px;margin-top:18px}.progressline{display:flex;justify-content:space-between;gap:12px;margin:22px 0 7px}progress{width:100%;height:7px;accent-color:#2a704a}
+button,textarea{font:inherit}button{border:1px solid #bdd1c3;border-radius:9px;padding:10px 16px;cursor:pointer;color:#255c3f;background:white;font-weight:700}button:hover:enabled{background:#edf5ef}button.primary{background:#286a47;color:white;border-color:#286a47}button:disabled{opacity:.45;cursor:default}
+button:focus-visible,input:focus-visible,textarea:focus-visible,summary:focus-visible{outline:3px solid #8ebb9d;outline-offset:3px}audio{width:100%;display:block;margin:14px 0;height:48px}textarea{width:100%;min-height:70px;display:block;padding:10px 12px;resize:vertical;border:1px solid #c7d8cb;border-radius:9px;margin:8px 0 14px;background:#fcfdfb}
+fieldset{border:0;padding:0;margin:0}.option{display:flex;gap:12px;border:1px solid #d7e3da;border-radius:10px;padding:12px 14px;margin:8px 0;cursor:pointer}.option:has(input:checked){background:#eaf5ed;border-color:#47825b}.option input{flex-shrink:0;accent-color:#276744;margin-top:7px}.option.form span{font-size:23px;line-height:1.5;overflow-wrap:anywhere}.option.form input{margin-top:12px}
+.confirm{display:flex;gap:12px;background:#f3f6f1;padding:13px;border-radius:10px;margin:14px 0}.confirm input{accent-color:#276744;flex-shrink:0;margin-top:7px}.actions{display:flex;justify-content:space-between;gap:12px;margin-top:22px}.error{padding:12px 16px;background:#fff0e9;color:#9b3324;border-radius:10px}.saved{color:#296847;font-size:14px}
+details{border-top:1px solid #e0e9df;padding-top:15px;margin-top:20px}summary{cursor:pointer;color:#41634d;font-size:14px}.jump{display:flex;gap:6px;flex-wrap:wrap;margin-top:20px}.jump button{padding:5px 10px;font-size:13px}.jump button.answered{background:#deeedf}.jump button.current{border:2px solid #327448}#done{text-align:center}.tip{background:#edf3e9;padding:13px 16px;border-radius:10px}.small{font-size:13px}
+@media(max-width:520px){main{padding:24px 15px 45px}.card{padding:20px 16px}h1{font-size:25px}.option.form span{font-size:21px}.actions button{flex:1}}
+</style>
+<main>
+  <p class="eyebrow">들은 소리 확인 · 15개</p>
+  <h1>들린 소리를 그대로 골라 주세요</h1>
+  <p class="muted">이전에 다르게 들렸던 5개와 다른 화자의 새 녹음 10개입니다.<br>소리를 먼저 듣고, <strong>문장 전체</strong>가 같은 소리인 표기를 골라 주세요.</p>
+  <p class="tip muted">둘 다 맞게 들리면 <strong>「하나로 확정하기 어려움」</strong>, 일부만 알겠으면 <strong>「문장 전체 표기는 확정하기 어려움」</strong>을 골라 주세요. 억지로 철자를 정하지 않아도 됩니다.</p>
+  <div class="progressline"><strong id="position">준비 중…</strong><span class="muted" id="count"></span></div>
+  <progress id="progress" max="15" value="0" aria-label="저장한 답변 수"></progress>
+  <div id="error" class="error" role="alert" hidden></div>
+  <section id="done" class="card" hidden><h2>15개 모두 저장했습니다.</h2>
+    <p>답변은 이 컴퓨터에 저장되어 있습니다.<br>채팅에 <strong>「완료」</strong>라고 알려 주세요.</p><button id="review-again">저장한 답변 다시 보기</button></section>
+  <section id="review" hidden>
+    <div class="card"><h2>1. 먼저 듣기</h2><p id="duration" class="muted"></p>
+      <audio id="clip" controls preload="metadata" aria-label="판단할 음성"></audio>
+      <p class="muted small" id="play-status">한 번 끝까지 재생하면 표기를 볼 수 있습니다.</p>
+      <div id="blind-note"><label class="muted" for="first-heard">처음 들린 소리 · 선택</label>
+        <textarea id="first-heard" maxlength="1000" placeholder="비워 두어도 됩니다. 표기를 보기 전에 들린 소리를 메모할 수 있습니다."></textarea></div>
+      <button id="reveal" class="primary" disabled>소리 표기 보기</button>
+    </div>
+    <div class="card" id="comparison" hidden>
+      <fieldset><legend>2. 어떻게 들렸나요?</legend><p class="muted" id="question"></p><div id="choices"></div></fieldset>
+      <label id="whole-check" class="confirm" hidden><input id="whole-confirmed" type="checkbox"><span>고른 표기가 <strong>문장 전체에서</strong> 들린 소리와 같습니다.<br><span class="muted small">일부 글자가 헷갈리면 위의 판단 항목을 골라 주세요.</span></span></label>
+      <label for="note" class="muted">다른 소리나 확실한 부분만 메모 · 선택</label>
+      <textarea id="note" maxlength="2000" placeholder="예: 가운데 ㄹ 소리는 안 들림 / 첫 음절만 헷갈림. 이 메모만으로 정답 표기를 확정하지 않습니다."></textarea>
+      <details id="original" hidden><summary>시작이나 끝이 잘린 것 같다면 원본도 듣기 · 선택</summary>
+        <p class="muted small">위 음성은 판단할 구간, 아래는 자르기 전 원본입니다.</p>
+        <audio id="full" controls preload="none" aria-label="자르기 전 원본"></audio>
+        <fieldset id="crop-choices" disabled><legend class="muted">원본과 비교하면 · 선택</legend>
+          <label class="option"><input type="radio" name="crop" value="same"><span>판단한 말소리는 원본에서도 같음</span></label>
+          <label class="option"><input type="radio" name="crop" value="cut"><span>원본의 말소리 일부가 위 구간에서 잘림</span></label>
+          <label class="option"><input type="radio" name="crop" value="uncertain"><span>잘렸는지 구분하기 어려움</span></label>
+        </fieldset>
+      </details>
+      <div class="actions"><button id="previous">이전</button><button id="save" class="primary" disabled>저장하고 다음</button></div>
+      <p id="saved" class="saved" aria-live="polite"></p>
+    </div>
+  </section>
+  <nav id="jump" class="jump" aria-label="문항 이동"></nav>
+  <p class="muted small">초록색 번호는 저장된 문항입니다. 답변을 바꾸면 수정 이력도 보관됩니다.</p>
+</main>
+<script>
+const $ = id => document.getElementById(id);
+let state, index = 0, current, busy = false, dirty = false, completed = false;
+const refs = new Map();
+async function api(path, body) {
+  const response = await fetch(path, body === undefined ? {cache:'no-store'} : {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(body)});
+  const data = await response.json(); if (!response.ok) throw new Error(data.error || '요청을 처리하지 못했습니다.'); return data;
+}
+function error(e) { $('error').textContent = e.message; $('error').hidden = false; }
+function clearError() { $('error').hidden = true; }
+function markDirty() { dirty = true; $('saved').textContent = '변경한 답변을 저장해 주세요.'; }
+function navigation() {
+  $('position').textContent = completed ? '확인 완료' : `${index+1}번째 / ${state.total}개`;
+  $('count').textContent = `${state.answered}개 저장됨`; $('progress').max = state.total; $('progress').value = state.answered;
+  $('jump').replaceChildren();
+  for (let i=0; i<state.items.length; i++) {
+    const button = document.createElement('button'); button.textContent = i+1;
+    button.className = `${state.items[i].answer ? 'answered' : ''} ${!completed && i===index ? 'current' : ''}`;
+    button.setAttribute('aria-label', `${i+1}번${state.items[i].answer ? ', 저장됨' : ''}`);
+    button.onclick = () => go(i); $('jump').append(button);
+  }
+}
+function updateSave() {
+  const value = document.querySelector('input[name=choice]:checked')?.value;
+  const whole = value?.startsWith('whole_form_'); $('whole-check').hidden = !whole;
+  $('save').disabled = !value || (whole && !$('whole-confirmed').checked);
+}
+function showReference(reference) {
+  $('comparison').hidden = false; $('reveal').hidden = true; $('first-heard').readOnly = true;
+  $('blind-note').hidden = !current.reveal?.first_heard; $('question').textContent = reference.question;
+  $('play-status').textContent = '소리는 여러 번 다시 들어도 됩니다.'; $('choices').replaceChildren();
+  for (const choice of reference.choices) {
+    const label = document.createElement('label'); const whole = choice.value.startsWith('whole_form_'); label.className = `option${whole ? ' form' : ''}`;
+    const input = document.createElement('input'); input.type = 'radio'; input.name = 'choice'; input.value = choice.value;
+    input.checked = current.answer?.choice === choice.value;
+    input.onchange = () => { $('whole-confirmed').checked = false; markDirty(); updateSave(); };
+    const span = document.createElement('span'); span.textContent = choice.label; label.append(input, span); $('choices').append(label);
+  }
+  $('whole-confirmed').checked = !!current.answer?.choice.startsWith('whole_form_');
+  $('note').value = current.answer?.note || ''; $('original').hidden = !current.cropped; $('original').open = false;
+  $('full').src = `/audio/${current.id}/full`; $('crop-choices').disabled = !current.answer?.crop_relation;
+  for (const input of document.querySelectorAll('input[name=crop]')) input.checked = input.value === current.answer?.crop_relation;
+  $('previous').disabled = index===0; updateSave(); $('saved').textContent = current.answer ? '이 답변은 저장되어 있습니다.' : '';
+}
+async function render() {
+  current = state.items[index]; completed = false; dirty = false; clearError(); $('clip').pause(); $('full').pause();
+  $('done').hidden = true; $('review').hidden = false; $('comparison').hidden = true;
+  $('clip').src = `/audio/${current.id}/train`; $('duration').textContent = `${current.seconds.toFixed(1)}초`;
+  $('reveal').hidden = false; $('reveal').disabled = true; $('first-heard').value = current.reveal?.first_heard || '';
+  $('first-heard').readOnly = !!current.reveal; $('blind-note').hidden = false;
+  $('play-status').textContent = '한 번 끝까지 재생하면 표기를 볼 수 있습니다.'; navigation();
+  if (current.reveal) {
+    const id = current.id;
+    try { if (!refs.has(id)) refs.set(id,(await api('/api/reveal',{id,binding:current.binding})).reference); if (current.id===id) showReference(refs.get(id)); }
+    catch(e) { error(e); }
+  }
+}
+async function go(i) {
+  if (busy || i<0 || i>=state.total) return;
+  if (dirty && !confirm('저장하지 않은 답변이 있습니다. 저장하지 않고 이동할까요?')) return;
+  index=i; await render(); window.scrollTo({top:0,behavior:'smooth'});
+}
+function done() {
+  completed=true; dirty=false; $('clip').pause(); $('full').pause(); $('review').hidden=true; $('done').hidden=false; navigation(); window.scrollTo({top:0,behavior:'smooth'});
+}
+$('clip').onended = () => { $('reveal').disabled=false; $('play-status').textContent='소리 표기를 열고 확인해 주세요.'; };
+$('clip').onplay = () => $('full').pause(); $('full').onplay = () => $('clip').pause();
+for (const id of ['clip','full']) $(id).onerror = () => error(new Error('음성을 불러오지 못했습니다. 새로고침 후 다시 재생해 주세요.'));
+$('full').onended = () => { $('crop-choices').disabled=false; };
+$('first-heard').oninput = () => { dirty=true; }; $('note').oninput = markDirty;
+$('whole-confirmed').onchange = () => { markDirty(); updateSave(); };
+for (const input of document.querySelectorAll('input[name=crop]')) input.onchange=markDirty;
+$('reveal').onclick = async () => {
+  if(busy) return; busy=true; $('reveal').disabled=true; clearError();
+  try { const result=await api('/api/reveal',{id:current.id,binding:current.binding,first_heard:$('first-heard').value});
+    current.reveal=result.reveal; refs.set(current.id,result.reference); dirty=false; showReference(result.reference); $('comparison').scrollIntoView({behavior:'smooth',block:'start'});
+  } catch(e) { error(e); $('reveal').disabled=false; } finally { busy=false; }
+};
+$('save').onclick = async () => {
+  const choice=document.querySelector('input[name=choice]:checked')?.value;
+  if(busy || !choice) return; busy=true; $('save').disabled=true; clearError();
+  try { await api('/api/answer',{id:current.id,binding:current.binding,revision:current.revision,choice,
+      whole_confirmed:$('whole-confirmed').checked,note:$('note').value,crop_relation:document.querySelector('input[name=crop]:checked')?.value || ''});
+    dirty=false; state=await api('/api/state');
+    if(state.answered===state.total) done();
+    else { const next=state.items.findIndex((item,i)=>i>index && !item.answer); index=next>=0 ? next : state.items.findIndex(item=>!item.answer); await render(); window.scrollTo({top:0,behavior:'smooth'}); }
+  } catch(e) { error(e); updateSave(); } finally { busy=false; }
+};
+$('previous').onclick=()=>go(index-1); $('review-again').onclick=()=>go(0);
+window.addEventListener('beforeunload',e=>{if(dirty){e.preventDefault();e.returnValue='';}});
+(async()=>{try { state=await api('/api/state'); if(state.answered===state.total) done(); else { index=state.items.findIndex(item=>!item.answer); await render(); }} catch(e){ $('position').textContent='불러오지 못했습니다'; error(e); }})();
+</script>
+</html>

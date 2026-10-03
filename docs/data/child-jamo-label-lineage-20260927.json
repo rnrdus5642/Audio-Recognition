@@ -1,0 +1,247 @@
+{
+  "complete": true,
+  "at_utc": "2026-09-27T07:14:23.335580+00:00",
+  "manifest": ".venv\\hubert-child-20260914\\manifest-train-repaired-20260927.jsonl",
+  "manifest_sha256": "095ab47072b4f24b0624fe6afb9d26dc3a16982dd75e6af3b255f94ee201b892",
+  "index_sha256": "e9bb4fe27ba55b63c46443ba7f07273d7b8e88614d3868eefdd4c266c82f0e6d",
+  "labels_contract_sha256": "ae3bef2311c735d4560ef11e3a42f3138821592e2e0e1ab10d112f82b9faf013",
+  "counts": {
+    "selected_recordings": 150252,
+    "surface_differs_from_text_not_a_defect_count": 120301,
+    "distinct_selected_texts": 29676,
+    "index_rows_scanned": 2765817,
+    "selected_index_rows_seen_including_duplicates": 150252,
+    "selected_names_found_in_index": 150252
+  },
+  "mismatches": [],
+  "missing_index_names": [],
+  "notation_index_row_counts_not_training_error_counts": {
+    "parentheses": 15263,
+    "brackets": 26
+  },
+  "notation_policy_examples": [
+    {
+      "input": "읽었어요(일저더요)",
+      "result": "unsupported_characters",
+      "included_by_current_policy": false
+    },
+    {
+      "input": "미끄럼을(틀) 타요.",
+      "result": "unsupported_characters",
+      "included_by_current_policy": false
+    },
+    {
+      "input": "어항이[어하니] 흔들려[흐뜨여].",
+      "result": "unsupported_characters",
+      "included_by_current_policy": false
+    }
+  ],
+  "previously_reviewed_original_json_examples": [
+    {
+      "review_question": 1,
+      "source_payload_sha256": "29778e8577ed7eae27a22c0e77d099f1ad5971027a1aa5d4b62d4cb546370208",
+      "transcription_fields": {
+        "LabelText": "작은 다람쥐.",
+        "ErrorTagged": "N/A",
+        "GrammaticalError": "N/A"
+      },
+      "original_target_text": "작은 다람쥐."
+    },
+    {
+      "review_question": 2,
+      "source_payload_sha256": "95b2acd296b9ca22be8c62a360ad56daad43569516bd8a8bb981f39e1652450f",
+      "transcription_fields": {
+        "GrammaticalError": "N/A",
+        "LabelText": "하늘에서 눈이 내렸어요.",
+        "ErrorTagged": "N/A"
+      },
+      "original_target_text": "하늘에서 눈이 내렸어요."
+    },
+    {
+      "review_question": 3,
+      "source_payload_sha256": "29156e3ebcb5639d754b9ce1f6943e3a1b7645b4a03ca10a1b9a57b2d720b842",
+      "transcription_fields": {
+        "GrammaticalError": "N/A",
+        "LabelText": "책.",
+        "ErrorTagged": "N/A"
+      },
+      "original_target_text": "책."
+    },
+    {
+      "review_question": 4,
+      "source_payload_sha256": "6143b30906cc3c9f31b8e18b317756e22b8eef41d16a8072f29015641305c199",
+      "transcription_fields": {
+        "LabelText": "책상 밑에다 놔요",
+        "ErrorTagged": "N/A",
+        "GrammaticalError": "N/A"
+      },
+      "original_target_text": "책상 밑에다 놔요"
+    }
+  ],
+  "isolated_word_contrasts": [
+    {
+      "pair": [
+        {
+          "input": "책",
+          "normalized": "책",
+          "surface": "책",
+          "jamo": "ㅊㅐㄱ",
+          "ids": [
+            16,
+            22,
+            2
+          ]
+        },
+        {
+          "input": "쌕",
+          "normalized": "쌕",
+          "surface": "쌕",
+          "jamo": "ㅆㅐㄱ",
+          "ids": [
+            12,
+            22,
+            2
+          ]
+        }
+      ],
+      "distinct": true
+    },
+    {
+      "pair": [
+        {
+          "input": "책",
+          "normalized": "책",
+          "surface": "책",
+          "jamo": "ㅊㅐㄱ",
+          "ids": [
+            16,
+            22,
+            2
+          ]
+        },
+        {
+          "input": "샙",
+          "normalized": "샙",
+          "surface": "샙",
+          "jamo": "ㅅㅐㅂ",
+          "ids": [
+            11,
+            22,
+            9
+          ]
+        }
+      ],
+      "distinct": true
+    },
+    {
+      "pair": [
+        {
+          "input": "나비",
+          "normalized": "나비",
+          "surface": "나비",
+          "jamo": "ㄴㅏㅂㅣ",
+          "ids": [
+            4,
+            21,
+            9,
+            41
+          ]
+        },
+        {
+          "input": "나리",
+          "normalized": "나리",
+          "surface": "나리",
+          "jamo": "ㄴㅏㄹㅣ",
+          "ids": [
+            4,
+            21,
+            7,
+            41
+          ]
+        }
+      ],
+      "distinct": true
+    },
+    {
+      "pair": [
+        {
+          "input": "뛰어가요",
+          "normalized": "뛰어가요",
+          "surface": "뛰어가요",
+          "jamo": "ㄸㅟㅇㅓㄱㅏㅇㅛ",
+          "ids": [
+            6,
+            37,
+            13,
+            25,
+            2,
+            21,
+            13,
+            33
+          ]
+        },
+        {
+          "input": "귀어 가요",
+          "normalized": "귀어 가요",
+          "surface": "귀어 가요",
+          "jamo": "ㄱㅟㅇㅓ|ㄱㅏㅇㅛ",
+          "ids": [
+            2,
+            37,
+            13,
+            25,
+            1,
+            2,
+            21,
+            13,
+            33
+          ]
+        }
+      ],
+      "distinct": true
+    },
+    {
+      "pair": [
+        {
+          "input": "놔요",
+          "normalized": "놔요",
+          "surface": "놔요",
+          "jamo": "ㄴㅘㅇㅛ",
+          "ids": [
+            4,
+            30,
+            13,
+            33
+          ]
+        },
+        {
+          "input": "나요",
+          "normalized": "나요",
+          "surface": "나요",
+          "jamo": "ㄴㅏㅇㅛ",
+          "ids": [
+            4,
+            21,
+            13,
+            33
+          ]
+        }
+      ],
+      "distinct": true
+    }
+  ],
+  "findings": [
+    "Targets depend on transcript text, not an independently annotated realization.",
+    "Consistent text lineage does not establish that the transcript matches the waveform.",
+    "Parenthetical/bracketed annotations are excluded, not parsed into realized speech.",
+    "Word-pair label separation does not prove their recorded training examples have correct labels."
+  ],
+  "limitations": [
+    "No new listening judgment; no corpus phonetic label error rate has been measured.",
+    "Original archive JSON was re-read only for four previously reviewed cases; all selected rows were compared to the existing index.",
+    "G2P changes include legitimate phonological transformations; the changed count is not an error count.",
+    "Excluding ambiguous notation can affect representation, but this audit does not prove selection bias caused current recognition errors."
+  ],
+  "labels_or_audio_changed": false,
+  "training_started": false
+}

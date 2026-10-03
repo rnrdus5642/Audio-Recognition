@@ -1,0 +1,36 @@
+{
+  "user_answer_database_used": false,
+  "qa_directory": "C:\\Users\\user\\Documents\\GitHub\\Audio-Recognition\\.venv\\child-jamo-web-20260916\\phonetic-labels-20260929\\qa\\20260929T045233Z",
+  "checks": {
+    "blind_before_listening_no_model_or_split_display": true,
+    "whole_form_requires_explicit_confirmation_in_browser_and_api": true,
+    "mobile_no_horizontal_overflow": true,
+    "reload_resumes_unanswered_question": true,
+    "all_15_saved_and_completed_state_persisted": true,
+    "revision_preserved_and_whole_confirmation_resets_on_choice_change": true,
+    "real_clip_playbacks": 15,
+    "real_full_source_playbacks": 9
+  },
+  "errors": [],
+  "complete": true,
+  "page_sha256": "07245e883bff5233534127d6ee6b253d52eb76eab8f4569ea225fa1edbabf208",
+  "server_sha256": "2aee514c2bd2446a29df125dc87d2639d26ff2dcad3b5c0b3f7f6b317833e285",
+  "unit_tests": {
+    "existing_review_server": 8,
+    "phonetic_readiness": 6,
+    "passed": 14
+  },
+  "live_server": {
+    "url": "http://127.0.0.1:8778/",
+    "pid": 43980,
+    "exec_session_id": 92107,
+    "answered_at_handoff": 0,
+    "review_sha256": "c5a0fe2d71dff6e17188dcb303da8bbed374ed192acda512e322cd42bddefe50",
+    "verified_html_matches_qa": true
+  },
+  "old_review_preserved": {
+    "answered": 20,
+    "history_entries": 21,
+    "review_sha256": "167ff2b5720be1cc22563ec39815bfab500a420ae0e57d8200e16a40768e97b9"
+  }
+}

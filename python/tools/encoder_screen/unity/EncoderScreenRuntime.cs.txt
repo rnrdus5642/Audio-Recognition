@@ -1,0 +1,140 @@
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
+using System.Linq;
+using Newtonsoft.Json;
+using Unity.InferenceEngine;
+using UnityEngine;
+using UnityEngine.Profiling;
+
+public sealed class EncoderScreenRuntime : MonoBehaviour
+{
+    [Serializable] public class AudioCase { public string id; public string input_file; public string logits_file; public int[] input_shape; public int[] output_shape; }
+    [Serializable] public class Job { public string key; public string model; public string output; public AudioCase[] cases; public int repeats = 40; }
+
+    static string Argument(string name)
+    {
+        var args = Environment.GetCommandLineArgs();
+        for (int i = 0; i + 1 < args.Length; i++) if (args[i] == name) return args[i + 1];
+        return null;
+    }
+
+    void Start()
+    {
+        var path = Argument("-encoderJob");
+        if (path == null) { UnityEngine.Debug.LogError("Missing -encoderJob"); Application.Quit(2); return; }
+        var result = Run(path);
+        Application.Quit((bool)result["success"] ? 0 : 3);
+    }
+
+    public static Dictionary<string, object> Run(string path)
+    {
+        var job = JsonConvert.DeserializeObject<Job>(File.ReadAllText(path));
+        var report = new Dictionary<string, object> {
+            ["key"] = job.key, ["unity"] = Application.unityVersion,
+            ["in_editor"] = Application.isEditor, ["platform"] = Application.platform.ToString(),
+            ["graphics_device"] = SystemInfo.graphicsDeviceName, ["graphics_api"] = SystemInfo.graphicsDeviceType.ToString(),
+            ["graphics_memory_mb"] = SystemInfo.graphicsMemorySize, ["supports_compute"] = SystemInfo.supportsComputeShaders,
+            ["backend"] = "GPUCompute", ["utc"] = DateTime.UtcNow.ToString("o"), ["success"] = false
+        };
+        Worker worker = null;
+        Model model = null;
+        try
+        {
+            if (!SystemInfo.supportsComputeShaders) throw new InvalidOperationException("Compute shaders unavailable");
+            var watch = Stopwatch.StartNew();
+            long memBefore = Profiler.GetAllocatedMemoryForGraphicsDriver();
+            report["native_memory_before"] = EncoderScreenMemory.Capture(SystemInfo.graphicsDeviceName);
+            watch.Restart();
+            model = ModelLoader.Load(job.model);
+            report["model_load_ms"] = watch.Elapsed.TotalMilliseconds;
+            watch.Restart();
+            worker = new Worker(model, BackendType.GPUCompute);
+            report["worker_create_ms"] = watch.Elapsed.TotalMilliseconds;
+            report["actual_backend"] = worker.backendType.ToString();
+            var fallbackField = typeof(Worker).GetField("m_LayerCPUFallback", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic);
+            if (fallbackField == null) throw new InvalidOperationException("Cannot audit CPU fallback assignments in this engine version");
+            var fallback = (HashSet<int>)fallbackField.GetValue(worker);
+            report["cpu_fallback_layers"] = model.layers.Where(l => fallback.Contains(l.outputs[0]))
+                .Select(l => new { output = l.outputs[0], type = l.GetType().Name }).ToArray();
+            report["total_model_layers"] = model.layers.Count;
+            var cases = new List<object>();
+            bool allFinite = true, allDecodedEqual = true;
+            int totalFrames = 0, mismatchFrames = 0;
+            for (int c = 0; c < job.cases.Length; c++)
+            {
+                var item = job.cases[c];
+                float[] inputData = Floats(item.input_file), expected = Floats(item.logits_file);
+                watch.Restart();
+                float[] actual;
+                int[] actualShape;
+                using (var input = new Tensor<float>(new TensorShape(item.input_shape), inputData))
+                {
+                    worker.Schedule(input);
+                    using (var output = ((Tensor<float>)worker.PeekOutput()).ReadbackAndClone())
+                    {
+                        actual = output.DownloadToArray();
+                        actualShape = Enumerable.Range(0, output.shape.rank).Select(i => output.shape[i]).ToArray();
+                    }
+                }
+                double milliseconds = watch.Elapsed.TotalMilliseconds;
+                if (!actualShape.SequenceEqual(item.output_shape) || actual.Length != expected.Length)
+                    throw new InvalidOperationException("Output shape mismatch for " + item.id);
+                int classes = actualShape[actualShape.Length - 1];
+                int frames = actual.Length / classes;
+                int[] got = Argmax(actual, classes), want = Argmax(expected, classes);
+                int mismatches = got.Zip(want, (a,b) => a == b ? 0 : 1).Sum();
+                bool finite = actual.All(x => !float.IsNaN(x) && !float.IsInfinity(x));
+                double maxAbs = 0, squares = 0;
+                for (int i = 0; i < actual.Length; i++) { double d = Math.Abs((double)actual[i] - expected[i]); maxAbs = Math.Max(maxAbs,d); squares += d*d; }
+                bool decodedEqual = Collapse(got).SequenceEqual(Collapse(want));
+                cases.Add(new { item.id, ms = milliseconds, finite, frames, mismatch_frames = mismatches,
+                    max_abs = maxAbs, rmse = Math.Sqrt(squares/actual.Length), decoded_equal = decodedEqual,
+                    expected_ctc_ids = Collapse(want), actual_ctc_ids = Collapse(got) });
+                allFinite &= finite; allDecodedEqual &= decodedEqual; totalFrames += frames; mismatchFrames += mismatches;
+                if (c == 0) report["cold_inference_ms"] = milliseconds;
+            }
+            report["cases"] = cases;
+            var timingCase = job.cases[0];
+            var timingData = Floats(timingCase.input_file);
+            var times = new List<double>();
+            using (var input = new Tensor<float>(new TensorShape(timingCase.input_shape), timingData))
+            {
+                for (int i=0; i<job.repeats + 4; i++)
+                {
+                    watch.Restart(); worker.Schedule(input);
+                    using (var output = ((Tensor<float>)worker.PeekOutput()).ReadbackAndClone()) { output.DownloadToArray(); }
+                    if (i >= 4) times.Add(watch.Elapsed.TotalMilliseconds);
+                }
+            }
+            var sorted = times.OrderBy(x=>x).ToArray();
+            report["warm_times_ms"] = times;
+            report["warm_median_ms"] = Quantile(sorted,.5);
+            report["warm_p95_ms"] = Quantile(sorted,.95);
+            report["graphics_driver_allocated_before_bytes"] = memBefore;
+            report["graphics_driver_allocated_after_bytes"] = Profiler.GetAllocatedMemoryForGraphicsDriver();
+            report["process_private_bytes"] = Process.GetCurrentProcess().PrivateMemorySize64;
+            report["native_memory_after"] = EncoderScreenMemory.Capture(SystemInfo.graphicsDeviceName);
+            report["all_finite"] = allFinite;
+            report["all_ctc_sequences_equal"] = allDecodedEqual;
+            report["mismatch_frames"] = mismatchFrames;
+            report["total_frames"] = totalFrames;
+            report["within_500ms_hop"] = Quantile(sorted,.95) < 500;
+            report["success"] = allFinite && allDecodedEqual && Quantile(sorted,.95) < 500;
+        }
+        catch (Exception ex) { report["error"] = ex.ToString(); UnityEngine.Debug.LogException(ex); }
+        finally
+        {
+            worker?.Dispose();
+            File.WriteAllText(job.output,JsonConvert.SerializeObject(report,Formatting.Indented));
+            UnityEngine.Debug.Log("ENCODER_SCREEN_RESULT " + job.key + " " + report["success"]);
+        }
+        return report;
+    }
+
+    static float[] Floats(string path) { byte[] bytes=File.ReadAllBytes(path); var x=new float[bytes.Length/4]; Buffer.BlockCopy(bytes,0,x,0,bytes.Length); return x; }
+    static int[] Argmax(float[] logits,int classes) { var ids=new int[logits.Length/classes]; for(int f=0;f<ids.Length;f++) { int k=0;for(int c=1;c<classes;c++)if(logits[f*classes+c]>logits[f*classes+k])k=c;ids[f]=k;} return ids; }
+    static int[] Collapse(int[] ids) {var result=new List<int>();int last=-1;foreach(int id in ids){if(id!=last && id!=0)result.Add(id);last=id;}return result.ToArray();}
+    static double Quantile(double[] sorted,double p) {double n=(sorted.Length-1)*p;int lo=(int)n,hi=Math.Min(lo+1,sorted.Length-1);return sorted[lo]+(sorted[hi]-sorted[lo])*(n-lo);}
+}

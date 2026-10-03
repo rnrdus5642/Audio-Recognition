@@ -1,0 +1,739 @@
+{
+  "before": "0.8.5",
+  "after": "0.8.6",
+  "new_false_accepts": 0,
+  "net_change_percentage_points": 0,
+  "cross_independent_recordings": 46,
+  "cross_totals": {
+    "basic": {
+      "trials": 308,
+      "before_false_accepts": 6,
+      "after_false_accepts": 6,
+      "new_false_accepts": 0,
+      "removed_false_accepts": 0
+    },
+    "all_offsets": {
+      "trials": 1232,
+      "before_false_accepts": 18,
+      "after_false_accepts": 18,
+      "new_false_accepts": 0,
+      "removed_false_accepts": 0
+    }
+  },
+  "cross_stages": [
+    {
+      "stage_id": 1,
+      "words": [
+        "실로폰채",
+        "들어",
+        "잡아"
+      ],
+      "basic": {
+        "trials": 32,
+        "before_false_accepts": 0,
+        "after_false_accepts": 0,
+        "new_false_accepts": 0,
+        "removed_false_accepts": 0
+      },
+      "all_offsets": {
+        "trials": 128,
+        "before_false_accepts": 0,
+        "after_false_accepts": 0,
+        "new_false_accepts": 0,
+        "removed_false_accepts": 0
+      },
+      "independent_recordings_in_stage": 32
+    },
+    {
+      "stage_id": 2,
+      "words": [
+        "쳐",
+        "때려",
+        "연주해"
+      ],
+      "basic": {
+        "trials": 32,
+        "before_false_accepts": 2,
+        "after_false_accepts": 2,
+        "new_false_accepts": 0,
+        "removed_false_accepts": 0
+      },
+      "all_offsets": {
+        "trials": 128,
+        "before_false_accepts": 6,
+        "after_false_accepts": 6,
+        "new_false_accepts": 0,
+        "removed_false_accepts": 0
+      },
+      "independent_recordings_in_stage": 32
+    },
+    {
+      "stage_id": 3,
+      "words": [
+        "놓아",
+        "놔",
+        "내려놔"
+      ],
+      "basic": {
+        "trials": 34,
+        "before_false_accepts": 0,
+        "after_false_accepts": 0,
+        "new_false_accepts": 0,
+        "removed_false_accepts": 0
+      },
+      "all_offsets": {
+        "trials": 136,
+        "before_false_accepts": 0,
+        "after_false_accepts": 0,
+        "new_false_accepts": 0,
+        "removed_false_accepts": 0
+      },
+      "independent_recordings_in_stage": 34
+    },
+    {
+      "stage_id": 4,
+      "words": [
+        "들어",
+        "잡아"
+      ],
+      "basic": {
+        "trials": 34,
+        "before_false_accepts": 0,
+        "after_false_accepts": 0,
+        "new_false_accepts": 0,
+        "removed_false_accepts": 0
+      },
+      "all_offsets": {
+        "trials": 136,
+        "before_false_accepts": 0,
+        "after_false_accepts": 0,
+        "new_false_accepts": 0,
+        "removed_false_accepts": 0
+      },
+      "independent_recordings_in_stage": 34
+    },
+    {
+      "stage_id": 5,
+      "words": [
+        "쳐",
+        "때려"
+      ],
+      "basic": {
+        "trials": 34,
+        "before_false_accepts": 2,
+        "after_false_accepts": 2,
+        "new_false_accepts": 0,
+        "removed_false_accepts": 0
+      },
+      "all_offsets": {
+        "trials": 136,
+        "before_false_accepts": 6,
+        "after_false_accepts": 6,
+        "new_false_accepts": 0,
+        "removed_false_accepts": 0
+      },
+      "independent_recordings_in_stage": 34
+    },
+    {
+      "stage_id": 6,
+      "words": [
+        "흔들어"
+      ],
+      "basic": {
+        "trials": 44,
+        "before_false_accepts": 0,
+        "after_false_accepts": 0,
+        "new_false_accepts": 0,
+        "removed_false_accepts": 0
+      },
+      "all_offsets": {
+        "trials": 176,
+        "before_false_accepts": 0,
+        "after_false_accepts": 0,
+        "new_false_accepts": 0,
+        "removed_false_accepts": 0
+      },
+      "independent_recordings_in_stage": 44
+    },
+    {
+      "stage_id": 7,
+      "words": [
+        "놓아",
+        "놔",
+        "내려놔"
+      ],
+      "basic": {
+        "trials": 34,
+        "before_false_accepts": 0,
+        "after_false_accepts": 0,
+        "new_false_accepts": 0,
+        "removed_false_accepts": 0
+      },
+      "all_offsets": {
+        "trials": 136,
+        "before_false_accepts": 0,
+        "after_false_accepts": 0,
+        "new_false_accepts": 0,
+        "removed_false_accepts": 0
+      },
+      "independent_recordings_in_stage": 34
+    },
+    {
+      "stage_id": 8,
+      "words": [
+        "북채",
+        "들어",
+        "잡아"
+      ],
+      "basic": {
+        "trials": 32,
+        "before_false_accepts": 0,
+        "after_false_accepts": 0,
+        "new_false_accepts": 0,
+        "removed_false_accepts": 0
+      },
+      "all_offsets": {
+        "trials": 128,
+        "before_false_accepts": 0,
+        "after_false_accepts": 0,
+        "new_false_accepts": 0,
+        "removed_false_accepts": 0
+      },
+      "independent_recordings_in_stage": 32
+    },
+    {
+      "stage_id": 9,
+      "words": [
+        "두드려",
+        "때려",
+        "쳐"
+      ],
+      "basic": {
+        "trials": 32,
+        "before_false_accepts": 2,
+        "after_false_accepts": 2,
+        "new_false_accepts": 0,
+        "removed_false_accepts": 0
+      },
+      "all_offsets": {
+        "trials": 128,
+        "before_false_accepts": 6,
+        "after_false_accepts": 6,
+        "new_false_accepts": 0,
+        "removed_false_accepts": 0
+      },
+      "independent_recordings_in_stage": 32
+    }
+  ],
+  "existing": [
+    {
+      "group": "북채",
+      "words": [
+        "북채"
+      ],
+      "stats": {
+        "reference": {
+          "trials": 4954,
+          "before_false_accepts": 0,
+          "after_false_accepts": 0,
+          "new_false_accepts": 0,
+          "removed_false_accepts": 0
+        },
+        "child_sentence": {
+          "trials": 704,
+          "before_false_accepts": 0,
+          "after_false_accepts": 0,
+          "new_false_accepts": 0,
+          "removed_false_accepts": 0
+        },
+        "child_single": {
+          "trials": 24,
+          "before_false_accepts": 0,
+          "after_false_accepts": 0,
+          "new_false_accepts": 0,
+          "removed_false_accepts": 0
+        }
+      }
+    },
+    {
+      "group": "잡아",
+      "words": [
+        "잡아"
+      ],
+      "stats": {
+        "child_existing": {
+          "trials": 698,
+          "before_false_accepts": 14,
+          "after_false_accepts": 14,
+          "new_false_accepts": 0,
+          "removed_false_accepts": 0
+        },
+        "reference": {
+          "trials": 4995,
+          "before_false_accepts": 1,
+          "after_false_accepts": 1,
+          "new_false_accepts": 0,
+          "removed_false_accepts": 0
+        },
+        "near_서랍": {
+          "trials": 30,
+          "before_false_accepts": 0,
+          "after_false_accepts": 0,
+          "new_false_accepts": 0,
+          "removed_false_accepts": 0
+        },
+        "near_작아": {
+          "trials": 30,
+          "before_false_accepts": 0,
+          "after_false_accepts": 0,
+          "new_false_accepts": 0,
+          "removed_false_accepts": 0
+        },
+        "near_잡아당": {
+          "trials": 30,
+          "before_false_accepts": 25,
+          "after_false_accepts": 25,
+          "new_false_accepts": 0,
+          "removed_false_accepts": 0
+        },
+        "near_잡아먹": {
+          "trials": 30,
+          "before_false_accepts": 21,
+          "after_false_accepts": 21,
+          "new_false_accepts": 0,
+          "removed_false_accepts": 0
+        },
+        "near_잡지": {
+          "trials": 30,
+          "before_false_accepts": 0,
+          "after_false_accepts": 0,
+          "new_false_accepts": 0,
+          "removed_false_accepts": 0
+        },
+        "near_접어": {
+          "trials": 30,
+          "before_false_accepts": 1,
+          "after_false_accepts": 1,
+          "new_false_accepts": 0,
+          "removed_false_accepts": 0
+        },
+        "user_negative": {
+          "trials": 8,
+          "before_false_accepts": 0,
+          "after_false_accepts": 0,
+          "new_false_accepts": 0,
+          "removed_false_accepts": 0
+        }
+      }
+    },
+    {
+      "group": 1,
+      "words": [
+        "실로폰채",
+        "들어",
+        "잡아"
+      ],
+      "stats": {
+        "child_existing": {
+          "trials": 462,
+          "before_false_accepts": 14,
+          "after_false_accepts": 14,
+          "new_false_accepts": 0,
+          "removed_false_accepts": 0
+        },
+        "reference": {
+          "trials": 4835,
+          "before_false_accepts": 2,
+          "after_false_accepts": 2,
+          "new_false_accepts": 0,
+          "removed_false_accepts": 0
+        },
+        "near_서랍": {
+          "trials": 30,
+          "before_false_accepts": 0,
+          "after_false_accepts": 0,
+          "new_false_accepts": 0,
+          "removed_false_accepts": 0
+        },
+        "near_작아": {
+          "trials": 30,
+          "before_false_accepts": 0,
+          "after_false_accepts": 0,
+          "new_false_accepts": 0,
+          "removed_false_accepts": 0
+        },
+        "near_잡아당": {
+          "trials": 30,
+          "before_false_accepts": 25,
+          "after_false_accepts": 25,
+          "new_false_accepts": 0,
+          "removed_false_accepts": 0
+        },
+        "near_잡아먹": {
+          "trials": 30,
+          "before_false_accepts": 21,
+          "after_false_accepts": 21,
+          "new_false_accepts": 0,
+          "removed_false_accepts": 0
+        },
+        "near_잡지": {
+          "trials": 30,
+          "before_false_accepts": 0,
+          "after_false_accepts": 0,
+          "new_false_accepts": 0,
+          "removed_false_accepts": 0
+        },
+        "near_접어": {
+          "trials": 30,
+          "before_false_accepts": 1,
+          "after_false_accepts": 1,
+          "new_false_accepts": 0,
+          "removed_false_accepts": 0
+        },
+        "user_negative": {
+          "trials": 8,
+          "before_false_accepts": 0,
+          "after_false_accepts": 0,
+          "new_false_accepts": 0,
+          "removed_false_accepts": 0
+        }
+      }
+    },
+    {
+      "group": 2,
+      "words": [
+        "쳐",
+        "때려",
+        "연주해"
+      ],
+      "stats": {
+        "reference": {
+          "trials": 4980,
+          "before_false_accepts": 7,
+          "after_false_accepts": 7,
+          "new_false_accepts": 0,
+          "removed_false_accepts": 0
+        },
+        "child_sentence": {
+          "trials": 441,
+          "before_false_accepts": 1,
+          "after_false_accepts": 1,
+          "new_false_accepts": 0,
+          "removed_false_accepts": 0
+        },
+        "child_single": {
+          "trials": 14,
+          "before_false_accepts": 1,
+          "after_false_accepts": 1,
+          "new_false_accepts": 0,
+          "removed_false_accepts": 0
+        }
+      }
+    },
+    {
+      "group": 3,
+      "words": [
+        "놓아",
+        "놔",
+        "내려놔"
+      ],
+      "stats": {
+        "reference": {
+          "trials": 4950,
+          "before_false_accepts": 9,
+          "after_false_accepts": 9,
+          "new_false_accepts": 0,
+          "removed_false_accepts": 0
+        },
+        "child_sentence": {
+          "trials": 603,
+          "before_false_accepts": 2,
+          "after_false_accepts": 2,
+          "new_false_accepts": 0,
+          "removed_false_accepts": 0
+        },
+        "child_single": {
+          "trials": 18,
+          "before_false_accepts": 0,
+          "after_false_accepts": 0,
+          "new_false_accepts": 0,
+          "removed_false_accepts": 0
+        }
+      }
+    },
+    {
+      "group": 4,
+      "words": [
+        "들어",
+        "잡아"
+      ],
+      "stats": {
+        "child_existing": {
+          "trials": 463,
+          "before_false_accepts": 14,
+          "after_false_accepts": 14,
+          "new_false_accepts": 0,
+          "removed_false_accepts": 0
+        },
+        "reference": {
+          "trials": 4835,
+          "before_false_accepts": 2,
+          "after_false_accepts": 2,
+          "new_false_accepts": 0,
+          "removed_false_accepts": 0
+        },
+        "near_서랍": {
+          "trials": 30,
+          "before_false_accepts": 0,
+          "after_false_accepts": 0,
+          "new_false_accepts": 0,
+          "removed_false_accepts": 0
+        },
+        "near_작아": {
+          "trials": 30,
+          "before_false_accepts": 0,
+          "after_false_accepts": 0,
+          "new_false_accepts": 0,
+          "removed_false_accepts": 0
+        },
+        "near_잡아당": {
+          "trials": 30,
+          "before_false_accepts": 25,
+          "after_false_accepts": 25,
+          "new_false_accepts": 0,
+          "removed_false_accepts": 0
+        },
+        "near_잡아먹": {
+          "trials": 30,
+          "before_false_accepts": 21,
+          "after_false_accepts": 21,
+          "new_false_accepts": 0,
+          "removed_false_accepts": 0
+        },
+        "near_잡지": {
+          "trials": 30,
+          "before_false_accepts": 0,
+          "after_false_accepts": 0,
+          "new_false_accepts": 0,
+          "removed_false_accepts": 0
+        },
+        "near_접어": {
+          "trials": 30,
+          "before_false_accepts": 1,
+          "after_false_accepts": 1,
+          "new_false_accepts": 0,
+          "removed_false_accepts": 0
+        },
+        "user_negative": {
+          "trials": 8,
+          "before_false_accepts": 0,
+          "after_false_accepts": 0,
+          "new_false_accepts": 0,
+          "removed_false_accepts": 0
+        }
+      }
+    },
+    {
+      "group": 5,
+      "words": [
+        "쳐",
+        "때려"
+      ],
+      "stats": {
+        "reference": {
+          "trials": 4982,
+          "before_false_accepts": 6,
+          "after_false_accepts": 6,
+          "new_false_accepts": 0,
+          "removed_false_accepts": 0
+        },
+        "child_sentence": {
+          "trials": 474,
+          "before_false_accepts": 1,
+          "after_false_accepts": 1,
+          "new_false_accepts": 0,
+          "removed_false_accepts": 0
+        },
+        "child_single": {
+          "trials": 14,
+          "before_false_accepts": 1,
+          "after_false_accepts": 1,
+          "new_false_accepts": 0,
+          "removed_false_accepts": 0
+        }
+      }
+    },
+    {
+      "group": 6,
+      "words": [
+        "흔들어"
+      ],
+      "stats": {
+        "reference": {
+          "trials": 4990,
+          "before_false_accepts": 0,
+          "after_false_accepts": 0,
+          "new_false_accepts": 0,
+          "removed_false_accepts": 0
+        },
+        "child_sentence": {
+          "trials": 643,
+          "before_false_accepts": 0,
+          "after_false_accepts": 0,
+          "new_false_accepts": 0,
+          "removed_false_accepts": 0
+        },
+        "child_single": {
+          "trials": 20,
+          "before_false_accepts": 0,
+          "after_false_accepts": 0,
+          "new_false_accepts": 0,
+          "removed_false_accepts": 0
+        }
+      }
+    },
+    {
+      "group": 7,
+      "words": [
+        "놓아",
+        "놔",
+        "내려놔"
+      ],
+      "stats": {
+        "reference": {
+          "trials": 4950,
+          "before_false_accepts": 9,
+          "after_false_accepts": 9,
+          "new_false_accepts": 0,
+          "removed_false_accepts": 0
+        },
+        "child_sentence": {
+          "trials": 603,
+          "before_false_accepts": 2,
+          "after_false_accepts": 2,
+          "new_false_accepts": 0,
+          "removed_false_accepts": 0
+        },
+        "child_single": {
+          "trials": 18,
+          "before_false_accepts": 0,
+          "after_false_accepts": 0,
+          "new_false_accepts": 0,
+          "removed_false_accepts": 0
+        }
+      }
+    },
+    {
+      "group": 8,
+      "words": [
+        "북채",
+        "들어",
+        "잡아"
+      ],
+      "stats": {
+        "child_existing": {
+          "trials": 416,
+          "before_false_accepts": 14,
+          "after_false_accepts": 14,
+          "new_false_accepts": 0,
+          "removed_false_accepts": 0
+        },
+        "reference": {
+          "trials": 4791,
+          "before_false_accepts": 2,
+          "after_false_accepts": 2,
+          "new_false_accepts": 0,
+          "removed_false_accepts": 0
+        },
+        "near_서랍": {
+          "trials": 30,
+          "before_false_accepts": 0,
+          "after_false_accepts": 0,
+          "new_false_accepts": 0,
+          "removed_false_accepts": 0
+        },
+        "near_작아": {
+          "trials": 30,
+          "before_false_accepts": 0,
+          "after_false_accepts": 0,
+          "new_false_accepts": 0,
+          "removed_false_accepts": 0
+        },
+        "near_잡아당": {
+          "trials": 30,
+          "before_false_accepts": 25,
+          "after_false_accepts": 25,
+          "new_false_accepts": 0,
+          "removed_false_accepts": 0
+        },
+        "near_잡아먹": {
+          "trials": 30,
+          "before_false_accepts": 21,
+          "after_false_accepts": 21,
+          "new_false_accepts": 0,
+          "removed_false_accepts": 0
+        },
+        "near_잡지": {
+          "trials": 30,
+          "before_false_accepts": 0,
+          "after_false_accepts": 0,
+          "new_false_accepts": 0,
+          "removed_false_accepts": 0
+        },
+        "near_접어": {
+          "trials": 30,
+          "before_false_accepts": 1,
+          "after_false_accepts": 1,
+          "new_false_accepts": 0,
+          "removed_false_accepts": 0
+        },
+        "user_negative": {
+          "trials": 8,
+          "before_false_accepts": 0,
+          "after_false_accepts": 0,
+          "new_false_accepts": 0,
+          "removed_false_accepts": 0
+        }
+      }
+    },
+    {
+      "group": 9,
+      "words": [
+        "두드려",
+        "때려",
+        "쳐"
+      ],
+      "stats": {
+        "reference": {
+          "trials": 4982,
+          "before_false_accepts": 6,
+          "after_false_accepts": 6,
+          "new_false_accepts": 0,
+          "removed_false_accepts": 0
+        },
+        "child_sentence": {
+          "trials": 474,
+          "before_false_accepts": 1,
+          "after_false_accepts": 1,
+          "new_false_accepts": 0,
+          "removed_false_accepts": 0
+        },
+        "child_single": {
+          "trials": 14,
+          "before_false_accepts": 1,
+          "after_false_accepts": 1,
+          "new_false_accepts": 0,
+          "removed_false_accepts": 0
+        }
+      }
+    }
+  ],
+  "unity": {
+    "actual_model_inferences": 1100,
+    "checked_pcm_windows": 1103,
+    "session_frames": 14734,
+    "comparisons": 2464,
+    "tests_passed": 1,
+    "raw_differences": 0
+  }
+}

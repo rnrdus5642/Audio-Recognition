@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>아이 음성 인식 확인</title>
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<header class="top">
+  <div class="top-inner">
+    <div>
+      <h1 id="page-title">아이 음성 인식 확인</h1>
+      <p class="sub" id="page-blurb">직접 미세조정한 한국어 음성 인식 모델이 아이 음성을 어떻게 알아듣는지 들어 보고 확인하세요.</p>
+    </div>
+    <div id="model-status" class="status status-loading">
+      <span class="dot"></span><span id="model-status-text">모델 상태 확인 중…</span>
+    </div>
+  </div>
+  <!-- 두 음성 출처는 서로 다른 자료라 페이지를 나눠 둡니다. 평범한 링크라
+       새로고침·뒤로 가기·즐겨찾기가 그대로 동작합니다. -->
+  <nav class="tabs" aria-label="음성 출처">
+    <a id="tab-aihub" class="tab" href="/aihub">AIHub 데이터</a>
+    <a id="tab-recordings" class="tab" href="/recordings">직접 녹음한 아동 음성</a>
+    <!-- 세 번째는 출처가 아니라 하는 일이 다른 화면이라 app.js 가 손대지 않습니다. -->
+    <a id="tab-review" class="tab" href="/review">발음 확인</a>
+  </nav>
+</header>
+
+<main class="layout">
+  <!-- 왼쪽: 음성 고르기 -->
+  <section class="panel browse" aria-label="음성 선택">
+    <h2>음성 고르기</h2>
+
+    <div class="field">
+      <label for="split">데이터셋</label>
+      <select id="split"></select>
+      <p class="hint" id="split-hint"></p>
+    </div>
+
+    <p class="hint dataset-note" id="dataset-note" hidden></p>
+
+    <div class="field">
+      <label for="query">검색</label>
+      <input id="query" type="search" placeholder="문장, 파일명, 화자로 검색" autocomplete="off">
+    </div>
+
+    <div class="filters">
+      <label id="child-filter" hidden>아동
+        <select id="child">
+          <option value="">전체</option>
+          <option value="child1">아동 1</option>
+          <option value="child2">아동 2</option>
+        </select>
+      </label>
+      <label id="age-filter">나이
+        <select id="age">
+          <option value="">전체</option>
+          <option value="5">5세</option>
+          <option value="6">6세</option>
+          <option value="7">7세</option>
+        </select>
+      </label>
+      <label>길이
+        <select id="bucket">
+          <option value="">전체</option>
+          <option value="short">짧음 (2초 미만)</option>
+          <option value="medium">보통 (2~5초)</option>
+          <option value="long">김 (5초 이상)</option>
+        </select>
+      </label>
+      <label>유형
+        <select id="style">
+          <option value="">전체</option>
+          <option value="formatted">낭독</option>
+          <option value="free">자유발화</option>
+          <option value="word">단어 목록</option>
+        </select>
+      </label>
+    </div>
+
+    <div class="listhead">
+      <span id="result-count" class="count">불러오는 중…</span>
+      <button id="random" class="ghost" type="button">무작위</button>
+    </div>
+
+    <ol id="sample-list" class="samples" aria-live="polite"></ol>
+
+    <nav class="pager">
+      <button id="prev-page" class="ghost" type="button">이전</button>
+      <span id="page-label">-</span>
+      <button id="next-page" class="ghost" type="button">다음</button>
+    </nav>
+  </section>
+
+  <!-- 오른쪽: 듣고 확인 -->
+  <section class="panel main" aria-label="인식 결과">
+    <div id="selected" class="selected">
+      <div class="selected-head">
+        <div>
+          <h2 id="sample-title">음성을 고르세요</h2>
+          <p id="sample-meta" class="meta"></p>
+          <p id="sample-source" class="meta source" hidden></p>
+        </div>
+        <div class="nav-buttons">
+          <button id="prev-sample" class="ghost" type="button" title="이전 음성">◀</button>
+          <button id="next-sample" class="ghost" type="button" title="다음 음성">▶</button>
+        </div>
+      </div>
+
+      <audio id="player" controls preload="metadata"></audio>
+      <p class="hint" id="audio-hint"></p>
+
+      <div class="actions">
+        <button id="transcribe" class="primary" type="button">이 음성 인식하기</button>
+        <button id="batch" class="ghost" type="button">여기서부터 10개 인식</button>
+      </div>
+      <div id="action-note" class="note" role="status"></div>
+    </div>
+
+    <div id="original-result" class="result" hidden>
+      <h3>원본 전체 구간별 인식 결과</h3>
+      <p class="hint" id="original-note"></p>
+      <div id="original-coverage" class="metrics"></div>
+      <div id="original-segments" class="segments"></div>
+    </div>
+
+    <div id="result" class="result" hidden>
+      <p class="hint" id="reference-note"></p>
+      <div class="row">
+        <div class="cell">
+          <h3>원문</h3>
+          <p id="ref-transcript" class="big"></p>
+        </div>
+        <div class="cell">
+          <h3>예상 발음 표기</h3>
+          <p id="ref-surface" class="big"></p>
+        </div>
+        <div class="cell highlight">
+          <h3>모델 인식 결과</h3>
+          <p id="pred-text" class="big"></p>
+        </div>
+      </div>
+
+      <p class="explain">
+        이 모델은 <b>발음 나는 대로 적은 표기</b>를 학습 목표로 삼아 훈련했습니다.
+        한국어는 적힌 대로 소리 나지 않는 경우가 많아서 (예: <b>익은</b> →
+        <b>이근</b>), 원문과 예상 발음 표기를 따로 보여 드립니다. 모델 결과는
+        가운데의 예상 발음 표기와 비교하는 것이 맞습니다.
+      </p>
+
+      <div id="metrics" class="metrics"></div>
+
+      <details class="details">
+        <summary>자모 단위로 비교해 보기</summary>
+        <div class="jamo-block">
+          <p><span class="tag">예상</span><span id="ref-jamo" class="mono"></span></p>
+          <p><span class="tag">인식</span><span id="pred-jamo" class="mono"></span></p>
+          <div id="diff" class="diff"></div>
+          <p id="orphan-note" class="hint"></p>
+        </div>
+      </details>
+    </div>
+
+    <div id="batch-result" class="result" hidden>
+      <h3>묶음 인식 결과</h3>
+      <div id="batch-aggregate" class="metrics"></div>
+      <div id="batch-rows" class="batch-rows"></div>
+    </div>
+
+    <details class="details upload">
+      <summary>내 음성 파일로 확인하기 (WAV / FLAC / OGG)</summary>
+      <div class="upload-body">
+        <input id="file" type="file" accept=".wav,.flac,.ogg">
+        <input id="file-reference" type="text" placeholder="원문을 알고 있다면 입력 (선택)">
+        <button id="upload" class="primary" type="button">업로드하고 인식</button>
+        <p class="hint">30초 이하, 20MB 이하. 파일은 이 컴퓨터 안에서만 처리됩니다.</p>
+        <div id="upload-note" class="note" role="status"></div>
+      </div>
+    </details>
+
+    <details class="details">
+      <summary>지금까지 인식한 기록</summary>
+      <div id="history" class="history"></div>
+    </details>
+
+    <footer class="foot">
+      <div id="model-facts"></div>
+    </footer>
+  </section>
+</main>
+
+<script src="/app.js"></script>
+</body>
+</html>

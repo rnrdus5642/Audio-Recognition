@@ -1,0 +1,1924 @@
+{
+  "complete": true,
+  "at_utc": "2026-09-29T03:12:11.266425+00:00",
+  "answer_snapshot": ".venv\\child-jamo-web-20260916\\dataset-audit-20260928\\answer-snapshot-revision-021.json",
+  "answer_snapshot_sha256": "014618681e1e34e362afc93067b1259743d0cb6aa87142fce0748ae6ac58235a",
+  "review_sha256": "167ff2b5720be1cc22563ec39815bfab500a420ae0e57d8200e16a40768e97b9",
+  "selection_sha256": "fe1a0c71f9a90300507b488dd147be98525b29d8bfea9c86f23088ff5d54ba15",
+  "checkpoint_sha256": "5a330f1bea3a17d1d063fdfd71a0cc25394695b0b797de01b293f6f688257aa7",
+  "answered": 20,
+  "answer_history_entries": 21,
+  "counts": {
+    "training_form_selected": 14,
+    "difference_reported": 5,
+    "unusable": 1
+  },
+  "by_sampling_group": {
+    "random": {
+      "training_form_selected": 6,
+      "difference_reported": 3,
+      "unusable": 1
+    },
+    "focused": {
+      "training_form_selected": 8,
+      "difference_reported": 2
+    }
+  },
+  "difference_numbers": [
+    3,
+    4,
+    6,
+    10,
+    15
+  ],
+  "differences_matching_model_target": [
+    3,
+    4,
+    10,
+    15
+  ],
+  "differences_with_model_literal_first_note_agreement_not_phonetic_certification": [
+    6
+  ],
+  "reported_differences_with_no_nonzero_samples_removed": [
+    3,
+    4,
+    6,
+    15
+  ],
+  "reported_differences_with_possible_crop_contribution": [],
+  "source_pair_difference_reported_without_g2p_text_change": [
+    3,
+    10
+  ],
+  "original_comparison_completed_numbers": [
+    10
+  ],
+  "pending_original_comparisons": [],
+  "first_note_details_not_certified_by_selected_answer": [
+    2,
+    8,
+    9
+  ],
+  "note_caveat": "All first-impression text is approximate human spelling. Preserve the selected judgment; do not apply G2P to notes, count phone errors from them, or infer all segments match from a focused contrast choice.",
+  "previous_audit": {
+    "path": "docs\\data\\child-jamo-label-review-20260927.json",
+    "sha256": "111191f325a84a50b8d7813da4012e80dce96918e54f6e93b48d053abab730db",
+    "questions": 18,
+    "reported_difference_numbers": [
+      1,
+      4,
+      10,
+      13
+    ],
+    "new_sample_overlap": 0,
+    "combined_distinct_questions": 38,
+    "combined_reported_differences": 9,
+    "population_rate_estimate": null
+  },
+  "next_recommendation": {
+    "priority": "Source/crop follow-up is complete. Curate actual-pronunciation evaluation labels and matched normal/variant contrasts in unseen speakers before another label-only training comparison.",
+    "already_reviewed_difference_items_to_curate": [
+      3,
+      4,
+      6,
+      10,
+      15
+    ],
+    "minimal_additional_listening": [],
+    "unseen_speaker_evaluation_required": true,
+    "prior_6_train_4_valid_trial_generalization_improvement": false,
+    "new_training_started": false
+  },
+  "limitations": [
+    "This is a small stratified and contrast-enriched training sample, not a population error-rate estimate.",
+    "Model-target agreement and note string agreement are not certified phonetic accuracy.",
+    "Digital-zero removal excludes waveform speech deletion; it does not exclude a change in model context.",
+    "A large removed signal is not proof of cropped target speech; it may be background or another utterance.",
+    "A same-in-original judgment means the reported discrepancy persists before cropping; it does not identify the removed signal or certify every crop boundary.",
+    "These items were used by the baseline model in training; they cannot establish unseen-speaker generalization.",
+    "Dataset suitability for pronunciation preservation is distinct from a supplier transcription-policy violation."
+  ],
+  "checks": {
+    "all_20_answers_bound_to_frozen_questions": true,
+    "original_json_hashes_and_targets_verified": 20,
+    "served_train_and_full_wav_hashes_verified": 40,
+    "training_pcm_verified": 20,
+    "zero_or_whole_sample_claims_exact_not_energy_threshold": true,
+    "qa_database_used": false,
+    "history_preserved": true,
+    "protected_files_unchanged": true
+  },
+  "protected_file_hashes": {
+    ".venv\\child-jamo-web-20260916\\dataset-audit-20260928\\selection.json": "fe1a0c71f9a90300507b488dd147be98525b29d8bfea9c86f23088ff5d54ba15",
+    ".venv\\child-jamo-web-20260916\\dataset-audit-20260928\\review.json": "167ff2b5720be1cc22563ec39815bfab500a420ae0e57d8200e16a40768e97b9",
+    ".venv\\child-jamo-web-20260916\\dataset-audit-20260928\\evidence.json": "78a5df427f9ec7dc6754236192eff22fddd7166fa028bc0fff9c387b24e81736",
+    ".venv\\child-jamo-web-20260916\\dataset-audit-20260928\\baseline-predictions.json": "9071b42154687b9923ed72b769f9e7d0cf2cd4b576567c60bdb0daa2737813eb",
+    ".venv\\child-jamo-web-20260916\\dataset-audit-20260928\\answers.sqlite3": "2aab03e7bb4b7ef1acd5f07195a9d51ff929ca037a726ee207818b6f483e86e9",
+    ".venv\\hubert-child-20260914\\manifest-train.jsonl": "6b15a65983f64d8b01603161fbb901e1dbcee164fce605d39560ac2a71681a04"
+  },
+  "rows": [
+    {
+      "number": 1,
+      "group": "velar_tense",
+      "stratum": "focused",
+      "wav": "K04578239-AMG11-L1N2D4-E-K0KK-04108330.wav",
+      "speaker": "73410b280868",
+      "binding": "dd336a9aa068ff2ad501b13f820804ec2ae5816d44a6e0d812fa6714d9a21be3",
+      "raw_transcript": "사과.",
+      "transcript": "사과",
+      "training_surface": "사과",
+      "label_ids": [
+        11,
+        21,
+        2,
+        30
+      ],
+      "first_heard_unedited": "사과",
+      "first_heard_at": "2026-09-29T01:06:01.961Z",
+      "answer": {
+        "revision": 1,
+        "item_id": "1",
+        "binding": "dd336a9aa068ff2ad501b13f820804ec2ae5816d44a6e0d812fa6714d9a21be3",
+        "choice": "form_2",
+        "note": "",
+        "crop_relation": "",
+        "at": "2026-09-29T01:06:11.243Z"
+      },
+      "selected_choice_label": "사과",
+      "choice_role": "training_surface",
+      "judgment": "training_form_selected",
+      "question_scope": "contrast",
+      "contrast": {
+        "position": 1,
+        "focus": "ㄱ / ㄲ",
+        "forms": [
+          "사과",
+          "사꽈"
+        ]
+      },
+      "model_text": "사과",
+      "model_matches_training_target": true,
+      "model_text_equals_first_note_ignoring_spaces_only": true,
+      "g2p_changes_transcript": false,
+      "source_json_path": ".venv\\child-jamo-web-20260916\\dataset-audit-20260928\\source-json\\01.json",
+      "crop": {
+        "start_seconds": 0.59,
+        "end_seconds": 3.968,
+        "full_seconds": 3.968,
+        "training_seconds": 3.378,
+        "physical_category": "nonzero_signal_removed_unclassified",
+        "removed_prefix": {
+          "samples": 9440,
+          "seconds": 0.59,
+          "nonzero_samples": 9055,
+          "peak": 0.01580810546875,
+          "rms": 0.0033235678612129425
+        },
+        "removed_suffix": {
+          "samples": 0,
+          "seconds": 0,
+          "nonzero_samples": 0,
+          "peak": 0,
+          "rms": 0
+        },
+        "removed_all": {
+          "samples": 9440,
+          "seconds": 0.59,
+          "nonzero_samples": 9055,
+          "peak": 0.01580810546875,
+          "rms": 0.0033235678612129425
+        },
+        "retained_first_250ms": {
+          "samples": 4000,
+          "seconds": 0.25,
+          "nonzero_samples": 3950,
+          "peak": 0.00738525390625,
+          "rms": 0.0017138557488040728
+        },
+        "exact_source_slice": true,
+        "human_full_audio_comparison": null
+      },
+      "origin_status": "no_new_origin_claim",
+      "new_phonetic_target": null
+    },
+    {
+      "number": 2,
+      "group": "random:6:formatted",
+      "stratum": "random",
+      "wav": "K03854773-AMG10-L1N2D2-E-K0KK-02173406.wav",
+      "speaker": "53b1751856e3",
+      "binding": "c18550006e92787c32c55a70ae4b1c7d6f85427432a50144d6397a1e93041d70",
+      "raw_transcript": "벨소리가 들려요.",
+      "transcript": "벨소리가 들려요",
+      "training_surface": "벨소리가 들려요",
+      "label_ids": [
+        9,
+        26,
+        7,
+        11,
+        29,
+        7,
+        41,
+        2,
+        21,
+        1,
+        5,
+        39,
+        7,
+        7,
+        27,
+        13,
+        33
+      ],
+      "first_heard_unedited": "뱃소리가 들려요",
+      "first_heard_at": "2026-09-29T01:06:23.729Z",
+      "answer": {
+        "revision": 2,
+        "item_id": "2",
+        "binding": "c18550006e92787c32c55a70ae4b1c7d6f85427432a50144d6397a1e93041d70",
+        "choice": "match",
+        "note": "",
+        "crop_relation": "",
+        "at": "2026-09-29T01:06:50.744Z"
+      },
+      "selected_choice_label": "소리가 비교 표기와 같게 들림",
+      "choice_role": "training_surface",
+      "judgment": "training_form_selected",
+      "question_scope": "general",
+      "contrast": null,
+      "model_text": "벨소리가 들려요",
+      "model_matches_training_target": true,
+      "model_text_equals_first_note_ignoring_spaces_only": false,
+      "g2p_changes_transcript": false,
+      "source_json_path": ".venv\\child-jamo-web-20260916\\dataset-audit-20260928\\source-json\\02.json",
+      "crop": {
+        "start_seconds": 0.18,
+        "end_seconds": 4.096,
+        "full_seconds": 4.096,
+        "training_seconds": 3.916,
+        "physical_category": "nonzero_signal_removed_unclassified",
+        "removed_prefix": {
+          "samples": 2880,
+          "seconds": 0.18,
+          "nonzero_samples": 1219,
+          "peak": 0.001983642578125,
+          "rms": 0.0002066566253770032
+        },
+        "removed_suffix": {
+          "samples": 0,
+          "seconds": 0,
+          "nonzero_samples": 0,
+          "peak": 0,
+          "rms": 0
+        },
+        "removed_all": {
+          "samples": 2880,
+          "seconds": 0.18,
+          "nonzero_samples": 1219,
+          "peak": 0.001983642578125,
+          "rms": 0.0002066566253770032
+        },
+        "retained_first_250ms": {
+          "samples": 4000,
+          "seconds": 0.25,
+          "nonzero_samples": 2445,
+          "peak": 0.000823974609375,
+          "rms": 0.0001326418018111359
+        },
+        "exact_source_slice": true,
+        "human_full_audio_comparison": null
+      },
+      "origin_status": "no_new_origin_claim",
+      "new_phonetic_target": null
+    },
+    {
+      "number": 3,
+      "group": "onset_presence",
+      "stratum": "focused",
+      "wav": "K03157268-AMG13-L1N2D1-E-K0KK-04103233.wav",
+      "speaker": "c09dc7da52e6",
+      "binding": "5a23a1a4013745f27351ae7333ec85214a19490b2aefee4018b36f9954e070cf",
+      "raw_transcript": "반가워요.",
+      "transcript": "반가워요",
+      "training_surface": "반가워요",
+      "label_ids": [
+        9,
+        21,
+        4,
+        2,
+        21,
+        13,
+        35,
+        13,
+        33
+      ],
+      "first_heard_unedited": "방가워우요",
+      "first_heard_at": "2026-09-29T01:07:26.335Z",
+      "answer": {
+        "revision": 3,
+        "item_id": "3",
+        "binding": "5a23a1a4013745f27351ae7333ec85214a19490b2aefee4018b36f9954e070cf",
+        "choice": "other",
+        "note": "",
+        "crop_relation": "",
+        "at": "2026-09-29T01:07:31.718Z"
+      },
+      "selected_choice_label": "보기와 다른 소리로 들림",
+      "choice_role": null,
+      "judgment": "difference_reported",
+      "question_scope": "contrast",
+      "contrast": {
+        "position": 0,
+        "focus": "ㅂ 초성의 유무",
+        "forms": [
+          "반가워요",
+          "안가워요"
+        ]
+      },
+      "model_text": "반가워요",
+      "model_matches_training_target": true,
+      "model_text_equals_first_note_ignoring_spaces_only": false,
+      "g2p_changes_transcript": false,
+      "source_json_path": ".venv\\child-jamo-web-20260916\\dataset-audit-20260928\\source-json\\03.json",
+      "crop": {
+        "start_seconds": 0.5,
+        "end_seconds": 3.84,
+        "full_seconds": 3.84,
+        "training_seconds": 3.34,
+        "physical_category": "digital_zero_only_removed",
+        "removed_prefix": {
+          "samples": 8000,
+          "seconds": 0.5,
+          "nonzero_samples": 0,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        "removed_suffix": {
+          "samples": 0,
+          "seconds": 0,
+          "nonzero_samples": 0,
+          "peak": 0,
+          "rms": 0
+        },
+        "removed_all": {
+          "samples": 8000,
+          "seconds": 0.5,
+          "nonzero_samples": 0,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        "retained_first_250ms": {
+          "samples": 4000,
+          "seconds": 0.25,
+          "nonzero_samples": 0,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        "exact_source_slice": true,
+        "human_full_audio_comparison": null
+      },
+      "origin_status": "source_pair_difference_reported_no_text_change_or_speech_removal",
+      "new_phonetic_target": null
+    },
+    {
+      "number": 4,
+      "group": "random:5:formatted",
+      "stratum": "random",
+      "wav": "K02450631-AMG10-L5N1D1-E-K0KK-01027544.wav",
+      "speaker": "5760f930210f",
+      "binding": "ba9bf01beb0152a32ab1927c9870c96f64c456ce6ffdf7d483333b99ae82d3f6",
+      "raw_transcript": "백화점에 가요.",
+      "transcript": "백화점에 가요",
+      "training_surface": "배콰저메 가요",
+      "label_ids": [
+        9,
+        22,
+        17,
+        30,
+        14,
+        25,
+        8,
+        26,
+        1,
+        2,
+        21,
+        13,
+        33
+      ],
+      "first_heard_unedited": "백화강에가요",
+      "first_heard_at": "2026-09-29T01:07:43.175Z",
+      "answer": {
+        "revision": 4,
+        "item_id": "4",
+        "binding": "ba9bf01beb0152a32ab1927c9870c96f64c456ce6ffdf7d483333b99ae82d3f6",
+        "choice": "different",
+        "note": "",
+        "crop_relation": "",
+        "at": "2026-09-29T01:07:59.844Z"
+      },
+      "selected_choice_label": "다르게 들리는 부분이 있음",
+      "choice_role": "reported_mismatch",
+      "judgment": "difference_reported",
+      "question_scope": "general",
+      "contrast": null,
+      "model_text": "배콰저메 가요",
+      "model_matches_training_target": true,
+      "model_text_equals_first_note_ignoring_spaces_only": false,
+      "g2p_changes_transcript": true,
+      "source_json_path": ".venv\\child-jamo-web-20260916\\dataset-audit-20260928\\source-json\\04.json",
+      "crop": {
+        "start_seconds": 0.0,
+        "end_seconds": 4.544,
+        "full_seconds": 4.544,
+        "training_seconds": 4.544,
+        "physical_category": "full_source",
+        "removed_prefix": {
+          "samples": 0,
+          "seconds": 0,
+          "nonzero_samples": 0,
+          "peak": 0,
+          "rms": 0
+        },
+        "removed_suffix": {
+          "samples": 0,
+          "seconds": 0,
+          "nonzero_samples": 0,
+          "peak": 0,
+          "rms": 0
+        },
+        "removed_all": {
+          "samples": 0,
+          "seconds": 0,
+          "nonzero_samples": 0,
+          "peak": 0,
+          "rms": 0
+        },
+        "retained_first_250ms": {
+          "samples": 4000,
+          "seconds": 0.25,
+          "nonzero_samples": 18,
+          "peak": 3.0517578125e-05,
+          "rms": 2.0471813758848173e-06
+        },
+        "exact_source_slice": true,
+        "human_full_audio_comparison": null
+      },
+      "origin_status": "speech_removal_excluded_source_vs_g2p_unresolved",
+      "new_phonetic_target": null
+    },
+    {
+      "number": 5,
+      "group": "coda_presence",
+      "stratum": "focused",
+      "wav": "K03918018-AFG10-L5N1D1-E-K0KK-03907025.wav",
+      "speaker": "3eebfbb8d746",
+      "binding": "c3e85b6bbe6f229fa49eb48d4dc72333bae9328c936c27b34c535fbfe916fd79",
+      "raw_transcript": "우주선.",
+      "transcript": "우주선",
+      "training_surface": "우주선",
+      "label_ids": [
+        13,
+        34,
+        14,
+        34,
+        11,
+        25,
+        4
+      ],
+      "first_heard_unedited": "우주선",
+      "first_heard_at": "2026-09-29T01:08:05.224Z",
+      "answer": {
+        "revision": 5,
+        "item_id": "5",
+        "binding": "c3e85b6bbe6f229fa49eb48d4dc72333bae9328c936c27b34c535fbfe916fd79",
+        "choice": "form_1",
+        "note": "",
+        "crop_relation": "",
+        "at": "2026-09-29T01:08:07.033Z"
+      },
+      "selected_choice_label": "우주선",
+      "choice_role": "training_surface",
+      "judgment": "training_form_selected",
+      "question_scope": "contrast",
+      "contrast": {
+        "position": 2,
+        "focus": "ㄴ 받침의 유무",
+        "forms": [
+          "우주선",
+          "우주서"
+        ]
+      },
+      "model_text": "우주선",
+      "model_matches_training_target": true,
+      "model_text_equals_first_note_ignoring_spaces_only": true,
+      "g2p_changes_transcript": false,
+      "source_json_path": ".venv\\child-jamo-web-20260916\\dataset-audit-20260928\\source-json\\05.json",
+      "crop": {
+        "start_seconds": 0.0,
+        "end_seconds": 2.83,
+        "full_seconds": 2.944,
+        "training_seconds": 2.83,
+        "physical_category": "nonzero_signal_removed_unclassified",
+        "removed_prefix": {
+          "samples": 0,
+          "seconds": 0,
+          "nonzero_samples": 0,
+          "peak": 0,
+          "rms": 0
+        },
+        "removed_suffix": {
+          "samples": 1824,
+          "seconds": 0.114,
+          "nonzero_samples": 13,
+          "peak": 3.0517578125e-05,
+          "rms": 2.5763764705885714e-06
+        },
+        "removed_all": {
+          "samples": 1824,
+          "seconds": 0.114,
+          "nonzero_samples": 13,
+          "peak": 3.0517578125e-05,
+          "rms": 2.5763764705885714e-06
+        },
+        "retained_first_250ms": {
+          "samples": 4000,
+          "seconds": 0.25,
+          "nonzero_samples": 3601,
+          "peak": 0.007110595703125,
+          "rms": 0.0017269893820830167
+        },
+        "exact_source_slice": true,
+        "human_full_audio_comparison": null
+      },
+      "origin_status": "no_new_origin_claim",
+      "new_phonetic_target": null
+    },
+    {
+      "number": 6,
+      "group": "random:5:formatted",
+      "stratum": "random",
+      "wav": "K02814180-AMG10-L1N2D1-E-K0KK-02169043.wav",
+      "speaker": "3b96b9d2dc7c",
+      "binding": "a8f434f0e33a896b10d95e2f92a7fe14cf7e51108e6acab20647c949b146872c",
+      "raw_transcript": "고양이가 졸아요.",
+      "transcript": "고양이가 졸아요",
+      "training_surface": "고양이가 조라요",
+      "label_ids": [
+        2,
+        29,
+        13,
+        23,
+        13,
+        13,
+        41,
+        2,
+        21,
+        1,
+        14,
+        29,
+        7,
+        21,
+        13,
+        33
+      ],
+      "first_heard_unedited": "고양이가조아요",
+      "first_heard_at": "2026-09-29T01:08:23.052Z",
+      "answer": {
+        "revision": 6,
+        "item_id": "6",
+        "binding": "a8f434f0e33a896b10d95e2f92a7fe14cf7e51108e6acab20647c949b146872c",
+        "choice": "different",
+        "note": "",
+        "crop_relation": "",
+        "at": "2026-09-29T01:08:25.662Z"
+      },
+      "selected_choice_label": "다르게 들리는 부분이 있음",
+      "choice_role": "reported_mismatch",
+      "judgment": "difference_reported",
+      "question_scope": "general",
+      "contrast": null,
+      "model_text": "고양이가 조아요",
+      "model_matches_training_target": false,
+      "model_text_equals_first_note_ignoring_spaces_only": true,
+      "g2p_changes_transcript": true,
+      "source_json_path": ".venv\\child-jamo-web-20260916\\dataset-audit-20260928\\source-json\\06.json",
+      "crop": {
+        "start_seconds": 0.0,
+        "end_seconds": 3.456,
+        "full_seconds": 3.456,
+        "training_seconds": 3.456,
+        "physical_category": "full_source",
+        "removed_prefix": {
+          "samples": 0,
+          "seconds": 0,
+          "nonzero_samples": 0,
+          "peak": 0,
+          "rms": 0
+        },
+        "removed_suffix": {
+          "samples": 0,
+          "seconds": 0,
+          "nonzero_samples": 0,
+          "peak": 0,
+          "rms": 0
+        },
+        "removed_all": {
+          "samples": 0,
+          "seconds": 0,
+          "nonzero_samples": 0,
+          "peak": 0,
+          "rms": 0
+        },
+        "retained_first_250ms": {
+          "samples": 4000,
+          "seconds": 0.25,
+          "nonzero_samples": 89,
+          "peak": 0.000335693359375,
+          "rms": 1.6119522273247385e-05
+        },
+        "exact_source_slice": true,
+        "human_full_audio_comparison": null
+      },
+      "origin_status": "speech_removal_excluded_source_vs_g2p_unresolved",
+      "new_phonetic_target": null
+    },
+    {
+      "number": 7,
+      "group": "random:5:formatted",
+      "stratum": "random",
+      "wav": "K04120041-AFG10-L1N2D1-E-K0KK-00197889.wav",
+      "speaker": "425ee316fbbc",
+      "binding": "2d6802bc7e0ba8196afcbf1393bf0a0f03e1f395c5d883ac1e94680113920292",
+      "raw_transcript": "천천히 숨을 쉬세요.",
+      "transcript": "천천히 숨을 쉬세요",
+      "training_surface": "천천히 수믈 쉬세요",
+      "label_ids": [
+        16,
+        25,
+        4,
+        16,
+        25,
+        4,
+        20,
+        41,
+        1,
+        11,
+        34,
+        8,
+        39,
+        7,
+        1,
+        11,
+        37,
+        11,
+        26,
+        13,
+        33
+      ],
+      "first_heard_unedited": "천천히 숨을쉬세요",
+      "first_heard_at": "2026-09-29T01:08:40.326Z",
+      "answer": {
+        "revision": 7,
+        "item_id": "7",
+        "binding": "2d6802bc7e0ba8196afcbf1393bf0a0f03e1f395c5d883ac1e94680113920292",
+        "choice": "match",
+        "note": "",
+        "crop_relation": "",
+        "at": "2026-09-29T01:08:43.434Z"
+      },
+      "selected_choice_label": "소리가 비교 표기와 같게 들림",
+      "choice_role": "training_surface",
+      "judgment": "training_form_selected",
+      "question_scope": "general",
+      "contrast": null,
+      "model_text": "천천히 수믈 쉬세요",
+      "model_matches_training_target": true,
+      "model_text_equals_first_note_ignoring_spaces_only": false,
+      "g2p_changes_transcript": true,
+      "source_json_path": ".venv\\child-jamo-web-20260916\\dataset-audit-20260928\\source-json\\07.json",
+      "crop": {
+        "start_seconds": 1.78,
+        "end_seconds": 7.168,
+        "full_seconds": 7.168,
+        "training_seconds": 5.388,
+        "physical_category": "nonzero_signal_removed_unclassified",
+        "removed_prefix": {
+          "samples": 28480,
+          "seconds": 1.78,
+          "nonzero_samples": 5529,
+          "peak": 0.00018310546875,
+          "rms": 2.0475008237101034e-05
+        },
+        "removed_suffix": {
+          "samples": 0,
+          "seconds": 0,
+          "nonzero_samples": 0,
+          "peak": 0,
+          "rms": 0
+        },
+        "removed_all": {
+          "samples": 28480,
+          "seconds": 1.78,
+          "nonzero_samples": 5529,
+          "peak": 0.00018310546875,
+          "rms": 2.0475008237101034e-05
+        },
+        "retained_first_250ms": {
+          "samples": 4000,
+          "seconds": 0.25,
+          "nonzero_samples": 441,
+          "peak": 6.103515625e-05,
+          "rms": 1.1150406437039252e-05
+        },
+        "exact_source_slice": true,
+        "human_full_audio_comparison": null
+      },
+      "origin_status": "no_new_origin_claim",
+      "new_phonetic_target": null
+    },
+    {
+      "number": 8,
+      "group": "onset_presence",
+      "stratum": "focused",
+      "wav": "K02340391-AMG13-L1N2D1-E-K0KK-00176511.wav",
+      "speaker": "0793f50bdd18",
+      "binding": "d189e9191ab6103252ab2ec90e3c0ae2020ebd5011e51dd62d4950e9e6be0bf4",
+      "raw_transcript": "어린싹.",
+      "transcript": "어린싹",
+      "training_surface": "어린싹",
+      "label_ids": [
+        13,
+        25,
+        7,
+        41,
+        4,
+        12,
+        21,
+        2
+      ],
+      "first_heard_unedited": "어린삭",
+      "first_heard_at": "2026-09-29T01:08:55.022Z",
+      "answer": {
+        "revision": 8,
+        "item_id": "8",
+        "binding": "d189e9191ab6103252ab2ec90e3c0ae2020ebd5011e51dd62d4950e9e6be0bf4",
+        "choice": "form_1",
+        "note": "",
+        "crop_relation": "",
+        "at": "2026-09-29T01:08:59.793Z"
+      },
+      "selected_choice_label": "어린싹",
+      "choice_role": "training_surface",
+      "judgment": "training_form_selected",
+      "question_scope": "contrast",
+      "contrast": {
+        "position": 1,
+        "focus": "ㄹ 초성의 유무",
+        "forms": [
+          "어린싹",
+          "어인싹"
+        ]
+      },
+      "model_text": "어린싹",
+      "model_matches_training_target": true,
+      "model_text_equals_first_note_ignoring_spaces_only": false,
+      "g2p_changes_transcript": false,
+      "source_json_path": ".venv\\child-jamo-web-20260916\\dataset-audit-20260928\\source-json\\08.json",
+      "crop": {
+        "start_seconds": 0.18,
+        "end_seconds": 3.328,
+        "full_seconds": 3.328,
+        "training_seconds": 3.148,
+        "physical_category": "nonzero_signal_removed_unclassified",
+        "removed_prefix": {
+          "samples": 2880,
+          "seconds": 0.18,
+          "nonzero_samples": 382,
+          "peak": 0.000335693359375,
+          "rms": 3.6416542136028864e-05
+        },
+        "removed_suffix": {
+          "samples": 0,
+          "seconds": 0,
+          "nonzero_samples": 0,
+          "peak": 0,
+          "rms": 0
+        },
+        "removed_all": {
+          "samples": 2880,
+          "seconds": 0.18,
+          "nonzero_samples": 382,
+          "peak": 0.000335693359375,
+          "rms": 3.6416542136028864e-05
+        },
+        "retained_first_250ms": {
+          "samples": 4000,
+          "seconds": 0.25,
+          "nonzero_samples": 221,
+          "peak": 0.0001220703125,
+          "rms": 9.35651227829339e-06
+        },
+        "exact_source_slice": true,
+        "human_full_audio_comparison": null
+      },
+      "origin_status": "no_new_origin_claim",
+      "new_phonetic_target": null
+    },
+    {
+      "number": 9,
+      "group": "vowel_quality",
+      "stratum": "focused",
+      "wav": "K06363619-AFG10-L1N2D3-E-K0KK-01967708.wav",
+      "speaker": "d6d6981499b6",
+      "binding": "5447a6d96cb0d00aa64f9f65f895054ebfeee2a7391a09a2de8b9aadcd54a337",
+      "raw_transcript": "작은언니.",
+      "transcript": "작은언니",
+      "training_surface": "자그넌니",
+      "label_ids": [
+        14,
+        21,
+        2,
+        39,
+        4,
+        25,
+        4,
+        4,
+        41
+      ],
+      "first_heard_unedited": "자끈언니",
+      "first_heard_at": "2026-09-29T01:09:09.727Z",
+      "answer": {
+        "revision": 9,
+        "item_id": "9",
+        "binding": "5447a6d96cb0d00aa64f9f65f895054ebfeee2a7391a09a2de8b9aadcd54a337",
+        "choice": "form_1",
+        "note": "",
+        "crop_relation": "",
+        "at": "2026-09-29T01:09:16.548Z"
+      },
+      "selected_choice_label": "자그넌니",
+      "choice_role": "training_surface",
+      "judgment": "training_form_selected",
+      "question_scope": "contrast",
+      "contrast": {
+        "position": 1,
+        "focus": "ㅜ / ㅡ",
+        "forms": [
+          "자구넌니",
+          "자그넌니"
+        ]
+      },
+      "model_text": "자그넌니",
+      "model_matches_training_target": true,
+      "model_text_equals_first_note_ignoring_spaces_only": false,
+      "g2p_changes_transcript": true,
+      "source_json_path": ".venv\\child-jamo-web-20260916\\dataset-audit-20260928\\source-json\\09.json",
+      "crop": {
+        "start_seconds": 0.04,
+        "end_seconds": 3.2,
+        "full_seconds": 3.2,
+        "training_seconds": 3.16,
+        "physical_category": "nonzero_signal_removed_unclassified",
+        "removed_prefix": {
+          "samples": 640,
+          "seconds": 0.04,
+          "nonzero_samples": 156,
+          "peak": 0.00238037109375,
+          "rms": 0.0004927416564597846
+        },
+        "removed_suffix": {
+          "samples": 0,
+          "seconds": 0,
+          "nonzero_samples": 0,
+          "peak": 0,
+          "rms": 0
+        },
+        "removed_all": {
+          "samples": 640,
+          "seconds": 0.04,
+          "nonzero_samples": 156,
+          "peak": 0.00238037109375,
+          "rms": 0.0004927416564597846
+        },
+        "retained_first_250ms": {
+          "samples": 4000,
+          "seconds": 0.25,
+          "nonzero_samples": 3929,
+          "peak": 0.00408935546875,
+          "rms": 0.0010137953692201723
+        },
+        "exact_source_slice": true,
+        "human_full_audio_comparison": null
+      },
+      "origin_status": "no_new_origin_claim",
+      "new_phonetic_target": null
+    },
+    {
+      "number": 10,
+      "group": "random:6:formatted",
+      "stratum": "random",
+      "wav": "K04112272-AMG10-L4N1D1-E-K0KK-01619039.wav",
+      "speaker": "1134c0a7d44f",
+      "binding": "dfa431f32cca29067f63242e96039ea91fc995a13b3c46201df92f53ab350223",
+      "raw_transcript": "장미가 예뻐요.",
+      "transcript": "장미가 예뻐요",
+      "training_surface": "장미가 예뻐요",
+      "label_ids": [
+        14,
+        21,
+        13,
+        8,
+        41,
+        2,
+        21,
+        1,
+        13,
+        28,
+        10,
+        25,
+        13,
+        33
+      ],
+      "first_heard_unedited": "감미가예뻐요",
+      "first_heard_at": "2026-09-29T01:09:26.633Z",
+      "answer": {
+        "revision": 21,
+        "item_id": "10",
+        "binding": "dfa431f32cca29067f63242e96039ea91fc995a13b3c46201df92f53ab350223",
+        "choice": "different",
+        "note": "",
+        "crop_relation": "same",
+        "at": "2026-09-29T03:10:19.653Z"
+      },
+      "selected_choice_label": "다르게 들리는 부분이 있음",
+      "choice_role": "reported_mismatch",
+      "judgment": "difference_reported",
+      "question_scope": "general",
+      "contrast": null,
+      "model_text": "장미가 예뻐요",
+      "model_matches_training_target": true,
+      "model_text_equals_first_note_ignoring_spaces_only": false,
+      "g2p_changes_transcript": false,
+      "source_json_path": ".venv\\child-jamo-web-20260916\\dataset-audit-20260928\\source-json\\10.json",
+      "crop": {
+        "start_seconds": 1.27,
+        "end_seconds": 4.672,
+        "full_seconds": 4.672,
+        "training_seconds": 3.402,
+        "physical_category": "nonzero_signal_removed_unclassified",
+        "removed_prefix": {
+          "samples": 20320,
+          "seconds": 1.27,
+          "nonzero_samples": 19038,
+          "peak": 0.91644287109375,
+          "rms": 0.2433217618791082
+        },
+        "removed_suffix": {
+          "samples": 0,
+          "seconds": 0,
+          "nonzero_samples": 0,
+          "peak": 0,
+          "rms": 0
+        },
+        "removed_all": {
+          "samples": 20320,
+          "seconds": 1.27,
+          "nonzero_samples": 19038,
+          "peak": 0.91644287109375,
+          "rms": 0.2433217618791082
+        },
+        "retained_first_250ms": {
+          "samples": 4000,
+          "seconds": 0.25,
+          "nonzero_samples": 3999,
+          "peak": 0.506072998046875,
+          "rms": 0.1313384021012598
+        },
+        "exact_source_slice": true,
+        "human_full_audio_comparison": "same"
+      },
+      "origin_status": "difference_persists_in_original_unchanged_transcript_reported",
+      "new_phonetic_target": null
+    },
+    {
+      "number": 11,
+      "group": "random:5:formatted",
+      "stratum": "random",
+      "wav": "K02742285-AFG10-L5N1D1-E-K0KK-01032264.wav",
+      "speaker": "d8f548dedc43",
+      "binding": "be4505419ec5f799fa89668b7993feb7a9843a1ac01b02b760708ee2b646e8ab",
+      "raw_transcript": "아주 멋져요.",
+      "transcript": "아주 멋져요",
+      "training_surface": "아주 먿쩌요",
+      "label_ids": [
+        13,
+        21,
+        14,
+        34,
+        1,
+        8,
+        25,
+        5,
+        15,
+        25,
+        13,
+        33
+      ],
+      "first_heard_unedited": "아주멋져요",
+      "first_heard_at": "2026-09-29T01:09:35.931Z",
+      "answer": {
+        "revision": 11,
+        "item_id": "11",
+        "binding": "be4505419ec5f799fa89668b7993feb7a9843a1ac01b02b760708ee2b646e8ab",
+        "choice": "match",
+        "note": "",
+        "crop_relation": "",
+        "at": "2026-09-29T01:09:38.216Z"
+      },
+      "selected_choice_label": "소리가 비교 표기와 같게 들림",
+      "choice_role": "training_surface",
+      "judgment": "training_form_selected",
+      "question_scope": "general",
+      "contrast": null,
+      "model_text": "아주 먿쩌요",
+      "model_matches_training_target": true,
+      "model_text_equals_first_note_ignoring_spaces_only": false,
+      "g2p_changes_transcript": true,
+      "source_json_path": ".venv\\child-jamo-web-20260916\\dataset-audit-20260928\\source-json\\11.json",
+      "crop": {
+        "start_seconds": 0.0,
+        "end_seconds": 5.568,
+        "full_seconds": 5.568,
+        "training_seconds": 5.568,
+        "physical_category": "full_source",
+        "removed_prefix": {
+          "samples": 0,
+          "seconds": 0,
+          "nonzero_samples": 0,
+          "peak": 0,
+          "rms": 0
+        },
+        "removed_suffix": {
+          "samples": 0,
+          "seconds": 0,
+          "nonzero_samples": 0,
+          "peak": 0,
+          "rms": 0
+        },
+        "removed_all": {
+          "samples": 0,
+          "seconds": 0,
+          "nonzero_samples": 0,
+          "peak": 0,
+          "rms": 0
+        },
+        "retained_first_250ms": {
+          "samples": 4000,
+          "seconds": 0.25,
+          "nonzero_samples": 0,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        "exact_source_slice": true,
+        "human_full_audio_comparison": null
+      },
+      "origin_status": "no_new_origin_claim",
+      "new_phonetic_target": null
+    },
+    {
+      "number": 12,
+      "group": "affricate_stop",
+      "stratum": "focused",
+      "wav": "K07871900-AFG10-L1N2D2-E-K0KK-02243366.wav",
+      "speaker": "e41d64db5703",
+      "binding": "867513e7365b74de7c178de96d7ad26fa74f22d1139854b14d8ebd8a028b62f8",
+      "raw_transcript": "비틀비틀.",
+      "transcript": "비틀비틀",
+      "training_surface": "비틀비틀",
+      "label_ids": [
+        9,
+        41,
+        18,
+        39,
+        7,
+        9,
+        41,
+        18,
+        39,
+        7
+      ],
+      "first_heard_unedited": "비틀비틀",
+      "first_heard_at": "2026-09-29T01:09:45.044Z",
+      "answer": {
+        "revision": 12,
+        "item_id": "12",
+        "binding": "867513e7365b74de7c178de96d7ad26fa74f22d1139854b14d8ebd8a028b62f8",
+        "choice": "form_2",
+        "note": "",
+        "crop_relation": "",
+        "at": "2026-09-29T01:09:48.230Z"
+      },
+      "selected_choice_label": "비틀비틀",
+      "choice_role": "training_surface",
+      "judgment": "training_form_selected",
+      "question_scope": "contrast",
+      "contrast": {
+        "position": 1,
+        "focus": "ㅊ / ㅉ / ㅌ",
+        "forms": [
+          "비츨비틀",
+          "비쯜비틀",
+          "비틀비틀"
+        ]
+      },
+      "model_text": "비틀비틀",
+      "model_matches_training_target": true,
+      "model_text_equals_first_note_ignoring_spaces_only": true,
+      "g2p_changes_transcript": false,
+      "source_json_path": ".venv\\child-jamo-web-20260916\\dataset-audit-20260928\\source-json\\12.json",
+      "crop": {
+        "start_seconds": 0.4,
+        "end_seconds": 4.096,
+        "full_seconds": 4.096,
+        "training_seconds": 3.696,
+        "physical_category": "nonzero_signal_removed_unclassified",
+        "removed_prefix": {
+          "samples": 6400,
+          "seconds": 0.4,
+          "nonzero_samples": 749,
+          "peak": 0.00018310546875,
+          "rms": 1.545305564920738e-05
+        },
+        "removed_suffix": {
+          "samples": 0,
+          "seconds": 0,
+          "nonzero_samples": 0,
+          "peak": 0,
+          "rms": 0
+        },
+        "removed_all": {
+          "samples": 6400,
+          "seconds": 0.4,
+          "nonzero_samples": 749,
+          "peak": 0.00018310546875,
+          "rms": 1.545305564920738e-05
+        },
+        "retained_first_250ms": {
+          "samples": 4000,
+          "seconds": 0.25,
+          "nonzero_samples": 2272,
+          "peak": 0.0008544921875,
+          "rms": 0.00017018167869692919
+        },
+        "exact_source_slice": true,
+        "human_full_audio_comparison": null
+      },
+      "origin_status": "no_new_origin_claim",
+      "new_phonetic_target": null
+    },
+    {
+      "number": 13,
+      "group": "random:6:formatted",
+      "stratum": "random",
+      "wav": "K05027224-AMG10-L1N2D1-E-K0KK-04287293.wav",
+      "speaker": "176745748285",
+      "binding": "0ac4ae63e957334276021eb1443d17c7d1392e65a4d7ccf1c8c02b68de7fd556",
+      "raw_transcript": "늦잠을 자요.",
+      "transcript": "늦잠을 자요",
+      "training_surface": "늗짜믈 자요",
+      "label_ids": [
+        4,
+        39,
+        5,
+        15,
+        21,
+        8,
+        39,
+        7,
+        1,
+        14,
+        21,
+        13,
+        33
+      ],
+      "first_heard_unedited": "늦잠을자요",
+      "first_heard_at": "2026-09-29T01:09:54.562Z",
+      "answer": {
+        "revision": 13,
+        "item_id": "13",
+        "binding": "0ac4ae63e957334276021eb1443d17c7d1392e65a4d7ccf1c8c02b68de7fd556",
+        "choice": "match",
+        "note": "",
+        "crop_relation": "",
+        "at": "2026-09-29T01:09:57.916Z"
+      },
+      "selected_choice_label": "소리가 비교 표기와 같게 들림",
+      "choice_role": "training_surface",
+      "judgment": "training_form_selected",
+      "question_scope": "general",
+      "contrast": null,
+      "model_text": "늗짜믈 자요",
+      "model_matches_training_target": true,
+      "model_text_equals_first_note_ignoring_spaces_only": false,
+      "g2p_changes_transcript": true,
+      "source_json_path": ".venv\\child-jamo-web-20260916\\dataset-audit-20260928\\source-json\\13.json",
+      "crop": {
+        "start_seconds": 0.75,
+        "end_seconds": 5.568,
+        "full_seconds": 5.568,
+        "training_seconds": 4.818,
+        "physical_category": "digital_zero_only_removed",
+        "removed_prefix": {
+          "samples": 12000,
+          "seconds": 0.75,
+          "nonzero_samples": 0,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        "removed_suffix": {
+          "samples": 0,
+          "seconds": 0,
+          "nonzero_samples": 0,
+          "peak": 0,
+          "rms": 0
+        },
+        "removed_all": {
+          "samples": 12000,
+          "seconds": 0.75,
+          "nonzero_samples": 0,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        "retained_first_250ms": {
+          "samples": 4000,
+          "seconds": 0.25,
+          "nonzero_samples": 0,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        "exact_source_slice": true,
+        "human_full_audio_comparison": null
+      },
+      "origin_status": "no_new_origin_claim",
+      "new_phonetic_target": null
+    },
+    {
+      "number": 14,
+      "group": "affricate_stop",
+      "stratum": "focused",
+      "wav": "K00103131-AMG10-L1N2D2-E-K0KK-01411970.wav",
+      "speaker": "656d5be9b843",
+      "binding": "e218cfa303f28eb1e25600fdec4a54d62526c67096f9f245f990696ca9ddb760",
+      "raw_transcript": "사탕.",
+      "transcript": "사탕",
+      "training_surface": "사탕",
+      "label_ids": [
+        11,
+        21,
+        18,
+        21,
+        13
+      ],
+      "first_heard_unedited": "사탕",
+      "first_heard_at": "2026-09-29T01:10:03.649Z",
+      "answer": {
+        "revision": 14,
+        "item_id": "14",
+        "binding": "e218cfa303f28eb1e25600fdec4a54d62526c67096f9f245f990696ca9ddb760",
+        "choice": "form_2",
+        "note": "",
+        "crop_relation": "",
+        "at": "2026-09-29T01:10:10.493Z"
+      },
+      "selected_choice_label": "사탕",
+      "choice_role": "training_surface",
+      "judgment": "training_form_selected",
+      "question_scope": "contrast",
+      "contrast": {
+        "position": 1,
+        "focus": "ㅊ / ㅉ / ㅌ",
+        "forms": [
+          "사창",
+          "사짱",
+          "사탕"
+        ]
+      },
+      "model_text": "사탕",
+      "model_matches_training_target": true,
+      "model_text_equals_first_note_ignoring_spaces_only": true,
+      "g2p_changes_transcript": false,
+      "source_json_path": ".venv\\child-jamo-web-20260916\\dataset-audit-20260928\\source-json\\14.json",
+      "crop": {
+        "start_seconds": 1.87,
+        "end_seconds": 5.12,
+        "full_seconds": 5.12,
+        "training_seconds": 3.25,
+        "physical_category": "digital_zero_only_removed",
+        "removed_prefix": {
+          "samples": 29920,
+          "seconds": 1.87,
+          "nonzero_samples": 0,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        "removed_suffix": {
+          "samples": 0,
+          "seconds": 0,
+          "nonzero_samples": 0,
+          "peak": 0,
+          "rms": 0
+        },
+        "removed_all": {
+          "samples": 29920,
+          "seconds": 1.87,
+          "nonzero_samples": 0,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        "retained_first_250ms": {
+          "samples": 4000,
+          "seconds": 0.25,
+          "nonzero_samples": 0,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        "exact_source_slice": true,
+        "human_full_audio_comparison": null
+      },
+      "origin_status": "no_new_origin_claim",
+      "new_phonetic_target": null
+    },
+    {
+      "number": 15,
+      "group": "velar_tense",
+      "stratum": "focused",
+      "wav": "K04460288-AFG10-L1N2D1-E-K0KK-00429233.wav",
+      "speaker": "62e8c11f5235",
+      "binding": "f5721a0be74938ab9b4621408a64b4c0527660d60f6810f4e6b104f1e0417b08",
+      "raw_transcript": "기뻤어요!",
+      "transcript": "기뻤어요",
+      "training_surface": "기뻐써요",
+      "label_ids": [
+        2,
+        41,
+        10,
+        25,
+        12,
+        25,
+        13,
+        33
+      ],
+      "first_heard_unedited": "굳뻗써요",
+      "first_heard_at": "2026-09-29T01:10:30.835Z",
+      "answer": {
+        "revision": 15,
+        "item_id": "15",
+        "binding": "f5721a0be74938ab9b4621408a64b4c0527660d60f6810f4e6b104f1e0417b08",
+        "choice": "other",
+        "note": "",
+        "crop_relation": "",
+        "at": "2026-09-29T01:10:35.788Z"
+      },
+      "selected_choice_label": "보기와 다른 소리로 들림",
+      "choice_role": null,
+      "judgment": "difference_reported",
+      "question_scope": "contrast",
+      "contrast": {
+        "position": 0,
+        "focus": "ㄱ / ㄲ",
+        "forms": [
+          "기뻐써요",
+          "끼뻐써요"
+        ]
+      },
+      "model_text": "기뻐써요",
+      "model_matches_training_target": true,
+      "model_text_equals_first_note_ignoring_spaces_only": false,
+      "g2p_changes_transcript": true,
+      "source_json_path": ".venv\\child-jamo-web-20260916\\dataset-audit-20260928\\source-json\\15.json",
+      "crop": {
+        "start_seconds": 0.31,
+        "end_seconds": 4.352,
+        "full_seconds": 4.352,
+        "training_seconds": 4.042,
+        "physical_category": "digital_zero_only_removed",
+        "removed_prefix": {
+          "samples": 4960,
+          "seconds": 0.31,
+          "nonzero_samples": 0,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        "removed_suffix": {
+          "samples": 0,
+          "seconds": 0,
+          "nonzero_samples": 0,
+          "peak": 0,
+          "rms": 0
+        },
+        "removed_all": {
+          "samples": 4960,
+          "seconds": 0.31,
+          "nonzero_samples": 0,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        "retained_first_250ms": {
+          "samples": 4000,
+          "seconds": 0.25,
+          "nonzero_samples": 0,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        "exact_source_slice": true,
+        "human_full_audio_comparison": null
+      },
+      "origin_status": "speech_removal_excluded_source_vs_g2p_unresolved",
+      "new_phonetic_target": null
+    },
+    {
+      "number": 16,
+      "group": "vowel_quality",
+      "stratum": "focused",
+      "wav": "K06373629-AMG10-L5N1D1-E-K0KK-01924309.wav",
+      "speaker": "2bb1c90302be",
+      "binding": "3351f97dbb0cad3d3e9db4ace209fbaa0d9d0bc5e1051270f26e0881e999c48f",
+      "raw_transcript": "고마워요.",
+      "transcript": "고마워요",
+      "training_surface": "고마워요",
+      "label_ids": [
+        2,
+        29,
+        8,
+        21,
+        13,
+        35,
+        13,
+        33
+      ],
+      "first_heard_unedited": "고마워요",
+      "first_heard_at": "2026-09-29T01:10:41.821Z",
+      "answer": {
+        "revision": 16,
+        "item_id": "16",
+        "binding": "3351f97dbb0cad3d3e9db4ace209fbaa0d9d0bc5e1051270f26e0881e999c48f",
+        "choice": "form_1",
+        "note": "",
+        "crop_relation": "",
+        "at": "2026-09-29T01:10:47.412Z"
+      },
+      "selected_choice_label": "고마워요",
+      "choice_role": "training_surface",
+      "judgment": "training_form_selected",
+      "question_scope": "contrast",
+      "contrast": {
+        "position": 0,
+        "focus": "ㅓ / ㅗ",
+        "forms": [
+          "거마워요",
+          "고마워요"
+        ]
+      },
+      "model_text": "고마워요",
+      "model_matches_training_target": true,
+      "model_text_equals_first_note_ignoring_spaces_only": true,
+      "g2p_changes_transcript": false,
+      "source_json_path": ".venv\\child-jamo-web-20260916\\dataset-audit-20260928\\source-json\\16.json",
+      "crop": {
+        "start_seconds": 0.0,
+        "end_seconds": 4.416,
+        "full_seconds": 4.416,
+        "training_seconds": 4.416,
+        "physical_category": "full_source",
+        "removed_prefix": {
+          "samples": 0,
+          "seconds": 0,
+          "nonzero_samples": 0,
+          "peak": 0,
+          "rms": 0
+        },
+        "removed_suffix": {
+          "samples": 0,
+          "seconds": 0,
+          "nonzero_samples": 0,
+          "peak": 0,
+          "rms": 0
+        },
+        "removed_all": {
+          "samples": 0,
+          "seconds": 0,
+          "nonzero_samples": 0,
+          "peak": 0,
+          "rms": 0
+        },
+        "retained_first_250ms": {
+          "samples": 4000,
+          "seconds": 0.25,
+          "nonzero_samples": 0,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        "exact_source_slice": true,
+        "human_full_audio_comparison": null
+      },
+      "origin_status": "no_new_origin_claim",
+      "new_phonetic_target": null
+    },
+    {
+      "number": 17,
+      "group": "random:7:formatted",
+      "stratum": "random",
+      "wav": "K01602347-AFG22-L5N1D2-E-K0KK-01095822.wav",
+      "speaker": "954f95d35f50",
+      "binding": "b1caf95843532daa463858e6e00fab0e725e08b8f6793b9c2576cb016e22f05b",
+      "raw_transcript": "바늘로 찌른 것처럼 따가웠습니다.",
+      "transcript": "바늘로 찌른 것처럼 따가웠습니다",
+      "training_surface": "바늘로 찌른 걷처럼 따가웓씀니다",
+      "label_ids": [
+        9,
+        21,
+        4,
+        39,
+        7,
+        7,
+        29,
+        1,
+        15,
+        41,
+        7,
+        39,
+        4,
+        1,
+        2,
+        25,
+        5,
+        16,
+        25,
+        7,
+        25,
+        8,
+        1,
+        6,
+        21,
+        2,
+        21,
+        13,
+        35,
+        5,
+        12,
+        39,
+        8,
+        4,
+        41,
+        5,
+        21
+      ],
+      "first_heard_unedited": "",
+      "first_heard_at": "2026-09-29T01:10:54.490Z",
+      "answer": {
+        "revision": 17,
+        "item_id": "17",
+        "binding": "b1caf95843532daa463858e6e00fab0e725e08b8f6793b9c2576cb016e22f05b",
+        "choice": "unusable",
+        "note": "",
+        "crop_relation": "",
+        "at": "2026-09-29T01:11:01.598Z"
+      },
+      "selected_choice_label": "잡음·겹침·잘림 등으로 판단하기 어려움",
+      "choice_role": null,
+      "judgment": "unusable",
+      "question_scope": "general",
+      "contrast": null,
+      "model_text": "바늘로 뛰는 걷처럼 따가웓씀니다",
+      "model_matches_training_target": false,
+      "model_text_equals_first_note_ignoring_spaces_only": false,
+      "g2p_changes_transcript": true,
+      "source_json_path": ".venv\\child-jamo-web-20260916\\dataset-audit-20260928\\source-json\\17.json",
+      "crop": {
+        "start_seconds": 0.7,
+        "end_seconds": 5.952,
+        "full_seconds": 5.952,
+        "training_seconds": 5.252,
+        "physical_category": "nonzero_signal_removed_unclassified",
+        "removed_prefix": {
+          "samples": 11200,
+          "seconds": 0.7,
+          "nonzero_samples": 330,
+          "peak": 0.000732421875,
+          "rms": 4.962961563878997e-05
+        },
+        "removed_suffix": {
+          "samples": 0,
+          "seconds": 0,
+          "nonzero_samples": 0,
+          "peak": 0,
+          "rms": 0
+        },
+        "removed_all": {
+          "samples": 11200,
+          "seconds": 0.7,
+          "nonzero_samples": 330,
+          "peak": 0.000732421875,
+          "rms": 4.962961563878997e-05
+        },
+        "retained_first_250ms": {
+          "samples": 4000,
+          "seconds": 0.25,
+          "nonzero_samples": 0,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        "exact_source_slice": true,
+        "human_full_audio_comparison": null
+      },
+      "origin_status": "no_new_origin_claim",
+      "new_phonetic_target": null
+    },
+    {
+      "number": 18,
+      "group": "random:6:free",
+      "stratum": "random",
+      "wav": "K0001A007-BMG23-L1N2D2-E-K0KK-04673053.wav",
+      "speaker": "9f5d58c4c2f8",
+      "binding": "f40ce624b3fbf8f15efbca5ea8e46644cb160d4494b7ac6583b58ceaae7f72fd",
+      "raw_transcript": "정말 궁금한 것이 있어요.",
+      "transcript": "정말 궁금한 것이 있어요",
+      "training_surface": "정말 궁금한 거시 이써요",
+      "label_ids": [
+        14,
+        25,
+        13,
+        8,
+        21,
+        7,
+        1,
+        2,
+        34,
+        13,
+        2,
+        39,
+        8,
+        20,
+        21,
+        4,
+        1,
+        2,
+        25,
+        11,
+        41,
+        1,
+        13,
+        41,
+        12,
+        25,
+        13,
+        33
+      ],
+      "first_heard_unedited": "정말궁금한거시있어요",
+      "first_heard_at": "2026-09-29T01:11:12.378Z",
+      "answer": {
+        "revision": 18,
+        "item_id": "18",
+        "binding": "f40ce624b3fbf8f15efbca5ea8e46644cb160d4494b7ac6583b58ceaae7f72fd",
+        "choice": "match",
+        "note": "",
+        "crop_relation": "",
+        "at": "2026-09-29T01:11:15.559Z"
+      },
+      "selected_choice_label": "소리가 비교 표기와 같게 들림",
+      "choice_role": "training_surface",
+      "judgment": "training_form_selected",
+      "question_scope": "general",
+      "contrast": null,
+      "model_text": "정말 궁금한 거시 이써요",
+      "model_matches_training_target": true,
+      "model_text_equals_first_note_ignoring_spaces_only": false,
+      "g2p_changes_transcript": true,
+      "source_json_path": ".venv\\child-jamo-web-20260916\\dataset-audit-20260928\\source-json\\18.json",
+      "crop": {
+        "start_seconds": 0.0,
+        "end_seconds": 4.544,
+        "full_seconds": 4.544,
+        "training_seconds": 4.544,
+        "physical_category": "full_source",
+        "removed_prefix": {
+          "samples": 0,
+          "seconds": 0,
+          "nonzero_samples": 0,
+          "peak": 0,
+          "rms": 0
+        },
+        "removed_suffix": {
+          "samples": 0,
+          "seconds": 0,
+          "nonzero_samples": 0,
+          "peak": 0,
+          "rms": 0
+        },
+        "removed_all": {
+          "samples": 0,
+          "seconds": 0,
+          "nonzero_samples": 0,
+          "peak": 0,
+          "rms": 0
+        },
+        "retained_first_250ms": {
+          "samples": 4000,
+          "seconds": 0.25,
+          "nonzero_samples": 1863,
+          "peak": 0.057098388671875,
+          "rms": 0.006207602875809488
+        },
+        "exact_source_slice": true,
+        "human_full_audio_comparison": null
+      },
+      "origin_status": "no_new_origin_claim",
+      "new_phonetic_target": null
+    },
+    {
+      "number": 19,
+      "group": "random:7:free",
+      "stratum": "random",
+      "wav": "K0001A391-BFG22-L1N2D1-E-K0KK-05192412.wav",
+      "speaker": "405260ddbb23",
+      "binding": "587339de0cb1674502945e5c1542149c97ba8d7ab567cfd6b9cbe3c0eceab14f",
+      "raw_transcript": "조금 보고 싶었어요",
+      "transcript": "조금 보고 싶었어요",
+      "training_surface": "조금 보고 시퍼써요",
+      "label_ids": [
+        14,
+        29,
+        2,
+        39,
+        8,
+        1,
+        9,
+        29,
+        2,
+        29,
+        1,
+        11,
+        41,
+        19,
+        25,
+        12,
+        25,
+        13,
+        33
+      ],
+      "first_heard_unedited": "조금보고시퍼써요",
+      "first_heard_at": "2026-09-29T01:11:27.092Z",
+      "answer": {
+        "revision": 19,
+        "item_id": "19",
+        "binding": "587339de0cb1674502945e5c1542149c97ba8d7ab567cfd6b9cbe3c0eceab14f",
+        "choice": "match",
+        "note": "",
+        "crop_relation": "",
+        "at": "2026-09-29T01:11:29.095Z"
+      },
+      "selected_choice_label": "소리가 비교 표기와 같게 들림",
+      "choice_role": "training_surface",
+      "judgment": "training_form_selected",
+      "question_scope": "general",
+      "contrast": null,
+      "model_text": "조금 보고 시퍼써요",
+      "model_matches_training_target": true,
+      "model_text_equals_first_note_ignoring_spaces_only": true,
+      "g2p_changes_transcript": true,
+      "source_json_path": ".venv\\child-jamo-web-20260916\\dataset-audit-20260928\\source-json\\19.json",
+      "crop": {
+        "start_seconds": 0.14,
+        "end_seconds": 4.288,
+        "full_seconds": 4.288,
+        "training_seconds": 4.148,
+        "physical_category": "digital_zero_only_removed",
+        "removed_prefix": {
+          "samples": 2240,
+          "seconds": 0.14,
+          "nonzero_samples": 0,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        "removed_suffix": {
+          "samples": 0,
+          "seconds": 0,
+          "nonzero_samples": 0,
+          "peak": 0,
+          "rms": 0
+        },
+        "removed_all": {
+          "samples": 2240,
+          "seconds": 0.14,
+          "nonzero_samples": 0,
+          "peak": 0.0,
+          "rms": 0.0
+        },
+        "retained_first_250ms": {
+          "samples": 4000,
+          "seconds": 0.25,
+          "nonzero_samples": 45,
+          "peak": 0.000244140625,
+          "rms": 9.541319702675465e-06
+        },
+        "exact_source_slice": true,
+        "human_full_audio_comparison": null
+      },
+      "origin_status": "no_new_origin_claim",
+      "new_phonetic_target": null
+    },
+    {
+      "number": 20,
+      "group": "coda_presence",
+      "stratum": "focused",
+      "wav": "K02740095-AFG10-L1N2D4-E-K0KK-00447915.wav",
+      "speaker": "5d2ba1f31c30",
+      "binding": "92669a6b6365756cf7943bca13a171dd553c240f2d71852645d4a42bf582e902",
+      "raw_transcript": "얼룩말.",
+      "transcript": "얼룩말",
+      "training_surface": "얼룽말",
+      "label_ids": [
+        13,
+        25,
+        7,
+        7,
+        34,
+        13,
+        8,
+        21,
+        7
+      ],
+      "first_heard_unedited": "얼룩말",
+      "first_heard_at": "2026-09-29T01:11:35.025Z",
+      "answer": {
+        "revision": 20,
+        "item_id": "20",
+        "binding": "92669a6b6365756cf7943bca13a171dd553c240f2d71852645d4a42bf582e902",
+        "choice": "form_1",
+        "note": "",
+        "crop_relation": "",
+        "at": "2026-09-29T01:11:42.122Z"
+      },
+      "selected_choice_label": "얼룽말",
+      "choice_role": "training_surface",
+      "judgment": "training_form_selected",
+      "question_scope": "contrast",
+      "contrast": {
+        "position": 2,
+        "focus": "ㄹ 받침의 유무",
+        "forms": [
+          "얼룽말",
+          "얼룽마"
+        ]
+      },
+      "model_text": "얼룽말",
+      "model_matches_training_target": true,
+      "model_text_equals_first_note_ignoring_spaces_only": false,
+      "g2p_changes_transcript": true,
+      "source_json_path": ".venv\\child-jamo-web-20260916\\dataset-audit-20260928\\source-json\\20.json",
+      "crop": {
+        "start_seconds": 0.45,
+        "end_seconds": 3.968,
+        "full_seconds": 3.968,
+        "training_seconds": 3.518,
+        "physical_category": "nonzero_signal_removed_unclassified",
+        "removed_prefix": {
+          "samples": 7200,
+          "seconds": 0.45,
+          "nonzero_samples": 6459,
+          "peak": 0.149658203125,
+          "rms": 0.009894441414701475
+        },
+        "removed_suffix": {
+          "samples": 0,
+          "seconds": 0,
+          "nonzero_samples": 0,
+          "peak": 0,
+          "rms": 0
+        },
+        "removed_all": {
+          "samples": 7200,
+          "seconds": 0.45,
+          "nonzero_samples": 6459,
+          "peak": 0.149658203125,
+          "rms": 0.009894441414701475
+        },
+        "retained_first_250ms": {
+          "samples": 4000,
+          "seconds": 0.25,
+          "nonzero_samples": 3889,
+          "peak": 0.005035400390625,
+          "rms": 0.0009807374641088052
+        },
+        "exact_source_slice": true,
+        "human_full_audio_comparison": null
+      },
+      "origin_status": "no_new_origin_claim",
+      "new_phonetic_target": null
+    }
+  ],
+  "labels_modified": false,
+  "model_modified": false,
+  "training_started": false
+}

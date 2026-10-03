@@ -1,0 +1,1585 @@
+{
+  "complete": true,
+  "batches": 2,
+  "answered": 20,
+  "classification_counts": {
+    "exclusive_annotation": 8,
+    "exclusive_canonical": 2,
+    "ambiguous_between_alternatives": 6,
+    "neither_alternative_no_replacement_known": 3,
+    "not_judged": 1
+  },
+  "clear_candidates": 10,
+  "train_candidates": 6,
+  "valid_candidates": 4,
+  "changed_train_candidates": 4,
+  "changed_valid_candidates": 4,
+  "unresolved": 10,
+  "items": [
+    {
+      "batch": "first",
+      "number": 1,
+      "wav": "K04900631-AMG10-L5N1D1-E-K0KK-00100034.wav",
+      "speaker": "5760f930210f",
+      "split": "train",
+      "source_transcript": "싸워요(사워요).",
+      "canonical": "싸워요",
+      "annotation": "사워요",
+      "answer": {
+        "revision": 1,
+        "item_id": "1",
+        "binding": "8133a574a8a56cbf453d48be34c9068b0cdfd3967e89b11619792aa448f65c12",
+        "choice": "a",
+        "heard": "",
+        "note": "",
+        "at": "2026-09-27 08:44:34"
+      },
+      "classification": "exclusive_annotation",
+      "selected_surface": "사워요",
+      "selected_role": "annotation",
+      "has_note_or_free_text": false,
+      "source_pcm_sha256": "f025996666ef6e5938a57d82f024880e5872e1ef93e1c597f0dd9d8cd1bee9bd",
+      "seconds": 4.288,
+      "source_and_playback_binding_verified": true,
+      "model": {
+        "number": 1,
+        "split": "train",
+        "human_classification": "exclusive_annotation",
+        "human_selected": "사워요",
+        "canonical": "싸워요",
+        "annotation": "사워요",
+        "prediction_text": "싸워요",
+        "prediction_ids": [
+          12,
+          21,
+          13,
+          35,
+          13,
+          33
+        ],
+        "matches_options_ignoring_spaces": {
+          "canonical": true,
+          "annotation": false
+        },
+        "matches_exclusive_human_choice": false,
+        "ctc_sequence_log_likelihood": {
+          "canonical": -0.0007710676873102784,
+          "annotation": -7.853141784667969
+        },
+        "ctc_annotation_minus_canonical_log_likelihood": -7.8523707169806585
+      }
+    },
+    {
+      "batch": "first",
+      "number": 2,
+      "wav": "K02412568-AFG11-L5N1D1-E-K0KK-01458075.wav",
+      "speaker": "9028dce6614e",
+      "split": "train",
+      "source_transcript": "아저씨(아저찌).",
+      "canonical": "아저씨",
+      "annotation": "아저찌",
+      "answer": {
+        "revision": 2,
+        "item_id": "2",
+        "binding": "09856be5ca329ce464cda6b2d9f9d645cabc5d475a509e2e6f654dc97beddcfb",
+        "choice": "b",
+        "heard": "",
+        "note": "",
+        "at": "2026-09-27 08:44:45"
+      },
+      "classification": "exclusive_canonical",
+      "selected_surface": "아저씨",
+      "selected_role": "canonical",
+      "has_note_or_free_text": false,
+      "source_pcm_sha256": "fc3739abe2098a8e531746018dbfb78a404f8793546aa4f39764be8e5ff905c8",
+      "seconds": 4.864,
+      "source_and_playback_binding_verified": true,
+      "model": {
+        "number": 2,
+        "split": "train",
+        "human_classification": "exclusive_canonical",
+        "human_selected": "아저씨",
+        "canonical": "아저씨",
+        "annotation": "아저찌",
+        "prediction_text": "아저씨",
+        "prediction_ids": [
+          13,
+          21,
+          14,
+          25,
+          12,
+          41
+        ],
+        "matches_options_ignoring_spaces": {
+          "canonical": true,
+          "annotation": false
+        },
+        "matches_exclusive_human_choice": true,
+        "ctc_sequence_log_likelihood": {
+          "canonical": -0.0005002613179385662,
+          "annotation": -17.579559326171875
+        },
+        "ctc_annotation_minus_canonical_log_likelihood": -17.579059064853936
+      }
+    },
+    {
+      "batch": "first",
+      "number": 3,
+      "wav": "K03820863-AFG10-L1N2D1-E-K0KK-00191755.wav",
+      "speaker": "72e0b5f69935",
+      "split": "train",
+      "source_transcript": "풍선(푼선).",
+      "canonical": "풍선",
+      "annotation": "푼선",
+      "answer": {
+        "revision": 3,
+        "item_id": "3",
+        "binding": "f0fcda3d3b27ad39d43a76409492a2600564764b122f06e69f2bcce5b6c8b7e6",
+        "choice": "both",
+        "heard": "",
+        "note": "",
+        "at": "2026-09-27 08:45:01"
+      },
+      "classification": "ambiguous_between_alternatives",
+      "selected_surface": null,
+      "selected_role": null,
+      "has_note_or_free_text": false,
+      "source_pcm_sha256": "5291887ad9c49a262771d0d77ba6246eb94f2edb04da98b58c13c1f19585c52b",
+      "seconds": 5.184,
+      "source_and_playback_binding_verified": true,
+      "model": {
+        "number": 3,
+        "split": "train",
+        "human_classification": "ambiguous_between_alternatives",
+        "human_selected": null,
+        "canonical": "풍선",
+        "annotation": "푼선",
+        "prediction_text": "풍선",
+        "prediction_ids": [
+          19,
+          34,
+          13,
+          11,
+          25,
+          4
+        ],
+        "matches_options_ignoring_spaces": {
+          "canonical": true,
+          "annotation": false
+        },
+        "matches_exclusive_human_choice": null,
+        "ctc_sequence_log_likelihood": {
+          "canonical": -0.0012969821691513062,
+          "annotation": -28.619384765625
+        },
+        "ctc_annotation_minus_canonical_log_likelihood": -28.61808778345585
+      }
+    },
+    {
+      "batch": "first",
+      "number": 4,
+      "wav": "K03911482-AFG13-L1N2D1-E-K0KK-00531465.wav",
+      "speaker": "e3e69eaf6c36",
+      "split": "valid",
+      "source_transcript": "우주선(우두선).",
+      "canonical": "우주선",
+      "annotation": "우두선",
+      "answer": {
+        "revision": 4,
+        "item_id": "4",
+        "binding": "d75653f89536eeb504e7b9dc16222992c37658cc6cfd318af7e98b393adb089d",
+        "choice": "both",
+        "heard": "",
+        "note": "",
+        "at": "2026-09-27 08:45:10"
+      },
+      "classification": "ambiguous_between_alternatives",
+      "selected_surface": null,
+      "selected_role": null,
+      "has_note_or_free_text": false,
+      "source_pcm_sha256": "5aa58ed7436e1a4331a315b540c1f1542a8c1470c24818d0919e239c68bf2a62",
+      "seconds": 3.072,
+      "source_and_playback_binding_verified": true,
+      "model": {
+        "number": 4,
+        "split": "valid",
+        "human_classification": "ambiguous_between_alternatives",
+        "human_selected": null,
+        "canonical": "우주선",
+        "annotation": "우두선",
+        "prediction_text": "우주선",
+        "prediction_ids": [
+          13,
+          34,
+          14,
+          34,
+          11,
+          25,
+          4
+        ],
+        "matches_options_ignoring_spaces": {
+          "canonical": true,
+          "annotation": false
+        },
+        "matches_exclusive_human_choice": null,
+        "ctc_sequence_log_likelihood": {
+          "canonical": -0.01948397606611252,
+          "annotation": -8.392215728759766
+        },
+        "ctc_annotation_minus_canonical_log_likelihood": -8.372731752693653
+      }
+    },
+    {
+      "batch": "first",
+      "number": 5,
+      "wav": "K06713112-AFG10-L1N2D1-E-K0KK-01503345.wav",
+      "speaker": "5ad4fca71d72",
+      "split": "valid",
+      "source_transcript": "원숭이(웡숭이).",
+      "canonical": "원숭이",
+      "annotation": "웡숭이",
+      "answer": {
+        "revision": 5,
+        "item_id": "5",
+        "binding": "191493a47b2f7d85abed9a90ec4794ea20fb67bccb3ac6b2a9441aa301b88473",
+        "choice": "a",
+        "heard": "",
+        "note": "",
+        "at": "2026-09-27 08:45:20"
+      },
+      "classification": "exclusive_annotation",
+      "selected_surface": "웡숭이",
+      "selected_role": "annotation",
+      "has_note_or_free_text": false,
+      "source_pcm_sha256": "5a14da7bd89d5ea724e568c3e6be307761e0420103a920afe7ad839af384ac36",
+      "seconds": 3.648,
+      "source_and_playback_binding_verified": true,
+      "model": {
+        "number": 5,
+        "split": "valid",
+        "human_classification": "exclusive_annotation",
+        "human_selected": "웡숭이",
+        "canonical": "원숭이",
+        "annotation": "웡숭이",
+        "prediction_text": "원숭이",
+        "prediction_ids": [
+          13,
+          35,
+          4,
+          11,
+          34,
+          13,
+          13,
+          41
+        ],
+        "matches_options_ignoring_spaces": {
+          "canonical": true,
+          "annotation": false
+        },
+        "matches_exclusive_human_choice": false,
+        "ctc_sequence_log_likelihood": {
+          "canonical": -0.0013992611784487963,
+          "annotation": -21.630016326904297
+        },
+        "ctc_annotation_minus_canonical_log_likelihood": -21.628617065725848
+      }
+    },
+    {
+      "batch": "first",
+      "number": 6,
+      "wav": "K09663010-AFG10-L1N2D1-E-K0KK-01676901.wav",
+      "speaker": "ff4b467b7a59",
+      "split": "valid",
+      "source_transcript": "크레용(크에용).",
+      "canonical": "크레용",
+      "annotation": "크에용",
+      "answer": {
+        "revision": 6,
+        "item_id": "6",
+        "binding": "1323ebf7317a10f334926c530373f0a974aac50ffe2c17d58e0c7d953dd8c351",
+        "choice": "both",
+        "heard": "",
+        "note": "",
+        "at": "2026-09-27 08:45:30"
+      },
+      "classification": "ambiguous_between_alternatives",
+      "selected_surface": null,
+      "selected_role": null,
+      "has_note_or_free_text": false,
+      "source_pcm_sha256": "f2d4c02e4e370db6f4e40722f21214d9ab7101cec305a82978c5aa795f262474",
+      "seconds": 3.072,
+      "source_and_playback_binding_verified": true,
+      "model": {
+        "number": 6,
+        "split": "valid",
+        "human_classification": "ambiguous_between_alternatives",
+        "human_selected": null,
+        "canonical": "크레용",
+        "annotation": "크에용",
+        "prediction_text": "크레용",
+        "prediction_ids": [
+          17,
+          39,
+          7,
+          26,
+          13,
+          33,
+          13
+        ],
+        "matches_options_ignoring_spaces": {
+          "canonical": true,
+          "annotation": false
+        },
+        "matches_exclusive_human_choice": null,
+        "ctc_sequence_log_likelihood": {
+          "canonical": -0.0042541418224573135,
+          "annotation": -14.966470718383789
+        },
+        "ctc_annotation_minus_canonical_log_likelihood": -14.962216576561332
+      }
+    },
+    {
+      "batch": "first",
+      "number": 7,
+      "wav": "K08053352-AFG10-L1N2D3-E-K0KK-01950422.wav",
+      "speaker": "ce0def455fe6",
+      "split": "valid",
+      "source_transcript": "싱글벙글(싱글벙그).",
+      "canonical": "싱글벙글",
+      "annotation": "싱글벙그",
+      "answer": {
+        "revision": 7,
+        "item_id": "7",
+        "binding": "b971f6948a15ea11fef9b7189e5f6b707c0589422b2aee20825c6d1b059ab7f7",
+        "choice": "neither",
+        "heard": "",
+        "note": "",
+        "at": "2026-09-27 08:45:38"
+      },
+      "classification": "neither_alternative_no_replacement_known",
+      "selected_surface": null,
+      "selected_role": null,
+      "has_note_or_free_text": false,
+      "source_pcm_sha256": "1675bfee2d8518ba2b33fd797ad17695902296636b97fd0e5d0c6c3f887a9d7a",
+      "seconds": 2.944,
+      "source_and_playback_binding_verified": true,
+      "model": {
+        "number": 7,
+        "split": "valid",
+        "human_classification": "neither_alternative_no_replacement_known",
+        "human_selected": null,
+        "canonical": "싱글벙글",
+        "annotation": "싱글벙그",
+        "prediction_text": "싱급ㅇ그",
+        "prediction_ids": [
+          11,
+          41,
+          13,
+          2,
+          39,
+          9,
+          13,
+          2,
+          39
+        ],
+        "matches_options_ignoring_spaces": {
+          "canonical": false,
+          "annotation": false
+        },
+        "matches_exclusive_human_choice": null,
+        "ctc_sequence_log_likelihood": {
+          "canonical": -12.271275520324707,
+          "annotation": -8.468154907226562
+        },
+        "ctc_annotation_minus_canonical_log_likelihood": 3.8031206130981445
+      }
+    },
+    {
+      "batch": "first",
+      "number": 8,
+      "wav": "K09402463-AMG10-L1N2D1-E-K0KK-01290396.wav",
+      "speaker": "1b13011c30bd",
+      "split": "train",
+      "source_transcript": "친구(치구).",
+      "canonical": "친구",
+      "annotation": "치구",
+      "answer": {
+        "revision": 9,
+        "item_id": "8",
+        "binding": "6c77787b40e5f284af973515f1642b839f740f7d5d0d9e70835d3f1076d7129a",
+        "choice": "neither",
+        "heard": "",
+        "note": "",
+        "at": "2026-09-27 08:45:48"
+      },
+      "classification": "neither_alternative_no_replacement_known",
+      "selected_surface": null,
+      "selected_role": null,
+      "has_note_or_free_text": false,
+      "source_pcm_sha256": "27e84bb612f2677a66094a91f89c4930c007848ba61b00b1cdc99d4cb9957882",
+      "seconds": 3.072,
+      "source_and_playback_binding_verified": true,
+      "model": {
+        "number": 8,
+        "split": "train",
+        "human_classification": "neither_alternative_no_replacement_known",
+        "human_selected": null,
+        "canonical": "친구",
+        "annotation": "치구",
+        "prediction_text": "키쿠",
+        "prediction_ids": [
+          17,
+          41,
+          17,
+          34
+        ],
+        "matches_options_ignoring_spaces": {
+          "canonical": false,
+          "annotation": false
+        },
+        "matches_exclusive_human_choice": null,
+        "ctc_sequence_log_likelihood": {
+          "canonical": -15.62693977355957,
+          "annotation": -7.867750644683838
+        },
+        "ctc_annotation_minus_canonical_log_likelihood": 7.759189128875732
+      }
+    },
+    {
+      "batch": "followup",
+      "number": 1,
+      "wav": "K01403098-AMG10-L3N1D1-E-K0KK-01458046.wav",
+      "speaker": "4e12486c3a0f",
+      "split": "train",
+      "source_transcript": "임금님(이끔님).",
+      "canonical": "임금님",
+      "annotation": "이끔님",
+      "answer": {
+        "revision": 1,
+        "item_id": "1",
+        "binding": "594c4573bbd81c6b8a97396642d1b2b0ece5bf48bc01432d60e11fde80d4faaf",
+        "choice": "neither",
+        "heard": "",
+        "note": "",
+        "at": "2026-09-27 09:02:11"
+      },
+      "classification": "neither_alternative_no_replacement_known",
+      "selected_surface": null,
+      "selected_role": null,
+      "has_note_or_free_text": false,
+      "source_pcm_sha256": "c5b25c5d4be20123e3edd86da79979554e154facee9ae33cf24645cb3ab07d4e",
+      "seconds": 2.88,
+      "source_and_playback_binding_verified": true,
+      "model": {
+        "number": 1,
+        "split": "train",
+        "human_classification": "neither_alternative_no_replacement_known",
+        "human_selected": null,
+        "canonical": "임금님",
+        "annotation": "이끔님",
+        "prediction_text": "임금님",
+        "prediction_ids": [
+          13,
+          41,
+          8,
+          2,
+          39,
+          8,
+          4,
+          41,
+          8
+        ],
+        "matches_options_ignoring_spaces": {
+          "canonical": true,
+          "annotation": false
+        },
+        "matches_exclusive_human_choice": null,
+        "ctc_sequence_log_likelihood": {
+          "canonical": -0.0034934282302856445,
+          "annotation": -23.698110580444336
+        },
+        "ctc_annotation_minus_canonical_log_likelihood": -23.69461715221405
+      }
+    },
+    {
+      "batch": "followup",
+      "number": 2,
+      "wav": "K03531083-AMG13-L1N2D1-E-K0KK-01317270.wav",
+      "speaker": "1090b9e9eba7",
+      "split": "valid",
+      "source_transcript": "인도사람(인도다람).",
+      "canonical": "인도사람",
+      "annotation": "인도다람",
+      "answer": {
+        "revision": 2,
+        "item_id": "2",
+        "binding": "bbe80b550820858ece0d94b57e78652ad0451e6f05249c5549af51a1cb05af27",
+        "choice": "both",
+        "heard": "",
+        "note": "",
+        "at": "2026-09-27 09:03:55"
+      },
+      "classification": "ambiguous_between_alternatives",
+      "selected_surface": null,
+      "selected_role": null,
+      "has_note_or_free_text": false,
+      "source_pcm_sha256": "a1dd2c93c8567716c37d348fc7d408b8a5a487409b595fb6fb1b2162da0cbaa6",
+      "seconds": 3.072,
+      "source_and_playback_binding_verified": true,
+      "model": {
+        "number": 2,
+        "split": "valid",
+        "human_classification": "ambiguous_between_alternatives",
+        "human_selected": null,
+        "canonical": "인도사람",
+        "annotation": "인도다람",
+        "prediction_text": "인도사람",
+        "prediction_ids": [
+          13,
+          41,
+          4,
+          5,
+          29,
+          11,
+          21,
+          7,
+          21,
+          8
+        ],
+        "matches_options_ignoring_spaces": {
+          "canonical": true,
+          "annotation": false
+        },
+        "matches_exclusive_human_choice": null,
+        "ctc_sequence_log_likelihood": {
+          "canonical": -0.019970372319221497,
+          "annotation": -13.905962944030762
+        },
+        "ctc_annotation_minus_canonical_log_likelihood": -13.88599257171154
+      }
+    },
+    {
+      "batch": "followup",
+      "number": 3,
+      "wav": "K04422425-AFG11-L1N2D1-E-K0KK-01932746.wav",
+      "speaker": "884787790b63",
+      "split": "valid",
+      "source_transcript": "춤춰요(춤서요).",
+      "canonical": "춤춰요",
+      "annotation": "춤서요",
+      "answer": {
+        "revision": 3,
+        "item_id": "3",
+        "binding": "606a28d7e0bc7ef04ba4900776a19afb2af2a89ec834451bb874b0188f103414",
+        "choice": "b",
+        "heard": "",
+        "note": "",
+        "at": "2026-09-27 09:04:10"
+      },
+      "classification": "exclusive_annotation",
+      "selected_surface": "춤서요",
+      "selected_role": "annotation",
+      "has_note_or_free_text": false,
+      "source_pcm_sha256": "de7d030a0f62c7cf7e33c7df0bfb236f6bd07d13bfd6af971e9dd1e625755c4a",
+      "seconds": 3.392,
+      "source_and_playback_binding_verified": true,
+      "model": {
+        "number": 3,
+        "split": "valid",
+        "human_classification": "exclusive_annotation",
+        "human_selected": "춤서요",
+        "canonical": "춤춰요",
+        "annotation": "춤서요",
+        "prediction_text": "춤춰요",
+        "prediction_ids": [
+          16,
+          34,
+          8,
+          16,
+          35,
+          13,
+          33
+        ],
+        "matches_options_ignoring_spaces": {
+          "canonical": true,
+          "annotation": false
+        },
+        "matches_exclusive_human_choice": false,
+        "ctc_sequence_log_likelihood": {
+          "canonical": -0.009513670578598976,
+          "annotation": -21.866498947143555
+        },
+        "ctc_annotation_minus_canonical_log_likelihood": -21.856985276564956
+      }
+    },
+    {
+      "batch": "followup",
+      "number": 4,
+      "wav": "K09660266-AFG11-L1N2D1-E-K0KK-00255172.wav",
+      "speaker": "16e46c0fa2ce",
+      "split": "valid",
+      "source_transcript": "크레용(쿠레용).",
+      "canonical": "크레용",
+      "annotation": "쿠레용",
+      "answer": {
+        "revision": 4,
+        "item_id": "4",
+        "binding": "e84128c663dfd15d6614c9bef4132c0c320c9c279cc3a7768258e634694b3033",
+        "choice": "a",
+        "heard": "",
+        "note": "",
+        "at": "2026-09-27 09:04:26"
+      },
+      "classification": "exclusive_annotation",
+      "selected_surface": "쿠레용",
+      "selected_role": "annotation",
+      "has_note_or_free_text": false,
+      "source_pcm_sha256": "b69ded7736dbc63a0c661d01ba51023a3a6f3443fc2637923f099d6a14c12c9c",
+      "seconds": 5.44,
+      "source_and_playback_binding_verified": true,
+      "model": {
+        "number": 4,
+        "split": "valid",
+        "human_classification": "exclusive_annotation",
+        "human_selected": "쿠레용",
+        "canonical": "크레용",
+        "annotation": "쿠레용",
+        "prediction_text": "포레용",
+        "prediction_ids": [
+          19,
+          29,
+          7,
+          26,
+          13,
+          33,
+          13
+        ],
+        "matches_options_ignoring_spaces": {
+          "canonical": false,
+          "annotation": false
+        },
+        "matches_exclusive_human_choice": false,
+        "ctc_sequence_log_likelihood": {
+          "canonical": -4.553789138793945,
+          "annotation": -2.4268605709075928
+        },
+        "ctc_annotation_minus_canonical_log_likelihood": 2.1269285678863525
+      }
+    },
+    {
+      "batch": "followup",
+      "number": 5,
+      "wav": "K00253758-AFG10-L1N2D1-E-K0KK-01581422.wav",
+      "speaker": "8c41f9158458",
+      "split": "train",
+      "source_transcript": "사랑(사탕).",
+      "canonical": "사랑",
+      "annotation": "사탕",
+      "answer": {
+        "revision": 5,
+        "item_id": "5",
+        "binding": "0ceab685136d817161141d6a4c45c34ab5b4e45fbfc26e5208a3a12fe7e89292",
+        "choice": "a",
+        "heard": "",
+        "note": "",
+        "at": "2026-09-27 09:04:31"
+      },
+      "classification": "exclusive_annotation",
+      "selected_surface": "사탕",
+      "selected_role": "annotation",
+      "has_note_or_free_text": false,
+      "source_pcm_sha256": "65fd3afc7ae2106458da1b43996bebbea08aff4a6d5118df4c1ed5ad808847a3",
+      "seconds": 3.2,
+      "source_and_playback_binding_verified": true,
+      "model": {
+        "number": 5,
+        "split": "train",
+        "human_classification": "exclusive_annotation",
+        "human_selected": "사탕",
+        "canonical": "사랑",
+        "annotation": "사탕",
+        "prediction_text": "사탕",
+        "prediction_ids": [
+          11,
+          21,
+          18,
+          21,
+          13
+        ],
+        "matches_options_ignoring_spaces": {
+          "canonical": false,
+          "annotation": true
+        },
+        "matches_exclusive_human_choice": true,
+        "ctc_sequence_log_likelihood": {
+          "canonical": -24.945615768432617,
+          "annotation": -0.00011332507710903883
+        },
+        "ctc_annotation_minus_canonical_log_likelihood": 24.945502443355508
+      }
+    },
+    {
+      "batch": "followup",
+      "number": 6,
+      "wav": "K08700464-AMG13-L1N2D1-E-K0KK-00327583.wav",
+      "speaker": "ac489824750e",
+      "split": "train",
+      "source_transcript": "요정(요점).",
+      "canonical": "요정",
+      "annotation": "요점",
+      "answer": {
+        "revision": 6,
+        "item_id": "6",
+        "binding": "8140e88b32550825b0d4e29ff9bad071c3d8323c289d9cc87709a948eb425e1e",
+        "choice": "unusable",
+        "heard": "",
+        "note": "",
+        "at": "2026-09-27 09:04:40"
+      },
+      "classification": "not_judged",
+      "selected_surface": null,
+      "selected_role": null,
+      "has_note_or_free_text": false,
+      "source_pcm_sha256": "f5aa56f7515f8f41bfe01d5cd13f1aeab1de6aa45a95b706928ec4cdc9028110",
+      "seconds": 1.856,
+      "source_and_playback_binding_verified": true,
+      "model": {
+        "number": 6,
+        "split": "train",
+        "human_classification": "not_judged",
+        "human_selected": null,
+        "canonical": "요정",
+        "annotation": "요점",
+        "prediction_text": "요정",
+        "prediction_ids": [
+          13,
+          33,
+          14,
+          25,
+          13
+        ],
+        "matches_options_ignoring_spaces": {
+          "canonical": true,
+          "annotation": false
+        },
+        "matches_exclusive_human_choice": null,
+        "ctc_sequence_log_likelihood": {
+          "canonical": -0.00042436367948539555,
+          "annotation": -20.295255661010742
+        },
+        "ctc_annotation_minus_canonical_log_likelihood": -20.294831297331257
+      }
+    },
+    {
+      "batch": "followup",
+      "number": 7,
+      "wav": "K07480420-AFG13-L1N2D1-E-K0KK-00717977.wav",
+      "speaker": "5335c1c78b99",
+      "split": "valid",
+      "source_transcript": "왕자님(왕장님).",
+      "canonical": "왕자님",
+      "annotation": "왕장님",
+      "answer": {
+        "revision": 7,
+        "item_id": "7",
+        "binding": "ab1390775860b0c31660589d5a695fca9cc7ebcb28e6f833bef627925b5df282",
+        "choice": "both",
+        "heard": "",
+        "note": "",
+        "at": "2026-09-27 09:04:50"
+      },
+      "classification": "ambiguous_between_alternatives",
+      "selected_surface": null,
+      "selected_role": null,
+      "has_note_or_free_text": false,
+      "source_pcm_sha256": "e6e9294adc7102f86a0f64a9aadb15d01202d456c3e4c5e828e4445f3d56a6c0",
+      "seconds": 3.456,
+      "source_and_playback_binding_verified": true,
+      "model": {
+        "number": 7,
+        "split": "valid",
+        "human_classification": "ambiguous_between_alternatives",
+        "human_selected": null,
+        "canonical": "왕자님",
+        "annotation": "왕장님",
+        "prediction_text": "왕자님",
+        "prediction_ids": [
+          13,
+          30,
+          13,
+          14,
+          21,
+          4,
+          41,
+          8
+        ],
+        "matches_options_ignoring_spaces": {
+          "canonical": true,
+          "annotation": false
+        },
+        "matches_exclusive_human_choice": null,
+        "ctc_sequence_log_likelihood": {
+          "canonical": -0.0035180107224732637,
+          "annotation": -12.9952974319458
+        },
+        "ctc_annotation_minus_canonical_log_likelihood": -12.991779421223328
+      }
+    },
+    {
+      "batch": "followup",
+      "number": 8,
+      "wav": "K02591562-AFG10-L1N2D4-E-K0KK-00368975.wav",
+      "speaker": "0f427d4e1430",
+      "split": "train",
+      "source_transcript": "누구일까요(누구이까요)?",
+      "canonical": "누구일까요",
+      "annotation": "누구이까요",
+      "answer": {
+        "revision": 8,
+        "item_id": "8",
+        "binding": "3bef3463d4e9246107c4afb430db31ecd2a4de413b9d9adaae8fee0063d6fdd9",
+        "choice": "b",
+        "heard": "",
+        "note": "",
+        "at": "2026-09-27 09:05:08"
+      },
+      "classification": "exclusive_annotation",
+      "selected_surface": "누구이까요",
+      "selected_role": "annotation",
+      "has_note_or_free_text": false,
+      "source_pcm_sha256": "d2427cd593b6b4277a2bf8812364857e8a93f4d37a75992c2a81d1f6ba00236b",
+      "seconds": 5.44,
+      "source_and_playback_binding_verified": true,
+      "model": {
+        "number": 8,
+        "split": "train",
+        "human_classification": "exclusive_annotation",
+        "human_selected": "누구이까요",
+        "canonical": "누구일까요",
+        "annotation": "누구이까요",
+        "prediction_text": "누구일까요",
+        "prediction_ids": [
+          4,
+          34,
+          2,
+          34,
+          13,
+          41,
+          7,
+          3,
+          21,
+          13,
+          33
+        ],
+        "matches_options_ignoring_spaces": {
+          "canonical": true,
+          "annotation": false
+        },
+        "matches_exclusive_human_choice": false,
+        "ctc_sequence_log_likelihood": {
+          "canonical": -0.01940053515136242,
+          "annotation": -12.829503059387207
+        },
+        "ctc_annotation_minus_canonical_log_likelihood": -12.810102524235845
+      }
+    },
+    {
+      "batch": "followup",
+      "number": 9,
+      "wav": "K02410218-AMG13-L1N2D1-E-K0KK-00416414.wav",
+      "speaker": "f3fec7b5757f",
+      "split": "train",
+      "source_transcript": "아저씨(아려씨).",
+      "canonical": "아저씨",
+      "annotation": "아려씨",
+      "answer": {
+        "revision": 9,
+        "item_id": "9",
+        "binding": "9d7aff5be82e190415a49b933d29c4d14b9ff89cee83b714b18f7087b6e48c11",
+        "choice": "a",
+        "heard": "",
+        "note": "",
+        "at": "2026-09-27 09:05:19"
+      },
+      "classification": "exclusive_canonical",
+      "selected_surface": "아저씨",
+      "selected_role": "canonical",
+      "has_note_or_free_text": false,
+      "source_pcm_sha256": "5d6a59d70069eb1d70d06881eba3c2fab1f1b9b4f9c1fea6b1fc8b7f451df133",
+      "seconds": 3.712,
+      "source_and_playback_binding_verified": true,
+      "model": {
+        "number": 9,
+        "split": "train",
+        "human_classification": "exclusive_canonical",
+        "human_selected": "아저씨",
+        "canonical": "아저씨",
+        "annotation": "아려씨",
+        "prediction_text": "아저씨",
+        "prediction_ids": [
+          13,
+          21,
+          14,
+          25,
+          12,
+          41
+        ],
+        "matches_options_ignoring_spaces": {
+          "canonical": true,
+          "annotation": false
+        },
+        "matches_exclusive_human_choice": true,
+        "ctc_sequence_log_likelihood": {
+          "canonical": -0.00036279845517128706,
+          "annotation": -24.291580200195312
+        },
+        "ctc_annotation_minus_canonical_log_likelihood": -24.29121740174014
+      }
+    },
+    {
+      "batch": "followup",
+      "number": 10,
+      "wav": "K06715527-AFG10-L1N2D2-E-K0KK-03035862.wav",
+      "speaker": "670d1430eca8",
+      "split": "train",
+      "source_transcript": "원숭이(웡충이).",
+      "canonical": "원숭이",
+      "annotation": "웡충이",
+      "answer": {
+        "revision": 10,
+        "item_id": "10",
+        "binding": "3dd97114f083becf544f0cd523c1781a00c1d4f9060b0cee0e235eed6f348f46",
+        "choice": "b",
+        "heard": "",
+        "note": "",
+        "at": "2026-09-27 09:05:26"
+      },
+      "classification": "exclusive_annotation",
+      "selected_surface": "웡충이",
+      "selected_role": "annotation",
+      "has_note_or_free_text": false,
+      "source_pcm_sha256": "42b85f0ff64d91b509d09cd91798d89e617fe3e0042e816f0977d42f1b3e0786",
+      "seconds": 4.672,
+      "source_and_playback_binding_verified": true,
+      "model": {
+        "number": 10,
+        "split": "train",
+        "human_classification": "exclusive_annotation",
+        "human_selected": "웡충이",
+        "canonical": "원숭이",
+        "annotation": "웡충이",
+        "prediction_text": "원숭이",
+        "prediction_ids": [
+          13,
+          35,
+          4,
+          11,
+          34,
+          13,
+          13,
+          41
+        ],
+        "matches_options_ignoring_spaces": {
+          "canonical": true,
+          "annotation": false
+        },
+        "matches_exclusive_human_choice": false,
+        "ctc_sequence_log_likelihood": {
+          "canonical": -0.007387571036815643,
+          "annotation": -23.446643829345703
+        },
+        "ctc_annotation_minus_canonical_log_likelihood": -23.439256258308887
+      }
+    },
+    {
+      "batch": "followup",
+      "number": 11,
+      "wav": "K07793627-AMG10-L1N2D1-E-K0KK-01787724.wav",
+      "speaker": "00b8f2fdf1fb",
+      "split": "valid",
+      "source_transcript": "크레파스(크데파스).",
+      "canonical": "크레파스",
+      "annotation": "크데파스",
+      "answer": {
+        "revision": 11,
+        "item_id": "11",
+        "binding": "98fc3812e0afe8917055252c3e84a6cd2c399e4930cd4371e53a0869555e08f2",
+        "choice": "both",
+        "heard": "",
+        "note": "",
+        "at": "2026-09-27 09:05:39"
+      },
+      "classification": "ambiguous_between_alternatives",
+      "selected_surface": null,
+      "selected_role": null,
+      "has_note_or_free_text": false,
+      "source_pcm_sha256": "4e4052c9a318094d972716d07bc9613c18bdb319e142bb7541aac3a50c0a88a1",
+      "seconds": 3.392,
+      "source_and_playback_binding_verified": true,
+      "model": {
+        "number": 11,
+        "split": "valid",
+        "human_classification": "ambiguous_between_alternatives",
+        "human_selected": null,
+        "canonical": "크레파스",
+        "annotation": "크데파스",
+        "prediction_text": "크레파스",
+        "prediction_ids": [
+          17,
+          39,
+          7,
+          26,
+          19,
+          21,
+          11,
+          39
+        ],
+        "matches_options_ignoring_spaces": {
+          "canonical": true,
+          "annotation": false
+        },
+        "matches_exclusive_human_choice": null,
+        "ctc_sequence_log_likelihood": {
+          "canonical": -0.004483014345169067,
+          "annotation": -19.43744659423828
+        },
+        "ctc_annotation_minus_canonical_log_likelihood": -19.432963579893112
+      }
+    },
+    {
+      "batch": "followup",
+      "number": 12,
+      "wav": "K09251771-AMG10-L1N2D2-E-K0KK-02497020.wav",
+      "speaker": "678fdf60f09b",
+      "split": "valid",
+      "source_transcript": "운동화(운등화).",
+      "canonical": "운동화",
+      "annotation": "운등화",
+      "answer": {
+        "revision": 12,
+        "item_id": "12",
+        "binding": "b30a20343cdfb9d9cad0f721414e4f80b83be44ad2edd0805db540d0a9e9c26f",
+        "choice": "a",
+        "heard": "",
+        "note": "",
+        "at": "2026-09-27 09:05:45"
+      },
+      "classification": "exclusive_annotation",
+      "selected_surface": "운등화",
+      "selected_role": "annotation",
+      "has_note_or_free_text": false,
+      "source_pcm_sha256": "3460cd1900c5cb32e326a6d8aa3047666d5f449c58d629d1d859384c9ffcb095",
+      "seconds": 3.072,
+      "source_and_playback_binding_verified": true,
+      "model": {
+        "number": 12,
+        "split": "valid",
+        "human_classification": "exclusive_annotation",
+        "human_selected": "운등화",
+        "canonical": "운동화",
+        "annotation": "운등화",
+        "prediction_text": "운동화",
+        "prediction_ids": [
+          13,
+          34,
+          4,
+          5,
+          29,
+          13,
+          20,
+          30
+        ],
+        "matches_options_ignoring_spaces": {
+          "canonical": true,
+          "annotation": false
+        },
+        "matches_exclusive_human_choice": false,
+        "ctc_sequence_log_likelihood": {
+          "canonical": -0.0010019242763519287,
+          "annotation": -13.267263412475586
+        },
+        "ctc_annotation_minus_canonical_log_likelihood": -13.266261488199234
+      }
+    }
+  ],
+  "candidate_supervision": [
+    {
+      "id": "first:1",
+      "review_batch": "first",
+      "number": 1,
+      "wav": "K04900631-AMG10-L5N1D1-E-K0KK-00100034.wav",
+      "speaker": "5760f930210f",
+      "split": "train",
+      "path": "C:\\Users\\user\\Documents\\GitHub\\Audio-Recognition\\.venv\\child-jamo-web-20260916\\cause-analysis-20260927\\inline-contrast-listening\\listen-audio\\01.wav",
+      "samples": 68608,
+      "seconds": 4.288,
+      "file_sha256": "41eeb19cf713e4d0c034a06c8f3bdf51529df0af2ed78c128ffcc79b6b63f1fc",
+      "pcm_sha256": "f025996666ef6e5938a57d82f024880e5872e1ef93e1c597f0dd9d8cd1bee9bd",
+      "source_sha256": "41eeb19cf713e4d0c034a06c8f3bdf51529df0af2ed78c128ffcc79b6b63f1fc",
+      "canonical_surface": "싸워요",
+      "realized_surface": "사워요",
+      "canonical_ids": [
+        12,
+        21,
+        13,
+        35,
+        13,
+        33
+      ],
+      "realized_ids": [
+        11,
+        21,
+        13,
+        35,
+        13,
+        33
+      ],
+      "label_differs": true,
+      "binding": "8133a574a8a56cbf453d48be34c9068b0cdfd3967e89b11619792aa448f65c12",
+      "answer_revision": 1,
+      "baseline_prediction_ids": [
+        12,
+        21,
+        13,
+        35,
+        13,
+        33
+      ],
+      "supervision_scope": "Single-listener exclusive choice, not expert phonetic transcription."
+    },
+    {
+      "id": "first:2",
+      "review_batch": "first",
+      "number": 2,
+      "wav": "K02412568-AFG11-L5N1D1-E-K0KK-01458075.wav",
+      "speaker": "9028dce6614e",
+      "split": "train",
+      "path": "C:\\Users\\user\\Documents\\GitHub\\Audio-Recognition\\.venv\\child-jamo-web-20260916\\cause-analysis-20260927\\inline-contrast-listening\\listen-audio\\02.wav",
+      "samples": 77824,
+      "seconds": 4.864,
+      "file_sha256": "970c7d746564bcee742a16f9f12886a8730feb80fdf7c59e0b780ed9c597f1ab",
+      "pcm_sha256": "fc3739abe2098a8e531746018dbfb78a404f8793546aa4f39764be8e5ff905c8",
+      "source_sha256": "970c7d746564bcee742a16f9f12886a8730feb80fdf7c59e0b780ed9c597f1ab",
+      "canonical_surface": "아저씨",
+      "realized_surface": "아저씨",
+      "canonical_ids": [
+        13,
+        21,
+        14,
+        25,
+        12,
+        41
+      ],
+      "realized_ids": [
+        13,
+        21,
+        14,
+        25,
+        12,
+        41
+      ],
+      "label_differs": false,
+      "binding": "09856be5ca329ce464cda6b2d9f9d645cabc5d475a509e2e6f654dc97beddcfb",
+      "answer_revision": 2,
+      "baseline_prediction_ids": [
+        13,
+        21,
+        14,
+        25,
+        12,
+        41
+      ],
+      "supervision_scope": "Single-listener exclusive choice, not expert phonetic transcription."
+    },
+    {
+      "id": "first:5",
+      "review_batch": "first",
+      "number": 5,
+      "wav": "K06713112-AFG10-L1N2D1-E-K0KK-01503345.wav",
+      "speaker": "5ad4fca71d72",
+      "split": "valid",
+      "path": "C:\\Users\\user\\Documents\\GitHub\\Audio-Recognition\\.venv\\child-jamo-web-20260916\\cause-analysis-20260927\\inline-contrast-listening\\listen-audio\\05.wav",
+      "samples": 58368,
+      "seconds": 3.648,
+      "file_sha256": "e7b41f1748f2f93e48ebd4d2f81486b58a6335b80380f83da5a79d842c3517e4",
+      "pcm_sha256": "5a14da7bd89d5ea724e568c3e6be307761e0420103a920afe7ad839af384ac36",
+      "source_sha256": "e7b41f1748f2f93e48ebd4d2f81486b58a6335b80380f83da5a79d842c3517e4",
+      "canonical_surface": "원숭이",
+      "realized_surface": "웡숭이",
+      "canonical_ids": [
+        13,
+        35,
+        4,
+        11,
+        34,
+        13,
+        13,
+        41
+      ],
+      "realized_ids": [
+        13,
+        35,
+        13,
+        11,
+        34,
+        13,
+        13,
+        41
+      ],
+      "label_differs": true,
+      "binding": "191493a47b2f7d85abed9a90ec4794ea20fb67bccb3ac6b2a9441aa301b88473",
+      "answer_revision": 5,
+      "baseline_prediction_ids": [
+        13,
+        35,
+        4,
+        11,
+        34,
+        13,
+        13,
+        41
+      ],
+      "supervision_scope": "Single-listener exclusive choice, not expert phonetic transcription."
+    },
+    {
+      "id": "followup:3",
+      "review_batch": "followup",
+      "number": 3,
+      "wav": "K04422425-AFG11-L1N2D1-E-K0KK-01932746.wav",
+      "speaker": "884787790b63",
+      "split": "valid",
+      "path": "C:\\Users\\user\\Documents\\GitHub\\Audio-Recognition\\.venv\\child-jamo-web-20260916\\cause-analysis-20260927\\inline-contrast-followup\\listen-audio\\03.wav",
+      "samples": 54272,
+      "seconds": 3.392,
+      "file_sha256": "f624c1009a30fa85873b642f98aad85c0d483ee5a4cb11118d5644844561c2be",
+      "pcm_sha256": "de7d030a0f62c7cf7e33c7df0bfb236f6bd07d13bfd6af971e9dd1e625755c4a",
+      "source_sha256": "f624c1009a30fa85873b642f98aad85c0d483ee5a4cb11118d5644844561c2be",
+      "canonical_surface": "춤춰요",
+      "realized_surface": "춤서요",
+      "canonical_ids": [
+        16,
+        34,
+        8,
+        16,
+        35,
+        13,
+        33
+      ],
+      "realized_ids": [
+        16,
+        34,
+        8,
+        11,
+        25,
+        13,
+        33
+      ],
+      "label_differs": true,
+      "binding": "606a28d7e0bc7ef04ba4900776a19afb2af2a89ec834451bb874b0188f103414",
+      "answer_revision": 3,
+      "baseline_prediction_ids": [
+        16,
+        34,
+        8,
+        16,
+        35,
+        13,
+        33
+      ],
+      "supervision_scope": "Single-listener exclusive choice, not expert phonetic transcription."
+    },
+    {
+      "id": "followup:4",
+      "review_batch": "followup",
+      "number": 4,
+      "wav": "K09660266-AFG11-L1N2D1-E-K0KK-00255172.wav",
+      "speaker": "16e46c0fa2ce",
+      "split": "valid",
+      "path": "C:\\Users\\user\\Documents\\GitHub\\Audio-Recognition\\.venv\\child-jamo-web-20260916\\cause-analysis-20260927\\inline-contrast-followup\\listen-audio\\04.wav",
+      "samples": 87040,
+      "seconds": 5.44,
+      "file_sha256": "95ebbec3d09c5789d2519a9bd23a9f9c2bedb4ef90570ccf82e3b29b19e2f0bc",
+      "pcm_sha256": "b69ded7736dbc63a0c661d01ba51023a3a6f3443fc2637923f099d6a14c12c9c",
+      "source_sha256": "95ebbec3d09c5789d2519a9bd23a9f9c2bedb4ef90570ccf82e3b29b19e2f0bc",
+      "canonical_surface": "크레용",
+      "realized_surface": "쿠레용",
+      "canonical_ids": [
+        17,
+        39,
+        7,
+        26,
+        13,
+        33,
+        13
+      ],
+      "realized_ids": [
+        17,
+        34,
+        7,
+        26,
+        13,
+        33,
+        13
+      ],
+      "label_differs": true,
+      "binding": "e84128c663dfd15d6614c9bef4132c0c320c9c279cc3a7768258e634694b3033",
+      "answer_revision": 4,
+      "baseline_prediction_ids": [
+        19,
+        29,
+        7,
+        26,
+        13,
+        33,
+        13
+      ],
+      "supervision_scope": "Single-listener exclusive choice, not expert phonetic transcription."
+    },
+    {
+      "id": "followup:5",
+      "review_batch": "followup",
+      "number": 5,
+      "wav": "K00253758-AFG10-L1N2D1-E-K0KK-01581422.wav",
+      "speaker": "8c41f9158458",
+      "split": "train",
+      "path": "C:\\Users\\user\\Documents\\GitHub\\Audio-Recognition\\.venv\\child-jamo-web-20260916\\cause-analysis-20260927\\inline-contrast-followup\\listen-audio\\05.wav",
+      "samples": 51200,
+      "seconds": 3.2,
+      "file_sha256": "f7253cd067826071c804d395bbe2dd72df680face3cae7c950b189cfe8671b3f",
+      "pcm_sha256": "65fd3afc7ae2106458da1b43996bebbea08aff4a6d5118df4c1ed5ad808847a3",
+      "source_sha256": "f7253cd067826071c804d395bbe2dd72df680face3cae7c950b189cfe8671b3f",
+      "canonical_surface": "사랑",
+      "realized_surface": "사탕",
+      "canonical_ids": [
+        11,
+        21,
+        7,
+        21,
+        13
+      ],
+      "realized_ids": [
+        11,
+        21,
+        18,
+        21,
+        13
+      ],
+      "label_differs": true,
+      "binding": "0ceab685136d817161141d6a4c45c34ab5b4e45fbfc26e5208a3a12fe7e89292",
+      "answer_revision": 5,
+      "baseline_prediction_ids": [
+        11,
+        21,
+        18,
+        21,
+        13
+      ],
+      "supervision_scope": "Single-listener exclusive choice, not expert phonetic transcription."
+    },
+    {
+      "id": "followup:8",
+      "review_batch": "followup",
+      "number": 8,
+      "wav": "K02591562-AFG10-L1N2D4-E-K0KK-00368975.wav",
+      "speaker": "0f427d4e1430",
+      "split": "train",
+      "path": "C:\\Users\\user\\Documents\\GitHub\\Audio-Recognition\\.venv\\child-jamo-web-20260916\\cause-analysis-20260927\\inline-contrast-followup\\listen-audio\\08.wav",
+      "samples": 87040,
+      "seconds": 5.44,
+      "file_sha256": "9d62c7d3d6bb0978d5d9231d925445b803af97c537fa7cc85f9a02f259c28858",
+      "pcm_sha256": "d2427cd593b6b4277a2bf8812364857e8a93f4d37a75992c2a81d1f6ba00236b",
+      "source_sha256": "9d62c7d3d6bb0978d5d9231d925445b803af97c537fa7cc85f9a02f259c28858",
+      "canonical_surface": "누구일까요",
+      "realized_surface": "누구이까요",
+      "canonical_ids": [
+        4,
+        34,
+        2,
+        34,
+        13,
+        41,
+        7,
+        3,
+        21,
+        13,
+        33
+      ],
+      "realized_ids": [
+        4,
+        34,
+        2,
+        34,
+        13,
+        41,
+        3,
+        21,
+        13,
+        33
+      ],
+      "label_differs": true,
+      "binding": "3bef3463d4e9246107c4afb430db31ecd2a4de413b9d9adaae8fee0063d6fdd9",
+      "answer_revision": 8,
+      "baseline_prediction_ids": [
+        4,
+        34,
+        2,
+        34,
+        13,
+        41,
+        7,
+        3,
+        21,
+        13,
+        33
+      ],
+      "supervision_scope": "Single-listener exclusive choice, not expert phonetic transcription."
+    },
+    {
+      "id": "followup:9",
+      "review_batch": "followup",
+      "number": 9,
+      "wav": "K02410218-AMG13-L1N2D1-E-K0KK-00416414.wav",
+      "speaker": "f3fec7b5757f",
+      "split": "train",
+      "path": "C:\\Users\\user\\Documents\\GitHub\\Audio-Recognition\\.venv\\child-jamo-web-20260916\\cause-analysis-20260927\\inline-contrast-followup\\listen-audio\\09.wav",
+      "samples": 59392,
+      "seconds": 3.712,
+      "file_sha256": "7dde53468a9ec4f2c031634ad6d59eec2021ba9373a871cdeb679596cb00e050",
+      "pcm_sha256": "5d6a59d70069eb1d70d06881eba3c2fab1f1b9b4f9c1fea6b1fc8b7f451df133",
+      "source_sha256": "7dde53468a9ec4f2c031634ad6d59eec2021ba9373a871cdeb679596cb00e050",
+      "canonical_surface": "아저씨",
+      "realized_surface": "아저씨",
+      "canonical_ids": [
+        13,
+        21,
+        14,
+        25,
+        12,
+        41
+      ],
+      "realized_ids": [
+        13,
+        21,
+        14,
+        25,
+        12,
+        41
+      ],
+      "label_differs": false,
+      "binding": "9d7aff5be82e190415a49b933d29c4d14b9ff89cee83b714b18f7087b6e48c11",
+      "answer_revision": 9,
+      "baseline_prediction_ids": [
+        13,
+        21,
+        14,
+        25,
+        12,
+        41
+      ],
+      "supervision_scope": "Single-listener exclusive choice, not expert phonetic transcription."
+    },
+    {
+      "id": "followup:10",
+      "review_batch": "followup",
+      "number": 10,
+      "wav": "K06715527-AFG10-L1N2D2-E-K0KK-03035862.wav",
+      "speaker": "670d1430eca8",
+      "split": "train",
+      "path": "C:\\Users\\user\\Documents\\GitHub\\Audio-Recognition\\.venv\\child-jamo-web-20260916\\cause-analysis-20260927\\inline-contrast-followup\\listen-audio\\10.wav",
+      "samples": 74752,
+      "seconds": 4.672,
+      "file_sha256": "dad7e80d5783ca9ebde954b9d418cdb579017980a9449fe74c35a70e20f29196",
+      "pcm_sha256": "42b85f0ff64d91b509d09cd91798d89e617fe3e0042e816f0977d42f1b3e0786",
+      "source_sha256": "dad7e80d5783ca9ebde954b9d418cdb579017980a9449fe74c35a70e20f29196",
+      "canonical_surface": "원숭이",
+      "realized_surface": "웡충이",
+      "canonical_ids": [
+        13,
+        35,
+        4,
+        11,
+        34,
+        13,
+        13,
+        41
+      ],
+      "realized_ids": [
+        13,
+        35,
+        13,
+        16,
+        34,
+        13,
+        13,
+        41
+      ],
+      "label_differs": true,
+      "binding": "3dd97114f083becf544f0cd523c1781a00c1d4f9060b0cee0e235eed6f348f46",
+      "answer_revision": 10,
+      "baseline_prediction_ids": [
+        13,
+        35,
+        4,
+        11,
+        34,
+        13,
+        13,
+        41
+      ],
+      "supervision_scope": "Single-listener exclusive choice, not expert phonetic transcription."
+    },
+    {
+      "id": "followup:12",
+      "review_batch": "followup",
+      "number": 12,
+      "wav": "K09251771-AMG10-L1N2D2-E-K0KK-02497020.wav",
+      "speaker": "678fdf60f09b",
+      "split": "valid",
+      "path": "C:\\Users\\user\\Documents\\GitHub\\Audio-Recognition\\.venv\\child-jamo-web-20260916\\cause-analysis-20260927\\inline-contrast-followup\\listen-audio\\12.wav",
+      "samples": 49152,
+      "seconds": 3.072,
+      "file_sha256": "1e4c19a1c1d3e95bfb110340140ef1e5c876391f81d1be5390bc8cf0ae6343f0",
+      "pcm_sha256": "3460cd1900c5cb32e326a6d8aa3047666d5f449c58d629d1d859384c9ffcb095",
+      "source_sha256": "1e4c19a1c1d3e95bfb110340140ef1e5c876391f81d1be5390bc8cf0ae6343f0",
+      "canonical_surface": "운동화",
+      "realized_surface": "운등화",
+      "canonical_ids": [
+        13,
+        34,
+        4,
+        5,
+        29,
+        13,
+        20,
+        30
+      ],
+      "realized_ids": [
+        13,
+        34,
+        4,
+        5,
+        39,
+        13,
+        20,
+        30
+      ],
+      "label_differs": true,
+      "binding": "b30a20343cdfb9d9cad0f721414e4f80b83be44ad2edd0805db540d0a9e9c26f",
+      "answer_revision": 12,
+      "baseline_prediction_ids": [
+        13,
+        34,
+        4,
+        5,
+        29,
+        13,
+        20,
+        30
+      ],
+      "supervision_scope": "Single-listener exclusive choice, not expert phonetic transcription."
+    }
+  ],
+  "training_plan": "C:\\Users\\user\\Documents\\GitHub\\Audio-Recognition\\.venv\\hubert-child-20260914\\label-comparison-20260927\\plan.json",
+  "decision": "Proceed with a fixed, exploratory 72-update paired label comparison; no population/generalization claim and no automatic deployment.",
+  "new_listening_batch_prepared": false
+}

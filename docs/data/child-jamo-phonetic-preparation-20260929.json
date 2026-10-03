@@ -1,0 +1,66 @@
+{
+  "version": "whole-form-adjudication-20260929-v1",
+  "status": "awaiting_whole_form_review",
+  "questions": 15,
+  "training_relabel_questions": 5,
+  "new_development_questions": 10,
+  "unique_speakers": 15,
+  "new_development_speakers_absent_from_baseline_train": 10,
+  "new_recordings_absent_from_all_baseline_manifests": 10,
+  "total_clip_seconds": 58.214,
+  "cropped_with_full_original_available": 9,
+  "selection_sha256": "8ba758b6d199e619fe62a0c93e2cbc5aeee6d62eef1ee455e7dab981a3adbd2e",
+  "review_sha256": "c5a0fe2d71dff6e17188dcb303da8bbed374ed192acda512e322cd42bddefe50",
+  "evidence_sha256": "da3da8f563d5178a79b6aba169c8cae06163f1cf671a60214f19b07eb930501d",
+  "comparison_plan_sha256": "eee793e97f5b88c25270f60f5e6149ed8c4e70ef84757293e15dfd88936f2b73",
+  "source_checks_passed": true,
+  "pcm_roundtrips_verified": 15,
+  "source_archives": {
+    "TS_Kor_formatted_01.tar": {
+      "archive": {
+        "path": "C:\\Users\\user\\Desktop\\AIHUB\\01.데이터\\1.Training\\원천데이터\\TS_Kor_formatted_01.tar",
+        "bytes": 100750155264,
+        "mtime_ns": 1786606785220885800
+      },
+      "wav_members": 465832,
+      "catalog_sha256": "02b4677590a9804cf4b9011f51ff3520ae3f0c8a56356042826daea7d1283b3c"
+    },
+    "TS_kor_formatted_02.tar": {
+      "archive": {
+        "path": "C:\\Users\\user\\Desktop\\AIHUB\\01.데이터\\1.Training\\원천데이터\\TS_kor_formatted_02.tar",
+        "bytes": 95347465216,
+        "mtime_ns": 1786608309290857700
+      },
+      "wav_members": 426132,
+      "catalog_sha256": "ea95cbb2b2e22ad5a0b53a9c0bf58ac66c1263bc4e3ffc9b32deb42bfa286a4c"
+    },
+    "TS_kor_formatted_03.tar": {
+      "archive": {
+        "path": "C:\\Users\\user\\Desktop\\AIHUB\\01.데이터\\1.Training\\원천데이터\\TS_kor_formatted_03.tar",
+        "bytes": 104152345088,
+        "mtime_ns": 1786610240156342900
+      },
+      "wav_members": 478140,
+      "catalog_sha256": "aeee4c3c8c0952a074e3a9b364f6def1cbc43ac4b50731d967e468fdac0516aa"
+    },
+    "TS_kor_formatted_04.tar": {
+      "archive": {
+        "path": "C:\\Users\\user\\Desktop\\AIHUB\\01.데이터\\1.Training\\원천데이터_230421_add\\TS_kor_formatted_04.tar",
+        "bytes": 89418066944,
+        "mtime_ns": 1786613623655337900
+      },
+      "wav_members": 401696,
+      "catalog_sha256": "0f452a9615cea54b4103eebfd99a561b48580c32c6084ae46f91973f82bbf4f7"
+    }
+  },
+  "automatic_target_labels_created": 0,
+  "training_started": false,
+  "model_replaced": false,
+  "limitations": [
+    "Held-out here means absent from this baseline fine-tuning TRAIN split, not unseen in encoder pretraining.",
+    "New recordings are absent from baseline train/valid/test. Their speakers have other recordings in baseline validation; this is a development comparison, not an untouched final test.",
+    "Same corpus transcript does not establish what sound was produced or guarantee a normal/variant pair.",
+    "Proposed alternatives use old approximate notes as hypotheses, never as accepted sound labels.",
+    "Whole-form choices are single-listener broad Hangul/jamo judgments, not expert narrow phonetic annotation."
+  ]
+}

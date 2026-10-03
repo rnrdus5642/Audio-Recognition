@@ -1,0 +1,42 @@
+{
+  "version": 1,
+  "source_manifest_sha256": "6b15a65983f64d8b01603161fbb901e1dbcee164fce605d39560ac2a71681a04",
+  "review_report": ".venv/child-jamo-web-20260916/cause-analysis-20260927/followup-review-results.json",
+  "limitation": "Only the two human-confirmed training defects. Other screening candidates and ambiguous listening answers do not authorize changes.",
+  "decisions": [
+    {
+      "wav": "K08181705-AMG13-L5N1D1-E-K0KK-00761681.wav",
+      "action": "whole_source",
+      "source_sha256": "c8509e8822fe9eed3ff62511394c6e82bce6702d4a4c910e905774518abf0e01",
+      "text": "작은 다람쥐",
+      "surface": "자근 다람쥐",
+      "label_ids": [14, 21, 2, 39, 4, 1, 5, 21, 7, 21, 8, 14, 37],
+      "original_pcm_sha256": "a4d9d855cd80993da5c7e51784ec481478836b324ee9a23bd11f7d2b2b3f4794",
+      "full_pcm_sha256": "25ac29b254ff3f8faeaa696244ebbbd15e47dd6721255cf6e44f3259a2e21e2a",
+      "full_samples": 46080,
+      "review": {
+        "item_id": "1",
+        "revision": 2,
+        "binding": "a891d51c3fc7a47ccfd84faf3df9cc47b465733afc1ae0cc6567a013e847336a",
+        "choice": "full_only",
+        "reason": "User heard the labelled utterance only in the whole source, not the training crop."
+      }
+    },
+    {
+      "wav": "K00770201-AMG10-L1N2D4-E-K0KK-00005765.wav",
+      "action": "exclude",
+      "source_sha256": "7f13eec78e1c17c63a432d73cf739bbf1cac962a3d0b86d190120b896efc6303",
+      "text": "하늘에서 눈이 내렸어요",
+      "surface": "하느레서 누니 내려써요",
+      "label_ids": [20, 21, 4, 39, 7, 26, 11, 25, 1, 4, 34, 4, 41, 1, 4, 22, 7, 27, 12, 25, 13, 33],
+      "original_pcm_sha256": "94cda139f6a26c8218f0fe568a2c1fbf496840e5a6a3c085e55cdd8af999da61",
+      "review": {
+        "item_id": "2",
+        "revision": 3,
+        "binding": "5988fe6909e8228eb4e65716b7189f6d4e6afede7253830b82b6c3cea0075afb",
+        "choice": "no_speech",
+        "reason": "User heard background noise only in both the original and amplified whole source."
+      }
+    }
+  ]
+}

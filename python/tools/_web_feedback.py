@@ -96,18 +96,9 @@ def pronunciation_feedback_html(feedback: PronunciationFeedback | None) -> str:
     if outside:
         note += f" 비교 구간 밖 {outside}개 음소는 위 교체·누락·추가 개수에서 제외합니다."
     note += " 점수는 차이 개수의 단순 비율이 아닌 가중 유사도입니다.</p>"
-    review_note = (
-        "<p>내부 검토: 인식 혼동 가능성이나 자료 부족으로 제외한 차이는 "
-        "보류 기록으로 유지하며, 화면에는 문제 없음으로 표시합니다.</p>"
-        if feedback.feedback_review.withheld else ""
-    )
     details = (
         "<details style='margin-top:14px;'><summary style='cursor:pointer;'>"
         "IPA 상세 비교 (개발·디버깅용)</summary>"
-        + "<p>아래는 인식 원본 비교입니다. 보류한 항목도 포함되며 아동에게 지적할 목록이 아닙니다.</p>"
-        + "".join(f"<p>{escape(hint.target_syllable)}"
-                  + (" → " + escape(hint.heard_syllable) if hint.heard_syllable else "")
-                  + f" · {escape(hint.message)}</p>" for hint in feedback.raw_korean_feedback.items)
-        + review_note + counts + table + note + caution + "</details>"
+        + counts + table + note + "</details>"
     )
-    return title + readable + details + "</section>"
+    return title + readable + details + caution + "</section>"

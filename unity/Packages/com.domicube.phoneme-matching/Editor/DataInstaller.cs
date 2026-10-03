@@ -35,7 +35,6 @@ namespace DomiCube.PhonemeMatching.Editor
             "targets.json",
             "ko_child_v2.json",
             "targets_child.json",
-            "targets_music_demo.json",
             "wav2vec2_ko_vocab.json",
         };
 

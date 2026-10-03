@@ -1,0 +1,164 @@
+{
+  "complete": true,
+  "at_utc": "2026-09-27T08:00:56.462678+00:00",
+  "original_train_recordings": 150253,
+  "current_train_recordings": 150252,
+  "original_manifest_sha256": "6b15a65983f64d8b01603161fbb901e1dbcee164fce605d39560ac2a71681a04",
+  "repaired_manifest_sha256": "095ab47072b4f24b0624fe6afb9d26dc3a16982dd75e6af3b255f94ee201b892",
+  "original_json_members_seen": 150253,
+  "unique_training_names_found": 150253,
+  "missing": [],
+  "duplicates": {},
+  "identity_mismatches": [],
+  "root_key_counts": {
+    "Wav": 150253,
+    "Environment": 150253,
+    "Speaker": 150253,
+    "Other": 150253,
+    "File": 150253,
+    "Basic": 150253,
+    "Transcription": 150253,
+    "Miscellaneous_Info": 150253
+  },
+  "scalar_or_list_field_path_counts": {
+    "Basic.ApplicationCategory": 150253,
+    "Basic.DataCategory": 150253,
+    "Basic.Distributor": 150253,
+    "Basic.FillingDate": 150253,
+    "Basic.Language": 150253,
+    "Basic.NumberOfSpeaker": 150253,
+    "Basic.NumberOfUtterance": 150253,
+    "Basic.RecordingDate": 150253,
+    "Basic.RevisionHistory": 150253,
+    "Basic.Version": 150253,
+    "Environment.NoiseEnviron": 150253,
+    "Environment.RecordingDevices": 150253,
+    "Environment.RecordingEnviron": 150253,
+    "File.DirectoryPath": 150253,
+    "File.Distance": 150253,
+    "File.FileCategory": 150253,
+    "File.FileFormat": 150253,
+    "File.FileLength": 150253,
+    "File.FileName": 150253,
+    "File.HeaderSize": 150253,
+    "File.NumberOfRepeat": 150253,
+    "File.TimeInterval": 150253,
+    "Miscellaneous_Info.SpeechEnd": 150253,
+    "Miscellaneous_Info.SpeechStart": 150253,
+    "Other.IncName": 150253,
+    "Other.QualityStatus": 150253,
+    "Speaker.Age": 150253,
+    "Speaker.AgeGroup": 150253,
+    "Speaker.Dialect": 150253,
+    "Speaker.Fluency": 150253,
+    "Speaker.Gender": 150253,
+    "Speaker.Region": 150253,
+    "Speaker.SchoolYear": 150253,
+    "Speaker.SpeakerName": 150253,
+    "Transcription.AccurateRead": 11,
+    "Transcription.CausesofError": 11,
+    "Transcription.ErrorTagged": 150253,
+    "Transcription.ErrorWords": 11,
+    "Transcription.GrammaticalError": 150253,
+    "Transcription.LabelText": 150253,
+    "Transcription.SpeakerRead": 11,
+    "Wav.ByteOrder": 150253,
+    "Wav.EncodingLaw": 150253,
+    "Wav.NumberOfBit": 150253,
+    "Wav.NumberOfChannel": 150253,
+    "Wav.SamplingRate": 150253,
+    "Wav.SignalToNoiseRatio": 150253
+  },
+  "transcription_field_counts": {
+    "LabelText": 150253,
+    "ErrorTagged": 150253,
+    "GrammaticalError": 150253,
+    "ErrorWords": 11,
+    "AccurateRead": 11,
+    "SpeakerRead": 11,
+    "CausesofError": 11
+  },
+  "original_train_field_values": {
+    "ErrorTagged": {
+      "\"N/A\"": 150253
+    },
+    "GrammaticalError": {
+      "\"N/A\"": 150253
+    },
+    "QualityStatus": {
+      "\"Good\"": 150253
+    }
+  },
+  "current_train_field_values": {
+    "ErrorTagged": {
+      "\"N/A\"": 150252
+    },
+    "GrammaticalError": {
+      "\"N/A\"": 150252
+    },
+    "QualityStatus": {
+      "\"Good\"": 150252
+    }
+  },
+  "non_placeholder_error_or_grammar_annotations": [],
+  "archive_metadata": [
+    {
+      "name": "TL_kor_formatted_01.tar",
+      "size": 954301952,
+      "mtime_ns": 1786604936090966300,
+      "selected_members_seen": 27296
+    },
+    {
+      "name": "TL_kor_formatted_02.tar",
+      "size": 873091072,
+      "mtime_ns": 1786604947504944900,
+      "selected_members_seen": 25861
+    },
+    {
+      "name": "TL_kor_formatted_03.tar",
+      "size": 979809792,
+      "mtime_ns": 1786604959843565200,
+      "selected_members_seen": 40357
+    },
+    {
+      "name": "TL_kor_formatted_04.tar",
+      "size": 828532736,
+      "mtime_ns": 1786604970098558000,
+      "selected_members_seen": 28458
+    },
+    {
+      "name": "TL_kor_free_01.tar",
+      "size": 828516864,
+      "mtime_ns": 1786604980809082600,
+      "selected_members_seen": 9057
+    },
+    {
+      "name": "TL_kor_free_02.tar",
+      "size": 646405632,
+      "mtime_ns": 1786604989082902900,
+      "selected_members_seen": 6915
+    },
+    {
+      "name": "VL_kor_formatted_01.tar",
+      "size": 441113088,
+      "mtime_ns": 1786613629888497000,
+      "selected_members_seen": 10743
+    },
+    {
+      "name": "VL_kor_free_01.tar",
+      "size": 121133568,
+      "mtime_ns": 1786613631847008800,
+      "selected_members_seen": 1566
+    }
+  ],
+  "ordered_label_payload_aggregate_sha256": "270b0021ec2d96fa0b2aaca791a0acdd0d4427921a5d1c0fcae8d4741ad39df5",
+  "provenance_journal": ".venv\\child-jamo-web-20260916\\cause-analysis-20260927\\training-annotation-provenance.jsonl",
+  "provenance_journal_sha256": "022b3451afc1db4f75cc3add0621413f19589e7dbf8e32bb7b4b5cb2f91aede0",
+  "elapsed_seconds": 67.28,
+  "limitations": [
+    "This audits metadata fields for the original training selection, not every recording in the corpus.",
+    "N/A and Good do not certify pronunciation correctness; audio was not listened to in this audit.",
+    "No missing phonetic labels are invented and no user free text is normalized into a new target."
+  ],
+  "training_or_labels_changed": false
+}

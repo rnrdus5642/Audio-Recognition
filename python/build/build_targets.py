@@ -1,10 +1,8 @@
 """Build targets.json from words.csv.
 
-Reads the authoring file (answer_id, text, language, and the optional
-action_group) and produces a runtime-ready JSON containing IPA phoneme
-sequences, per-word thresholds, and - for words that name an action
-group - the competing actions the runtime must be able to tell them
-apart from.
+Reads the authoring file (answer_id, text, language) and produces a
+runtime-ready JSON containing IPA phoneme sequences and per-word
+thresholds.
 
 The output is a flat list of answers. Words used to be grouped into
 segments that competed with each other, on the theory that "which of
@@ -33,7 +31,6 @@ import argparse
 import csv
 import io
 import json
-import math
 import sys
 from collections import defaultdict
 from datetime import date
@@ -62,10 +59,6 @@ class WordRow(NamedTuple):
     answer_id: str
     text: str
     language: str
-    #: Which action this word asks for, or "" for the words that are not
-    #: part of a contrast set. Two rows sharing a group are two ways of
-    #: naming the same action, so they never compete with each other.
-    action_group: str = ""
 
 
 # ---------------------------------------------------------------------------
@@ -121,12 +114,6 @@ def read_words_csv(path: Path) -> list[WordRow]:
 
     Required columns: answer_id, text, language.
 
-    Optional column: action_group. Empty or absent is what every row
-    meant before the column existed - no contrast set, nothing embedded,
-    nothing to veto. A value with whitespace in it is refused with its
-    line number rather than trimmed into a different group id, because a
-    group that nothing else joins silently protects nothing.
-
     The file is UTF-8 with a BOM, which is what makes Excel on a Korean
     Windows open it as UTF-8 rather than CP949 and show 엄마 instead of
     ?꾨쭏. Excel keeps the BOM when it saves, but other editors may not,
@@ -168,18 +155,11 @@ def read_words_csv(path: Path) -> list[WordRow]:
                     f"'{row['answer_id']}'"
                 )
             seen_answer_ids.add(row["answer_id"])
-            action_group = row.get("action_group") or ""
-            if any(ch.isspace() for ch in action_group):
-                raise ValueError(
-                    f"words.csv line {lineno}: action_group "
-                    f"'{action_group}' has whitespace in it"
-                )
             rows.append(
                 WordRow(
                     answer_id=row["answer_id"],
                     text=row["text"],
                     language=row["language"],
-                    action_group=action_group,
                 )
             )
 
@@ -264,43 +244,6 @@ def find_collisions(answers: list[dict]) -> list[tuple[str, str]]:
     return collisions
 
 
-def add_contrastive_alternatives(answers: list[dict]) -> None:
-    """Give each grouped answer every grouped answer, its own included.
-
-    A word only needs telling apart from words that mean something else.
-    두드리기 and 두드려 are the same instruction twice, so one winning
-    over the other changes nothing; 들기 winning when the child said
-    흔들기 changes which action the game performs, and 들기's phonemes
-    are the tail of 흔들기's, so a matcher that may start its window
-    anywhere cannot see the difference.
-
-    Each grouped answer therefore ships EVERY grouped answer as
-    `contrastive_alternatives` - text, phonemes and group - and the
-    runtime splits them by group at scoring time. Own-group aliases are
-    in there for a reason: a question may ask for 두드려 alone, and what
-    the child said has to be measured against the whole action, 두드리기
-    included, before another action is allowed to outscore it. Leaving
-    them out let a rival beat an anchor that was missing the alias the
-    child actually said. Nothing here is an answer: an alias that was not
-    asked for can defend the action, never win it.
-
-    A catalog with one group therefore still embeds its own entries -
-    there is simply no other action to be outscored by.
-    """
-    grouped = [a for a in answers if a.get("action_group")]
-    for answer in grouped:
-        alternatives = [
-            {
-                "text": other["text"],
-                "phonemes": list(other["phonemes"]),
-                "action_group": other["action_group"],
-            }
-            for other in grouped
-        ]
-        if alternatives:
-            answer["contrastive_alternatives"] = alternatives
-
-
 # ---------------------------------------------------------------------------
 # Build pipeline
 # ---------------------------------------------------------------------------
@@ -320,119 +263,11 @@ def load_thresholds(path: Path | None) -> dict[str, float]:
     return data["thresholds"]
 
 
-def _finite(value: object) -> bool:
-    """A real, finite number. `True` is not one, and neither is "0.01"."""
-    return (isinstance(value, (int, float)) and not isinstance(value, bool)
-            and math.isfinite(value))
-
-
-def _count(value: object) -> bool:
-    """A non-negative whole count. `True` is not one."""
-    return isinstance(value, int) and not isinstance(value, bool) and value >= 0
-
-
-def load_policy(path: Path | None, matrix_id: str | None = None) -> dict:
-    """Per-word calibration policy, keyed by word.
-
-    Carries the measured false-accept count behind each threshold and
-    whether the one-exact-frame escape was calibrated for that word. Older
-    threshold files have no policy block; then no word gets the escape and
-    the strict two-frame rule stands, which is the safe direction.
-
-    Returns the whole calibration, not just the per-word records: what
-    licensed a word is the matrix and profile it was measured under, and
-    the runtime has to be able to check that it is still running them.
-    """
-    if path is None:
-        return {"policy": {}}
-    data = json.loads(path.read_text(encoding="utf-8"))
-    policy = data.get("policy") or {}
-    if not policy:
-        return {"policy": {}}
-    for field in ("matrix_id", "consecutive", "budget", "streaming_profile",
-                  "reference"):
-        if field not in data:
-            raise ValueError(
-                f"threshold file has a policy block but no {field}; "
-                "recalibrate so the policy is tied to what produced it")
-    if not isinstance(data["matrix_id"], str) or not data["matrix_id"].strip():
-        raise ValueError(
-            "the policy does not name the matrix it was measured under")
-    if not _count(data["consecutive"]) or data["consecutive"] < 1:
-        raise ValueError(
-            f"consecutive {data['consecutive']!r} is not a streak length")
-    # Only the escape was calibrated at 2. A file that switches nothing on
-    # is the ordinary strict path, and deriving those thresholds at a
-    # different streak length is a normal thing to do.
-    enabled = [word for word, record in policy.items()
-               if record.get("allow_exact_single_frame") is True]
-    if enabled and data["consecutive"] != 2:
-        raise ValueError(
-            "the exact-single-frame policy is only calibrated for "
-            f"consecutive 2, not {data['consecutive']}")
-    if matrix_id is not None and data["matrix_id"] != matrix_id:
-        raise ValueError(
-            f"policy was calibrated for {data['matrix_id']} but this build "
-            f"targets {matrix_id}; recalibrate")
-    budget = data["budget"]
-    if not _finite(budget) or budget < 0:
-        raise ValueError(f"the false-accept budget {budget!r} is not usable")
-    profile = data["streaming_profile"]
-    for key in ("skip_cost", "coverage", "context_mult"):
-        value = profile.get(key)
-        if not _finite(value):
-            raise ValueError(f"streaming_profile.{key} is not a finite number")
-    seconds = data["reference"].get("seconds_exact") or data["reference"].get("seconds")
-    if not _finite(seconds) or seconds <= 0:
-        raise ValueError("reference seconds are missing or not usable")
-    for word, record in policy.items():
-        if record.get("feasible") is not True:
-            raise ValueError(
-                f"'{word}' has no threshold that meets the false-accept "
-                "budget; recalibrate rather than shipping the fallback")
-        if record.get("allow_exact_single_frame") is not True and \
-                record.get("allow_exact_single_frame") is not False:
-            raise ValueError(f"'{word}' policy flag is not a boolean")
-        if not _finite(record.get("threshold")):
-            raise ValueError(f"'{word}' policy threshold is not a number")
-        if record.get("threshold") != data["thresholds"].get(word):
-            raise ValueError(
-                f"'{word}' policy threshold disagrees with its threshold")
-        rate = record.get("rate_per_10s")
-        fired = record.get("false_accepts")
-        if not _finite(rate) or rate < 0 or rate > budget:
-            raise ValueError(
-                f"'{word}' policy rate {rate} is missing or outside the "
-                f"budget {budget}")
-        if not _count(fired):
-            raise ValueError(f"'{word}' false_accepts is not a count")
-        recomputed = fired / seconds * 10.0
-        if abs(recomputed - rate) > 1e-6:
-            raise ValueError(
-                f"'{word}' rate {rate} does not match {fired} firings over "
-                f"{seconds:.1f}s")
-        # The written rate is rounded, so checking only that one lets a
-        # measurement of 0.0100001 ship as 0.010000 against a budget of
-        # 0.01. The count and the seconds are what was measured.
-        if recomputed > budget:
-            raise ValueError(
-                f"'{word}' fired {fired} times in {seconds:.1f}s - "
-                f"{recomputed} per 10s, over the budget {budget}")
-    return {
-        "policy": policy,
-        "matrix_id": data["matrix_id"],
-        "streaming_profile": {k: float(profile[k])
-                              for k in ("skip_cost", "coverage", "context_mult")},
-        "consecutive": data["consecutive"],
-    }
-
-
 def build_answer_entries(
     rows: Iterable[WordRow],
     apply_rules: bool = True,
     thresholds: dict[str, float] | None = None,
     strict: bool = False,
-    calibration: dict | None = None,
 ) -> list[dict]:
     """Run each row through its language's G2P and return enriched dicts.
 
@@ -443,8 +278,6 @@ def build_answer_entries(
     to be measured rather than assumed (see `python.tools.evaluate`).
     """
     thresholds = thresholds or {}
-    calibration = calibration or {"policy": {}}
-    policy = calibration.get("policy") or {}
     g2p_cache: dict[str, object] = {}
     out: list[dict] = []
     guessed: list[str] = []
@@ -483,43 +316,8 @@ def build_answer_entries(
                 "threshold": round(
                     thresholds.get(row.text, auto_threshold(len(phonemes))), 4
                 ),
-                # Only for rows that named one, so a catalog built from a
-                # file without the column is what it always was.
-                **({"action_group": row.action_group}
-                   if row.action_group else {}),
             }
         )
-        record = policy.get(row.text)
-        if record and record.get("allow_exact_single_frame") is True:
-            # What was calibrated has to match what is being built, or the
-            # approval belongs to a different word than the one shipping.
-            if record.get("phonemes") != phonemes:
-                raise ValueError(
-                    f"'{row.text}' was calibrated for different phonemes; "
-                    "recalibrate (did the G2P or --no-rules change?)")
-            # Not `round(record["threshold"], 4)`: both sides would come
-            # from the same number and always agree. What has to hold is
-            # that the value shipped IS the value the budget was measured
-            # at - 0.82594 serialised as 0.8259 is a looser pass mark that
-            # nobody counted false accepts for.
-            if record["threshold"] != out[-1]["threshold"]:
-                raise ValueError(
-                    f"'{row.text}' was calibrated at {record['threshold']} "
-                    f"but the target file would ship "
-                    f"{out[-1]['threshold']}; recalibrate on a grid that "
-                    "survives 4-decimal rounding")
-            out[-1]["allow_exact_single_frame"] = True
-            # The snapshot the runtime checks itself against. Only written
-            # when calibration switched it on, so older data and
-            # uncalibrated words stay on the strict two-frame rule.
-            out[-1]["exact_single_frame_calibration"] = {
-                "matrix_id": calibration["matrix_id"],
-                "streaming_profile": dict(calibration["streaming_profile"]),
-                "consecutive": calibration["consecutive"],
-                "text": row.text,
-                "phonemes": list(phonemes),
-                "threshold": out[-1]["threshold"],
-            }
     if guessed:
         # The phoneme-count table lands within one step of the measured
         # value 19% of the time. 북 got 0.73 where measuring says 0.85,
@@ -539,7 +337,6 @@ def build_answer_entries(
               "이 단어들은 발음 피드백에서 글자를 짚지 못합니다.",
               file=sys.stderr)
 
-    add_contrastive_alternatives(out)
     return out
 
 
@@ -555,8 +352,7 @@ def build(
     rows = read_words_csv(input_path)
     answers = build_answer_entries(
         rows, apply_rules=apply_rules,
-        thresholds=load_thresholds(thresholds_path), strict=strict,
-        calibration=load_policy(thresholds_path, matrix_id))
+        thresholds=load_thresholds(thresholds_path), strict=strict)
 
     collisions = find_collisions(answers)
     if collisions:

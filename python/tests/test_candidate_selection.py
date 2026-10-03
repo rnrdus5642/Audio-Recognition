@@ -32,24 +32,6 @@ def matcher(matrix):
 
 @pytest.fixture
 def answers():
-    """The shipped catalog with the calibrated escape switched off.
-
-    These cases are about the streak and the candidate switch, which the
-    strict two-frame rule owns. `test_streaming.py` covers the escape
-    itself; leaving it on here would confirm an exact frame before the
-    streak logic under test ever ran.
-    """
-    catalog = {a["id"]: dict(a) for a in json.loads(
-        (DATA / "targets_child.json").read_text(encoding="utf-8")
-    )["answers"]}
-    for answer in catalog.values():
-        answer.pop("allow_exact_single_frame", None)
-    return catalog
-
-
-@pytest.fixture
-def calibrated_answers():
-    """The shipped catalog exactly as it ships, escape included."""
     return {a["id"]: a for a in json.loads(
         (DATA / "targets_child.json").read_text(encoding="utf-8")
     )["answers"]}
@@ -164,7 +146,7 @@ def test_two_frames_require_the_same_passing_answer_and_its_feedback(
     assert hit.streak == 2
     expected = matcher.best_match(final, [answers[expected_id]])
     assert hit.feedback.to_dict() == PronunciationFeedback.from_match(
-        expected, frame_count, 2, matrix_id=matcher.matrix.matrix_id).to_dict()
+        expected, frame_count, 2).to_dict()
     sm.reset()
     assert sm.streak == 0
     assert sm.push(final) is None

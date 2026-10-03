@@ -1,0 +1,1266 @@
+{
+  "audited_on": "2026-09-14",
+  "scope": "public training metadata audit; no training run performed",
+  "method": "pickletools static opcode interpretation; serialized globals represented symbolically, never executed",
+  "models": {
+    "syllable": {
+      "repo": "Miniijune/wav2vec2-xls-r-300m-Korean-children-pronunciation",
+      "revision": "4c8cae453bc7851c763570fc52d445a8c7f1a698",
+      "training_args": {
+        "per_device_train_batch_size": 4,
+        "per_device_eval_batch_size": 1,
+        "gradient_accumulation_steps": 8,
+        "learning_rate": 0.0001,
+        "weight_decay": 0.0,
+        "adam_beta1": 0.9,
+        "adam_beta2": 0.999,
+        "adam_epsilon": 1e-08,
+        "max_grad_norm": 1.0,
+        "num_train_epochs": 5,
+        "max_steps": -1,
+        "lr_scheduler_type": "linear",
+        "warmup_ratio": 0.0,
+        "warmup_steps": 2000,
+        "logging_steps": 200,
+        "eval_steps": 2000,
+        "save_steps": 2000,
+        "save_total_limit": 2,
+        "fp16": true,
+        "bf16": false,
+        "gradient_checkpointing": false,
+        "group_by_length": false,
+        "dataloader_drop_last": false,
+        "dataloader_num_workers": 0,
+        "load_best_model_at_end": true,
+        "metric_for_best_model": "cer",
+        "greater_is_better": false,
+        "seed": 42,
+        "data_seed": null,
+        "_n_gpu": 1,
+        "eval_strategy": "steps",
+        "save_strategy": "steps",
+        "optim": "adamw_torch_fused",
+        "resume_from_checkpoint": null,
+        "torch_compile": false,
+        "tf32": null
+      },
+      "model_config": {
+        "vocab_size": 1540,
+        "pad_token_id": 1539,
+        "bos_token_id": 1539,
+        "eos_token_id": 1540,
+        "apply_spec_augment": true,
+        "mask_time_prob": 0.075,
+        "mask_time_length": 10,
+        "mask_feature_prob": 0.0,
+        "mask_feature_length": 10,
+        "layerdrop": 0.1,
+        "hidden_dropout": 0.1,
+        "attention_dropout": 0.1,
+        "activation_dropout": 0.1,
+        "feat_proj_dropout": 0.0,
+        "final_dropout": 0.0,
+        "gradient_checkpointing": false,
+        "ctc_loss_reduction": "mean",
+        "ctc_zero_infinity": false
+      },
+      "root_final_training_args_equal": true,
+      "root_final_weights_lfs_sha256": {
+        "model.safetensors": "3f90496a53f011370d99f5b7ea5a9b6334fc62248fc444fa5416e6f841be615b",
+        "final/model.safetensors": "3f90496a53f011370d99f5b7ea5a9b6334fc62248fc444fa5416e6f841be615b"
+      },
+      "root_final_weights_same": true,
+      "output_directory_dataset_marker": true,
+      "output_directory_basename": "xlsr-children-finetuned-v2",
+      "vocab_entries": 1539,
+      "unmapped_head_ids": [
+        1537
+      ],
+      "training_rows": [
+        {
+          "training_loss": 2.7335,
+          "epoch": 0.2568,
+          "step": 2000.0,
+          "validation_loss": 2.9172,
+          "cer": 0.4084
+        },
+        {
+          "training_loss": 1.401,
+          "epoch": 0.5136,
+          "step": 4000.0,
+          "validation_loss": 1.97,
+          "cer": 0.252
+        },
+        {
+          "training_loss": 1.1359,
+          "epoch": 0.7703,
+          "step": 6000.0,
+          "validation_loss": 1.5784,
+          "cer": 0.2201
+        },
+        {
+          "training_loss": 0.9546,
+          "epoch": 1.0271,
+          "step": 8000.0,
+          "validation_loss": 1.3394,
+          "cer": 0.1981
+        },
+        {
+          "training_loss": 0.9167,
+          "epoch": 1.2839,
+          "step": 10000.0,
+          "validation_loss": 1.2866,
+          "cer": 0.1901
+        },
+        {
+          "training_loss": 0.8224,
+          "epoch": 1.5406,
+          "step": 12000.0,
+          "validation_loss": 1.2323,
+          "cer": 0.1795
+        },
+        {
+          "training_loss": 0.7777,
+          "epoch": 1.7974,
+          "step": 14000.0,
+          "validation_loss": 1.1941,
+          "cer": 0.1695
+        },
+        {
+          "training_loss": 0.7436,
+          "epoch": 2.0542,
+          "step": 16000.0,
+          "validation_loss": 1.2106,
+          "cer": 0.1676
+        },
+        {
+          "training_loss": 0.7119,
+          "epoch": 2.311,
+          "step": 18000.0,
+          "validation_loss": 1.2312,
+          "cer": 0.1608
+        },
+        {
+          "training_loss": 0.6783,
+          "epoch": 2.5677,
+          "step": 20000.0,
+          "validation_loss": 1.1446,
+          "cer": 0.1566
+        },
+        {
+          "training_loss": 0.6452,
+          "epoch": 2.8245,
+          "step": 22000.0,
+          "validation_loss": 1.1421,
+          "cer": 0.1513
+        },
+        {
+          "training_loss": 0.6208,
+          "epoch": 3.0813,
+          "step": 24000.0,
+          "validation_loss": 1.1602,
+          "cer": 0.146
+        },
+        {
+          "training_loss": 0.5758,
+          "epoch": 3.338,
+          "step": 26000.0,
+          "validation_loss": 1.1391,
+          "cer": 0.1435
+        },
+        {
+          "training_loss": 0.5673,
+          "epoch": 3.5948,
+          "step": 28000.0,
+          "validation_loss": 1.0839,
+          "cer": 0.1395
+        },
+        {
+          "training_loss": 0.5353,
+          "epoch": 3.8516,
+          "step": 30000.0,
+          "validation_loss": 1.0952,
+          "cer": 0.1364
+        },
+        {
+          "training_loss": 0.5235,
+          "epoch": 4.1084,
+          "step": 32000.0,
+          "validation_loss": 1.0479,
+          "cer": 0.1343
+        },
+        {
+          "training_loss": 0.5056,
+          "epoch": 4.3651,
+          "step": 34000.0,
+          "validation_loss": 1.0552,
+          "cer": 0.1312
+        },
+        {
+          "training_loss": 0.4978,
+          "epoch": 4.6219,
+          "step": 36000.0,
+          "validation_loss": 1.0342,
+          "cer": 0.1292
+        },
+        {
+          "training_loss": 0.4895,
+          "epoch": 4.8787,
+          "step": 38000.0,
+          "validation_loss": 1.0513,
+          "cer": 0.1287
+        }
+      ],
+      "approximate_records_per_epoch_range": [
+        249221.18380062308,
+        249253.53758275998
+      ],
+      "dataset_size_is_inference": true,
+      "root_final_configs_equal": true,
+      "root_final_vocab_equal": true
+    },
+    "jamo_v1": {
+      "repo": "Miniijune/wav2vec2-xls-r-300m-Korean-children-pronunciation-jamo-based",
+      "revision": "b171d53144615b207a129c2f6f428ab3adb5a7f9",
+      "training_args": {
+        "per_device_train_batch_size": 4,
+        "per_device_eval_batch_size": 1,
+        "gradient_accumulation_steps": 8,
+        "learning_rate": 1e-05,
+        "weight_decay": 0.0,
+        "adam_beta1": 0.9,
+        "adam_beta2": 0.999,
+        "adam_epsilon": 1e-08,
+        "max_grad_norm": 1.5,
+        "num_train_epochs": 4,
+        "max_steps": -1,
+        "lr_scheduler_type": "cosine",
+        "warmup_ratio": 0.0,
+        "warmup_steps": 2000,
+        "logging_steps": 200,
+        "eval_steps": 2000,
+        "save_steps": 2000,
+        "save_total_limit": 2,
+        "fp16": true,
+        "bf16": false,
+        "gradient_checkpointing": false,
+        "group_by_length": false,
+        "dataloader_drop_last": false,
+        "dataloader_num_workers": 0,
+        "load_best_model_at_end": true,
+        "metric_for_best_model": "cer",
+        "greater_is_better": false,
+        "seed": 42,
+        "data_seed": null,
+        "_n_gpu": 1,
+        "eval_strategy": "steps",
+        "save_strategy": "steps",
+        "optim": "adamw_torch_fused",
+        "resume_from_checkpoint": null,
+        "torch_compile": false,
+        "tf32": null
+      },
+      "model_config": {
+        "vocab_size": 44,
+        "pad_token_id": 43,
+        "bos_token_id": 43,
+        "eos_token_id": 44,
+        "apply_spec_augment": true,
+        "mask_time_prob": 0.05,
+        "mask_time_length": 10,
+        "mask_feature_prob": 0.0,
+        "mask_feature_length": 10,
+        "layerdrop": 0.1,
+        "hidden_dropout": 0.1,
+        "attention_dropout": 0.1,
+        "activation_dropout": 0.0,
+        "feat_proj_dropout": 0.1,
+        "final_dropout": 0.0,
+        "gradient_checkpointing": false,
+        "ctc_loss_reduction": "mean",
+        "ctc_zero_infinity": true
+      },
+      "root_final_training_args_equal": true,
+      "root_final_weights_lfs_sha256": {
+        "model.safetensors": "af96da23131d5d1bac6bd6f1e65deded5dd959ea2e6c37cf6a416637de3e9c7b",
+        "final/model.safetensors": "af96da23131d5d1bac6bd6f1e65deded5dd959ea2e6c37cf6a416637de3e9c7b"
+      },
+      "root_final_weights_same": true,
+      "output_directory_dataset_marker": true,
+      "output_directory_basename": "xlsr-children-finetuned-v4",
+      "vocab_entries": 43,
+      "unmapped_head_ids": [
+        41
+      ],
+      "training_rows": [
+        {
+          "training_loss": 3.3435,
+          "epoch": 0.2561,
+          "step": 2000.0,
+          "validation_loss": 3.2914,
+          "cer": 0.9219
+        },
+        {
+          "training_loss": 1.6187,
+          "epoch": 0.5122,
+          "step": 4000.0,
+          "validation_loss": 1.3231,
+          "cer": 0.2448
+        },
+        {
+          "training_loss": 0.9069,
+          "epoch": 0.7682,
+          "step": 6000.0,
+          "validation_loss": 0.9062,
+          "cer": 0.1556
+        },
+        {
+          "training_loss": 0.7448,
+          "epoch": 1.0242,
+          "step": 8000.0,
+          "validation_loss": 0.861,
+          "cer": 0.1396
+        },
+        {
+          "training_loss": 0.6777,
+          "epoch": 1.2803,
+          "step": 10000.0,
+          "validation_loss": 0.8514,
+          "cer": 0.1291
+        },
+        {
+          "training_loss": 0.6308,
+          "epoch": 1.5364,
+          "step": 12000.0,
+          "validation_loss": 0.8527,
+          "cer": 0.1228
+        },
+        {
+          "training_loss": 0.5983,
+          "epoch": 1.7924,
+          "step": 14000.0,
+          "validation_loss": 0.8562,
+          "cer": 0.1195
+        },
+        {
+          "training_loss": 0.5739,
+          "epoch": 2.0484,
+          "step": 16000.0,
+          "validation_loss": 0.856,
+          "cer": 0.1155
+        },
+        {
+          "training_loss": 0.5589,
+          "epoch": 2.3045,
+          "step": 18000.0,
+          "validation_loss": 0.8565,
+          "cer": 0.1135
+        },
+        {
+          "training_loss": 0.5429,
+          "epoch": 2.5606,
+          "step": 20000.0,
+          "validation_loss": 0.8573,
+          "cer": 0.1111
+        },
+        {
+          "training_loss": 0.5452,
+          "epoch": 2.8166,
+          "step": 22000.0,
+          "validation_loss": 0.8612,
+          "cer": 0.1107
+        },
+        {
+          "training_loss": 0.5311,
+          "epoch": 3.0726,
+          "step": 24000.0,
+          "validation_loss": 0.8567,
+          "cer": 0.1089
+        },
+        {
+          "training_loss": 0.5279,
+          "epoch": 3.3287,
+          "step": 26000.0,
+          "validation_loss": 0.8586,
+          "cer": 0.1088
+        },
+        {
+          "training_loss": 0.5278,
+          "epoch": 3.5848,
+          "step": 28000.0,
+          "validation_loss": 0.8557,
+          "cer": 0.1084
+        },
+        {
+          "training_loss": 0.5199,
+          "epoch": 3.8408,
+          "step": 30000.0,
+          "validation_loss": 0.8563,
+          "cer": 0.1084
+        }
+      ],
+      "approximate_records_per_epoch_range": [
+        249902.38188207732,
+        249951.1814098809
+      ],
+      "dataset_size_is_inference": true,
+      "root_final_configs_equal": true,
+      "root_final_vocab_equal": true
+    },
+    "jamo_v2": {
+      "repo": "Miniijune/wav2vec2-xls-r-300m-Korean-children-pronunciation-jamo-based-V2",
+      "revision": "448e988f77d2e95cc0636bf0eb98132b4a544849",
+      "training_args": {
+        "per_device_train_batch_size": 4,
+        "per_device_eval_batch_size": 1,
+        "gradient_accumulation_steps": 8,
+        "learning_rate": 3e-05,
+        "weight_decay": 0.0,
+        "adam_beta1": 0.9,
+        "adam_beta2": 0.999,
+        "adam_epsilon": 1e-08,
+        "max_grad_norm": 1.0,
+        "num_train_epochs": 4,
+        "max_steps": -1,
+        "lr_scheduler_type": "cosine",
+        "warmup_ratio": 0.0,
+        "warmup_steps": 2000,
+        "logging_steps": 200,
+        "eval_steps": 2000,
+        "save_steps": 2000,
+        "save_total_limit": 2,
+        "fp16": true,
+        "bf16": false,
+        "gradient_checkpointing": false,
+        "group_by_length": false,
+        "dataloader_drop_last": false,
+        "dataloader_num_workers": 0,
+        "load_best_model_at_end": true,
+        "metric_for_best_model": "cer",
+        "greater_is_better": false,
+        "seed": 42,
+        "data_seed": null,
+        "_n_gpu": 1,
+        "eval_strategy": "steps",
+        "save_strategy": "steps",
+        "optim": "adamw_torch_fused",
+        "resume_from_checkpoint": null,
+        "torch_compile": false,
+        "tf32": null
+      },
+      "model_config": {
+        "vocab_size": 44,
+        "pad_token_id": 43,
+        "bos_token_id": 43,
+        "eos_token_id": 44,
+        "apply_spec_augment": true,
+        "mask_time_prob": 0.05,
+        "mask_time_length": 10,
+        "mask_feature_prob": 0.0,
+        "mask_feature_length": 10,
+        "layerdrop": 0.1,
+        "hidden_dropout": 0.1,
+        "attention_dropout": 0.1,
+        "activation_dropout": 0.0,
+        "feat_proj_dropout": 0.1,
+        "final_dropout": 0.0,
+        "gradient_checkpointing": false,
+        "ctc_loss_reduction": "mean",
+        "ctc_zero_infinity": true
+      },
+      "root_final_training_args_equal": true,
+      "root_final_weights_lfs_sha256": {
+        "model.safetensors": "eb6d669fa610871da49c4cd2b05745e4042cbbd079a5a65a81c5d56ddc1ce76d",
+        "final/model.safetensors": "eb6d669fa610871da49c4cd2b05745e4042cbbd079a5a65a81c5d56ddc1ce76d"
+      },
+      "root_final_weights_same": true,
+      "output_directory_dataset_marker": true,
+      "output_directory_basename": "xlsr-children-finetuned-v5",
+      "vocab_entries": 43,
+      "unmapped_head_ids": [
+        41
+      ],
+      "training_rows": [
+        {
+          "training_loss": 1.7209,
+          "epoch": 0.2561,
+          "step": 2000.0,
+          "validation_loss": 1.1863,
+          "cer": 0.2136
+        },
+        {
+          "training_loss": 0.6811,
+          "epoch": 0.5122,
+          "step": 4000.0,
+          "validation_loss": 0.7557,
+          "cer": 0.1281
+        },
+        {
+          "training_loss": 0.5756,
+          "epoch": 0.7682,
+          "step": 6000.0,
+          "validation_loss": 0.737,
+          "cer": 0.1129
+        },
+        {
+          "training_loss": 0.5212,
+          "epoch": 1.0242,
+          "step": 8000.0,
+          "validation_loss": 0.7361,
+          "cer": 0.1062
+        },
+        {
+          "training_loss": 0.4786,
+          "epoch": 1.2803,
+          "step": 10000.0,
+          "validation_loss": 0.7466,
+          "cer": 0.0992
+        },
+        {
+          "training_loss": 0.4445,
+          "epoch": 1.5364,
+          "step": 12000.0,
+          "validation_loss": 0.7502,
+          "cer": 0.0936
+        },
+        {
+          "training_loss": 0.4405,
+          "epoch": 1.7924,
+          "step": 14000.0,
+          "validation_loss": 0.7623,
+          "cer": 0.0906
+        },
+        {
+          "training_loss": 0.4073,
+          "epoch": 2.0484,
+          "step": 16000.0,
+          "validation_loss": 0.7781,
+          "cer": 0.0872
+        },
+        {
+          "training_loss": 0.3998,
+          "epoch": 2.3045,
+          "step": 18000.0,
+          "validation_loss": 0.7862,
+          "cer": 0.0843
+        },
+        {
+          "training_loss": 0.3858,
+          "epoch": 2.5606,
+          "step": 20000.0,
+          "validation_loss": 0.7904,
+          "cer": 0.0831
+        },
+        {
+          "training_loss": 0.3744,
+          "epoch": 2.8166,
+          "step": 22000.0,
+          "validation_loss": 0.7849,
+          "cer": 0.0814
+        },
+        {
+          "training_loss": 0.3628,
+          "epoch": 3.0726,
+          "step": 24000.0,
+          "validation_loss": 0.794,
+          "cer": 0.08
+        },
+        {
+          "training_loss": 0.3622,
+          "epoch": 3.3287,
+          "step": 26000.0,
+          "validation_loss": 0.7972,
+          "cer": 0.0789
+        },
+        {
+          "training_loss": 0.3599,
+          "epoch": 3.5848,
+          "step": 28000.0,
+          "validation_loss": 0.7915,
+          "cer": 0.0788
+        },
+        {
+          "training_loss": 0.3636,
+          "epoch": 3.8408,
+          "step": 30000.0,
+          "validation_loss": 0.7929,
+          "cer": 0.0787
+        }
+      ],
+      "approximate_records_per_epoch_range": [
+        249902.38188207732,
+        249951.1814098809
+      ],
+      "dataset_size_is_inference": true,
+      "root_final_configs_equal": true,
+      "root_final_vocab_equal": true
+    },
+    "jamo_semi_v2": {
+      "repo": "Miniijune/wav2vec2-xls-r-300m-Korean-children-pronunciation-jamo-based-semi-supervised_V2",
+      "revision": "ee3027345a97f4559dbd1b270f303202306f1c38",
+      "training_args": {
+        "per_device_train_batch_size": 4,
+        "per_device_eval_batch_size": 1,
+        "gradient_accumulation_steps": 8,
+        "learning_rate": 3e-05,
+        "weight_decay": 0.0,
+        "adam_beta1": 0.9,
+        "adam_beta2": 0.999,
+        "adam_epsilon": 1e-08,
+        "max_grad_norm": 1.0,
+        "num_train_epochs": 4,
+        "max_steps": -1,
+        "lr_scheduler_type": "cosine",
+        "warmup_ratio": 0.0,
+        "warmup_steps": 2000,
+        "logging_steps": 200,
+        "eval_steps": 2000,
+        "save_steps": 2000,
+        "save_total_limit": 2,
+        "fp16": true,
+        "bf16": false,
+        "gradient_checkpointing": false,
+        "group_by_length": false,
+        "dataloader_drop_last": false,
+        "dataloader_num_workers": 0,
+        "load_best_model_at_end": true,
+        "metric_for_best_model": "cer",
+        "greater_is_better": false,
+        "seed": 42,
+        "data_seed": null,
+        "_n_gpu": 1,
+        "eval_strategy": "steps",
+        "save_strategy": "steps",
+        "optim": "adamw_torch_fused",
+        "resume_from_checkpoint": null,
+        "torch_compile": false,
+        "tf32": null
+      },
+      "model_config": {
+        "vocab_size": 45,
+        "pad_token_id": 42,
+        "bos_token_id": 43,
+        "eos_token_id": 44,
+        "apply_spec_augment": true,
+        "mask_time_prob": 0.07,
+        "mask_time_length": 10,
+        "mask_feature_prob": 0.0,
+        "mask_feature_length": 10,
+        "layerdrop": 0.1,
+        "hidden_dropout": 0.1,
+        "attention_dropout": 0.1,
+        "activation_dropout": 0.0,
+        "feat_proj_dropout": 0.1,
+        "final_dropout": 0.0,
+        "gradient_checkpointing": false,
+        "ctc_loss_reduction": "mean",
+        "ctc_zero_infinity": true
+      },
+      "root_final_training_args_equal": true,
+      "root_final_weights_lfs_sha256": {
+        "model.safetensors": "f8492d72c746644f432d9a3517104b28c35706f211e970637eb94de2a0f44edb",
+        "final/model.safetensors": "f8492d72c746644f432d9a3517104b28c35706f211e970637eb94de2a0f44edb"
+      },
+      "root_final_weights_same": true,
+      "output_directory_dataset_marker": false,
+      "output_directory_basename": "xlsr-children-finetuned(pseudo_label)_v2",
+      "vocab_entries": 43,
+      "unmapped_head_ids": [
+        43,
+        44
+      ],
+      "training_rows": [
+        {
+          "training_loss": 1.6482,
+          "epoch": 0.256,
+          "step": 2000.0,
+          "validation_loss": 0.9305,
+          "cer": 0.2902
+        },
+        {
+          "training_loss": 0.5812,
+          "epoch": 0.512,
+          "step": 4000.0,
+          "validation_loss": 0.3067,
+          "cer": 0.1785
+        },
+        {
+          "training_loss": 0.4531,
+          "epoch": 0.768,
+          "step": 6000.0,
+          "validation_loss": 0.211,
+          "cer": 0.1556
+        },
+        {
+          "training_loss": 0.3864,
+          "epoch": 1.0239,
+          "step": 8000.0,
+          "validation_loss": 0.1677,
+          "cer": 0.1434
+        },
+        {
+          "training_loss": 0.3448,
+          "epoch": 1.2799,
+          "step": 10000.0,
+          "validation_loss": 0.1385,
+          "cer": 0.1346
+        },
+        {
+          "training_loss": 0.311,
+          "epoch": 1.5359,
+          "step": 12000.0,
+          "validation_loss": 0.1276,
+          "cer": 0.131
+        },
+        {
+          "training_loss": 0.2957,
+          "epoch": 1.7919,
+          "step": 14000.0,
+          "validation_loss": 0.1057,
+          "cer": 0.1239
+        },
+        {
+          "training_loss": 0.2712,
+          "epoch": 2.0479,
+          "step": 16000.0,
+          "validation_loss": 0.1035,
+          "cer": 0.1235
+        },
+        {
+          "training_loss": 0.2652,
+          "epoch": 2.3039,
+          "step": 18000.0,
+          "validation_loss": 0.0946,
+          "cer": 0.1208
+        },
+        {
+          "training_loss": 0.2544,
+          "epoch": 2.5599,
+          "step": 20000.0,
+          "validation_loss": 0.0904,
+          "cer": 0.1188
+        },
+        {
+          "training_loss": 0.2514,
+          "epoch": 2.8159,
+          "step": 22000.0,
+          "validation_loss": 0.087,
+          "cer": 0.1178
+        },
+        {
+          "training_loss": 0.2332,
+          "epoch": 3.0718,
+          "step": 24000.0,
+          "validation_loss": 0.0818,
+          "cer": 0.1165
+        },
+        {
+          "training_loss": 0.2401,
+          "epoch": 3.3278,
+          "step": 26000.0,
+          "validation_loss": 0.0821,
+          "cer": 0.1165
+        },
+        {
+          "training_loss": 0.2323,
+          "epoch": 3.5838,
+          "step": 28000.0,
+          "validation_loss": 0.0801,
+          "cer": 0.1162
+        },
+        {
+          "training_loss": 0.2323,
+          "epoch": 3.8398,
+          "step": 30000.0,
+          "validation_loss": 0.0802,
+          "cer": 0.116
+        }
+      ],
+      "approximate_records_per_epoch_range": [
+        250000.0,
+        250024.41644691865
+      ],
+      "dataset_size_is_inference": true,
+      "root_final_configs_equal": true,
+      "root_final_vocab_equal": true
+    }
+  },
+  "downloads": {
+    "syllable": {
+      "repo": "Miniijune/wav2vec2-xls-r-300m-Korean-children-pronunciation",
+      "revision": "4c8cae453bc7851c763570fc52d445a8c7f1a698",
+      "createdAt": "2026-01-08T08:21:14.000Z",
+      "lastModified": "2026-01-12T06:38:42.000Z",
+      "files": [
+        {
+          "path": "README.md",
+          "url": "https://huggingface.co/Miniijune/wav2vec2-xls-r-300m-Korean-children-pronunciation/resolve/4c8cae453bc7851c763570fc52d445a8c7f1a698/README.md",
+          "bytes": 2940,
+          "sha256": "574059eb604f4b195319a9983a29e93882649f70bacefe7fc509e6108ce09360"
+        },
+        {
+          "path": "added_tokens.json",
+          "url": "https://huggingface.co/Miniijune/wav2vec2-xls-r-300m-Korean-children-pronunciation/resolve/4c8cae453bc7851c763570fc52d445a8c7f1a698/added_tokens.json",
+          "bytes": 40,
+          "sha256": "b6f3f7f3baa6d3da182616a2ff7e08abde269e66f750e2a4f4fa582b63d71392"
+        },
+        {
+          "path": "config.json",
+          "url": "https://huggingface.co/Miniijune/wav2vec2-xls-r-300m-Korean-children-pronunciation/resolve/4c8cae453bc7851c763570fc52d445a8c7f1a698/config.json",
+          "bytes": 2152,
+          "sha256": "4f6e4832ff7ddba92601b2ca54aac532eed344b1209a47be15d2be859c312a1c"
+        },
+        {
+          "path": "final/added_tokens.json",
+          "url": "https://huggingface.co/Miniijune/wav2vec2-xls-r-300m-Korean-children-pronunciation/resolve/4c8cae453bc7851c763570fc52d445a8c7f1a698/final/added_tokens.json",
+          "bytes": 40,
+          "sha256": "b6f3f7f3baa6d3da182616a2ff7e08abde269e66f750e2a4f4fa582b63d71392"
+        },
+        {
+          "path": "final/config.json",
+          "url": "https://huggingface.co/Miniijune/wav2vec2-xls-r-300m-Korean-children-pronunciation/resolve/4c8cae453bc7851c763570fc52d445a8c7f1a698/final/config.json",
+          "bytes": 2152,
+          "sha256": "4f6e4832ff7ddba92601b2ca54aac532eed344b1209a47be15d2be859c312a1c"
+        },
+        {
+          "path": "final/preprocessor_config.json",
+          "url": "https://huggingface.co/Miniijune/wav2vec2-xls-r-300m-Korean-children-pronunciation/resolve/4c8cae453bc7851c763570fc52d445a8c7f1a698/final/preprocessor_config.json",
+          "bytes": 266,
+          "sha256": "cabc254be8fb60f02a911e26f731e9221c4de7c6949fcfea31ab9119bfd073a6"
+        },
+        {
+          "path": "final/special_tokens_map.json",
+          "url": "https://huggingface.co/Miniijune/wav2vec2-xls-r-300m-Korean-children-pronunciation/resolve/4c8cae453bc7851c763570fc52d445a8c7f1a698/final/special_tokens_map.json",
+          "bytes": 102,
+          "sha256": "a9c1b734190481233481c8e58fa27e5122bbe641967f272e5ca92618e93349ea"
+        },
+        {
+          "path": "final/tokenizer_config.json",
+          "url": "https://huggingface.co/Miniijune/wav2vec2-xls-r-300m-Korean-children-pronunciation/resolve/4c8cae453bc7851c763570fc52d445a8c7f1a698/final/tokenizer_config.json",
+          "bytes": 1007,
+          "sha256": "6f660ef4a16f9f3929c4f09b28eda761ee4ecd465c9ae2a79c66877552f51e2b"
+        },
+        {
+          "path": "final/training_args.bin",
+          "url": "https://huggingface.co/Miniijune/wav2vec2-xls-r-300m-Korean-children-pronunciation/resolve/4c8cae453bc7851c763570fc52d445a8c7f1a698/final/training_args.bin",
+          "bytes": 5997,
+          "sha256": "71d300cd3b26fceb7135710dd1afd9f02cd6d5df35eea35c5775544925ac9722"
+        },
+        {
+          "path": "final/vocab.json",
+          "url": "https://huggingface.co/Miniijune/wav2vec2-xls-r-300m-Korean-children-pronunciation/resolve/4c8cae453bc7851c763570fc52d445a8c7f1a698/final/vocab.json",
+          "bytes": 23521,
+          "sha256": "8698812e93583e06177399118d3e2ffc8226706c0bbd4249fc662f360deb8718"
+        },
+        {
+          "path": "preprocessor_config.json",
+          "url": "https://huggingface.co/Miniijune/wav2vec2-xls-r-300m-Korean-children-pronunciation/resolve/4c8cae453bc7851c763570fc52d445a8c7f1a698/preprocessor_config.json",
+          "bytes": 266,
+          "sha256": "cabc254be8fb60f02a911e26f731e9221c4de7c6949fcfea31ab9119bfd073a6"
+        },
+        {
+          "path": "special_tokens_map.json",
+          "url": "https://huggingface.co/Miniijune/wav2vec2-xls-r-300m-Korean-children-pronunciation/resolve/4c8cae453bc7851c763570fc52d445a8c7f1a698/special_tokens_map.json",
+          "bytes": 102,
+          "sha256": "a9c1b734190481233481c8e58fa27e5122bbe641967f272e5ca92618e93349ea"
+        },
+        {
+          "path": "tokenizer_config.json",
+          "url": "https://huggingface.co/Miniijune/wav2vec2-xls-r-300m-Korean-children-pronunciation/resolve/4c8cae453bc7851c763570fc52d445a8c7f1a698/tokenizer_config.json",
+          "bytes": 1007,
+          "sha256": "6f660ef4a16f9f3929c4f09b28eda761ee4ecd465c9ae2a79c66877552f51e2b"
+        },
+        {
+          "path": "training_args.bin",
+          "url": "https://huggingface.co/Miniijune/wav2vec2-xls-r-300m-Korean-children-pronunciation/resolve/4c8cae453bc7851c763570fc52d445a8c7f1a698/training_args.bin",
+          "bytes": 5997,
+          "sha256": "71d300cd3b26fceb7135710dd1afd9f02cd6d5df35eea35c5775544925ac9722"
+        },
+        {
+          "path": "vocab.json",
+          "url": "https://huggingface.co/Miniijune/wav2vec2-xls-r-300m-Korean-children-pronunciation/resolve/4c8cae453bc7851c763570fc52d445a8c7f1a698/vocab.json",
+          "bytes": 23521,
+          "sha256": "8698812e93583e06177399118d3e2ffc8226706c0bbd4249fc662f360deb8718"
+        }
+      ],
+      "pickle_opcodes": {
+        "final/training_args.bin": 571,
+        "training_args.bin": 571
+      }
+    },
+    "jamo_v1": {
+      "repo": "Miniijune/wav2vec2-xls-r-300m-Korean-children-pronunciation-jamo-based",
+      "revision": "b171d53144615b207a129c2f6f428ab3adb5a7f9",
+      "createdAt": "2026-01-15T08:39:05.000Z",
+      "lastModified": "2026-01-19T16:19:20.000Z",
+      "files": [
+        {
+          "path": "README.md",
+          "url": "https://huggingface.co/Miniijune/wav2vec2-xls-r-300m-Korean-children-pronunciation-jamo-based/resolve/b171d53144615b207a129c2f6f428ab3adb5a7f9/README.md",
+          "bytes": 2639,
+          "sha256": "972d02eca7a5386992224fd1d53def6574a28efc81689fd17da58b84da215d5c"
+        },
+        {
+          "path": "added_tokens.json",
+          "url": "https://huggingface.co/Miniijune/wav2vec2-xls-r-300m-Korean-children-pronunciation-jamo-based/resolve/b171d53144615b207a129c2f6f428ab3adb5a7f9/added_tokens.json",
+          "bytes": 36,
+          "sha256": "8cf0322929babf442b9585bbd2b9179c9afe747226033f880191fdf7909964f2"
+        },
+        {
+          "path": "config.json",
+          "url": "https://huggingface.co/Miniijune/wav2vec2-xls-r-300m-Korean-children-pronunciation-jamo-based/resolve/b171d53144615b207a129c2f6f428ab3adb5a7f9/config.json",
+          "bytes": 2142,
+          "sha256": "3c8872e410cdca5c918ba7605e77d56cc470834503673575b2e1798bb66cafe6"
+        },
+        {
+          "path": "final/added_tokens.json",
+          "url": "https://huggingface.co/Miniijune/wav2vec2-xls-r-300m-Korean-children-pronunciation-jamo-based/resolve/b171d53144615b207a129c2f6f428ab3adb5a7f9/final/added_tokens.json",
+          "bytes": 36,
+          "sha256": "8cf0322929babf442b9585bbd2b9179c9afe747226033f880191fdf7909964f2"
+        },
+        {
+          "path": "final/config.json",
+          "url": "https://huggingface.co/Miniijune/wav2vec2-xls-r-300m-Korean-children-pronunciation-jamo-based/resolve/b171d53144615b207a129c2f6f428ab3adb5a7f9/final/config.json",
+          "bytes": 2142,
+          "sha256": "3c8872e410cdca5c918ba7605e77d56cc470834503673575b2e1798bb66cafe6"
+        },
+        {
+          "path": "final/preprocessor_config.json",
+          "url": "https://huggingface.co/Miniijune/wav2vec2-xls-r-300m-Korean-children-pronunciation-jamo-based/resolve/b171d53144615b207a129c2f6f428ab3adb5a7f9/final/preprocessor_config.json",
+          "bytes": 266,
+          "sha256": "cabc254be8fb60f02a911e26f731e9221c4de7c6949fcfea31ab9119bfd073a6"
+        },
+        {
+          "path": "final/special_tokens_map.json",
+          "url": "https://huggingface.co/Miniijune/wav2vec2-xls-r-300m-Korean-children-pronunciation-jamo-based/resolve/b171d53144615b207a129c2f6f428ab3adb5a7f9/final/special_tokens_map.json",
+          "bytes": 102,
+          "sha256": "a9c1b734190481233481c8e58fa27e5122bbe641967f272e5ca92618e93349ea"
+        },
+        {
+          "path": "final/tokenizer_config.json",
+          "url": "https://huggingface.co/Miniijune/wav2vec2-xls-r-300m-Korean-children-pronunciation-jamo-based/resolve/b171d53144615b207a129c2f6f428ab3adb5a7f9/final/tokenizer_config.json",
+          "bytes": 1001,
+          "sha256": "da20c32bc005b622e5a4c0ecd371bc7aae48ee8b603c091234f9a00b77894af5"
+        },
+        {
+          "path": "final/training_args.bin",
+          "url": "https://huggingface.co/Miniijune/wav2vec2-xls-r-300m-Korean-children-pronunciation-jamo-based/resolve/b171d53144615b207a129c2f6f428ab3adb5a7f9/final/training_args.bin",
+          "bytes": 5997,
+          "sha256": "b83cc7bc62a27bf789ab4f4d297e10af0e7c21bbb07bc0c34fb654126fd58328"
+        },
+        {
+          "path": "final/vocab.json",
+          "url": "https://huggingface.co/Miniijune/wav2vec2-xls-r-300m-Korean-children-pronunciation-jamo-based/resolve/b171d53144615b207a129c2f6f428ab3adb5a7f9/final/vocab.json",
+          "bytes": 599,
+          "sha256": "da5a57cc29feb5a0b3f55b3388fcafd8286a6cf546d15c2a363a67037a946a5c"
+        },
+        {
+          "path": "preprocessor_config.json",
+          "url": "https://huggingface.co/Miniijune/wav2vec2-xls-r-300m-Korean-children-pronunciation-jamo-based/resolve/b171d53144615b207a129c2f6f428ab3adb5a7f9/preprocessor_config.json",
+          "bytes": 266,
+          "sha256": "cabc254be8fb60f02a911e26f731e9221c4de7c6949fcfea31ab9119bfd073a6"
+        },
+        {
+          "path": "special_tokens_map.json",
+          "url": "https://huggingface.co/Miniijune/wav2vec2-xls-r-300m-Korean-children-pronunciation-jamo-based/resolve/b171d53144615b207a129c2f6f428ab3adb5a7f9/special_tokens_map.json",
+          "bytes": 102,
+          "sha256": "a9c1b734190481233481c8e58fa27e5122bbe641967f272e5ca92618e93349ea"
+        },
+        {
+          "path": "tokenizer_config.json",
+          "url": "https://huggingface.co/Miniijune/wav2vec2-xls-r-300m-Korean-children-pronunciation-jamo-based/resolve/b171d53144615b207a129c2f6f428ab3adb5a7f9/tokenizer_config.json",
+          "bytes": 1001,
+          "sha256": "da20c32bc005b622e5a4c0ecd371bc7aae48ee8b603c091234f9a00b77894af5"
+        },
+        {
+          "path": "training_args.bin",
+          "url": "https://huggingface.co/Miniijune/wav2vec2-xls-r-300m-Korean-children-pronunciation-jamo-based/resolve/b171d53144615b207a129c2f6f428ab3adb5a7f9/training_args.bin",
+          "bytes": 5997,
+          "sha256": "b83cc7bc62a27bf789ab4f4d297e10af0e7c21bbb07bc0c34fb654126fd58328"
+        },
+        {
+          "path": "vocab.json",
+          "url": "https://huggingface.co/Miniijune/wav2vec2-xls-r-300m-Korean-children-pronunciation-jamo-based/resolve/b171d53144615b207a129c2f6f428ab3adb5a7f9/vocab.json",
+          "bytes": 599,
+          "sha256": "da5a57cc29feb5a0b3f55b3388fcafd8286a6cf546d15c2a363a67037a946a5c"
+        }
+      ],
+      "pickle_opcodes": {
+        "final/training_args.bin": 571,
+        "training_args.bin": 571
+      }
+    },
+    "jamo_v2": {
+      "repo": "Miniijune/wav2vec2-xls-r-300m-Korean-children-pronunciation-jamo-based-V2",
+      "revision": "448e988f77d2e95cc0636bf0eb98132b4a544849",
+      "createdAt": "2026-01-21T13:25:46.000Z",
+      "lastModified": "2026-01-22T15:40:32.000Z",
+      "files": [
+        {
+          "path": "README.md",
+          "url": "https://huggingface.co/Miniijune/wav2vec2-xls-r-300m-Korean-children-pronunciation-jamo-based-V2/resolve/448e988f77d2e95cc0636bf0eb98132b4a544849/README.md",
+          "bytes": 2645,
+          "sha256": "416b9e84c7cc33b2b70c7cdbd3a7c81c4ebe1dff44d87f14f76b25aff3b1dc7d"
+        },
+        {
+          "path": "added_tokens.json",
+          "url": "https://huggingface.co/Miniijune/wav2vec2-xls-r-300m-Korean-children-pronunciation-jamo-based-V2/resolve/448e988f77d2e95cc0636bf0eb98132b4a544849/added_tokens.json",
+          "bytes": 36,
+          "sha256": "8cf0322929babf442b9585bbd2b9179c9afe747226033f880191fdf7909964f2"
+        },
+        {
+          "path": "config.json",
+          "url": "https://huggingface.co/Miniijune/wav2vec2-xls-r-300m-Korean-children-pronunciation-jamo-based-V2/resolve/448e988f77d2e95cc0636bf0eb98132b4a544849/config.json",
+          "bytes": 2142,
+          "sha256": "3c8872e410cdca5c918ba7605e77d56cc470834503673575b2e1798bb66cafe6"
+        },
+        {
+          "path": "final/added_tokens.json",
+          "url": "https://huggingface.co/Miniijune/wav2vec2-xls-r-300m-Korean-children-pronunciation-jamo-based-V2/resolve/448e988f77d2e95cc0636bf0eb98132b4a544849/final/added_tokens.json",
+          "bytes": 36,
+          "sha256": "8cf0322929babf442b9585bbd2b9179c9afe747226033f880191fdf7909964f2"
+        },
+        {
+          "path": "final/config.json",
+          "url": "https://huggingface.co/Miniijune/wav2vec2-xls-r-300m-Korean-children-pronunciation-jamo-based-V2/resolve/448e988f77d2e95cc0636bf0eb98132b4a544849/final/config.json",
+          "bytes": 2142,
+          "sha256": "3c8872e410cdca5c918ba7605e77d56cc470834503673575b2e1798bb66cafe6"
+        },
+        {
+          "path": "final/preprocessor_config.json",
+          "url": "https://huggingface.co/Miniijune/wav2vec2-xls-r-300m-Korean-children-pronunciation-jamo-based-V2/resolve/448e988f77d2e95cc0636bf0eb98132b4a544849/final/preprocessor_config.json",
+          "bytes": 266,
+          "sha256": "cabc254be8fb60f02a911e26f731e9221c4de7c6949fcfea31ab9119bfd073a6"
+        },
+        {
+          "path": "final/special_tokens_map.json",
+          "url": "https://huggingface.co/Miniijune/wav2vec2-xls-r-300m-Korean-children-pronunciation-jamo-based-V2/resolve/448e988f77d2e95cc0636bf0eb98132b4a544849/final/special_tokens_map.json",
+          "bytes": 102,
+          "sha256": "a9c1b734190481233481c8e58fa27e5122bbe641967f272e5ca92618e93349ea"
+        },
+        {
+          "path": "final/tokenizer_config.json",
+          "url": "https://huggingface.co/Miniijune/wav2vec2-xls-r-300m-Korean-children-pronunciation-jamo-based-V2/resolve/448e988f77d2e95cc0636bf0eb98132b4a544849/final/tokenizer_config.json",
+          "bytes": 1001,
+          "sha256": "da20c32bc005b622e5a4c0ecd371bc7aae48ee8b603c091234f9a00b77894af5"
+        },
+        {
+          "path": "final/training_args.bin",
+          "url": "https://huggingface.co/Miniijune/wav2vec2-xls-r-300m-Korean-children-pronunciation-jamo-based-V2/resolve/448e988f77d2e95cc0636bf0eb98132b4a544849/final/training_args.bin",
+          "bytes": 6061,
+          "sha256": "ecd94a0b5b132918430e75daa7083d57e542de66df474c210565705d4b313db3"
+        },
+        {
+          "path": "final/vocab.json",
+          "url": "https://huggingface.co/Miniijune/wav2vec2-xls-r-300m-Korean-children-pronunciation-jamo-based-V2/resolve/448e988f77d2e95cc0636bf0eb98132b4a544849/final/vocab.json",
+          "bytes": 599,
+          "sha256": "da5a57cc29feb5a0b3f55b3388fcafd8286a6cf546d15c2a363a67037a946a5c"
+        },
+        {
+          "path": "preprocessor_config.json",
+          "url": "https://huggingface.co/Miniijune/wav2vec2-xls-r-300m-Korean-children-pronunciation-jamo-based-V2/resolve/448e988f77d2e95cc0636bf0eb98132b4a544849/preprocessor_config.json",
+          "bytes": 266,
+          "sha256": "cabc254be8fb60f02a911e26f731e9221c4de7c6949fcfea31ab9119bfd073a6"
+        },
+        {
+          "path": "special_tokens_map.json",
+          "url": "https://huggingface.co/Miniijune/wav2vec2-xls-r-300m-Korean-children-pronunciation-jamo-based-V2/resolve/448e988f77d2e95cc0636bf0eb98132b4a544849/special_tokens_map.json",
+          "bytes": 102,
+          "sha256": "a9c1b734190481233481c8e58fa27e5122bbe641967f272e5ca92618e93349ea"
+        },
+        {
+          "path": "tokenizer_config.json",
+          "url": "https://huggingface.co/Miniijune/wav2vec2-xls-r-300m-Korean-children-pronunciation-jamo-based-V2/resolve/448e988f77d2e95cc0636bf0eb98132b4a544849/tokenizer_config.json",
+          "bytes": 1001,
+          "sha256": "da20c32bc005b622e5a4c0ecd371bc7aae48ee8b603c091234f9a00b77894af5"
+        },
+        {
+          "path": "training_args.bin",
+          "url": "https://huggingface.co/Miniijune/wav2vec2-xls-r-300m-Korean-children-pronunciation-jamo-based-V2/resolve/448e988f77d2e95cc0636bf0eb98132b4a544849/training_args.bin",
+          "bytes": 6061,
+          "sha256": "ecd94a0b5b132918430e75daa7083d57e542de66df474c210565705d4b313db3"
+        },
+        {
+          "path": "vocab.json",
+          "url": "https://huggingface.co/Miniijune/wav2vec2-xls-r-300m-Korean-children-pronunciation-jamo-based-V2/resolve/448e988f77d2e95cc0636bf0eb98132b4a544849/vocab.json",
+          "bytes": 599,
+          "sha256": "da5a57cc29feb5a0b3f55b3388fcafd8286a6cf546d15c2a363a67037a946a5c"
+        }
+      ],
+      "pickle_opcodes": {
+        "final/training_args.bin": 571,
+        "training_args.bin": 571
+      }
+    },
+    "jamo_semi_v2": {
+      "repo": "Miniijune/wav2vec2-xls-r-300m-Korean-children-pronunciation-jamo-based-semi-supervised_V2",
+      "revision": "ee3027345a97f4559dbd1b270f303202306f1c38",
+      "createdAt": "2026-01-26T09:17:20.000Z",
+      "lastModified": "2026-01-28T09:15:35.000Z",
+      "files": [
+        {
+          "path": "README.md",
+          "url": "https://huggingface.co/Miniijune/wav2vec2-xls-r-300m-Korean-children-pronunciation-jamo-based-semi-supervised_V2/resolve/ee3027345a97f4559dbd1b270f303202306f1c38/README.md",
+          "bytes": 2677,
+          "sha256": "0c6e5605529b0f781c84e52f2e14a84ed2409a4f094f39d1ff893c694ed04d19"
+        },
+        {
+          "path": "added_tokens.json",
+          "url": "https://huggingface.co/Miniijune/wav2vec2-xls-r-300m-Korean-children-pronunciation-jamo-based-semi-supervised_V2/resolve/ee3027345a97f4559dbd1b270f303202306f1c38/added_tokens.json",
+          "bytes": 34,
+          "sha256": "345372990b28586981edfa2df80304928cb4181dc2e44dc24c583ce9f1048a01"
+        },
+        {
+          "path": "config.json",
+          "url": "https://huggingface.co/Miniijune/wav2vec2-xls-r-300m-Korean-children-pronunciation-jamo-based-semi-supervised_V2/resolve/ee3027345a97f4559dbd1b270f303202306f1c38/config.json",
+          "bytes": 2142,
+          "sha256": "0c76e442b1baa84f843d4e5b2da3a048a6d149814d6a29fd483d1daac410e907"
+        },
+        {
+          "path": "final/added_tokens.json",
+          "url": "https://huggingface.co/Miniijune/wav2vec2-xls-r-300m-Korean-children-pronunciation-jamo-based-semi-supervised_V2/resolve/ee3027345a97f4559dbd1b270f303202306f1c38/final/added_tokens.json",
+          "bytes": 34,
+          "sha256": "345372990b28586981edfa2df80304928cb4181dc2e44dc24c583ce9f1048a01"
+        },
+        {
+          "path": "final/config.json",
+          "url": "https://huggingface.co/Miniijune/wav2vec2-xls-r-300m-Korean-children-pronunciation-jamo-based-semi-supervised_V2/resolve/ee3027345a97f4559dbd1b270f303202306f1c38/final/config.json",
+          "bytes": 2142,
+          "sha256": "0c76e442b1baa84f843d4e5b2da3a048a6d149814d6a29fd483d1daac410e907"
+        },
+        {
+          "path": "final/preprocessor_config.json",
+          "url": "https://huggingface.co/Miniijune/wav2vec2-xls-r-300m-Korean-children-pronunciation-jamo-based-semi-supervised_V2/resolve/ee3027345a97f4559dbd1b270f303202306f1c38/final/preprocessor_config.json",
+          "bytes": 266,
+          "sha256": "cabc254be8fb60f02a911e26f731e9221c4de7c6949fcfea31ab9119bfd073a6"
+        },
+        {
+          "path": "final/special_tokens_map.json",
+          "url": "https://huggingface.co/Miniijune/wav2vec2-xls-r-300m-Korean-children-pronunciation-jamo-based-semi-supervised_V2/resolve/ee3027345a97f4559dbd1b270f303202306f1c38/final/special_tokens_map.json",
+          "bytes": 102,
+          "sha256": "a9c1b734190481233481c8e58fa27e5122bbe641967f272e5ca92618e93349ea"
+        },
+        {
+          "path": "final/tokenizer_config.json",
+          "url": "https://huggingface.co/Miniijune/wav2vec2-xls-r-300m-Korean-children-pronunciation-jamo-based-semi-supervised_V2/resolve/ee3027345a97f4559dbd1b270f303202306f1c38/final/tokenizer_config.json",
+          "bytes": 1175,
+          "sha256": "45d5bac04bffe0d27c58f7246343cae80427d1b7e698de489ee1977660fa2245"
+        },
+        {
+          "path": "final/training_args.bin",
+          "url": "https://huggingface.co/Miniijune/wav2vec2-xls-r-300m-Korean-children-pronunciation-jamo-based-semi-supervised_V2/resolve/ee3027345a97f4559dbd1b270f303202306f1c38/final/training_args.bin",
+          "bytes": 6033,
+          "sha256": "5d6ea4befb94009e2320b166eca3eb6668d7cf5378916c47413b52ba457cde8a"
+        },
+        {
+          "path": "final/vocab.json",
+          "url": "https://huggingface.co/Miniijune/wav2vec2-xls-r-300m-Korean-children-pronunciation-jamo-based-semi-supervised_V2/resolve/ee3027345a97f4559dbd1b270f303202306f1c38/final/vocab.json",
+          "bytes": 599,
+          "sha256": "9dcdabcc194aaaa9f029a269043fdd79ecc7bd9d7ff91e038873e195ca2349ed"
+        },
+        {
+          "path": "preprocessor_config.json",
+          "url": "https://huggingface.co/Miniijune/wav2vec2-xls-r-300m-Korean-children-pronunciation-jamo-based-semi-supervised_V2/resolve/ee3027345a97f4559dbd1b270f303202306f1c38/preprocessor_config.json",
+          "bytes": 266,
+          "sha256": "cabc254be8fb60f02a911e26f731e9221c4de7c6949fcfea31ab9119bfd073a6"
+        },
+        {
+          "path": "special_tokens_map.json",
+          "url": "https://huggingface.co/Miniijune/wav2vec2-xls-r-300m-Korean-children-pronunciation-jamo-based-semi-supervised_V2/resolve/ee3027345a97f4559dbd1b270f303202306f1c38/special_tokens_map.json",
+          "bytes": 102,
+          "sha256": "a9c1b734190481233481c8e58fa27e5122bbe641967f272e5ca92618e93349ea"
+        },
+        {
+          "path": "tokenizer_config.json",
+          "url": "https://huggingface.co/Miniijune/wav2vec2-xls-r-300m-Korean-children-pronunciation-jamo-based-semi-supervised_V2/resolve/ee3027345a97f4559dbd1b270f303202306f1c38/tokenizer_config.json",
+          "bytes": 1175,
+          "sha256": "45d5bac04bffe0d27c58f7246343cae80427d1b7e698de489ee1977660fa2245"
+        },
+        {
+          "path": "training_args.bin",
+          "url": "https://huggingface.co/Miniijune/wav2vec2-xls-r-300m-Korean-children-pronunciation-jamo-based-semi-supervised_V2/resolve/ee3027345a97f4559dbd1b270f303202306f1c38/training_args.bin",
+          "bytes": 6033,
+          "sha256": "5d6ea4befb94009e2320b166eca3eb6668d7cf5378916c47413b52ba457cde8a"
+        },
+        {
+          "path": "vocab.json",
+          "url": "https://huggingface.co/Miniijune/wav2vec2-xls-r-300m-Korean-children-pronunciation-jamo-based-semi-supervised_V2/resolve/ee3027345a97f4559dbd1b270f303202306f1c38/vocab.json",
+          "bytes": 599,
+          "sha256": "9dcdabcc194aaaa9f029a269043fdd79ecc7bd9d7ff91e038873e195ca2349ed"
+        }
+      ],
+      "pickle_opcodes": {
+        "final/training_args.bin": 571,
+        "training_args.bin": 571
+      }
+    }
+  },
+  "v1_v2_metadata_equal": {
+    "config.json": true,
+    "vocab.json": true,
+    "tokenizer_config.json": true,
+    "preprocessor_config.json": true
+  },
+  "v1_v2_algorithmic_training_argument_differences": {
+    "learning_rate": {
+      "v1": 1e-05,
+      "v2": 3e-05
+    },
+    "max_grad_norm": {
+      "v1": 1.5,
+      "v2": 1.0
+    }
+  },
+  "local_existing_syllable_training_manifests": {
+    "dev.csv": {
+      "rows": 787,
+      "speakers": 50,
+      "audio_hours": 1.4317333333333284,
+      "trimmed_hours_estimate": 1.3734049999999973,
+      "ages": {
+        "7": 428,
+        "5": 171,
+        "6": 188
+      },
+      "fields": [
+        "wav",
+        "text",
+        "seconds",
+        "start",
+        "end",
+        "speaker",
+        "age",
+        "style"
+      ]
+    },
+    "train.csv": {
+      "rows": 123943,
+      "speakers": 884,
+      "audio_hours": 199.763804444399,
+      "trimmed_hours_estimate": 193.48142194442264,
+      "ages": {
+        "6": 39047,
+        "7": 63897,
+        "5": 20999
+      },
+      "fields": [
+        "wav",
+        "text",
+        "seconds",
+        "start",
+        "end",
+        "speaker",
+        "age",
+        "style"
+      ]
+    }
+  },
+  "limits": [
+    "V2 exact file/speaker/split/label lists unavailable",
+    "approximately 250000 records is inferred, not a verified unique recording count",
+    "configured 4 epochs; last public log 3.8408 epochs at 30000 steps",
+    "V2 elapsed time, GPU type, initialization path and freeze policy unknown",
+    "author CER is not our phonetic reference PER or pronunciation diagnostic accuracy",
+    "existing local manifest files counted; full audio inventory not revalidated"
+  ]
+}

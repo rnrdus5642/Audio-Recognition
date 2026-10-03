@@ -1,0 +1,67 @@
+{
+  "ready_for_browser_qa": true,
+  "version": "inline-contrast-20260927-v2",
+  "questions": 12,
+  "counts": {
+    "train": 6,
+    "valid": 6
+  },
+  "distinct_speakers": 12,
+  "total_audio_seconds": 43.584,
+  "original_json_and_wav_identity_verified": true,
+  "full_source_pcm_exact": true,
+  "crop_or_acoustic_transforms_applied": false,
+  "model_predictions_used": false,
+  "index_sha256": "e9bb4fe27ba55b63c46443ba7f07273d7b8e88614d3868eefdd4c266c82f0e6d",
+  "splits_sha256": "f201669125c42f2a361b300ee98c519652a504fae6c5df98aeebd9034b35f99e",
+  "selection_sha256": "eced00417393c438d91210283c46f4fd32fd502dcdb2e47f15ef208d4fbe9452",
+  "public_items_sha256": "664c515ea047bd0f4838bba62055387b8294eb1769d9d885ee7dc71d7eaa7520",
+  "evidence_sha256": "6e09ff2735f0957c6258903e591c9d429453314f4e8ca45b4d5ad3e606ea07c1",
+  "original_manifest_sha256": {
+    "train": "6b15a65983f64d8b01603161fbb901e1dbcee164fce605d39560ac2a71681a04",
+    "valid": "4d7839eb53b468a783b5683455c2e63ba6b348c7a34b1fc4d34c6fa3366bfcbb",
+    "test": "b1997497c874bb61167f5c04aeb8d144603c778d63cc5ebaba6479f8d75e650c"
+  },
+  "original_manifest_rows_checked": {
+    "train": 150253,
+    "valid": 1500,
+    "test": 2999
+  },
+  "overlap": {
+    "wav_name": 0,
+    "source_wav_bytes": 0,
+    "new_full_pcm_vs_old_used_pcm": 0,
+    "between_new_questions_pcm": 0,
+    "train_valid_speakers": 0,
+    "test_speakers": 0,
+    "first_batch_pcm": 0,
+    "first_batch_speakers": 0
+  },
+  "overlap_scope": "Exact basename/byte/hash checks; not approximate audio duplicate detection.",
+  "human_answers_created": 0,
+  "phonetic_targets_created": 0,
+  "training_started": false,
+  "elapsed_seconds": 46.89,
+  "limitation": "Feasibility review, not a representative sample or a sufficient training/evaluation set. Parenthesis content is only an unverified alternative. A/B answers are human judgments, not expert phonetic certification.",
+  "round_boundary": "Review the twelve new answers before choosing any further acquisition strategy; no automatic additional batch.",
+  "status": "additional_twelve_contrasts_ready",
+  "url": "http://127.0.0.1:8775/",
+  "verified_at": "2026-09-27T08:57:51.092674+00:00",
+  "live_root_items_and_all_audio_hashes_verified": true,
+  "browser_qa_passed": true,
+  "browser_checks": {
+    "all_questions_no_tabs_no_preselected_or_biased_role_labels": true,
+    "all_bound_wavs_play_and_all_five_choices_save_without_transcription": true,
+    "save_and_next_finishes_with_persisted_progress": true,
+    "both_and_neither_stay_distinct_and_verbatim_notes_persist": true,
+    "mobile_no_overflow_and_no_javascript_errors": true,
+    "stale_bindings_revisions_and_invalid_choices_rejected": true
+  },
+  "live_answer_count": 0,
+  "pending_questions": 12,
+  "html_sha256": "9b3d19e03ed3aac21d2883c75b7b2e15248d894521c78263fafe35b00f9e8024",
+  "first_batch_answers_unchanged": true,
+  "first_batch_history_sha256": "aefc5c619833f5a9f32b3aac542798cb96e6ae283f9a7277399c46eeb89c2bd6",
+  "managed_server_session_id": 55986,
+  "model_predictions_computed_for_this_batch": false
+}

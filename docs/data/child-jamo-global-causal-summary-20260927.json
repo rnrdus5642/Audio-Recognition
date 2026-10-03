@@ -1,0 +1,499 @@
+{
+  "complete": true,
+  "primary_findings": {
+    "all_reference_discrepancies": {
+      "recordings": 1500,
+      "speakers": 224,
+      "exact": 1164,
+      "errors": 978,
+      "reference_jamo": 33182,
+      "jer": 0.029473811102404917
+    },
+    "position_totals": {
+      "initial": {
+        "references": 14672,
+        "substitutions": 254,
+        "deletions": 110
+      },
+      "medial": {
+        "references": 14672,
+        "substitutions": 260,
+        "deletions": 95
+      },
+      "final": {
+        "references": 3838,
+        "substitutions": 55,
+        "deletions": 70
+      }
+    },
+    "jamo_output_types": 40,
+    "jamo_types_with_reference_errors": 40,
+    "invalid_inference_control_predictions": 0,
+    "mechanism": {
+      "recordings": 27,
+      "baseline_exact": 11,
+      "baseline_errors": 16,
+      "beam_corrected": 0,
+      "beam_same_as_greedy_on_errors": 15,
+      "repeat_predictions_identical": 27,
+      "masked_right_predictions_identical": 27,
+      "masked_latent_control_predictions_identical": 27,
+      "attention_only_changes": 5,
+      "position_only_changes": 10,
+      "joint_context_changes": 4,
+      "minus_12_db_changes": 3,
+      "natural_padding_changes": 4
+    },
+    "context_sensitive_cases": [
+      {
+        "id": "followup:4",
+        "cohort": "inline_valid",
+        "target": "쿠레용",
+        "baseline": "포레용",
+        "baseline_exact": false,
+        "changed_variants": [
+          {
+            "attention_sees_silence": false,
+            "position_sees_silence": true,
+            "text": "포래용",
+            "exact": false
+          }
+        ]
+      },
+      {
+        "id": "training_review:5",
+        "cohort": "human_verified_training",
+        "target": "폴짝폴짝 뛰어가요",
+        "baseline": "폴짝폴짝 뛰어가요",
+        "baseline_exact": true,
+        "changed_variants": [
+          {
+            "attention_sees_silence": false,
+            "position_sees_silence": true,
+            "text": "ㅗㄹ짝폴짝 뛰어가요",
+            "exact": false
+          }
+        ]
+      },
+      {
+        "id": "personal:child1_18",
+        "cohort": "personal_diagnostic",
+        "target": "책",
+        "baseline": "샙",
+        "baseline_exact": false,
+        "changed_variants": [
+          {
+            "attention_sees_silence": false,
+            "position_sees_silence": true,
+            "text": "카",
+            "exact": false
+          },
+          {
+            "attention_sees_silence": true,
+            "position_sees_silence": false,
+            "text": "해",
+            "exact": false
+          },
+          {
+            "attention_sees_silence": true,
+            "position_sees_silence": true,
+            "text": "캅",
+            "exact": false
+          }
+        ]
+      },
+      {
+        "id": "personal:child1_22",
+        "cohort": "personal_diagnostic",
+        "target": "뛰어가요",
+        "baseline": "귀어 가요",
+        "baseline_exact": false,
+        "changed_variants": [
+          {
+            "attention_sees_silence": false,
+            "position_sees_silence": true,
+            "text": "뛰어가요",
+            "exact": true
+          }
+        ]
+      },
+      {
+        "id": "personal:child1_17",
+        "cohort": "personal_diagnostic",
+        "target": "쌕",
+        "baseline": "ㅐㄱ",
+        "baseline_exact": false,
+        "changed_variants": [
+          {
+            "attention_sees_silence": false,
+            "position_sees_silence": true,
+            "text": "책",
+            "exact": false
+          },
+          {
+            "attention_sees_silence": true,
+            "position_sees_silence": false,
+            "text": "책",
+            "exact": false
+          },
+          {
+            "attention_sees_silence": true,
+            "position_sees_silence": true,
+            "text": "책",
+            "exact": false
+          }
+        ]
+      },
+      {
+        "id": "personal:child1_09",
+        "cohort": "personal_diagnostic",
+        "target": "나비",
+        "baseline": "나리",
+        "baseline_exact": false,
+        "changed_variants": [
+          {
+            "attention_sees_silence": true,
+            "position_sees_silence": false,
+            "text": "나비",
+            "exact": true
+          },
+          {
+            "attention_sees_silence": true,
+            "position_sees_silence": true,
+            "text": "나비",
+            "exact": true
+          }
+        ]
+      },
+      {
+        "id": "personal:child2_20",
+        "cohort": "personal_diagnostic",
+        "target": "가",
+        "baseline": "하",
+        "baseline_exact": false,
+        "changed_variants": [
+          {
+            "attention_sees_silence": false,
+            "position_sees_silence": true,
+            "text": "사",
+            "exact": false
+          },
+          {
+            "attention_sees_silence": true,
+            "position_sees_silence": false,
+            "text": "카",
+            "exact": false
+          },
+          {
+            "attention_sees_silence": true,
+            "position_sees_silence": true,
+            "text": "카",
+            "exact": false
+          }
+        ]
+      },
+      {
+        "id": "personal:child1_19",
+        "cohort": "personal_diagnostic",
+        "target": "실로폰",
+        "baseline": "켈리폰",
+        "baseline_exact": false,
+        "changed_variants": [
+          {
+            "attention_sees_silence": false,
+            "position_sees_silence": true,
+            "text": "킬로폰 ",
+            "exact": false
+          },
+          {
+            "attention_sees_silence": true,
+            "position_sees_silence": false,
+            "text": "헬리폰",
+            "exact": false
+          }
+        ]
+      },
+      {
+        "id": "personal:child2_28",
+        "cohort": "personal_diagnostic",
+        "target": "놔요",
+        "baseline": "와요",
+        "baseline_exact": false,
+        "changed_variants": [
+          {
+            "attention_sees_silence": false,
+            "position_sees_silence": true,
+            "text": "봥",
+            "exact": false
+          }
+        ]
+      },
+      {
+        "id": "personal:child1_21",
+        "cohort": "personal_diagnostic",
+        "target": "가요",
+        "baseline": "봐요",
+        "baseline_exact": false,
+        "changed_variants": [
+          {
+            "attention_sees_silence": false,
+            "position_sees_silence": true,
+            "text": "가요",
+            "exact": true
+          }
+        ]
+      },
+      {
+        "id": "personal:child2_29",
+        "cohort": "personal_diagnostic",
+        "target": "놔",
+        "baseline": "봐",
+        "baseline_exact": false,
+        "changed_variants": [
+          {
+            "attention_sees_silence": false,
+            "position_sees_silence": true,
+            "text": "바",
+            "exact": false
+          }
+        ]
+      }
+    ],
+    "personal_errors_context_sensitive": 9,
+    "personal_errors": 9,
+    "personal_errors_recovered_in_at_least_one_latent_control": 3,
+    "stable_canonical_rewrites": [
+      {
+        "id": "first:1",
+        "selected": "사워요",
+        "prediction": "싸워요",
+        "human_nll_minus_prediction_nll": 7.8523707169806585,
+        "stable_under_all_current_controls": true
+      },
+      {
+        "id": "followup:10",
+        "selected": "웡충이",
+        "prediction": "원숭이",
+        "human_nll_minus_prediction_nll": 23.439256258308887,
+        "stable_under_all_current_controls": true
+      },
+      {
+        "id": "followup:8",
+        "selected": "누구이까요",
+        "prediction": "누구일까요",
+        "human_nll_minus_prediction_nll": 12.810102524235845,
+        "stable_under_all_current_controls": true
+      },
+      {
+        "id": "followup:3",
+        "selected": "춤서요",
+        "prediction": "춤춰요",
+        "human_nll_minus_prediction_nll": 21.856985276564956,
+        "stable_under_all_current_controls": true
+      },
+      {
+        "id": "followup:12",
+        "selected": "운등화",
+        "prediction": "운동화",
+        "human_nll_minus_prediction_nll": 13.266261488199234,
+        "stable_under_all_current_controls": true
+      },
+      {
+        "id": "first:5",
+        "selected": "웡숭이",
+        "prediction": "원숭이",
+        "human_nll_minus_prediction_nll": 21.628617065725848,
+        "stable_under_all_current_controls": true
+      }
+    ],
+    "allowed_pronunciation_penalties": [
+      {
+        "id": "valid:K06040126-AMG22-L5N1D1-E-K0KK-00357669.wav",
+        "raw_word": "외국의",
+        "stored_surface_word": "외구긔",
+        "allowed_alternative_word": "외구게",
+        "prediction": "외구게 타멈가를 차자 다녀써요",
+        "strict_edits": 2,
+        "with_contextual_alternative_edits": 1,
+        "interpretation": "The single target penalizes an allowed pronunciation at this position. Does not certify the audio or the rest of the utterance."
+      },
+      {
+        "id": "valid:K06211323-AFG23-L1N2D1-I-K0KK-00748585.wav",
+        "raw_word": "전설의",
+        "stored_surface_word": "전서릐",
+        "allowed_alternative_word": "전서레",
+        "prediction": "샌쥐는 전서레 도시에 가써요",
+        "strict_edits": 2,
+        "with_contextual_alternative_edits": 1,
+        "interpretation": "The single target penalizes an allowed pronunciation at this position. Does not certify the audio or the rest of the utterance."
+      },
+      {
+        "id": "valid:K00952452-AFG23-L1N2D4-E-K0KK-01214248.wav",
+        "raw_word": "속의",
+        "stored_surface_word": "쏘긔",
+        "allowed_alternative_word": "쏘게",
+        "prediction": "엄지 공주는 코 소게 꾸를 빠라 먹끼도 해써요",
+        "strict_edits": 4,
+        "with_contextual_alternative_edits": 3,
+        "interpretation": "The single target penalizes an allowed pronunciation at this position. Does not certify the audio or the rest of the utterance."
+      },
+      {
+        "id": "valid:K01671351-AMG20-L1N2D1-E-K0KK-00325843.wav",
+        "raw_word": "남들의",
+        "stored_surface_word": "남드릐",
+        "allowed_alternative_word": "남드레",
+        "prediction": "맘드레 도우미 피료한 경으 나무한테도 도우믈 청할 수 업쓸 검니다",
+        "strict_edits": 4,
+        "with_contextual_alternative_edits": 3,
+        "interpretation": "The single target penalizes an allowed pronunciation at this position. Does not certify the audio or the rest of the utterance."
+      }
+    ],
+    "allowed_variant_source": "https://korean.go.kr/front/onlineQna/onlineQnaView.do?mn_id=98&pageIndex=1&qna_seq=324254",
+    "top_five_speakers": [
+      {
+        "speaker": "4d934fe9163e",
+        "recordings": 13,
+        "speakers": 1,
+        "exact": 1,
+        "errors": 118,
+        "reference_jamo": 255,
+        "jer": 0.4627450980392157
+      },
+      {
+        "speaker": "5ad4fca71d72",
+        "recordings": 13,
+        "speakers": 1,
+        "exact": 8,
+        "errors": 28,
+        "reference_jamo": 232,
+        "jer": 0.1206896551724138
+      },
+      {
+        "speaker": "262a4450bf32",
+        "recordings": 5,
+        "speakers": 1,
+        "exact": 1,
+        "errors": 26,
+        "reference_jamo": 166,
+        "jer": 0.1566265060240964
+      },
+      {
+        "speaker": "3dd993106edc",
+        "recordings": 2,
+        "speakers": 1,
+        "exact": 0,
+        "errors": 24,
+        "reference_jamo": 75,
+        "jer": 0.32
+      },
+      {
+        "speaker": "94ca7771bcbf",
+        "recordings": 4,
+        "speakers": 1,
+        "exact": 1,
+        "errors": 20,
+        "reference_jamo": 132,
+        "jer": 0.15151515151515152
+      }
+    ],
+    "top_five_speaker_error_share": 0.22085889570552147,
+    "top_ten_utterance_error_share": 0.15644171779141106,
+    "training_duration_exposure": {
+      "3_or_more": 142710,
+      "2_to_3": 7228,
+      "1.5_to_2": 278,
+      "under_1.5": 37
+    },
+    "validation_duration_exposure": {
+      "3_or_more": 1435,
+      "2_to_3": 64,
+      "under_1.5": 1
+    },
+    "test_duration_exposure": {
+      "3_or_more": 2902,
+      "2_to_3": 94,
+      "under_1.5": 1,
+      "1.5_to_2": 2
+    },
+    "source_crop_audit": {
+      "whole_original": {
+        "recordings": 728,
+        "speakers": 183,
+        "exact": 542,
+        "errors": 584,
+        "reference_jamo": 16866,
+        "jer": 0.03462587454049567
+      },
+      "cropped": {
+        "recordings": 772,
+        "speakers": 182,
+        "exact": 622,
+        "errors": 394,
+        "reference_jamo": 16316,
+        "jer": 0.024148075508703112
+      }
+    },
+    "label_recalculation_matches": 1500,
+    "rendering_reproduction_matches": 1500,
+    "rendering_dropped_or_changed_tokens": 0
+  },
+  "causal_classification": [
+    {
+      "layer": "Data source and acceptance checks",
+      "status": "confirmed existing defects, causal for those two pairs only",
+      "evidence": "One source timing defect removed speech; one source had noise with a sentence label. Both repaired before this analysis. Their effect on personal recognition errors is not established."
+    },
+    {
+      "layer": "Input I/O, padding masks, inference randomness, rendering and greedy decoder",
+      "status": "not supported as the current common cause on the 27 judged clips",
+      "evidence": "Exact PCM/checkpoint/baseline bindings, 27 repeated and 27 masked-padding outputs identical; no mismatches corrected with beam 50. Raw jamo already contain errors."
+    },
+    {
+      "layer": "Encoder dependence on nuisance context",
+      "status": "mechanistic contribution demonstrated; not a learned-origin explanation",
+      "evidence": "Identical speech convolutional features, 2x2 control of silence attention and position signals, 27/27 control parity. All nine personal errors change under at least one latent condition; three can match the selected label. Controls can introduce harmful changes and are not a deployment fix."
+    },
+    {
+      "layer": "Transcript-reconstruction target versus realized speech",
+      "status": "objective mismatch is concrete; causal strength for individual original errors remains unquantified",
+      "evidence": "Source discrepancies in three previously judged full-audio training examples; six independent canonical rewrites stable under all current acoustic/context/decoder controls. Paired label fine-tuning changes training fit but not held-out behavior."
+    },
+    {
+      "layer": "Single-pronunciation scoring",
+      "status": "confirmed evaluation limitation",
+      "evidence": "Four explicit possessive 의 contexts penalize allowed 에 alternatives. Do not equate the 978 reference edits with 978 audible mistakes."
+    },
+    {
+      "layer": "Training and use distribution, token balance",
+      "status": "measured mismatch and suspected contributor, not isolated causal proof",
+      "evidence": "Only 37/150253 original training files and 1/1500 validation files under 1.5 s; 74/83 personal clips under 1.5 s. Other children have correct short book clips, so duration alone is not sufficient."
+    }
+  ],
+  "actions_taken": [
+    "Aggregated all 40 jamo with denominators and initial/medial/final attribution.",
+    "Validated frozen references and original prediction provenance.",
+    "Completed 27-clip causal input/encoder/decoder controls, no parameter updates.",
+    "Audited four context-specific allowed-pronunciation penalties against an official source."
+  ],
+  "next_recommendation": [
+    "Separate transcript reconstruction from actual-pronunciation evaluation and preserve noncanonical contrasts; freeze reference provenance and ambiguity.",
+    "Target the measured encoder context sensitivity and duration/context mismatch in the next intervention, with normal and noncanonical controls, after the reference criteria are explicit.",
+    "Avoid further arbitrary listening batches, word-specific corrections, or scaling the failed label pilot."
+  ],
+  "training_started": false,
+  "optimization_updates": 0,
+  "model_replaced": false,
+  "new_human_questions": 0,
+  "original_errors_fixed": false,
+  "evidence_files": {
+    "docs/data/child-jamo-global-error-audit-20260927.json": "6f22c7a6cf9d29caec17a9a284711311ab7401940f7c224a9f332b54a4ae7425",
+    "docs/data/child-jamo-global-mechanisms-20260927.json": "17b1e05baf77e2adc8a2b38d0fb068d13167ff06a5020660ee1b35ffff38bbfe",
+    "docs/data/child-jamo-label-comparison-conclusion-20260927.json": "e8308264980df16c48bbb5c4a4d13246589749c7a02c193995420f3e6fb47de9",
+    ".venv/child-jamo-web-20260916/cause-analysis-20260927/label-review-results.json": "111191f325a84a50b8d7813da4012e80dce96918e54f6e93b48d053abab730db",
+    ".venv/child-jamo-web-20260916/cause-analysis-20260927/applied-repair-validation.json": "d8432b75a8d16a00db16a2bef35ec7370c6b99134a54667f4e250d268baf7ec6",
+    "docs/data/child-jamo-global-error-sources-20260927.json": "bf9f03e56b6008e3316b4bd0c4f8195788c8916f34d67ce5557cd8ead77875c9"
+  },
+  "related_tests_passed": 4,
+  "report": "docs/CHILD_JAMO_GLOBAL_CAUSES_2026-09-27.md",
+  "finished_at_utc": "2026-09-27T11:34:17.553736+00:00"
+}

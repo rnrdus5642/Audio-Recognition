@@ -9,7 +9,6 @@ from dataclasses import asdict, dataclass, field
 
 from .matcher import MatchResult
 from .korean_feedback import KoreanFeedback, build_korean_feedback
-from .model_feedback import FeedbackReview, review_feedback
 
 
 @dataclass
@@ -43,12 +42,10 @@ class PronunciationFeedback:
     deletion_count: int
     insertion_count: int
     korean_feedback: KoreanFeedback = field(default_factory=KoreanFeedback)
-    raw_korean_feedback: KoreanFeedback = field(default_factory=KoreanFeedback)
-    feedback_review: FeedbackReview = field(default_factory=FeedbackReview)
 
     @classmethod
     def from_match(
-        cls, result: MatchResult, frames: int, streak: int, *, matrix_id=None, model_errors=None
+        cls, result: MatchResult, frames: int, streak: int
     ) -> "PronunciationFeedback":
         steps = []
         counts = {"match": 0, "sub": 0, "del": 0, "ins": 0}
@@ -67,7 +64,7 @@ class PronunciationFeedback:
             if operation != "del":
                 user_index += 1
         feedback = cls(
-            schema_version=3,
+            schema_version=2,
             target_id=result.target_id,
             target_text=result.target_text,
             score=result.score,
@@ -89,13 +86,8 @@ class PronunciationFeedback:
             deletion_count=counts["del"],
             insertion_count=counts["ins"],
         )
-        feedback._acoustic_recovery = result.acoustic_evidence is not None
-        feedback.raw_korean_feedback = build_korean_feedback(feedback)
-        feedback.apply_model_errors(matrix_id, model_errors)
+        feedback.korean_feedback = build_korean_feedback(feedback)
         return feedback
-
-    def apply_model_errors(self, matrix_id, errors=None):
-        self.korean_feedback, self.feedback_review = review_feedback(self, matrix_id, errors)
 
     def to_dict(self) -> dict:
         """A detached, JSON-serializable copy for UI and future clients."""

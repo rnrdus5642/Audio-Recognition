@@ -1,16 +1,5 @@
 ﻿# Phoneme Matching (Unity 패키지)
 
-**0.8.5 · 악기놀이 발표용:** Package Manager의 `+ > Add package from tarball…`에서
-제공된 `com.domicube.phoneme-matching-0.8.5.tgz`를 선택하고,
-`Tools > Phoneme Matching > 악기놀이 발표 설정`을 실행하세요.
-필요한 추론 엔진과 아동 모델을 준비하고, **12개 정답의 조정값·9단계가 연결된 테스트 창**을 엽니다.
-이미 설치된 아동 모델은 재사용합니다. 처음 받는 모델은 약 1.18GB라 다운로드·임포트 시간이 필요합니다.
-
-발표 설정은 패키지 Resources에 포함됩니다. JSON 복사나 Python 실행이 필요 없으며,
-이후 패키지 업데이트에도 새 설정이 함께 반영됩니다. 게임에는
-`GameObject > Phoneme Matching > 악기놀이 발표`로 컴포넌트를 추가하세요.
-기존 게임의 연결 코드와 업데이트 방법은 [악기놀이 적용 안내](Documentation~/music-presentation.md)를 보세요.
-
 발화가 정답 단어와 **음소(IPA) 수준에서** 충분히 가까운지 판정합니다. STT로 "무슨
 단어인지" 맞추는 게 아니라 음소 부분 매칭이라, 발음이 부정확한 사용자(아동·발달지연
 포함)에게도 동작하고 STT 환각·마이크 잡음 문제를 함께 회피합니다.
@@ -20,13 +9,8 @@
 2026-09-06 개발 소스에는 기존 JSON을 보존하는 초기 세팅, 합격 후보 우선 선택,
 모델별 테스트 창 설정이 반영되어 있습니다. 웹도 기본 2.5초 창·앞쪽 무음 패딩으로 맞췄습니다.
 검증된 환경과 남은 제약은 [검증 기록](Documentation~/validation-2026-09-06.md)을 참고하세요.
-0.8.2에는 9월 9일 변경된 정답표와 `잡아·연주해·내려놔`의 판정 설정을 포함했습니다.
-0.8.3에서는 보류된 차이를 화면에 `문제 없음`으로 표시합니다. 내부 보류 기록과 정답 설정은 유지합니다.
-0.8.5는 실제 사용자 녹음으로 확인한 `잡아`의 모델 오인식을 보완합니다. 같은 추론의 CTC 후보 점수를 추가 확인하며, 원래 인식 문구와 연속 2회 조건을 유지합니다. 다른 단어 설정은 0.8.4와 같습니다.
-
-0.8.4는 악기 이름이 붙은 동작 표현, 짧은 발화 보완, `잡아` 연속 2회와 인식 진단 로그를 추가합니다.
-0.8.1에서 추가한 모델 혼동을 고려한 발음 안내도 유지합니다. Git URL로 받으려면 이번 변경이
-원격에 게시되어야 하며, 기존 `v0.7.0` 태그에서는 새 발표 기능을 받을 수 없습니다.
+패키지 버전 표기는 `0.7.0`이지만 기존 `v0.7.0` 태그와 같은 소스라는 뜻은 아닙니다.
+이번 변경을 포함한 커밋/브랜치가 원격에 게시된 뒤 해당 Git 참조로 갱신해야 합니다.
 
 ## 실행 구조
 
@@ -43,7 +27,7 @@
 같은 규칙 구현이 있습니다. 런타임에 mecab이나 Python은 필요 없습니다.
 g2pkk는 Python의 별도 비교 실험 경로에서만 사용합니다.
 
-## 일반 단어용 설치
+## 설치
 
 **Unity 2022.3 과 Unity 6 을 모두 지원합니다.**
 
@@ -56,7 +40,7 @@ https://github.com/rnrdus5642/Audio-Recognition.git?path=/unity/Packages/com.dom
 Tools > Phoneme Matching > 초기 세팅
 ```
 
-`초기 세팅` 은 없는 것만 차례대로 설치합니다 - 추론 엔진, 데이터 JSON 6개,
+`초기 세팅` 은 없는 것만 차례대로 설치합니다 - 추론 엔진, 데이터 JSON 5개,
 음향 모델. 이미 있는 것은 건너뛰므로 두 경우에 같은 버튼을 씁니다.
 
 | 상황 | 실제로 하는 일 |
@@ -141,9 +125,9 @@ https://github.com/rnrdus5642/Audio-Recognition.git?path=/unity/Packages/com.dom
 
 `Tools > Phoneme Matching > 추론 엔진 설치`
 
-기본 패키지와 `LessonExample`은 엔진 설치 전에도 컴파일됩니다.
-실제 음성 인식에는 추론 엔진과 모델이 필요합니다. 악기놀이 컴포넌트는 준비가
-안 된 상태에서 정답을 만들지 않고, 설치 안내를 표시합니다.
+`LessonExample` 샘플도 엔진 설치 후에 가져오세요. 기본 패키지는 엔진 없이 컴파일되지만,
+현재 예제의 무엔진 대체 경로는 `SentisPhonemeRecognizer` 참조로 컴파일 오류가 납니다.
+이 문제의 코드 수정은 보류했으며, 엔진 설치 후 같은 예제는 정상 컴파일됩니다.
 
 에디터 버전을 보고 알맞은 것을 받습니다 - 2022.3 은
 `com.unity.sentis 1.2.0-exp.2`, Unity 6 은
@@ -183,33 +167,6 @@ https://github.com/rnrdus5642/Audio-Recognition.git?path=/unity/Packages/com.dom
 단어를 바꿨다면 `데이터 파일 설치` 대신
 `정답 데이터 다시 만들기` 를 쓰세요 — 저장소의 `words.csv` 로 빌드해서
 `targets.json` 만 갱신합니다.
-
-> **패키지만 올리면 데이터는 그대로입니다.** 이미 프로젝트의
-> `StreamingAssets/` 에 복사된 `targets_child.json` 은 패키지 갱신으로
-> 덮이지 않습니다. 동작 그룹(`action_group` · `contrastive_alternatives`)
-> 처럼 카탈로그 형식이 늘어난 갱신을 받으려면 `데이터 파일 설치`로 최신
-> 아동 데이터도 설치해야 합니다. `정답 데이터 다시 만들기`는 위 설명처럼
-> 성인 `targets.json`만 갱신하므로 아동 데이터 갱신을 대신하지 않습니다.
-> 직접 손본 카탈로그가 있다면 덮어쓰기 전에
-> 따로 보관하세요. 이 필드가 없는 예전 카탈로그도 그대로 동작합니다 —
-> 없으면 비교할 다른 동작이 없다는 뜻이고, 판정은 예전과 같습니다.
-
-2026-09-07 아동 카탈로그에는 악기 동작 표현 10종이 모두 등록됐습니다(총 35개).
-같은 그룹은 `들어/들기`, `쳐/치기`, `놓아/놓기`, `흔들어/흔들기`,
-`두드려/두드리기`입니다. `Begin`에는 허용할 표현만 기존처럼 넘기면 됩니다.
-다른 동작이 발화 전체에 더 잘 맞으면 기존 통과를 취소하며, 허용하지 않은
-표현으로 정답을 바꾸지는 않습니다. 호출 시 새로운 필수 인자는 없습니다.
-
-취소 정보는 `FrameScore.Best`의 `CompetitorRejected`, `CompetitorReason`,
-`CompetitorText`, `CompetitorScore`, `AcceptedWholeScore`로 확인합니다.
-마지막 두 값은 전체 음소열 비교 점수이며 확률이 아닙니다. 취소되지 않은
-프레임은 취소 정보가 비어 있습니다. 원래 `Score`·`Threshold`는 그대로이므로
-직접 점수만 비교하지 말고 `Passed`·`Confirmed`·확정 이벤트를 사용하세요.
-확정 시 발음 피드백 형식은 바뀌지 않았습니다.
-
-실제 아동 녹음의 해당 표현은 여전히 **7개 중 2개만 확정**됐습니다. 새로
-등록한 6개 표현은 실제 녹음이 없어 인식률을 검증하지 못했습니다. 이번 수정은
-표현 등록 누락과 다른 동작의 오통과를 줄이는 것이며 음향 모델 개선은 아닙니다.
 
 ### 4. 음향 모델
 
@@ -372,33 +329,6 @@ listener.TargetWords = new[] { "엄마", "어머니" };
 각 프레임에서 **각 정답의 점수를 그 정답의 임계값과 먼저 비교**합니다. 통과한
 정답이 있으면 그중 최고 점수를 선택하고, 전부 불합격이면 표시용 최고 점수만
 반환합니다. 같은 통과 정답이 연속 2회(기본값) 선택돼야 최종 확정됩니다.
-
-예외가 하나 있습니다. 정답 데이터가 그 단어에 `allow_exact_single_frame`
-을 켜 뒀고, `Consecutive` 가 정확히 2이며, 지금 설정이 그 단어의 **보정
-스냅샷**(`exact_single_frame_calibration`: 매트릭스 이름·스트리밍
-프로파일·임계값·음소열·표기)과 같으면, **점수가 정확히 1.0 인 프레임
-하나로 확정**됩니다. 1.0 은 **그 프레임에서 채점에 쓰인 구간**(문맥 제한으로
-잘라낸 최근 음소열)이 설정된 정답 음소열과 그대로 같았다는 뜻입니다 — 전사
-전체가 정답뿐이었다는 뜻도, 발음이 100% 정확했다는 인증도 아니며, 0.9999 는
-해당하지 않습니다. 짧은 단어가 그런 프레임을 딱 한 번만 얻는 경우를 위한
-것입니다 — 발화는 다음 hop 에도 창 안에 있지만 창 안에서의 위치가 바뀌면
-인식 결과가 달라집니다
-([근거와 한계](../../../docs/DEMO_RELIABILITY_2026-09-06.md)).
-이때 보고되는 `Streak` 은 진짜 **1** 입니다 — 한 프레임을 두 번 성공한
-것처럼 표시하지 않습니다. 플래그가 없는 데이터, 성인용 타깃, 손으로 조정한
-프로파일, `Consecutive` 1 또는 3 은 전부 예전 그대로입니다.
-
-매트릭스는 자기 이름을 알아야 합니다. `ko_child_v2.json` 에는 `matrix_id`
-가 들어 있어 `PhonemeData.LoadMatrix(json)` 한 인자 호출로도 신원이
-확인됩니다. `matrix_id` 가 없는 예전 파일은 `unknown` 으로 읽히고 예외를
-받지 못하므로, 필요하면 `LoadMatrix(json, "ko_child_v2")` 로 직접
-알려 주세요. 이 예외를 쓰려면 **`targets_child.json` 과 `ko_child_v2.json`
-을 함께** 최신으로 갱신해야 합니다.
-
-대조 대상은 매트릭스·스트리밍 프로파일·임계값·음소열까지입니다.
-**음향 모델(ONNX)의 신원은 확인하지 않습니다** — 보정은 아동 파인튜닝
-모델에서 잰 값이므로, 다른 모델을 쓸 거라면 다시 보정하거나 플래그를 끄는
-것은 호출자의 책임입니다.
 정답이 바뀌면 연속 횟수는 1부터, 모두 불합격이면 0부터 다시 시작합니다.
 `FrameScore.Best`, 이벤트의 단어·점수, 확정 피드백은 모두 이 선택된 정답 기준입니다.
 `Begin(...)`·이벤트·결과 JSON 형식은 바뀌지 않습니다.
@@ -420,17 +350,16 @@ listener.TargetWords = new[] { "엄마", "어머니" };
 
 ### 방법 2~4 공통 — 앱이 오디오를 준다
 
-리듬이 둘로 나뉩니다. **오는 대로 붓고, 0.5초치가 모이면 채점합니다.**
+리듬이 둘로 나뉩니다. **오는 대로 붓고, 0.5초마다 채점합니다.**
 
 ```
-앱의 오디오 ──Append()──▶ [ 2.5초 창 ] ──TryPush()──▶ 채점
-            오는 대로 계속              새 샘플 0.5초마다
+앱의 오디오 ──Append()──▶ [ 2.5초 창 ] ──Push()──▶ 채점
+            오는 대로 계속                0.5초마다
 ```
 
 ```csharp
 // 한 번 만들어 계속 씁니다. Begin ~ End 한 번이 문제 하나입니다.
-// hop 을 주면 버퍼가 0.5초치 새 샘플마다 프레임을 하나씩 쌓습니다.
-var buffer  = new AudioWindowBuffer(2.5f, 0.5f);
+var buffer  = new AudioWindowBuffer(2.5f);
 var session = new PronunciationSession(matrix, catalog, recognizer,
                                        buffer: buffer);
 
@@ -438,28 +367,14 @@ var session = new PronunciationSession(matrix, catalog, recognizer,
 session.Begin("사과");                      // 이 단어만 채점
 // session.Begin(new[] { "사과", "능금" }); // 둘 중 아무거나 정답
 
-// 아무 때나 자주 불러도 됩니다. 0.5초가 안 모였으면 아무것도 안 합니다.
-while (session.TryPush(out var frame))
-{
-    if (frame.Confirmed) { 다음문제로(); break; }
-}
+// 0.5초마다
+var frame = session.Push();
+if (frame.Confirmed) 다음문제로();
 
-session.End();   // 중단 — 안 읽은 프레임과 남은 부분 hop 도 같이 버립니다
+session.End();   // 중단
 ```
 
-**왜 `TryPush` 인가.** `Push()` 는 부를 때마다 지금 창을 채점하므로,
-채점 횟수가 오디오가 아니라 **호출 횟수**를 따라갑니다. 같은 1초를
-8000샘플씩 두 번 주면 2회, 4000샘플씩 네 번 주면 4회 채점돼 확정 시점이
-달라졌습니다. `TryPush` 는 새 샘플 수로 프레임을 끊으므로 청크를 어떻게
-쪼개 넣든 같은 창이 같은 순서로 나옵니다. 한 청크에 hop 이 여러 개 들어
-있으면 각각의 경계 시점 창을 순서대로 돌려주고, 확정된 프레임에서 멈춥니다.
-(보장 범위는 **같은 16 kHz 모노 PCM** 입니다. 다른 샘플레이트를 넣을 때의
-리샘플링은 종전과 같습니다.)
-
-`Push()` 는 직접 창을 넘기는 수동 API 로 그대로 둡니다. 이미 자체 클럭을
-돌리는 코드는 바꾸지 않아도 됩니다.
-
-`TryPush()` 는 메인 스레드에서 부르세요 - 20~30ms 걸리고 GPU 를 씁니다.
+`Push()` 는 메인 스레드에서 부르세요 - 20~30ms 걸리고 GPU 를 씁니다.
 오답 신호는 따로 없습니다. 시간을 재서 앱이 판단하세요 (방법 1 은 이
 타이머가 내장돼 있습니다).
 
@@ -543,10 +458,8 @@ listener.OnConfirmedDetailed.AddListener(feedback =>
 });
 ```
 
-`KoreanFeedback`은 웹·Unity 모두 모델 오류표를 확인한 표시용 안내입니다.
-모델 혼동이 잦거나 자료가 없거나 부족한 차이는 보류합니다. `놔 → 와`의 ㄴ 누락도
-발음 오류로 지적하지 않습니다. `RawKoreanFeedback`·`Alignment`에는 원본 차이가 남습니다.
-결과 계약은 `schema_version: 3`이며 정답 점수·임계값·확정 횟수는 그대로입니다.
+이 계약은 인식된 음소의 원본 비교이며 실제 발음 진단이 아닙니다.
+웹의 별도 모델 오류표 기반 판단 보류 정책은 C# 기본 DTO에 적용되지 않습니다.
 
 방법 2~4 는 `Push()` 가 돌려주고, 방법 1 은 `OnFrameScored` 로 옵니다.
 
@@ -684,7 +597,7 @@ public sealed class Lesson : MonoBehaviour
         // 사람마다 다릅니다.
         var model = Resources.Load<ModelAsset>("Models/wav2vec2_ko");
         _recognizer = new SentisPhonemeRecognizer(model, vocab);
-        _buffer = new AudioWindowBuffer(2.5f, 0.5f);   // 창 2.5초 · hop 0.5초
+        _buffer = new AudioWindowBuffer(2.5f);
         _judge  = new PronunciationSession(
             matrix, catalog, _recognizer, buffer: _buffer);
     }
@@ -711,22 +624,21 @@ public sealed class Lesson : MonoBehaviour
 
     System.Collections.IEnumerator Score()
     {
+        var wait = new WaitForSeconds(0.5f);
         float started = Time.time;
 
         while (_judge.IsActive)
         {
-            yield return null;
+            yield return wait;
 
-            // 0.5초치가 모였을 때만 돕니다 (20~30ms, 메인 스레드)
-            while (_judge.TryPush(out var frame))
+            var frame = _judge.Push();      // 20~30ms, 메인 스레드
+
+            if (frame.Confirmed)
             {
-                if (frame.Confirmed)
-                {
-                    Debug.Log($"정답 {frame.Best.TargetText} {frame.Best.Score:F2}");
-                    _index++;
-                    Invoke(nameof(Ask), 1f);
-                    yield break;
-                }
+                Debug.Log($"정답 {frame.Best.TargetText} {frame.Best.Score:F2}");
+                _index++;
+                Invoke(nameof(Ask), 1f);
+                yield break;
             }
 
             if (Time.time - started > 15f)  // 오답 판정은 앱 몫
@@ -761,19 +673,10 @@ public sealed class Lesson : MonoBehaviour
 | `Begin(string word)` | 문제 시작. 그 단어만 채점 |
 | `Begin(IReadOnlyList<string> words)` | 여러 정답 중 아무거나 |
 | `Push(float[] window)` | 창 하나 채점 → `FrameScore` |
-| `Push()` | (수동) 지금 버퍼 상태를 그대로 채점 — 부른 만큼 채점됨 |
-| `TryPush(out FrameScore)` | hop 이 하나 찼으면 채점. 아니면 추론 없이 false |
-| `End()` | 중단. 버퍼의 안 읽은 프레임·부분 hop 도 비움 (`LastConfirmation` 은 유지) |
+| `Push()` | 생성자에 넘긴 버퍼에서 가져와 채점 |
+| `End()` | 중단 |
 | `IsActive` | `Begin` 과 확정/`End` 사이 |
 | `TargetText`, `Candidates` | 지금 묻고 있는 것 |
-
-`FrameScore.EndSampleIndex` 는 그 창이 끝난 16 kHz 샘플 번호입니다
-(`TryPush` 로 얻은 프레임만; 직접 창을 넘겼으면 -1). 프레임 큐가 넘쳐
-`TryPush` 가 예외를 던지면, 또는 **인식·채점 자체가 예외를 던지면** 세션도
-무효가 됩니다. 예외를 잡고 계속 먹여도 옛 연속 횟수는 이어지지 않으며
-(버퍼만 `Reset()` 해도 마찬가지), 다시 `Begin()` 해야 합니다 — 실패한
-프레임 앞뒤를 붙여 "연속 2회" 라고 부를 수는 없기 때문입니다.
-`LastConfirmation` 은 이때도 지우지 않습니다.
 
 `Begin` 은 `buffer` 를 넘겼다면 그것도 비웁니다 — 직전 답이 다음 문제에
 섞이지 않도록.
@@ -795,24 +698,14 @@ public sealed class Lesson : MonoBehaviour
 
 | 멤버 | 설명 |
 |---|---|
-| `new AudioWindowBuffer(2.5f)` | 창 길이 = 모델이 받는 길이. hop 없음 = 종전과 동일 |
-| `new AudioWindowBuffer(2.5f, 0.5f)` | hop 프레이밍 켜기 (새 샘플 0.5초 = 프레임 1개) |
+| `new AudioWindowBuffer(2.5f)` | 창 길이 = 모델이 받는 길이 |
 | `Append(float[] mono, int rate)` | 모노 샘플 추가. 리샘플링 자동 |
 | `AppendInterleaved(float[] data, int channels, int rate)` | 인터리브 다채널 |
 | `Snapshot()` | 항상 40000개 (모자라면 앞을 무음으로) |
-| `TryReadFrame(out HopFrame)` | 다음 hop 프레임. 아직 안 찼으면 false |
-| `Reset()` | 오디오·대기 프레임·경계 위상·오류 상태 모두 비우기 |
+| `Reset()` | 비우기 |
 | `IsFull` | 실제 오디오로 창이 다 찼는지 |
-| `PendingFrames` / `Overflowed` | 안 읽은 프레임 수 / 큐가 넘쳤는지 |
 
-`HopFrame` 은 `Window`(그 경계 시점의 창)와 `EndSampleIndex`(그때까지
-들어온 16 kHz 샘플 수)를 가집니다. 프레임을 읽지 않고 쌓기만 하면
-`maxPendingFrames`(기본 64, 기본 hop 으로 32초)에서 큐가 **비워지고
-`TryReadFrame` 이 예외를 던집니다** — 조용히 버리면 아무도 채점하지 않은
-오디오 위에 연속 횟수가 이어지기 때문입니다. `Reset()` 해야 풀립니다.
-
-`Append` 는 오디오 스레드에서 불러도 안전합니다. `Snapshot`/`Push`/
-`TryPush` 는 메인 스레드에서 부르세요.
+`Append` 는 오디오 스레드에서 불러도 안전합니다. `Snapshot`/`Push` 는
 메인 스레드에서 부르세요.
 
 ### `PronunciationListener` — 마이크까지 맡기는 컴포넌트
@@ -862,7 +755,7 @@ public sealed class Lesson : MonoBehaviour
 | 첫 발화에서 2초 멈춤 | `Warmup()` 을 로딩 중에 안 부름 |
 | 계속 무음, 점수 0 | 마이크 장치가 엉뚱하거나 Windows 개인정보 설정에서 차단 |
 | `inference failed on N samples` | 창 길이와 모델 길이 불일치. `--static-samples` 로 다시 export |
-| 말했는데 확정 안 됨 | 처음 통과한 프레임 뒤로 **`(연속횟수-1) × hop` = 0.5초** 를 더 들어야 함. 발화가 끝난 시점부터 1초라는 뜻이 아니라, 통과가 시작된 시점부터입니다 |
+| 말했는데 확정 안 됨 | 발화 후 **1초는 더** 들어야 함 (연속 2회 × hop 0.5초) |
 | 점수가 이상하게 낮음 | 앱이 넘기는 샘플레이트를 잘못 알려줌 (`Append` 의 두 번째 인자) |
 
 ## 배치와 스트리밍은 설정이 다릅니다

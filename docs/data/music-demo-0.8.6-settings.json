@@ -1,0 +1,49 @@
+{
+  "profile_id": "music_demo_2026_09_12",
+  "confusion_matrix_id": "ko_child_v2",
+  "window_seconds": 2.5,
+  "hop_seconds": 0.5,
+  "words": [
+    {"id": "silophone_mallet", "text": "실로폰채", "action_group": "xylophone", "threshold": 0.75, "confirmation_frames": 2, "min_whole_score": 0.65},
+    {"id": "lift_plain", "text": "들어", "action_group": "lift", "threshold": 0.69, "confirmation_frames": 2, "min_whole_score": 0.65, "contrast_margin": 0.08},
+    {"id": "grab_plain", "text": "잡아", "action_group": "grip", "threshold": 0.97, "confirmation_frames": 2, "min_whole_score": 0.0, "contrast_margin": 0.5, "short_utterance_policy": {"threshold": 0.85, "min_whole_score": 0.85, "max_extra_phonemes": 0}, "acoustic_keyword_policy": {"min_score": 0.65, "min_log_probability": -14.0, "max_log_gap": 13.0, "contrast_text": "작아", "max_contrast_log_gap": 6.0, "max_extra_phonemes": 2}},
+    {"id": "hit_plain", "text": "쳐", "action_group": "strike", "threshold": 0.69, "confirmation_frames": 2, "min_whole_score": 0.7},
+    {"id": "beat_plain", "text": "때려", "action_group": "drum", "threshold": 0.83, "confirmation_frames": 2, "min_whole_score": 0.2, "contrast_margin": 0.15, "short_utterance_policy": {"threshold": 0.56, "min_whole_score": 0.65, "max_extra_phonemes": 0}},
+    {"id": "play_plain", "text": "연주해", "action_group": "play", "threshold": 0.9, "confirmation_frames": 2, "min_whole_score": 0.0, "contrast_margin": 0.2, "short_utterance_policy": {"threshold": 0.75, "min_whole_score": 0.75, "max_extra_phonemes": 2}},
+    {"id": "put_uncontracted", "text": "놓아", "action_group": "put_down", "threshold": 0.79, "confirmation_frames": 2, "min_whole_score": 0.6},
+    {"id": "put_plain", "text": "놔", "action_group": "put_down", "threshold": 0.72, "confirmation_frames": 2, "min_whole_score": 0.85},
+    {"id": "put_lower", "text": "내려놔", "action_group": "put_down", "threshold": 0.9, "confirmation_frames": 2, "min_whole_score": 0.65, "short_utterance_policy": {"threshold": 0.49, "min_whole_score": 0.63, "max_extra_phonemes": 0}},
+    {"id": "shake_plain", "text": "흔들어", "action_group": "shake", "threshold": 0.95, "confirmation_frames": 1, "min_whole_score": 0.7},
+    {"id": "drumstick", "text": "북채", "action_group": "drum_object", "threshold": 0.74, "confirmation_frames": 2, "min_whole_score": 0.65},
+    {"id": "knock_plain", "text": "두드려", "action_group": "drum", "threshold": 0.73, "confirmation_frames": 2, "min_whole_score": 0.6}
+  ],
+  "sentence_prefixes": {
+    "잡아": ["실로폰채를", "탬버린을", "북채를", "손을"],
+    "쳐": ["실로폰채를", "실로폰을", "탬버린을", "북을"],
+    "때려": ["실로폰채를", "실로폰을", "탬버린을", "북을"],
+    "연주해": ["실로폰을", "악기를", "탬버린을", "북을"],
+    "내려놔": ["실로폰채를", "탬버린을", "북채를", "북을"]
+  },
+  "comparison_aliases": [
+    {"text": "쳐요", "action_group": "strike"},
+    {"text": "놔요", "action_group": "put_down"}
+  ],
+  "comparison_only": [
+    {"text": "실로폰", "action_group": "excluded_object"},
+    {"text": "탬버린", "action_group": "excluded_object"},
+    {"text": "북", "action_group": "excluded_object"},
+    {"text": "내려와", "action_group": "come_down"},
+    {"text": "잡아먹어", "action_group": "eat"}
+  ],
+  "stages": [
+    {"id": 1, "title": "실로폰채 들기", "answers": ["실로폰채", "들어", "잡아"]},
+    {"id": 2, "title": "실로폰 치기", "answers": ["쳐", "때려", "연주해"]},
+    {"id": 3, "title": "실로폰채 놓기", "answers": ["놓아", "놔", "내려놔"]},
+    {"id": 4, "title": "탬버린 들기", "answers": ["들어", "잡아"]},
+    {"id": 5, "title": "탬버린 치기", "answers": ["쳐", "때려"]},
+    {"id": 6, "title": "탬버린 흔들기", "answers": ["흔들어"]},
+    {"id": 7, "title": "탬버린 놓기", "answers": ["놓아", "놔", "내려놔"]},
+    {"id": 8, "title": "북채 들기", "answers": ["북채", "들어", "잡아"]},
+    {"id": 9, "title": "북 두드리기", "answers": ["두드려", "때려", "쳐"]}
+  ]
+}

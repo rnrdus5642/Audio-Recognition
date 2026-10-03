@@ -36,8 +36,6 @@ namespace DomiCube.PhonemeMatching
         public string TargetText;
         public List<string> TargetPhonemes;
         public List<string> UserPhonemes;
-        // Threshold met AND not vetoed by another action. Do not derive
-        // this flag from Score >= Threshold in callers.
         public bool Passed;
 
         /// <summary>
@@ -49,34 +47,6 @@ namespace DomiCube.PhonemeMatching
         public int WindowEnd;
 
         public List<AlignStep> Alignment = new List<AlignStep>();
-
-        /// <summary>
-        /// Set when a passing answer was refused because a DIFFERENT
-        /// action explains the same speech better. False for every
-        /// answer that ships no contrast set, which is every answer in a
-        /// catalog built before contrasts existed.
-        /// </summary>
-        public bool CompetitorRejected;
-
-        /// <summary>Why, or empty. See <see cref="Matcher.OtherActionScoredHigher"/>.</summary>
-        public string CompetitorReason = string.Empty;
-
-        /// <summary>The action that fitted better, or null.</summary>
-        public string CompetitorText;
-
-        /// <summary>Its whole-sequence score, or null.</summary>
-        public double? CompetitorScore;
-
-        /// <summary>
-        /// The best whole-sequence score within the winner's action group,
-        /// including embedded aliases that were not requested, or null.
-        /// Reported only on veto, beside the competitor. Comparison-only:
-        /// neither a probability nor the answer's thresholded Score.
-        /// </summary>
-        public double? AcceptedWholeScore;
-        public bool WholeRejected;
-        public bool UsedShortUtterancePolicy;
-        public AcousticEvidence AcousticEvidence;
     }
 
     public enum MatchMode
@@ -107,13 +77,6 @@ namespace DomiCube.PhonemeMatching
         /// target sitting at the very end of the window is not clipped.
         /// </summary>
         public const int ContextPad = 3;
-
-        /// <summary>
-        /// <see cref="MatchResult.CompetitorReason"/> when the pass was
-        /// taken back because another action fitted the speech better.
-        /// </summary>
-        public const string OtherActionScoredHigher = "other_action_scored_higher";
-        public const double ContextPrefixMinScore = 0.80;
 
         public ConfusionMatrix Matrix { get; }
         public MatchMode Mode { get; }
@@ -547,15 +510,9 @@ namespace DomiCube.PhonemeMatching
         /// Ties within the same pass/fail group keep the earlier candidate.
         /// Only the supplied answers are considered; a higher-scoring failure
         /// must not hide an acceptable answer with a lower pass mark.
-        ///
-        /// A candidate may carry an action group and the contrast set the
-        /// build embedded for it. Those change nothing about who wins or
-        /// what they score - they can only take a pass away afterwards,
-        /// see <see cref="VetoByOtherAction"/>.
         /// </summary>
         public MatchResult BestMatch(
-            IReadOnlyList<string> user, IReadOnlyList<Answer> candidates,
-            IReadOnlyDictionary<string, AcousticEvidence> acousticEvidence = null)
+            IReadOnlyList<string> user, IReadOnlyList<Answer> candidates)
         {
             var userList = new List<string>(user ?? new List<string>());
 
@@ -576,57 +533,15 @@ namespace DomiCube.PhonemeMatching
             Answer best = candidates[0];
             int bestWs = 0, bestWe = userList.Count;
             var bestOps = new List<AlignStep>();
-            double? bestWhole = null;
-            bool bestWholeRejected = false;
-            double bestThreshold = best.Threshold;
-            bool bestShort = false;
-            AcousticEvidence bestAcoustic = null;
 
             foreach (var cand in candidates)
             {
-                AnswerPolicy.Validate(cand);
                 var ops = new List<AlignStep>();
                 double d = ScoreAgainst(
                     userList, cand.Phonemes, out double s,
                     out int ws, out int we, ops);
 
-                double threshold = cand.Threshold;
-                bool passed = s >= threshold;
-                bool usedShort = false;
-                AcousticEvidence usedAcoustic = null;
-                double? whole = null;
-                bool wholeRejected = false;
-                if (passed && cand.MinWholeScore > 0.0)
-                {
-                    whole = AcceptedWholeScore(userList, candidates, cand);
-                    wholeRejected = whole.Value < cand.MinWholeScore;
-                    passed = !wholeRejected;
-                }
-                var shortPolicy = cand.ShortUtterancePolicy;
-                if (!passed && shortPolicy != null && s >= shortPolicy.Threshold)
-                {
-                    double shortWhole = ShortUtteranceScore(userList, cand);
-                    if (shortWhole >= shortPolicy.MinWholeScore)
-                    {
-                        passed = usedShort = true;
-                        wholeRejected = false;
-                        threshold = shortPolicy.Threshold;
-                        whole = shortWhole;
-                    }
-                }
-                if (!passed && acousticEvidence != null
-                    && acousticEvidence.TryGetValue(cand.Text, out var evidence)
-                    && evidence != null && evidence.Permits(cand, userList.Count, s))
-                {
-                    whole = AcceptedWholeScore(userList, candidates, cand);
-                    if (whole >= cand.MinWholeScore)
-                    {
-                        passed = true;
-                        wholeRejected = false;
-                        threshold = cand.AcousticKeywordPolicy.MinScore;
-                        usedAcoustic = evidence;
-                    }
-                }
+                bool passed = s >= cand.Threshold;
                 if ((passed && !bestPassed)
                     || (passed == bestPassed && s > bestScore))
                 {
@@ -637,19 +552,14 @@ namespace DomiCube.PhonemeMatching
                     bestWs = ws;
                     bestWe = we;
                     bestOps = ops;
-                    bestWhole = whole;
-                    bestWholeRejected = wholeRejected;
-                    bestThreshold = threshold;
-                    bestShort = usedShort;
-                    bestAcoustic = usedAcoustic;
                 }
             }
 
-            var result = new MatchResult
+            return new MatchResult
             {
                 Score = bestScore,
                 Distance = bestDistance,
-                Threshold = bestThreshold,
+                Threshold = best.Threshold,
                 TargetId = best.Id,
                 TargetText = best.Text,
                 TargetPhonemes = best.Phonemes,
@@ -657,214 +567,8 @@ namespace DomiCube.PhonemeMatching
                 Passed = bestPassed,
                 WindowStart = bestWs,
                 WindowEnd = bestWe,
-                Alignment = bestOps,
-                AcceptedWholeScore = bestWhole,
-                WholeRejected = bestWholeRejected,
-                UsedShortUtterancePolicy = bestShort,
-                AcousticEvidence = bestAcoustic
+                Alignment = bestOps
             };
-
-            VetoByOtherAction(result, userList, candidates, best);
-            return result;
-        }
-
-        /// <summary>
-        /// <paramref name="user"/> against <paramref name="target"/>, whole
-        /// against whole: no window and no context limit, so every phoneme
-        /// the recogniser produced is paid for. The existing exact-mode
-        /// arithmetic, used only to compare an answer with the actions it
-        /// must be told apart from. It accepts nothing and is never
-        /// reported as an answer's score.
-        /// </summary>
-        public double WholeScore(
-            IReadOnlyList<string> user, IReadOnlyList<string> target)
-        {
-            double distance = WeightedEditDistance(user, target, Matrix);
-            return SimilarityScore(distance, target.Count, user.Count);
-        }
-
-        /// <summary>The whole utterance against the answer and its own group's aliases.</summary>
-        public double AcceptedWholeScore(IReadOnlyList<string> user,
-            IReadOnlyList<Answer> candidates, Answer winner)
-        {
-            ActionContrast.Validate(winner);
-            AnswerPolicy.Validate(winner);
-            double best = WholeScore(user, winner.Phonemes);
-            if (winner.ActionGroup != null)
-            {
-                foreach (var candidate in candidates)
-                    if (candidate.ActionGroup == winner.ActionGroup)
-                        best = Math.Max(best, WholeScore(user, candidate.Phonemes));
-                if (winner.ContrastiveAlternatives != null)
-                    foreach (var alias in winner.ContrastiveAlternatives)
-                        if (alias.ActionGroup == winner.ActionGroup)
-                            best = Math.Max(best, WholeScore(user, alias.Phonemes));
-            }
-            foreach (var tail in ContextTails(user, winner))
-            {
-                best = Math.Max(best, WholeScore(tail, winner.Phonemes));
-                if (winner.ActionGroup == null) continue;
-                foreach (var candidate in candidates)
-                    if (candidate.ActionGroup == winner.ActionGroup)
-                        best = Math.Max(best, WholeScore(tail, candidate.Phonemes));
-                if (winner.ContrastiveAlternatives != null)
-                    foreach (var alias in winner.ContrastiveAlternatives)
-                        if (alias.ActionGroup == winner.ActionGroup)
-                            best = Math.Max(best, WholeScore(tail, alias.Phonemes));
-            }
-            return best;
-        }
-
-        /// <summary>Compare the remaining verb, so a long noun cannot inflate its score.</summary>
-        private List<IReadOnlyList<string>> ContextTails(IReadOnlyList<string> user, Answer winner)
-        {
-            var tails = new List<IReadOnlyList<string>>();
-            if (winner.ContextPrefixes != null && winner.ContextPrefixes.Count > 0)
-            {
-                ScoreAgainst(user, winner.Phonemes, out _, out int wordStart, out int wordEnd);
-                if (wordEnd > wordStart)
-                    foreach (var context in winner.ContextPrefixes)
-                    {
-                        ScoreAgainst(user, context.Phonemes, out double prefixScore,
-                            out int start, out int end);
-                        // The noun's final syllable cannot also count as the verb.
-                        if (prefixScore >= ContextPrefixMinScore && start < end && end <= wordStart)
-                            tails.Add(Slice(user, end));
-                    }
-            }
-            return tails;
-        }
-
-        /// <summary>Short-input fallback compares the word itself, never an alias.</summary>
-        public double ShortUtteranceScore(IReadOnlyList<string> user, Answer winner)
-        {
-            int limit = winner.Phonemes.Count + winner.ShortUtterancePolicy.MaxExtraPhonemes;
-            double best = user.Count > 0 && user.Count <= limit ? WholeScore(user, winner.Phonemes) : -1.0;
-            foreach (var tail in ContextTails(user, winner))
-                if (tail.Count > 0 && tail.Count <= limit)
-                    best = Math.Max(best, WholeScore(tail, winner.Phonemes));
-            return best;
-        }
-
-        /// <summary>
-        /// Take the pass back when another ACTION explains this better.
-        ///
-        /// The decision above is left exactly as it was - same winner,
-        /// same score, same window, same alignment. This can only refuse
-        /// it, and it never promotes a rival: the rivals are not answers
-        /// to the question that was asked. There is no second ranking.
-        ///
-        /// Substring scoring may start its window anywhere, so a short
-        /// answer whose phonemes are the tail of a longer word passes on
-        /// the longer word. Whole-sequence scoring sees the difference,
-        /// but as a THRESHOLD it creates the mirror failure, so it is
-        /// used here only to compare two readings of the same speech: if
-        /// an action this question does not accept fits everything the
-        /// child said better than anything it does accept, the pass was
-        /// not earned. Ties never veto.
-        ///
-        /// The anchor is what the ACTION that won is worth, read whole:
-        /// the winner, the aliases of its group the question accepted,
-        /// and the aliases it did not ask for, which the build embedded
-        /// for exactly this. A lesson may ask for 두드려 alone while the
-        /// child says 두드리기 - the same instruction - and without the
-        /// unrequested alias the winner is measured on a form nobody
-        /// said. Another accepted action never raises the anchor.
-        ///
-        /// Both skips are decided by catalog data, never by knowing any
-        /// particular word: an action the question already accepts, and a
-        /// rival whose phonemes an accepted answer already has.
-        /// </summary>
-        private void VetoByOtherAction(
-            MatchResult result,
-            IReadOnlyList<string> user,
-            IReadOnlyList<Answer> candidates,
-            Answer winner)
-        {
-            // Checked before anything else, so metadata a caller built in
-            // code cannot switch the protection off by being unreadable.
-            ActionContrast.Validate(winner);
-            var rivals = winner.ContrastiveAlternatives;
-            if (!result.Passed || rivals == null || rivals.Count == 0)
-            {
-                return;
-            }
-
-            var acceptedGroups = new HashSet<string>(StringComparer.Ordinal);
-            // The winner is always part of its own action.
-            double bestAccepted = AcceptedWholeScore(user, candidates, winner);
-            var tails = ContextTails(user, winner);
-            foreach (var candidate in candidates)
-            {
-                string group = ActionContrast.CheckGroup(
-                    candidate.ActionGroup, candidate.Text ?? candidate.Id);
-                if (group != null)
-                {
-                    acceptedGroups.Add(group);
-                }
-
-            }
-
-            string challengerText = null;
-            double challengerScore = 0.0;
-            foreach (var rival in rivals)
-            {
-                if (acceptedGroups.Contains(rival.ActionGroup)
-                    || IsAlreadyAccepted(rival.Phonemes, candidates))
-                {
-                    continue;
-                }
-
-                double score = WholeScore(user, rival.Phonemes);
-                foreach (var tail in tails)
-                    score = Math.Max(score, WholeScore(tail, rival.Phonemes));
-                if (score > bestAccepted + winner.ContrastMargin
-                    && (challengerText == null || score > challengerScore))
-                {
-                    challengerText = rival.Text;
-                    challengerScore = score;
-                }
-            }
-
-            if (challengerText == null)
-            {
-                return;
-            }
-
-            result.Passed = false;
-            result.CompetitorRejected = true;
-            result.CompetitorReason = OtherActionScoredHigher;
-            result.CompetitorText = challengerText;
-            result.CompetitorScore = challengerScore;
-            result.AcceptedWholeScore = bestAccepted;
-        }
-
-        /// <summary>Whether an accepted answer already has these sounds.</summary>
-        private static bool IsAlreadyAccepted(
-            IReadOnlyList<string> phonemes, IReadOnlyList<Answer> candidates)
-        {
-            foreach (var candidate in candidates)
-            {
-                var other = candidate.Phonemes;
-                if (other == null || other.Count != phonemes.Count)
-                {
-                    continue;
-                }
-
-                bool same = true;
-                for (int i = 0; i < other.Count && same; i++)
-                {
-                    same = string.Equals(other[i], phonemes[i],
-                        StringComparison.Ordinal);
-                }
-
-                if (same)
-                {
-                    return true;
-                }
-            }
-
-            return false;
         }
     }
 }

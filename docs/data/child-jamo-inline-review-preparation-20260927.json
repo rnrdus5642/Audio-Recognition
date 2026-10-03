@@ -1,0 +1,61 @@
+{
+  "ready_for_browser_qa": true,
+  "version": "inline-contrast-20260927-v1",
+  "questions": 8,
+  "counts": {
+    "train": 4,
+    "valid": 4
+  },
+  "distinct_speakers": 8,
+  "total_audio_seconds": 30.144,
+  "original_json_and_wav_identity_verified": true,
+  "full_source_pcm_exact": true,
+  "crop_or_acoustic_transforms_applied": false,
+  "model_predictions_used": false,
+  "index_sha256": "e9bb4fe27ba55b63c46443ba7f07273d7b8e88614d3868eefdd4c266c82f0e6d",
+  "splits_sha256": "f201669125c42f2a361b300ee98c519652a504fae6c5df98aeebd9034b35f99e",
+  "selection_sha256": "402b19941eec7ba27fac7f7437d1019403f7691704ee2d19e929653e8253758d",
+  "public_items_sha256": "fa0b05bf9f8d4667b248c790afecc3817a2d428d7acee2b06f11668c390eccd0",
+  "evidence_sha256": "d9268089051e306e3a9486bad2d917c6a504266ed8c9840d38216339354f194a",
+  "original_manifest_sha256": {
+    "train": "6b15a65983f64d8b01603161fbb901e1dbcee164fce605d39560ac2a71681a04",
+    "valid": "4d7839eb53b468a783b5683455c2e63ba6b348c7a34b1fc4d34c6fa3366bfcbb",
+    "test": "b1997497c874bb61167f5c04aeb8d144603c778d63cc5ebaba6479f8d75e650c"
+  },
+  "original_manifest_rows_checked": {
+    "train": 150253,
+    "valid": 1500,
+    "test": 2999
+  },
+  "overlap": {
+    "wav_name": 0,
+    "source_wav_bytes": 0,
+    "new_full_pcm_vs_old_used_pcm": 0,
+    "between_new_questions_pcm": 0,
+    "train_valid_speakers": 0,
+    "test_speakers": 0
+  },
+  "overlap_scope": "Exact basename/byte/hash checks; not approximate audio duplicate detection.",
+  "human_answers_created": 0,
+  "phonetic_targets_created": 0,
+  "training_started": false,
+  "elapsed_seconds": 36.86,
+  "limitation": "Feasibility review, not a representative sample or a sufficient training/evaluation set. Parenthesis content is only an unverified alternative. A/B answers are human judgments, not expert phonetic certification.",
+  "status": "first_inline_contrast_review_ready",
+  "listening_url": "http://127.0.0.1:8773/",
+  "verified_at": "2026-09-27T17:26:29.531481+09:00",
+  "browser_qa_passed": true,
+  "browser_checks": {
+    "eight_questions_no_tabs_no_preselected_or_biased_role_labels": true,
+    "eight_bound_wavs_play_and_all_five_choices_save_without_transcription": true,
+    "save_and_next_finishes_with_persisted_progress": true,
+    "both_and_neither_stay_distinct_and_verbatim_notes_persist": true,
+    "mobile_no_overflow_and_no_javascript_errors": true,
+    "stale_bindings_revisions_and_invalid_choices_rejected": true
+  },
+  "live_root_state_and_all_eight_audio_hashes_verified": true,
+  "user_answers_at_verification": 0,
+  "pending_questions": 8,
+  "html_sha256": "97eaa1ab9745f9a1fdac2438e40916fb1b7eb0a1127eeae6deb183b303994cb7",
+  "next_action": "Interpret A/B answers with their frozen role mapping and any notes. Both/neither/unusable stay separate. Exclusive choices are provisional human sound judgments; notes are not converted to exact phones. Assess data sufficiency before matched-label training."
+}

@@ -1,0 +1,230 @@
+{
+  "complete": true,
+  "scanned": 150253,
+  "records": [
+    {
+      "wav": "K05380326-AMG11-L4N1D1-E-K0KK-00071886.wav",
+      "archive": "TL_kor_formatted_04.tar",
+      "label_member": "kor_formatted/2021-09-04/0326/K05380326-AMG11-L4N1D1-E-K0KK-00071886.json",
+      "label_offset": 9274880,
+      "label_size": 1211,
+      "label_payload_sha256": "b5c892d848bdf46695142a6868cc53384219d0b63775efc2ebe0672288c4a700",
+      "in_current_repaired_train": true,
+      "transcription": {
+        "ErrorWords": "N/A",
+        "GrammaticalError": "N/A",
+        "LabelText": "크리스마스.",
+        "ErrorTagged": "N/A",
+        "AccurateRead": "N/A",
+        "SpeakerRead": "N/A",
+        "CausesofError": "N/A"
+      },
+      "speaker_read_equals_label_text_after_normalization": null,
+      "accurate_read_equals_label_text_after_normalization": null
+    },
+    {
+      "wav": "K00470274-AMG10-L1N2D1-E-K0KK-00162438.wav",
+      "archive": "TL_kor_formatted_04.tar",
+      "label_member": "kor_formatted/2021-09-06/0274/K00470274-AMG10-L1N2D1-E-K0KK-00162438.json",
+      "label_offset": 15779328,
+      "label_size": 1227,
+      "label_payload_sha256": "b9f57c0465e25864c2e82571e2ddb29cf54e1b913e8bb8597d5ce762f30198bd",
+      "in_current_repaired_train": true,
+      "transcription": {
+        "ErrorWords": "N/A",
+        "GrammaticalError": "N/A",
+        "LabelText": "멋진 바다거북이 나옵니다.",
+        "ErrorTagged": "N/A",
+        "AccurateRead": "N/A",
+        "SpeakerRead": "N/A",
+        "CausesofError": "N/A"
+      },
+      "speaker_read_equals_label_text_after_normalization": null,
+      "accurate_read_equals_label_text_after_normalization": null
+    },
+    {
+      "wav": "K00791279-AFG21-L1N2D4-E-K0KK-00169223.wav",
+      "archive": "TL_kor_formatted_04.tar",
+      "label_member": "kor_formatted/2021-09-06/1279/K00791279-AFG21-L1N2D4-E-K0KK-00169223.json",
+      "label_offset": 17745408,
+      "label_size": 1257,
+      "label_payload_sha256": "24f507db3a6bbc8bdb731ebc8674f1c6ab5c55509bd0c8bc4a493a3cb8dc0ee6",
+      "in_current_repaired_train": true,
+      "transcription": {
+        "ErrorWords": "N/A",
+        "GrammaticalError": "N/A",
+        "LabelText": "지혜로운 부인이 그에게 도움을 줄지도 모릅니다.",
+        "ErrorTagged": "N/A",
+        "AccurateRead": "N/A",
+        "SpeakerRead": "N/A",
+        "CausesofError": "N/A"
+      },
+      "speaker_read_equals_label_text_after_normalization": null,
+      "accurate_read_equals_label_text_after_normalization": null
+    },
+    {
+      "wav": "K07450631-AMG10-L5N1D1-E-K0KK-00206519.wav",
+      "archive": "TL_kor_formatted_04.tar",
+      "label_member": "kor_formatted/2021-09-07/0631/K07450631-AMG10-L5N1D1-E-K0KK-00206519.json",
+      "label_offset": 18832896,
+      "label_size": 1203,
+      "label_payload_sha256": "632f26326e5cf5d84907ed9bd7a95f2348e8415fe03e885468b104955e7fd709",
+      "in_current_repaired_train": true,
+      "transcription": {
+        "ErrorWords": "N/A",
+        "GrammaticalError": "N/A",
+        "LabelText": "공룡이에요.",
+        "ErrorTagged": "N/A",
+        "AccurateRead": "N/A",
+        "SpeakerRead": "N/A",
+        "CausesofError": "N/A"
+      },
+      "speaker_read_equals_label_text_after_normalization": null,
+      "accurate_read_equals_label_text_after_normalization": null
+    },
+    {
+      "wav": "K05259002-AMG10-L1N2D1-E-K0KK-00250241.wav",
+      "archive": "TL_kor_formatted_04.tar",
+      "label_member": "kor_formatted/2021-09-08/9002/K05259002-AMG10-L1N2D1-E-K0KK-00250241.json",
+      "label_offset": 20223488,
+      "label_size": 1210,
+      "label_payload_sha256": "2bab7849e9c9f329edc6b747d9cf9246580129ae599d8dffca7b58d6f755d630",
+      "in_current_repaired_train": true,
+      "transcription": {
+        "ErrorWords": "N/A",
+        "GrammaticalError": "N/A",
+        "LabelText": "비가 쏟아져요.",
+        "ErrorTagged": "N/A",
+        "AccurateRead": "N/A",
+        "SpeakerRead": "N/A",
+        "CausesofError": "N/A"
+      },
+      "speaker_read_equals_label_text_after_normalization": null,
+      "accurate_read_equals_label_text_after_normalization": null
+    },
+    {
+      "wav": "K06550332-AMG11-L5N1D1-E-K0KK-00403548.wav",
+      "archive": "TL_kor_formatted_04.tar",
+      "label_member": "kor_formatted/2021-09-12/0332/K06550332-AMG11-L5N1D1-E-K0KK-00403548.json",
+      "label_offset": 31317504,
+      "label_size": 1217,
+      "label_payload_sha256": "9bc6678f5d5b5de6f9342c3928d3198fab2a175cd5ba22acc1d4f6b7d6c66570",
+      "in_current_repaired_train": true,
+      "transcription": {
+        "ErrorWords": "N/A",
+        "GrammaticalError": "N/A",
+        "LabelText": "자전거가 부서집니다.",
+        "ErrorTagged": "N/A",
+        "AccurateRead": "N/A",
+        "SpeakerRead": "N/A",
+        "CausesofError": "N/A"
+      },
+      "speaker_read_equals_label_text_after_normalization": null,
+      "accurate_read_equals_label_text_after_normalization": null
+    },
+    {
+      "wav": "K02650402-AFG20-L5N1D2-E-K0KK-00433562.wav",
+      "archive": "TL_kor_formatted_04.tar",
+      "label_member": "kor_formatted/2021-09-12/0402/K02650402-AFG20-L5N1D2-E-K0KK-00433562.json",
+      "label_offset": 31954432,
+      "label_size": 1255,
+      "label_payload_sha256": "dbf3c428c68728e07fde0ce3c208d68475d406ba9cc63565a472c433187fe697",
+      "in_current_repaired_train": true,
+      "transcription": {
+        "ErrorWords": "N/A",
+        "GrammaticalError": "N/A",
+        "LabelText": "온 나라가 검은 모자 산적 얘기로 시끄러웠습니다.",
+        "ErrorTagged": "N/A",
+        "AccurateRead": "N/A",
+        "SpeakerRead": "N/A",
+        "CausesofError": "N/A"
+      },
+      "speaker_read_equals_label_text_after_normalization": null,
+      "accurate_read_equals_label_text_after_normalization": null
+    },
+    {
+      "wav": "K07840349-AFG20-L1N2D1-E-K0KK-00493538.wav",
+      "archive": "TL_kor_formatted_04.tar",
+      "label_member": "kor_formatted/2021-09-13/0349/K07840349-AFG20-L1N2D1-E-K0KK-00493538.json",
+      "label_offset": 36781568,
+      "label_size": 1260,
+      "label_payload_sha256": "208a64b9f77faf23fe5822f0c61b77c99a504718acea3acb750b514e49ab75aa",
+      "in_current_repaired_train": true,
+      "transcription": {
+        "ErrorWords": "N/A",
+        "GrammaticalError": "N/A",
+        "LabelText": "여왕님이 적에게 돌아가시는 부끄러운 일을 당했다.",
+        "ErrorTagged": "N/A",
+        "AccurateRead": "N/A",
+        "SpeakerRead": "N/A",
+        "CausesofError": "N/A"
+      },
+      "speaker_read_equals_label_text_after_normalization": null,
+      "accurate_read_equals_label_text_after_normalization": null
+    },
+    {
+      "wav": "K00911294-AMG10-L1N2D1-E-K0KK-00501081.wav",
+      "archive": "TL_kor_formatted_04.tar",
+      "label_member": "kor_formatted/2021-09-13/1294/K00911294-AMG10-L1N2D1-E-K0KK-00501081.json",
+      "label_offset": 38563328,
+      "label_size": 1211,
+      "label_payload_sha256": "92223520df57e4efb9089d8b43e7dd218280a9ac89b0fec3c0b7e0c5bdd3a57a",
+      "in_current_repaired_train": true,
+      "transcription": {
+        "ErrorWords": "N/A",
+        "GrammaticalError": "N/A",
+        "LabelText": "햇볕이 뜨거워.",
+        "ErrorTagged": "N/A",
+        "AccurateRead": "N/A",
+        "SpeakerRead": "N/A",
+        "CausesofError": "N/A"
+      },
+      "speaker_read_equals_label_text_after_normalization": null,
+      "accurate_read_equals_label_text_after_normalization": null
+    },
+    {
+      "wav": "K00531590-AMG13-L1N2D1-E-K0KK-00500204.wav",
+      "archive": "TL_kor_formatted_04.tar",
+      "label_member": "kor_formatted/2021-09-13/1590/K00531590-AMG13-L1N2D1-E-K0KK-00500204.json",
+      "label_offset": 38807040,
+      "label_size": 1201,
+      "label_payload_sha256": "a7ddde6d486473f016b8aecbaf77bcb3ee19eb13125858f3f0113b24d9e8efcd",
+      "in_current_repaired_train": true,
+      "transcription": {
+        "ErrorWords": "N/A",
+        "GrammaticalError": "N/A",
+        "LabelText": "큰 고래.",
+        "ErrorTagged": "N/A",
+        "AccurateRead": "N/A",
+        "SpeakerRead": "N/A",
+        "CausesofError": "N/A"
+      },
+      "speaker_read_equals_label_text_after_normalization": null,
+      "accurate_read_equals_label_text_after_normalization": null
+    },
+    {
+      "wav": "K01231801-AFG10-L5N1D1-E-K0KK-00544802.wav",
+      "archive": "TL_kor_formatted_04.tar",
+      "label_member": "kor_formatted/2021-09-14/1801/K01231801-AFG10-L5N1D1-E-K0KK-00544802.json",
+      "label_offset": 45100544,
+      "label_size": 1201,
+      "label_payload_sha256": "7293f80065f8732ec34e60cc20136944e1b89734a992639ce38ff09828883377",
+      "in_current_repaired_train": true,
+      "transcription": {
+        "ErrorWords": "N/A",
+        "GrammaticalError": "N/A",
+        "LabelText": "타조예요.",
+        "ErrorTagged": "N/A",
+        "AccurateRead": "N/A",
+        "SpeakerRead": "N/A",
+        "CausesofError": "N/A"
+      },
+      "speaker_read_equals_label_text_after_normalization": null,
+      "accurate_read_equals_label_text_after_normalization": null
+    }
+  ],
+  "extra_field_recordings": 11,
+  "elapsed_seconds": 2.19,
+  "scope": "Field names and contents are evidence of annotation structure; do not assume their precise semantic convention without inspection.",
+  "training_data_changed": false
+}

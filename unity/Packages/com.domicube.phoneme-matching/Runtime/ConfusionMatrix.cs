@@ -85,22 +85,6 @@ namespace DomiCube.PhonemeMatching
                 : b + "|" + a;
         }
 
-        /// <summary>
-        /// Whether an id picks out one particular matrix.
-        ///
-        /// A file that never said which matrix it is loads as "unknown",
-        /// and two anonymous matrices are not the same matrix just because
-        /// both are anonymous. Surrounding space is ignored, so " unknown "
-        /// is refused here exactly as Python refuses it - the parser and
-        /// the runtime guard both go through this.
-        /// </summary>
-        internal static bool NamesAMatrix(string matrixId)
-        {
-            return !string.IsNullOrWhiteSpace(matrixId)
-                   && !string.Equals(matrixId.Trim(), "unknown",
-                                     StringComparison.Ordinal);
-        }
-
         /// <summary>Cost of substituting <paramref name="a"/> with
         /// <paramref name="b"/>.</summary>
         public double SubCost(string a, string b)

@@ -1,0 +1,1543 @@
+{
+  "complete": true,
+  "plan": {
+    "checkpoint_sha256": "5a330f1bea3a17d1d063fdfd71a0cc25394695b0b797de01b293f6f688257aa7",
+    "selection_sha256": "d95d7e3da128cb9610031731b505ae1b6cb048de1c010bbd276a6dd6b1c6d584",
+    "code_sha256": "37072bfc7d5f05e566cb06af4b7db37a2c8d219d3200ffeeefcdd29df490f3bc",
+    "recordings": [
+      "followup:5",
+      "first:1",
+      "followup:10",
+      "first:2",
+      "followup:9",
+      "followup:8",
+      "followup:3",
+      "followup:12",
+      "followup:4",
+      "first:5",
+      "training_review:1",
+      "training_review:2",
+      "training_review:3",
+      "training_review:4",
+      "training_review:5",
+      "training_review:6",
+      "personal:child1_18",
+      "personal:child1_22",
+      "personal:child1_17",
+      "personal:child1_09",
+      "personal:child2_20",
+      "personal:child1_19",
+      "personal:child2_28",
+      "personal:child1_21",
+      "personal:child2_29",
+      "personal:child1_01",
+      "personal:child1_02"
+    ],
+    "original_stride": [
+      5,
+      2,
+      2,
+      2,
+      2,
+      2,
+      2
+    ],
+    "experimental_stride": [
+      5,
+      2,
+      2,
+      2,
+      2,
+      2,
+      1
+    ],
+    "sample_rate": 16000,
+    "only_change": "In-memory last convolution stride 2 to 1, plus matching model length calculation config. Same kernels, weights, PCM, float32 and decoder.",
+    "optimization_updates": 0,
+    "purpose": "Feasibility and immediate behavior only. Changing temporal density also changes positional context in seconds; it is not an isolated test proving 20-ms information loss.",
+    "deployment": false
+  },
+  "encoder_receptive_field_samples": 400,
+  "encoder_receptive_field_ms": 25.0,
+  "entries": [
+    {
+      "id": "followup:5",
+      "cohort": "inline_train",
+      "human_target": "사탕",
+      "samples": 51200,
+      "pcm_sha256": "65fd3afc7ae2106458da1b43996bebbea08aff4a6d5118df4c1ed5ad808847a3",
+      "variants": {
+        "20ms": {
+          "frames": 159,
+          "text": "사탕",
+          "ids": [
+            11,
+            21,
+            18,
+            21,
+            13
+          ],
+          "metrics": {
+            "errors": 0,
+            "reference_jamo": 5,
+            "hypothesis_jamo": 5,
+            "jer": 0.0,
+            "exact": true,
+            "convention": "training: boundaries ignored, edit ops / reference jamo, not clamped"
+          }
+        },
+        "10ms": {
+          "frames": 318,
+          "text": "사탕",
+          "ids": [
+            11,
+            21,
+            18,
+            21,
+            13
+          ],
+          "metrics": {
+            "errors": 0,
+            "reference_jamo": 5,
+            "hypothesis_jamo": 5,
+            "jer": 0.0,
+            "exact": true,
+            "convention": "training: boundaries ignored, edit ops / reference jamo, not clamped"
+          }
+        }
+      }
+    },
+    {
+      "id": "first:1",
+      "cohort": "inline_train",
+      "human_target": "사워요",
+      "samples": 68608,
+      "pcm_sha256": "f025996666ef6e5938a57d82f024880e5872e1ef93e1c597f0dd9d8cd1bee9bd",
+      "variants": {
+        "20ms": {
+          "frames": 214,
+          "text": "싸워요",
+          "ids": [
+            12,
+            21,
+            13,
+            35,
+            13,
+            33
+          ],
+          "metrics": {
+            "errors": 1,
+            "reference_jamo": 6,
+            "hypothesis_jamo": 6,
+            "jer": 0.16666666666666666,
+            "exact": false,
+            "convention": "training: boundaries ignored, edit ops / reference jamo, not clamped"
+          }
+        },
+        "10ms": {
+          "frames": 427,
+          "text": "싸워요",
+          "ids": [
+            12,
+            21,
+            13,
+            35,
+            13,
+            33
+          ],
+          "metrics": {
+            "errors": 1,
+            "reference_jamo": 6,
+            "hypothesis_jamo": 6,
+            "jer": 0.16666666666666666,
+            "exact": false,
+            "convention": "training: boundaries ignored, edit ops / reference jamo, not clamped"
+          }
+        }
+      }
+    },
+    {
+      "id": "followup:10",
+      "cohort": "inline_train",
+      "human_target": "웡충이",
+      "samples": 74752,
+      "pcm_sha256": "42b85f0ff64d91b509d09cd91798d89e617fe3e0042e816f0977d42f1b3e0786",
+      "variants": {
+        "20ms": {
+          "frames": 233,
+          "text": "원숭이",
+          "ids": [
+            13,
+            35,
+            4,
+            11,
+            34,
+            13,
+            13,
+            41
+          ],
+          "metrics": {
+            "errors": 2,
+            "reference_jamo": 8,
+            "hypothesis_jamo": 8,
+            "jer": 0.25,
+            "exact": false,
+            "convention": "training: boundaries ignored, edit ops / reference jamo, not clamped"
+          }
+        },
+        "10ms": {
+          "frames": 465,
+          "text": "웡숭이",
+          "ids": [
+            13,
+            35,
+            13,
+            11,
+            34,
+            13,
+            13,
+            41
+          ],
+          "metrics": {
+            "errors": 1,
+            "reference_jamo": 8,
+            "hypothesis_jamo": 8,
+            "jer": 0.125,
+            "exact": false,
+            "convention": "training: boundaries ignored, edit ops / reference jamo, not clamped"
+          }
+        }
+      }
+    },
+    {
+      "id": "first:2",
+      "cohort": "inline_train",
+      "human_target": "아저씨",
+      "samples": 77824,
+      "pcm_sha256": "fc3739abe2098a8e531746018dbfb78a404f8793546aa4f39764be8e5ff905c8",
+      "variants": {
+        "20ms": {
+          "frames": 242,
+          "text": "아저씨",
+          "ids": [
+            13,
+            21,
+            14,
+            25,
+            12,
+            41
+          ],
+          "metrics": {
+            "errors": 0,
+            "reference_jamo": 6,
+            "hypothesis_jamo": 6,
+            "jer": 0.0,
+            "exact": true,
+            "convention": "training: boundaries ignored, edit ops / reference jamo, not clamped"
+          }
+        },
+        "10ms": {
+          "frames": 484,
+          "text": "아저씨",
+          "ids": [
+            13,
+            21,
+            14,
+            25,
+            12,
+            41
+          ],
+          "metrics": {
+            "errors": 0,
+            "reference_jamo": 6,
+            "hypothesis_jamo": 6,
+            "jer": 0.0,
+            "exact": true,
+            "convention": "training: boundaries ignored, edit ops / reference jamo, not clamped"
+          }
+        }
+      }
+    },
+    {
+      "id": "followup:9",
+      "cohort": "inline_train",
+      "human_target": "아저씨",
+      "samples": 59392,
+      "pcm_sha256": "5d6a59d70069eb1d70d06881eba3c2fab1f1b9b4f9c1fea6b1fc8b7f451df133",
+      "variants": {
+        "20ms": {
+          "frames": 185,
+          "text": "아저씨",
+          "ids": [
+            13,
+            21,
+            14,
+            25,
+            12,
+            41
+          ],
+          "metrics": {
+            "errors": 0,
+            "reference_jamo": 6,
+            "hypothesis_jamo": 6,
+            "jer": 0.0,
+            "exact": true,
+            "convention": "training: boundaries ignored, edit ops / reference jamo, not clamped"
+          }
+        },
+        "10ms": {
+          "frames": 369,
+          "text": "아저씨",
+          "ids": [
+            13,
+            21,
+            14,
+            25,
+            12,
+            41
+          ],
+          "metrics": {
+            "errors": 0,
+            "reference_jamo": 6,
+            "hypothesis_jamo": 6,
+            "jer": 0.0,
+            "exact": true,
+            "convention": "training: boundaries ignored, edit ops / reference jamo, not clamped"
+          }
+        }
+      }
+    },
+    {
+      "id": "followup:8",
+      "cohort": "inline_train",
+      "human_target": "누구이까요",
+      "samples": 87040,
+      "pcm_sha256": "d2427cd593b6b4277a2bf8812364857e8a93f4d37a75992c2a81d1f6ba00236b",
+      "variants": {
+        "20ms": {
+          "frames": 271,
+          "text": "누구일까요",
+          "ids": [
+            4,
+            34,
+            2,
+            34,
+            13,
+            41,
+            7,
+            3,
+            21,
+            13,
+            33
+          ],
+          "metrics": {
+            "errors": 1,
+            "reference_jamo": 10,
+            "hypothesis_jamo": 11,
+            "jer": 0.1,
+            "exact": false,
+            "convention": "training: boundaries ignored, edit ops / reference jamo, not clamped"
+          }
+        },
+        "10ms": {
+          "frames": 542,
+          "text": "누구일까요",
+          "ids": [
+            4,
+            34,
+            2,
+            34,
+            13,
+            41,
+            7,
+            3,
+            21,
+            13,
+            33
+          ],
+          "metrics": {
+            "errors": 1,
+            "reference_jamo": 10,
+            "hypothesis_jamo": 11,
+            "jer": 0.1,
+            "exact": false,
+            "convention": "training: boundaries ignored, edit ops / reference jamo, not clamped"
+          }
+        }
+      }
+    },
+    {
+      "id": "followup:3",
+      "cohort": "inline_valid",
+      "human_target": "춤서요",
+      "samples": 54272,
+      "pcm_sha256": "de7d030a0f62c7cf7e33c7df0bfb236f6bd07d13bfd6af971e9dd1e625755c4a",
+      "variants": {
+        "20ms": {
+          "frames": 169,
+          "text": "춤춰요",
+          "ids": [
+            16,
+            34,
+            8,
+            16,
+            35,
+            13,
+            33
+          ],
+          "metrics": {
+            "errors": 2,
+            "reference_jamo": 7,
+            "hypothesis_jamo": 7,
+            "jer": 0.2857142857142857,
+            "exact": false,
+            "convention": "training: boundaries ignored, edit ops / reference jamo, not clamped"
+          }
+        },
+        "10ms": {
+          "frames": 337,
+          "text": "춤춰요",
+          "ids": [
+            16,
+            34,
+            8,
+            16,
+            35,
+            13,
+            33
+          ],
+          "metrics": {
+            "errors": 2,
+            "reference_jamo": 7,
+            "hypothesis_jamo": 7,
+            "jer": 0.2857142857142857,
+            "exact": false,
+            "convention": "training: boundaries ignored, edit ops / reference jamo, not clamped"
+          }
+        }
+      }
+    },
+    {
+      "id": "followup:12",
+      "cohort": "inline_valid",
+      "human_target": "운등화",
+      "samples": 49152,
+      "pcm_sha256": "3460cd1900c5cb32e326a6d8aa3047666d5f449c58d629d1d859384c9ffcb095",
+      "variants": {
+        "20ms": {
+          "frames": 153,
+          "text": "운동화",
+          "ids": [
+            13,
+            34,
+            4,
+            5,
+            29,
+            13,
+            20,
+            30
+          ],
+          "metrics": {
+            "errors": 1,
+            "reference_jamo": 8,
+            "hypothesis_jamo": 8,
+            "jer": 0.125,
+            "exact": false,
+            "convention": "training: boundaries ignored, edit ops / reference jamo, not clamped"
+          }
+        },
+        "10ms": {
+          "frames": 305,
+          "text": "운동화",
+          "ids": [
+            13,
+            34,
+            4,
+            5,
+            29,
+            13,
+            20,
+            30
+          ],
+          "metrics": {
+            "errors": 1,
+            "reference_jamo": 8,
+            "hypothesis_jamo": 8,
+            "jer": 0.125,
+            "exact": false,
+            "convention": "training: boundaries ignored, edit ops / reference jamo, not clamped"
+          }
+        }
+      }
+    },
+    {
+      "id": "followup:4",
+      "cohort": "inline_valid",
+      "human_target": "쿠레용",
+      "samples": 87040,
+      "pcm_sha256": "b69ded7736dbc63a0c661d01ba51023a3a6f3443fc2637923f099d6a14c12c9c",
+      "variants": {
+        "20ms": {
+          "frames": 271,
+          "text": "포레용",
+          "ids": [
+            19,
+            29,
+            7,
+            26,
+            13,
+            33,
+            13
+          ],
+          "metrics": {
+            "errors": 2,
+            "reference_jamo": 7,
+            "hypothesis_jamo": 7,
+            "jer": 0.2857142857142857,
+            "exact": false,
+            "convention": "training: boundaries ignored, edit ops / reference jamo, not clamped"
+          }
+        },
+        "10ms": {
+          "frames": 542,
+          "text": "ㅗ레영",
+          "ids": [
+            29,
+            7,
+            26,
+            13,
+            27,
+            13
+          ],
+          "metrics": {
+            "errors": 3,
+            "reference_jamo": 7,
+            "hypothesis_jamo": 6,
+            "jer": 0.42857142857142855,
+            "exact": false,
+            "convention": "training: boundaries ignored, edit ops / reference jamo, not clamped"
+          }
+        }
+      }
+    },
+    {
+      "id": "first:5",
+      "cohort": "inline_valid",
+      "human_target": "웡숭이",
+      "samples": 58368,
+      "pcm_sha256": "5a14da7bd89d5ea724e568c3e6be307761e0420103a920afe7ad839af384ac36",
+      "variants": {
+        "20ms": {
+          "frames": 182,
+          "text": "원숭이",
+          "ids": [
+            13,
+            35,
+            4,
+            11,
+            34,
+            13,
+            13,
+            41
+          ],
+          "metrics": {
+            "errors": 1,
+            "reference_jamo": 8,
+            "hypothesis_jamo": 8,
+            "jer": 0.125,
+            "exact": false,
+            "convention": "training: boundaries ignored, edit ops / reference jamo, not clamped"
+          }
+        },
+        "10ms": {
+          "frames": 363,
+          "text": "원숭이",
+          "ids": [
+            13,
+            35,
+            4,
+            11,
+            34,
+            13,
+            13,
+            41
+          ],
+          "metrics": {
+            "errors": 1,
+            "reference_jamo": 8,
+            "hypothesis_jamo": 8,
+            "jer": 0.125,
+            "exact": false,
+            "convention": "training: boundaries ignored, edit ops / reference jamo, not clamped"
+          }
+        }
+      }
+    },
+    {
+      "id": "training_review:1",
+      "cohort": "human_verified_training",
+      "human_target": "책",
+      "samples": 26528,
+      "pcm_sha256": "19fe8cfa9fe7d03cd2198087aa1745e2951163517e0e93113b318e89557650ca",
+      "variants": {
+        "20ms": {
+          "frames": 82,
+          "text": "책",
+          "ids": [
+            16,
+            22,
+            2
+          ],
+          "metrics": {
+            "errors": 0,
+            "reference_jamo": 3,
+            "hypothesis_jamo": 3,
+            "jer": 0.0,
+            "exact": true,
+            "convention": "training: boundaries ignored, edit ops / reference jamo, not clamped"
+          }
+        },
+        "10ms": {
+          "frames": 164,
+          "text": "책",
+          "ids": [
+            16,
+            22,
+            2
+          ],
+          "metrics": {
+            "errors": 0,
+            "reference_jamo": 3,
+            "hypothesis_jamo": 3,
+            "jer": 0.0,
+            "exact": true,
+            "convention": "training: boundaries ignored, edit ops / reference jamo, not clamped"
+          }
+        }
+      }
+    },
+    {
+      "id": "training_review:2",
+      "cohort": "human_verified_training",
+      "human_target": "책",
+      "samples": 28672,
+      "pcm_sha256": "7624f5491311ddb305f294645e1ee20239e36ced4ed9f3127a9e67ac829ae936",
+      "variants": {
+        "20ms": {
+          "frames": 89,
+          "text": "책",
+          "ids": [
+            16,
+            22,
+            2
+          ],
+          "metrics": {
+            "errors": 0,
+            "reference_jamo": 3,
+            "hypothesis_jamo": 3,
+            "jer": 0.0,
+            "exact": true,
+            "convention": "training: boundaries ignored, edit ops / reference jamo, not clamped"
+          }
+        },
+        "10ms": {
+          "frames": 177,
+          "text": "키리",
+          "ids": [
+            17,
+            41,
+            7,
+            41
+          ],
+          "metrics": {
+            "errors": 4,
+            "reference_jamo": 3,
+            "hypothesis_jamo": 4,
+            "jer": 1.3333333333333333,
+            "exact": false,
+            "convention": "training: boundaries ignored, edit ops / reference jamo, not clamped"
+          }
+        }
+      }
+    },
+    {
+      "id": "training_review:3",
+      "cohort": "human_verified_training",
+      "human_target": "예쁜 나비",
+      "samples": 32768,
+      "pcm_sha256": "05d21852ddc58a9961fddb939b59c92172bc76cf8f887cab39aa934269451406",
+      "variants": {
+        "20ms": {
+          "frames": 102,
+          "text": "예쁜 나비",
+          "ids": [
+            13,
+            28,
+            10,
+            39,
+            4,
+            1,
+            4,
+            21,
+            9,
+            41
+          ],
+          "metrics": {
+            "errors": 0,
+            "reference_jamo": 9,
+            "hypothesis_jamo": 9,
+            "jer": 0.0,
+            "exact": true,
+            "convention": "training: boundaries ignored, edit ops / reference jamo, not clamped"
+          }
+        },
+        "10ms": {
+          "frames": 203,
+          "text": "예쁜 나비",
+          "ids": [
+            13,
+            28,
+            10,
+            39,
+            4,
+            1,
+            4,
+            21,
+            9,
+            41
+          ],
+          "metrics": {
+            "errors": 0,
+            "reference_jamo": 9,
+            "hypothesis_jamo": 9,
+            "jer": 0.0,
+            "exact": true,
+            "convention": "training: boundaries ignored, edit ops / reference jamo, not clamped"
+          }
+        }
+      }
+    },
+    {
+      "id": "training_review:4",
+      "cohort": "human_verified_training",
+      "human_target": "예쁜 나비",
+      "samples": 34816,
+      "pcm_sha256": "680900111d2f9fe1bef4e298e3a3fe3c92ee3ecfc10aed8bc5322cb57ec64fb1",
+      "variants": {
+        "20ms": {
+          "frames": 108,
+          "text": "예쁜 나비",
+          "ids": [
+            13,
+            28,
+            10,
+            39,
+            4,
+            1,
+            4,
+            21,
+            9,
+            41
+          ],
+          "metrics": {
+            "errors": 0,
+            "reference_jamo": 9,
+            "hypothesis_jamo": 9,
+            "jer": 0.0,
+            "exact": true,
+            "convention": "training: boundaries ignored, edit ops / reference jamo, not clamped"
+          }
+        },
+        "10ms": {
+          "frames": 216,
+          "text": "예쁜 나비",
+          "ids": [
+            13,
+            28,
+            10,
+            39,
+            4,
+            1,
+            4,
+            21,
+            9,
+            41
+          ],
+          "metrics": {
+            "errors": 0,
+            "reference_jamo": 9,
+            "hypothesis_jamo": 9,
+            "jer": 0.0,
+            "exact": true,
+            "convention": "training: boundaries ignored, edit ops / reference jamo, not clamped"
+          }
+        }
+      }
+    },
+    {
+      "id": "training_review:5",
+      "cohort": "human_verified_training",
+      "human_target": "폴짝폴짝 뛰어가요",
+      "samples": 45056,
+      "pcm_sha256": "447f5e68e086da2d200a9455e462b68f14a76ce6757240b3f791f56793201a97",
+      "variants": {
+        "20ms": {
+          "frames": 140,
+          "text": "폴짝폴짝 뛰어가요",
+          "ids": [
+            19,
+            29,
+            7,
+            15,
+            21,
+            2,
+            19,
+            29,
+            7,
+            15,
+            21,
+            2,
+            1,
+            6,
+            37,
+            13,
+            25,
+            2,
+            21,
+            13,
+            33
+          ],
+          "metrics": {
+            "errors": 0,
+            "reference_jamo": 20,
+            "hypothesis_jamo": 20,
+            "jer": 0.0,
+            "exact": true,
+            "convention": "training: boundaries ignored, edit ops / reference jamo, not clamped"
+          }
+        },
+        "10ms": {
+          "frames": 280,
+          "text": "폴짝폴짝 뛰어가요",
+          "ids": [
+            19,
+            29,
+            7,
+            15,
+            21,
+            2,
+            19,
+            29,
+            7,
+            15,
+            21,
+            2,
+            1,
+            6,
+            37,
+            13,
+            25,
+            2,
+            21,
+            13,
+            33
+          ],
+          "metrics": {
+            "errors": 0,
+            "reference_jamo": 20,
+            "hypothesis_jamo": 20,
+            "jer": 0.0,
+            "exact": true,
+            "convention": "training: boundaries ignored, edit ops / reference jamo, not clamped"
+          }
+        }
+      }
+    },
+    {
+      "id": "training_review:6",
+      "cohort": "human_verified_training",
+      "human_target": "폴짝폴짝 뛰어가요",
+      "samples": 49152,
+      "pcm_sha256": "c42372ad79186892e30d4d2705b8b6d1837c57849f897ec58b658b1c02b81989",
+      "variants": {
+        "20ms": {
+          "frames": 153,
+          "text": "폴짝폴짝 뛰어가요",
+          "ids": [
+            19,
+            29,
+            7,
+            15,
+            21,
+            2,
+            19,
+            29,
+            7,
+            15,
+            21,
+            2,
+            1,
+            6,
+            37,
+            13,
+            25,
+            2,
+            21,
+            13,
+            33
+          ],
+          "metrics": {
+            "errors": 0,
+            "reference_jamo": 20,
+            "hypothesis_jamo": 20,
+            "jer": 0.0,
+            "exact": true,
+            "convention": "training: boundaries ignored, edit ops / reference jamo, not clamped"
+          }
+        },
+        "10ms": {
+          "frames": 305,
+          "text": "폴짝폴짝 뛰어가요",
+          "ids": [
+            19,
+            29,
+            7,
+            15,
+            21,
+            2,
+            19,
+            29,
+            7,
+            15,
+            21,
+            2,
+            1,
+            6,
+            37,
+            13,
+            25,
+            2,
+            21,
+            13,
+            33
+          ],
+          "metrics": {
+            "errors": 0,
+            "reference_jamo": 20,
+            "hypothesis_jamo": 20,
+            "jer": 0.0,
+            "exact": true,
+            "convention": "training: boundaries ignored, edit ops / reference jamo, not clamped"
+          }
+        }
+      }
+    },
+    {
+      "id": "personal:child1_18",
+      "cohort": "personal_diagnostic",
+      "human_target": "책",
+      "samples": 13920,
+      "pcm_sha256": "820c72500a561f6d12b5e2ce9e10a0c8ed8fd387159b0a2fc8f05cd5fb314a50",
+      "variants": {
+        "20ms": {
+          "frames": 43,
+          "text": "샙",
+          "ids": [
+            11,
+            22,
+            9
+          ],
+          "metrics": {
+            "errors": 2,
+            "reference_jamo": 3,
+            "hypothesis_jamo": 3,
+            "jer": 0.6666666666666666,
+            "exact": false,
+            "convention": "training: boundaries ignored, edit ops / reference jamo, not clamped"
+          }
+        },
+        "10ms": {
+          "frames": 85,
+          "text": "해",
+          "ids": [
+            20,
+            22
+          ],
+          "metrics": {
+            "errors": 2,
+            "reference_jamo": 3,
+            "hypothesis_jamo": 2,
+            "jer": 0.6666666666666666,
+            "exact": false,
+            "convention": "training: boundaries ignored, edit ops / reference jamo, not clamped"
+          }
+        }
+      }
+    },
+    {
+      "id": "personal:child1_22",
+      "cohort": "personal_diagnostic",
+      "human_target": "뛰어가요",
+      "samples": 27040,
+      "pcm_sha256": "ceb99e9dbd8ba2e20c62dc2318f6de6d78d57e2b145673cf1b9d5b2a5b8c1ade",
+      "variants": {
+        "20ms": {
+          "frames": 84,
+          "text": "귀어 가요",
+          "ids": [
+            2,
+            37,
+            13,
+            25,
+            1,
+            2,
+            21,
+            13,
+            33
+          ],
+          "metrics": {
+            "errors": 1,
+            "reference_jamo": 8,
+            "hypothesis_jamo": 8,
+            "jer": 0.125,
+            "exact": false,
+            "convention": "training: boundaries ignored, edit ops / reference jamo, not clamped"
+          }
+        },
+        "10ms": {
+          "frames": 167,
+          "text": "뛰어가요",
+          "ids": [
+            6,
+            37,
+            13,
+            25,
+            2,
+            21,
+            13,
+            33
+          ],
+          "metrics": {
+            "errors": 0,
+            "reference_jamo": 8,
+            "hypothesis_jamo": 8,
+            "jer": 0.0,
+            "exact": true,
+            "convention": "training: boundaries ignored, edit ops / reference jamo, not clamped"
+          }
+        }
+      }
+    },
+    {
+      "id": "personal:child1_17",
+      "cohort": "personal_diagnostic",
+      "human_target": "쌕",
+      "samples": 17440,
+      "pcm_sha256": "431d8ac5383cca89be4c8730dc5ba0cff46a89df8bdccaa796b1f60fc685b4b1",
+      "variants": {
+        "20ms": {
+          "frames": 54,
+          "text": "ㅐㄱ",
+          "ids": [
+            22,
+            2
+          ],
+          "metrics": {
+            "errors": 1,
+            "reference_jamo": 3,
+            "hypothesis_jamo": 2,
+            "jer": 0.3333333333333333,
+            "exact": false,
+            "convention": "training: boundaries ignored, edit ops / reference jamo, not clamped"
+          }
+        },
+        "10ms": {
+          "frames": 107,
+          "text": "책",
+          "ids": [
+            16,
+            22,
+            2
+          ],
+          "metrics": {
+            "errors": 1,
+            "reference_jamo": 3,
+            "hypothesis_jamo": 3,
+            "jer": 0.3333333333333333,
+            "exact": false,
+            "convention": "training: boundaries ignored, edit ops / reference jamo, not clamped"
+          }
+        }
+      }
+    },
+    {
+      "id": "personal:child1_09",
+      "cohort": "personal_diagnostic",
+      "human_target": "나비",
+      "samples": 19040,
+      "pcm_sha256": "d1645736547afdb4a37493b34a7b3c7e613824ad2ea2fb8a32c2a78f78f2770e",
+      "variants": {
+        "20ms": {
+          "frames": 59,
+          "text": "나리",
+          "ids": [
+            4,
+            21,
+            7,
+            41
+          ],
+          "metrics": {
+            "errors": 1,
+            "reference_jamo": 4,
+            "hypothesis_jamo": 4,
+            "jer": 0.25,
+            "exact": false,
+            "convention": "training: boundaries ignored, edit ops / reference jamo, not clamped"
+          }
+        },
+        "10ms": {
+          "frames": 117,
+          "text": "나지",
+          "ids": [
+            4,
+            21,
+            14,
+            41
+          ],
+          "metrics": {
+            "errors": 1,
+            "reference_jamo": 4,
+            "hypothesis_jamo": 4,
+            "jer": 0.25,
+            "exact": false,
+            "convention": "training: boundaries ignored, edit ops / reference jamo, not clamped"
+          }
+        }
+      }
+    },
+    {
+      "id": "personal:child2_20",
+      "cohort": "personal_diagnostic",
+      "human_target": "가",
+      "samples": 12480,
+      "pcm_sha256": "c3e3cf24ea737ff92c475d7ece99ada6b6d4c161a0efda1b147f3e7ee9d0b7a1",
+      "variants": {
+        "20ms": {
+          "frames": 38,
+          "text": "하",
+          "ids": [
+            20,
+            21
+          ],
+          "metrics": {
+            "errors": 1,
+            "reference_jamo": 2,
+            "hypothesis_jamo": 2,
+            "jer": 0.5,
+            "exact": false,
+            "convention": "training: boundaries ignored, edit ops / reference jamo, not clamped"
+          }
+        },
+        "10ms": {
+          "frames": 76,
+          "text": "사",
+          "ids": [
+            11,
+            21
+          ],
+          "metrics": {
+            "errors": 1,
+            "reference_jamo": 2,
+            "hypothesis_jamo": 2,
+            "jer": 0.5,
+            "exact": false,
+            "convention": "training: boundaries ignored, edit ops / reference jamo, not clamped"
+          }
+        }
+      }
+    },
+    {
+      "id": "personal:child1_19",
+      "cohort": "personal_diagnostic",
+      "human_target": "실로폰",
+      "samples": 20320,
+      "pcm_sha256": "37eed4563b2e5245d9007a3c8aa4b2df077476ec519a8030395cbbceba0b894f",
+      "variants": {
+        "20ms": {
+          "frames": 63,
+          "text": "켈리폰",
+          "ids": [
+            17,
+            26,
+            7,
+            7,
+            41,
+            19,
+            29,
+            4
+          ],
+          "metrics": {
+            "errors": 3,
+            "reference_jamo": 8,
+            "hypothesis_jamo": 8,
+            "jer": 0.375,
+            "exact": false,
+            "convention": "training: boundaries ignored, edit ops / reference jamo, not clamped"
+          }
+        },
+        "10ms": {
+          "frames": 125,
+          "text": "켈ㄹ리폰",
+          "ids": [
+            17,
+            26,
+            7,
+            7,
+            7,
+            41,
+            19,
+            29,
+            4
+          ],
+          "metrics": {
+            "errors": 4,
+            "reference_jamo": 8,
+            "hypothesis_jamo": 9,
+            "jer": 0.5,
+            "exact": false,
+            "convention": "training: boundaries ignored, edit ops / reference jamo, not clamped"
+          }
+        }
+      }
+    },
+    {
+      "id": "personal:child2_28",
+      "cohort": "personal_diagnostic",
+      "human_target": "놔요",
+      "samples": 17920,
+      "pcm_sha256": "39134be4731713aeeaf9dc2890c412aacb24d0eec72cbc4f746805e76163ccc9",
+      "variants": {
+        "20ms": {
+          "frames": 55,
+          "text": "와요",
+          "ids": [
+            13,
+            30,
+            13,
+            33
+          ],
+          "metrics": {
+            "errors": 1,
+            "reference_jamo": 4,
+            "hypothesis_jamo": 4,
+            "jer": 0.25,
+            "exact": false,
+            "convention": "training: boundaries ignored, edit ops / reference jamo, not clamped"
+          }
+        },
+        "10ms": {
+          "frames": 110,
+          "text": "와유",
+          "ids": [
+            13,
+            30,
+            13,
+            38
+          ],
+          "metrics": {
+            "errors": 2,
+            "reference_jamo": 4,
+            "hypothesis_jamo": 4,
+            "jer": 0.5,
+            "exact": false,
+            "convention": "training: boundaries ignored, edit ops / reference jamo, not clamped"
+          }
+        }
+      }
+    },
+    {
+      "id": "personal:child1_21",
+      "cohort": "personal_diagnostic",
+      "human_target": "가요",
+      "samples": 17760,
+      "pcm_sha256": "d5d684de311a747dab813e9bf1f04368290b2880802abc9dd97ffc20addbca82",
+      "variants": {
+        "20ms": {
+          "frames": 55,
+          "text": "봐요",
+          "ids": [
+            9,
+            30,
+            13,
+            33
+          ],
+          "metrics": {
+            "errors": 2,
+            "reference_jamo": 4,
+            "hypothesis_jamo": 4,
+            "jer": 0.5,
+            "exact": false,
+            "convention": "training: boundaries ignored, edit ops / reference jamo, not clamped"
+          }
+        },
+        "10ms": {
+          "frames": 109,
+          "text": "가요",
+          "ids": [
+            2,
+            21,
+            13,
+            33
+          ],
+          "metrics": {
+            "errors": 0,
+            "reference_jamo": 4,
+            "hypothesis_jamo": 4,
+            "jer": 0.0,
+            "exact": true,
+            "convention": "training: boundaries ignored, edit ops / reference jamo, not clamped"
+          }
+        }
+      }
+    },
+    {
+      "id": "personal:child2_29",
+      "cohort": "personal_diagnostic",
+      "human_target": "놔",
+      "samples": 11840,
+      "pcm_sha256": "2ef1c4a98334aa67d78d3822848dbf6661663ead107825472832b7eb68c4db0f",
+      "variants": {
+        "20ms": {
+          "frames": 36,
+          "text": "봐",
+          "ids": [
+            9,
+            30
+          ],
+          "metrics": {
+            "errors": 1,
+            "reference_jamo": 2,
+            "hypothesis_jamo": 2,
+            "jer": 0.5,
+            "exact": false,
+            "convention": "training: boundaries ignored, edit ops / reference jamo, not clamped"
+          }
+        },
+        "10ms": {
+          "frames": 72,
+          "text": "봐",
+          "ids": [
+            9,
+            30
+          ],
+          "metrics": {
+            "errors": 1,
+            "reference_jamo": 2,
+            "hypothesis_jamo": 2,
+            "jer": 0.5,
+            "exact": false,
+            "convention": "training: boundaries ignored, edit ops / reference jamo, not clamped"
+          }
+        }
+      }
+    },
+    {
+      "id": "personal:child1_01",
+      "cohort": "personal_diagnostic",
+      "human_target": "아빠",
+      "samples": 21600,
+      "pcm_sha256": "ef0ed9bab36f7df3a8520d9b6cc9556c252bc1db45bcb677705c55c1ac863465",
+      "variants": {
+        "20ms": {
+          "frames": 67,
+          "text": "아빠",
+          "ids": [
+            13,
+            21,
+            10,
+            21
+          ],
+          "metrics": {
+            "errors": 0,
+            "reference_jamo": 4,
+            "hypothesis_jamo": 4,
+            "jer": 0.0,
+            "exact": true,
+            "convention": "training: boundaries ignored, edit ops / reference jamo, not clamped"
+          }
+        },
+        "10ms": {
+          "frames": 133,
+          "text": "아빠",
+          "ids": [
+            13,
+            21,
+            10,
+            21
+          ],
+          "metrics": {
+            "errors": 0,
+            "reference_jamo": 4,
+            "hypothesis_jamo": 4,
+            "jer": 0.0,
+            "exact": true,
+            "convention": "training: boundaries ignored, edit ops / reference jamo, not clamped"
+          }
+        }
+      }
+    },
+    {
+      "id": "personal:child1_02",
+      "cohort": "personal_diagnostic",
+      "human_target": "엄마",
+      "samples": 23840,
+      "pcm_sha256": "507452a125666ed5a017c747719661b5d35e7828dcdb9b9f95145709a67c2ee3",
+      "variants": {
+        "20ms": {
+          "frames": 74,
+          "text": "엄마",
+          "ids": [
+            13,
+            25,
+            8,
+            8,
+            21
+          ],
+          "metrics": {
+            "errors": 0,
+            "reference_jamo": 5,
+            "hypothesis_jamo": 5,
+            "jer": 0.0,
+            "exact": true,
+            "convention": "training: boundaries ignored, edit ops / reference jamo, not clamped"
+          }
+        },
+        "10ms": {
+          "frames": 147,
+          "text": "엄마",
+          "ids": [
+            13,
+            25,
+            8,
+            8,
+            21
+          ],
+          "metrics": {
+            "errors": 0,
+            "reference_jamo": 5,
+            "hypothesis_jamo": 5,
+            "jer": 0.0,
+            "exact": true,
+            "convention": "training: boundaries ignored, edit ops / reference jamo, not clamped"
+          }
+        }
+      }
+    }
+  ],
+  "progress": {
+    "done": 27,
+    "total": 27
+  },
+  "summary": {
+    "all": {
+      "recordings": 27,
+      "20ms": {
+        "exact": 11,
+        "errors": 23,
+        "reference_jamo": 182,
+        "jer": 0.12637362637362637
+      },
+      "10ms": {
+        "exact": 12,
+        "errors": 26,
+        "reference_jamo": 182,
+        "jer": 0.14285714285714285
+      },
+      "new_exact": [
+        "personal:child1_22",
+        "personal:child1_21"
+      ],
+      "lost_exact": [
+        "training_review:2"
+      ]
+    },
+    "personal_diagnostic": {
+      "recordings": 11,
+      "20ms": {
+        "exact": 2,
+        "errors": 13,
+        "reference_jamo": 47,
+        "jer": 0.2765957446808511
+      },
+      "10ms": {
+        "exact": 4,
+        "errors": 12,
+        "reference_jamo": 47,
+        "jer": 0.2553191489361702
+      },
+      "new_exact": [
+        "personal:child1_22",
+        "personal:child1_21"
+      ],
+      "lost_exact": []
+    },
+    "human_verified_training": {
+      "recordings": 6,
+      "20ms": {
+        "exact": 6,
+        "errors": 0,
+        "reference_jamo": 64,
+        "jer": 0.0
+      },
+      "10ms": {
+        "exact": 5,
+        "errors": 4,
+        "reference_jamo": 64,
+        "jer": 0.0625
+      },
+      "new_exact": [],
+      "lost_exact": [
+        "training_review:2"
+      ]
+    },
+    "inline_train": {
+      "recordings": 6,
+      "20ms": {
+        "exact": 3,
+        "errors": 4,
+        "reference_jamo": 41,
+        "jer": 0.0975609756097561
+      },
+      "10ms": {
+        "exact": 3,
+        "errors": 3,
+        "reference_jamo": 41,
+        "jer": 0.07317073170731707
+      },
+      "new_exact": [],
+      "lost_exact": []
+    },
+    "inline_valid": {
+      "recordings": 4,
+      "20ms": {
+        "exact": 0,
+        "errors": 6,
+        "reference_jamo": 30,
+        "jer": 0.2
+      },
+      "10ms": {
+        "exact": 0,
+        "errors": 7,
+        "reference_jamo": 30,
+        "jer": 0.23333333333333334
+      },
+      "new_exact": [],
+      "lost_exact": []
+    }
+  },
+  "elapsed_seconds": 10.66,
+  "original_stride_restored": true,
+  "checkpoint_files_modified": false,
+  "model_deployed": false,
+  "extra_optimizer_updates": 0
+}

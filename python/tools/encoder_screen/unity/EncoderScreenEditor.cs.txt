@@ -1,0 +1,67 @@
+using System;
+using System.IO;
+using System.Reflection;
+using Newtonsoft.Json;
+using Unity.InferenceEngine;
+using UnityEditor;
+using UnityEditor.SceneManagement;
+using UnityEngine;
+
+public static class EncoderScreenEditor
+{
+    static string Argument(string name)
+    {
+        var args=Environment.GetCommandLineArgs();
+        for(int i=0;i+1<args.Length;i++)if(args[i]==name)return args[i+1];
+        throw new InvalidOperationException("Missing " + name);
+    }
+
+    public static void Convert()
+    {
+        string source=Argument("-encoderOnnx"),target=Argument("-encoderSentis");
+        try
+        {
+            // Use the installed engine's actual ONNX importer without copying
+            // multi-GB checkpoints into the production project's Assets folder.
+            var assembly=Assembly.Load("Unity.InferenceEngine.Editor");
+            var type=assembly.GetType("Unity.InferenceEngine.Editor.Onnx.ONNXModelConverter",true);
+            var converter=Activator.CreateInstance(type,new object[]{source});
+            var model=(Model)type.GetMethod("Convert",BindingFlags.Instance|BindingFlags.Public).Invoke(converter,null);
+            ModelWriter.Save(target,model);
+            File.WriteAllText(target+".import.json",JsonConvert.SerializeObject(new {success=true,unity=Application.unityVersion,source,target},Formatting.Indented));
+            var rebuild = Path.Combine(Application.dataPath,"../rebuild-runtime.flag");
+            if (File.Exists(rebuild)) { BuildTo(File.ReadAllText(rebuild).Trim()); File.Delete(rebuild); }
+        }
+        catch(Exception ex)
+        {
+            File.WriteAllText(target+".import.json",JsonConvert.SerializeObject(new {success=false,error=ex.ToString()},Formatting.Indented));
+            throw;
+        }
+    }
+
+    public static void RunEditor()
+    {
+        var report=EncoderScreenRuntime.Run(Argument("-encoderJob"));
+        if (!(bool)report["success"]) EditorApplication.Exit(3);
+    }
+
+    public static void Build()
+    {
+        BuildTo(Argument("-encoderBuild"));
+    }
+
+    static void BuildTo(string targetPath)
+    {
+        var scene=EditorSceneManager.NewScene(NewSceneSetup.EmptyScene,NewSceneMode.Single);
+        var go=new GameObject("Encoder benchmark");
+        go.AddComponent<EncoderScreenRuntime>();
+        EditorSceneManager.SaveScene(scene,"Assets/EncoderScreen.unity");
+        PlayerSettings.SetScriptingBackend(UnityEditor.Build.NamedBuildTarget.Standalone,ScriptingImplementation.Mono2x);
+        PlayerSettings.SetGraphicsAPIs(BuildTarget.StandaloneWindows64,new[]{UnityEngine.Rendering.GraphicsDeviceType.Direct3D11});
+        var report=BuildPipeline.BuildPlayer(new BuildPlayerOptions {
+            scenes=new[]{"Assets/EncoderScreen.unity"}, locationPathName=targetPath,
+            target=BuildTarget.StandaloneWindows64,options=BuildOptions.None
+        });
+        if (report.summary.result!=UnityEditor.Build.Reporting.BuildResult.Succeeded) throw new Exception("Build failed: " + report.summary.result);
+    }
+}

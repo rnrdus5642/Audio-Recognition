@@ -1,0 +1,6136 @@
+{
+  "complete": true,
+  "plan": {
+    "recordings": [
+      {
+        "id": "followup:5",
+        "human_target": "사탕",
+        "baseline_ids": [
+          11,
+          21,
+          18,
+          21,
+          13
+        ],
+        "cohort": "inline_train"
+      },
+      {
+        "id": "first:1",
+        "human_target": "사워요",
+        "baseline_ids": [
+          12,
+          21,
+          13,
+          35,
+          13,
+          33
+        ],
+        "cohort": "inline_train"
+      },
+      {
+        "id": "followup:10",
+        "human_target": "웡충이",
+        "baseline_ids": [
+          13,
+          35,
+          4,
+          11,
+          34,
+          13,
+          13,
+          41
+        ],
+        "cohort": "inline_train"
+      },
+      {
+        "id": "first:2",
+        "human_target": "아저씨",
+        "baseline_ids": [
+          13,
+          21,
+          14,
+          25,
+          12,
+          41
+        ],
+        "cohort": "inline_train"
+      },
+      {
+        "id": "followup:9",
+        "human_target": "아저씨",
+        "baseline_ids": [
+          13,
+          21,
+          14,
+          25,
+          12,
+          41
+        ],
+        "cohort": "inline_train"
+      },
+      {
+        "id": "followup:8",
+        "human_target": "누구이까요",
+        "baseline_ids": [
+          4,
+          34,
+          2,
+          34,
+          13,
+          41,
+          7,
+          3,
+          21,
+          13,
+          33
+        ],
+        "cohort": "inline_train"
+      },
+      {
+        "id": "followup:3",
+        "human_target": "춤서요",
+        "baseline_ids": [
+          16,
+          34,
+          8,
+          16,
+          35,
+          13,
+          33
+        ],
+        "cohort": "inline_valid"
+      },
+      {
+        "id": "followup:12",
+        "human_target": "운등화",
+        "baseline_ids": [
+          13,
+          34,
+          4,
+          5,
+          29,
+          13,
+          20,
+          30
+        ],
+        "cohort": "inline_valid"
+      },
+      {
+        "id": "followup:4",
+        "human_target": "쿠레용",
+        "baseline_ids": [
+          19,
+          29,
+          7,
+          26,
+          13,
+          33,
+          13
+        ],
+        "cohort": "inline_valid"
+      },
+      {
+        "id": "first:5",
+        "human_target": "웡숭이",
+        "baseline_ids": [
+          13,
+          35,
+          4,
+          11,
+          34,
+          13,
+          13,
+          41
+        ],
+        "cohort": "inline_valid"
+      },
+      {
+        "id": "training_review:1",
+        "human_target": "책",
+        "baseline_ids": [
+          16,
+          22,
+          2
+        ],
+        "cohort": "human_verified_training"
+      },
+      {
+        "id": "training_review:2",
+        "human_target": "책",
+        "baseline_ids": [
+          16,
+          22,
+          2
+        ],
+        "cohort": "human_verified_training"
+      },
+      {
+        "id": "training_review:3",
+        "human_target": "예쁜 나비",
+        "baseline_ids": [
+          13,
+          28,
+          10,
+          39,
+          4,
+          1,
+          4,
+          21,
+          9,
+          41
+        ],
+        "cohort": "human_verified_training"
+      },
+      {
+        "id": "training_review:4",
+        "human_target": "예쁜 나비",
+        "baseline_ids": [
+          13,
+          28,
+          10,
+          39,
+          4,
+          1,
+          4,
+          21,
+          9,
+          41
+        ],
+        "cohort": "human_verified_training"
+      },
+      {
+        "id": "training_review:5",
+        "human_target": "폴짝폴짝 뛰어가요",
+        "baseline_ids": [
+          19,
+          29,
+          7,
+          15,
+          21,
+          2,
+          19,
+          29,
+          7,
+          15,
+          21,
+          2,
+          1,
+          6,
+          37,
+          13,
+          25,
+          2,
+          21,
+          13,
+          33
+        ],
+        "cohort": "human_verified_training"
+      },
+      {
+        "id": "training_review:6",
+        "human_target": "폴짝폴짝 뛰어가요",
+        "baseline_ids": [
+          19,
+          29,
+          7,
+          15,
+          21,
+          2,
+          19,
+          29,
+          7,
+          15,
+          21,
+          2,
+          1,
+          6,
+          37,
+          13,
+          25,
+          2,
+          21,
+          13,
+          33
+        ],
+        "cohort": "human_verified_training"
+      },
+      {
+        "id": "personal:child1_18",
+        "human_target": "책",
+        "baseline_ids": [
+          11,
+          22,
+          9
+        ],
+        "cohort": "personal_diagnostic"
+      },
+      {
+        "id": "personal:child1_22",
+        "human_target": "뛰어가요",
+        "baseline_ids": [
+          2,
+          37,
+          13,
+          25,
+          1,
+          2,
+          21,
+          13,
+          33
+        ],
+        "cohort": "personal_diagnostic"
+      },
+      {
+        "id": "personal:child1_17",
+        "human_target": "쌕",
+        "baseline_ids": [
+          22,
+          2
+        ],
+        "cohort": "personal_diagnostic"
+      },
+      {
+        "id": "personal:child1_09",
+        "human_target": "나비",
+        "baseline_ids": [
+          4,
+          21,
+          7,
+          41
+        ],
+        "cohort": "personal_diagnostic"
+      },
+      {
+        "id": "personal:child2_20",
+        "human_target": "가",
+        "baseline_ids": [
+          20,
+          21
+        ],
+        "cohort": "personal_diagnostic"
+      },
+      {
+        "id": "personal:child1_19",
+        "human_target": "실로폰",
+        "baseline_ids": [
+          17,
+          26,
+          7,
+          7,
+          41,
+          19,
+          29,
+          4
+        ],
+        "cohort": "personal_diagnostic"
+      },
+      {
+        "id": "personal:child2_28",
+        "human_target": "놔요",
+        "baseline_ids": [
+          13,
+          30,
+          13,
+          33
+        ],
+        "cohort": "personal_diagnostic"
+      },
+      {
+        "id": "personal:child1_21",
+        "human_target": "가요",
+        "baseline_ids": [
+          9,
+          30,
+          13,
+          33
+        ],
+        "cohort": "personal_diagnostic"
+      },
+      {
+        "id": "personal:child2_29",
+        "human_target": "놔",
+        "baseline_ids": [
+          9,
+          30
+        ],
+        "cohort": "personal_diagnostic"
+      },
+      {
+        "id": "personal:child1_01",
+        "human_target": "아빠",
+        "baseline_ids": [
+          13,
+          21,
+          10,
+          21
+        ],
+        "cohort": "personal_diagnostic"
+      },
+      {
+        "id": "personal:child1_02",
+        "human_target": "엄마",
+        "baseline_ids": [
+          13,
+          25,
+          8,
+          8,
+          21
+        ],
+        "cohort": "personal_diagnostic"
+      }
+    ],
+    "checkpoint_sha256": "5a330f1bea3a17d1d063fdfd71a0cc25394695b0b797de01b293f6f688257aa7",
+    "selection_sha256": "d95d7e3da128cb9610031731b505ae1b6cb048de1c010bbd276a6dd6b1c6d584",
+    "global_audit_sha256": "6f22c7a6cf9d29caec17a9a284711311ab7401940f7c224a9f332b54a4ae7425",
+    "code_sha256": "bce69248f5a04d68cb7139f483d36179b5796a9e7c03ca55a34574d5b6cd2555",
+    "controls": [
+      "repeat unchanged input",
+      "training-style masked right padding",
+      "plus 0.5 second zero silence on each side",
+      "minus 12 dB gain",
+      "2x2 latent silence access in attention and position convolution"
+    ],
+    "latent_policy": "Copy isolated convolutional speech features into padded positions, score only original speech frames, mask control must reproduce raw predictions.",
+    "decoding": "Unconditioned prefix beam width 50 on mismatches, all 42 tokens, no LM or target passed to decoding.",
+    "label_limits": "Human spelling choices are provisional; interventions diagnose computation, not the original cause of learning or population accuracy.",
+    "optimization_updates": 0
+  },
+  "engine": {
+    "checkpoint": "C:\\Users\\user\\Documents\\GitHub\\Audio-Recognition\\.venv\\hubert-child-20260914\\main\\best.pt",
+    "checkpoint_bytes": 3850525679,
+    "checkpoint_sha256": "5a330f1bea3a17d1d063fdfd71a0cc25394695b0b797de01b293f6f688257aa7",
+    "selected_by_validation": {
+      "phase": "encoder",
+      "epoch": 7,
+      "update": 17654,
+      "at": "epoch_end",
+      "jer": 0.029473811102404917,
+      "errors": 978,
+      "reference_jamo": 33182,
+      "exact": 1164,
+      "recordings": 1500,
+      "precision": "float32"
+    },
+    "labels_version": "child-jamo-2026-09-15",
+    "labels_contract_sha256": "ae3bef2311c735d4560ef11e3a42f3138821592e2e0e1ab10d112f82b9faf013",
+    "encoder": "C:\\Users\\user\\Documents\\GitHub\\Audio-Recognition\\.venv\\encoder-screen-0914\\models\\hubertko1b",
+    "encoder_files_sha256": {
+      "model.safetensors": "14977266907588c28da9403bc4c04478a29b49968dfe206fb9cb8e71e4d2e31d",
+      "config.json": "65b80fbdfa687baea3d33c5050b64a162d55c27c62b720b872f8a210245ad382",
+      "preprocessor_config.json": "7a8f0fc8ee1272ed28a8b468e183c56a19329a92babd3ca8d4d21ae02ba511cd"
+    },
+    "decode_version": "compose-1",
+    "precision": "float32, no autocast",
+    "matmul_allow_tf32": false,
+    "attention": "sdpa",
+    "device": "NVIDIA GeForce RTX 5060 Ti",
+    "parameters": 962497408,
+    "load_seconds": 8.5,
+    "historical_test": {
+      "jer": 0.028905407202707296,
+      "errors": 1956,
+      "reference_jamo": 67669,
+      "exact": 2297,
+      "recordings": 2999,
+      "precision": "float32"
+    },
+    "historical_provenance": "result.json 의 selected_checkpoint 및 data_contract 가 이 체크포인트와 일치",
+    "historical_note": "Aggregate over the whole 2,999-recording test split for this fixed checkpoint. It is not the score of whatever sample is on screen."
+  },
+  "entries": [
+    {
+      "id": "followup:5",
+      "speaker": "8c41f9158458",
+      "cohort": "inline_train",
+      "surface": "사탕",
+      "seconds": 3.2,
+      "pcm_sha256": "65fd3afc7ae2106458da1b43996bebbea08aff4a6d5118df4c1ed5ad808847a3",
+      "baseline": {
+        "ids": [
+          11,
+          21,
+          18,
+          21,
+          13
+        ],
+        "text": "사탕",
+        "exact": true,
+        "human_sequence_nll": 0.00011332507710903883,
+        "greedy_sequence_nll": 0.00011332507710903883
+      },
+      "repeat_delta": {
+        "max_abs": 0.0,
+        "mean_abs": 0.0,
+        "argmax_equal": true
+      },
+      "wave_controls": {
+        "minus_12_db": {
+          "ids": [
+            11,
+            21,
+            18,
+            21,
+            13
+          ],
+          "text": "사탕",
+          "exact": true,
+          "human_sequence_nll": 0.00012617534957826138
+        },
+        "plus_half_second_silence_each_side": {
+          "ids": [
+            11,
+            21,
+            18,
+            21,
+            13
+          ],
+          "text": "사탕",
+          "exact": true,
+          "human_sequence_nll": 0.00014886504504829645
+        }
+      },
+      "masked_right_padding": {
+        "ids": [
+          11,
+          21,
+          18,
+          21,
+          13
+        ],
+        "text": "사탕",
+        "exact": true,
+        "human_sequence_nll": 0.00011329480912536383,
+        "delta": {
+          "max_abs": 2.288818359375e-05,
+          "mean_abs": 2.8560759801621316e-06,
+          "argmax_equal": true
+        }
+      },
+      "aligned_convolutional_feature_delta_before_copy": {
+        "max_abs": 0.0,
+        "mean_abs": 0.0,
+        "argmax_equal": true
+      },
+      "latent_controls": [
+        {
+          "attention_sees_silence": false,
+          "position_sees_silence": false,
+          "ids": [
+            11,
+            21,
+            18,
+            21,
+            13
+          ],
+          "text": "사탕",
+          "exact": true,
+          "human_sequence_nll": 0.00011326547246426344,
+          "delta_from_raw": {
+            "max_abs": 2.47955322265625e-05,
+            "mean_abs": 2.871020114980638e-06,
+            "argmax_equal": true
+          }
+        },
+        {
+          "attention_sees_silence": false,
+          "position_sees_silence": true,
+          "ids": [
+            11,
+            21,
+            18,
+            21,
+            13
+          ],
+          "text": "사탕",
+          "exact": true,
+          "human_sequence_nll": 0.00015052406524773687,
+          "delta_from_raw": {
+            "max_abs": 6.427713394165039,
+            "mean_abs": 0.6099480390548706,
+            "argmax_equal": false
+          }
+        },
+        {
+          "attention_sees_silence": true,
+          "position_sees_silence": false,
+          "ids": [
+            11,
+            21,
+            18,
+            21,
+            13
+          ],
+          "text": "사탕",
+          "exact": true,
+          "human_sequence_nll": 0.00012515083653852344,
+          "delta_from_raw": {
+            "max_abs": 3.0675601959228516,
+            "mean_abs": 0.34677964448928833,
+            "argmax_equal": false
+          }
+        },
+        {
+          "attention_sees_silence": true,
+          "position_sees_silence": true,
+          "ids": [
+            11,
+            21,
+            18,
+            21,
+            13
+          ],
+          "text": "사탕",
+          "exact": true,
+          "human_sequence_nll": 0.0001078570494428277,
+          "delta_from_raw": {
+            "max_abs": 3.6321911811828613,
+            "mean_abs": 0.3367895185947418,
+            "argmax_equal": true
+          }
+        }
+      ],
+      "masked_latent_control_matches_raw": true
+    },
+    {
+      "id": "first:1",
+      "speaker": "5760f930210f",
+      "cohort": "inline_train",
+      "surface": "사워요",
+      "seconds": 4.288,
+      "pcm_sha256": "f025996666ef6e5938a57d82f024880e5872e1ef93e1c597f0dd9d8cd1bee9bd",
+      "baseline": {
+        "ids": [
+          12,
+          21,
+          13,
+          35,
+          13,
+          33
+        ],
+        "text": "싸워요",
+        "exact": false,
+        "human_sequence_nll": 7.853141784667969,
+        "greedy_sequence_nll": 0.0007710676873102784
+      },
+      "beam_origin": "fresh width 50",
+      "beam50": [
+        {
+          "ids": [
+            12,
+            21,
+            13,
+            35,
+            13,
+            33
+          ],
+          "jamo": "ㅆㅏㅇㅝㅇㅛ",
+          "text": "싸워요",
+          "log_probability": -0.001
+        },
+        {
+          "ids": [
+            11,
+            21,
+            13,
+            35,
+            13,
+            33
+          ],
+          "jamo": "ㅅㅏㅇㅝㅇㅛ",
+          "text": "사워요",
+          "log_probability": -7.853
+        },
+        {
+          "ids": [
+            12,
+            21,
+            13,
+            35,
+            33
+          ],
+          "jamo": "ㅆㅏㅇㅝㅛ",
+          "text": "싸워ㅛ",
+          "log_probability": -8.52
+        },
+        {
+          "ids": [
+            12,
+            25,
+            21,
+            13,
+            35,
+            13,
+            33
+          ],
+          "jamo": "ㅆㅓㅏㅇㅝㅇㅛ",
+          "text": "써ㅏ워요",
+          "log_probability": -10.774
+        },
+        {
+          "ids": [
+            12,
+            21,
+            13,
+            35,
+            13,
+            27
+          ],
+          "jamo": "ㅆㅏㅇㅝㅇㅕ",
+          "text": "싸워여",
+          "log_probability": -11.298
+        }
+      ],
+      "beam_top_exact": false,
+      "beam_top_same_as_greedy": true,
+      "repeat_delta": {
+        "max_abs": 0.0,
+        "mean_abs": 0.0,
+        "argmax_equal": true
+      },
+      "wave_controls": {
+        "minus_12_db": {
+          "ids": [
+            12,
+            21,
+            13,
+            35,
+            13,
+            33
+          ],
+          "text": "싸워요",
+          "exact": false,
+          "human_sequence_nll": 7.709657669067383
+        },
+        "plus_half_second_silence_each_side": {
+          "ids": [
+            12,
+            21,
+            13,
+            35,
+            13,
+            33
+          ],
+          "text": "싸워요",
+          "exact": false,
+          "human_sequence_nll": 7.532191276550293
+        }
+      },
+      "masked_right_padding": {
+        "ids": [
+          12,
+          21,
+          13,
+          35,
+          13,
+          33
+        ],
+        "text": "싸워요",
+        "exact": false,
+        "human_sequence_nll": 7.8531575202941895,
+        "delta": {
+          "max_abs": 3.24249267578125e-05,
+          "mean_abs": 3.168727289448725e-06,
+          "argmax_equal": true
+        }
+      },
+      "aligned_convolutional_feature_delta_before_copy": {
+        "max_abs": 0.0,
+        "mean_abs": 0.0,
+        "argmax_equal": true
+      },
+      "latent_controls": [
+        {
+          "attention_sees_silence": false,
+          "position_sees_silence": false,
+          "ids": [
+            12,
+            21,
+            13,
+            35,
+            13,
+            33
+          ],
+          "text": "싸워요",
+          "exact": false,
+          "human_sequence_nll": 7.853160858154297,
+          "delta_from_raw": {
+            "max_abs": 4.1961669921875e-05,
+            "mean_abs": 3.238797035010066e-06,
+            "argmax_equal": true
+          }
+        },
+        {
+          "attention_sees_silence": false,
+          "position_sees_silence": true,
+          "ids": [
+            12,
+            21,
+            13,
+            35,
+            13,
+            33
+          ],
+          "text": "싸워요",
+          "exact": false,
+          "human_sequence_nll": 6.45206880569458,
+          "delta_from_raw": {
+            "max_abs": 6.372089385986328,
+            "mean_abs": 0.5755127668380737,
+            "argmax_equal": false
+          }
+        },
+        {
+          "attention_sees_silence": true,
+          "position_sees_silence": false,
+          "ids": [
+            12,
+            21,
+            13,
+            35,
+            13,
+            33
+          ],
+          "text": "싸워요",
+          "exact": false,
+          "human_sequence_nll": 8.487853050231934,
+          "delta_from_raw": {
+            "max_abs": 3.947695732116699,
+            "mean_abs": 0.3288165330886841,
+            "argmax_equal": true
+          }
+        },
+        {
+          "attention_sees_silence": true,
+          "position_sees_silence": true,
+          "ids": [
+            12,
+            21,
+            13,
+            35,
+            13,
+            33
+          ],
+          "text": "싸워요",
+          "exact": false,
+          "human_sequence_nll": 7.532162666320801,
+          "delta_from_raw": {
+            "max_abs": 3.8241381645202637,
+            "mean_abs": 0.28118592500686646,
+            "argmax_equal": true
+          }
+        }
+      ],
+      "masked_latent_control_matches_raw": true
+    },
+    {
+      "id": "followup:10",
+      "speaker": "670d1430eca8",
+      "cohort": "inline_train",
+      "surface": "웡충이",
+      "seconds": 4.672,
+      "pcm_sha256": "42b85f0ff64d91b509d09cd91798d89e617fe3e0042e816f0977d42f1b3e0786",
+      "baseline": {
+        "ids": [
+          13,
+          35,
+          4,
+          11,
+          34,
+          13,
+          13,
+          41
+        ],
+        "text": "원숭이",
+        "exact": false,
+        "human_sequence_nll": 23.446643829345703,
+        "greedy_sequence_nll": 0.007387571036815643
+      },
+      "beam_origin": "fresh width 50",
+      "beam50": [
+        {
+          "ids": [
+            13,
+            35,
+            4,
+            11,
+            34,
+            13,
+            13,
+            41
+          ],
+          "jamo": "ㅇㅝㄴㅅㅜㅇㅇㅣ",
+          "text": "원숭이",
+          "log_probability": -0.007
+        },
+        {
+          "ids": [
+            13,
+            25,
+            4,
+            11,
+            34,
+            13,
+            13,
+            41
+          ],
+          "jamo": "ㅇㅓㄴㅅㅜㅇㅇㅣ",
+          "text": "언숭이",
+          "log_probability": -5.653
+        },
+        {
+          "ids": [
+            13,
+            35,
+            13,
+            4,
+            11,
+            34,
+            13,
+            13,
+            41
+          ],
+          "jamo": "ㅇㅝㅇㄴㅅㅜㅇㅇㅣ",
+          "text": "웡ㄴ숭이",
+          "log_probability": -6.877
+        },
+        {
+          "ids": [
+            13,
+            30,
+            4,
+            11,
+            34,
+            13,
+            13,
+            41
+          ],
+          "jamo": "ㅇㅘㄴㅅㅜㅇㅇㅣ",
+          "text": "완숭이",
+          "log_probability": -7.208
+        },
+        {
+          "ids": [
+            13,
+            35,
+            4,
+            13,
+            11,
+            34,
+            13,
+            13,
+            41
+          ],
+          "jamo": "ㅇㅝㄴㅇㅅㅜㅇㅇㅣ",
+          "text": "원ㅇ숭이",
+          "log_probability": -7.526
+        }
+      ],
+      "beam_top_exact": false,
+      "beam_top_same_as_greedy": true,
+      "repeat_delta": {
+        "max_abs": 0.0,
+        "mean_abs": 0.0,
+        "argmax_equal": true
+      },
+      "wave_controls": {
+        "minus_12_db": {
+          "ids": [
+            13,
+            35,
+            4,
+            11,
+            34,
+            13,
+            13,
+            41
+          ],
+          "text": "원숭이",
+          "exact": false,
+          "human_sequence_nll": 33.707496643066406
+        },
+        "plus_half_second_silence_each_side": {
+          "ids": [
+            13,
+            35,
+            4,
+            11,
+            34,
+            13,
+            13,
+            41
+          ],
+          "text": "원숭이",
+          "exact": false,
+          "human_sequence_nll": 18.12607765197754
+        }
+      },
+      "masked_right_padding": {
+        "ids": [
+          13,
+          35,
+          4,
+          11,
+          34,
+          13,
+          13,
+          41
+        ],
+        "text": "원숭이",
+        "exact": false,
+        "human_sequence_nll": 23.4483585357666,
+        "delta": {
+          "max_abs": 0.000812530517578125,
+          "mean_abs": 3.2620599085930735e-05,
+          "argmax_equal": true
+        }
+      },
+      "aligned_convolutional_feature_delta_before_copy": {
+        "max_abs": 6.935792043805122e-06,
+        "mean_abs": 7.99773971493778e-08,
+        "argmax_equal": true
+      },
+      "latent_controls": [
+        {
+          "attention_sees_silence": false,
+          "position_sees_silence": false,
+          "ids": [
+            13,
+            35,
+            4,
+            11,
+            34,
+            13,
+            13,
+            41
+          ],
+          "text": "원숭이",
+          "exact": false,
+          "human_sequence_nll": 23.44654655456543,
+          "delta_from_raw": {
+            "max_abs": 5.91278076171875e-05,
+            "mean_abs": 2.4915636913647177e-06,
+            "argmax_equal": true
+          }
+        },
+        {
+          "attention_sees_silence": false,
+          "position_sees_silence": true,
+          "ids": [
+            13,
+            35,
+            4,
+            11,
+            34,
+            13,
+            13,
+            41
+          ],
+          "text": "원숭이",
+          "exact": false,
+          "human_sequence_nll": 5.003233432769775,
+          "delta_from_raw": {
+            "max_abs": 7.589702129364014,
+            "mean_abs": 0.7686514854431152,
+            "argmax_equal": false
+          }
+        },
+        {
+          "attention_sees_silence": true,
+          "position_sees_silence": false,
+          "ids": [
+            13,
+            35,
+            4,
+            11,
+            34,
+            13,
+            13,
+            41
+          ],
+          "text": "원숭이",
+          "exact": false,
+          "human_sequence_nll": 20.51658821105957,
+          "delta_from_raw": {
+            "max_abs": 2.9520702362060547,
+            "mean_abs": 0.33254480361938477,
+            "argmax_equal": false
+          }
+        },
+        {
+          "attention_sees_silence": true,
+          "position_sees_silence": true,
+          "ids": [
+            13,
+            35,
+            4,
+            11,
+            34,
+            13,
+            13,
+            41
+          ],
+          "text": "원숭이",
+          "exact": false,
+          "human_sequence_nll": 18.124248504638672,
+          "delta_from_raw": {
+            "max_abs": 3.0807723999023438,
+            "mean_abs": 0.3966253697872162,
+            "argmax_equal": true
+          }
+        }
+      ],
+      "masked_latent_control_matches_raw": true
+    },
+    {
+      "id": "first:2",
+      "speaker": "9028dce6614e",
+      "cohort": "inline_train",
+      "surface": "아저씨",
+      "seconds": 4.864,
+      "pcm_sha256": "fc3739abe2098a8e531746018dbfb78a404f8793546aa4f39764be8e5ff905c8",
+      "baseline": {
+        "ids": [
+          13,
+          21,
+          14,
+          25,
+          12,
+          41
+        ],
+        "text": "아저씨",
+        "exact": true,
+        "human_sequence_nll": 0.0005002613179385662,
+        "greedy_sequence_nll": 0.0005002613179385662
+      },
+      "repeat_delta": {
+        "max_abs": 0.0,
+        "mean_abs": 0.0,
+        "argmax_equal": true
+      },
+      "wave_controls": {
+        "minus_12_db": {
+          "ids": [
+            13,
+            21,
+            14,
+            25,
+            12,
+            41
+          ],
+          "text": "아저씨",
+          "exact": true,
+          "human_sequence_nll": 0.00042962966836057603
+        },
+        "plus_half_second_silence_each_side": {
+          "ids": [
+            13,
+            21,
+            14,
+            25,
+            12,
+            41
+          ],
+          "text": "아저씨",
+          "exact": true,
+          "human_sequence_nll": 0.003735107136890292
+        }
+      },
+      "masked_right_padding": {
+        "ids": [
+          13,
+          21,
+          14,
+          25,
+          12,
+          41
+        ],
+        "text": "아저씨",
+        "exact": true,
+        "human_sequence_nll": 0.0005002017132937908,
+        "delta": {
+          "max_abs": 0.001552581787109375,
+          "mean_abs": 5.314363443176262e-05,
+          "argmax_equal": true
+        }
+      },
+      "aligned_convolutional_feature_delta_before_copy": {
+        "max_abs": 5.936715751886368e-06,
+        "mean_abs": 2.223135453505165e-07,
+        "argmax_equal": true
+      },
+      "latent_controls": [
+        {
+          "attention_sees_silence": false,
+          "position_sees_silence": false,
+          "ids": [
+            13,
+            21,
+            14,
+            25,
+            12,
+            41
+          ],
+          "text": "아저씨",
+          "exact": true,
+          "human_sequence_nll": 0.0005003656260669231,
+          "delta_from_raw": {
+            "max_abs": 3.147125244140625e-05,
+            "mean_abs": 1.7513050352135906e-06,
+            "argmax_equal": true
+          }
+        },
+        {
+          "attention_sees_silence": false,
+          "position_sees_silence": true,
+          "ids": [
+            13,
+            21,
+            14,
+            25,
+            12,
+            41
+          ],
+          "text": "아저씨",
+          "exact": true,
+          "human_sequence_nll": 0.15488459169864655,
+          "delta_from_raw": {
+            "max_abs": 6.385042190551758,
+            "mean_abs": 0.5230005979537964,
+            "argmax_equal": false
+          }
+        },
+        {
+          "attention_sees_silence": true,
+          "position_sees_silence": false,
+          "ids": [
+            13,
+            21,
+            14,
+            25,
+            12,
+            41
+          ],
+          "text": "아저씨",
+          "exact": true,
+          "human_sequence_nll": 0.001104487106204033,
+          "delta_from_raw": {
+            "max_abs": 3.262998580932617,
+            "mean_abs": 0.4562317132949829,
+            "argmax_equal": false
+          }
+        },
+        {
+          "attention_sees_silence": true,
+          "position_sees_silence": true,
+          "ids": [
+            13,
+            21,
+            14,
+            25,
+            12,
+            41
+          ],
+          "text": "아저씨",
+          "exact": true,
+          "human_sequence_nll": 0.0035594869405031204,
+          "delta_from_raw": {
+            "max_abs": 3.908734083175659,
+            "mean_abs": 0.42547672986984253,
+            "argmax_equal": false
+          }
+        }
+      ],
+      "masked_latent_control_matches_raw": true
+    },
+    {
+      "id": "followup:9",
+      "speaker": "f3fec7b5757f",
+      "cohort": "inline_train",
+      "surface": "아저씨",
+      "seconds": 3.712,
+      "pcm_sha256": "5d6a59d70069eb1d70d06881eba3c2fab1f1b9b4f9c1fea6b1fc8b7f451df133",
+      "baseline": {
+        "ids": [
+          13,
+          21,
+          14,
+          25,
+          12,
+          41
+        ],
+        "text": "아저씨",
+        "exact": true,
+        "human_sequence_nll": 0.00036279845517128706,
+        "greedy_sequence_nll": 0.00036279845517128706
+      },
+      "repeat_delta": {
+        "max_abs": 0.0,
+        "mean_abs": 0.0,
+        "argmax_equal": true
+      },
+      "wave_controls": {
+        "minus_12_db": {
+          "ids": [
+            13,
+            21,
+            14,
+            25,
+            12,
+            41
+          ],
+          "text": "아저씨",
+          "exact": true,
+          "human_sequence_nll": 0.0003497227153275162
+        },
+        "plus_half_second_silence_each_side": {
+          "ids": [
+            13,
+            21,
+            14,
+            25,
+            12,
+            41
+          ],
+          "text": "아저씨",
+          "exact": true,
+          "human_sequence_nll": 0.00037400395376607776
+        }
+      },
+      "masked_right_padding": {
+        "ids": [
+          13,
+          21,
+          14,
+          25,
+          12,
+          41
+        ],
+        "text": "아저씨",
+        "exact": true,
+        "human_sequence_nll": 0.00036270159762352705,
+        "delta": {
+          "max_abs": 2.6702880859375e-05,
+          "mean_abs": 2.971206640722812e-06,
+          "argmax_equal": true
+        }
+      },
+      "aligned_convolutional_feature_delta_before_copy": {
+        "max_abs": 0.0,
+        "mean_abs": 0.0,
+        "argmax_equal": true
+      },
+      "latent_controls": [
+        {
+          "attention_sees_silence": false,
+          "position_sees_silence": false,
+          "ids": [
+            13,
+            21,
+            14,
+            25,
+            12,
+            41
+          ],
+          "text": "아저씨",
+          "exact": true,
+          "human_sequence_nll": 0.00036279845517128706,
+          "delta_from_raw": {
+            "max_abs": 2.47955322265625e-05,
+            "mean_abs": 2.9343791538849473e-06,
+            "argmax_equal": true
+          }
+        },
+        {
+          "attention_sees_silence": false,
+          "position_sees_silence": true,
+          "ids": [
+            13,
+            21,
+            14,
+            25,
+            12,
+            41
+          ],
+          "text": "아저씨",
+          "exact": true,
+          "human_sequence_nll": 0.003762416308745742,
+          "delta_from_raw": {
+            "max_abs": 4.870977878570557,
+            "mean_abs": 0.45978057384490967,
+            "argmax_equal": true
+          }
+        },
+        {
+          "attention_sees_silence": true,
+          "position_sees_silence": false,
+          "ids": [
+            13,
+            21,
+            14,
+            25,
+            12,
+            41
+          ],
+          "text": "아저씨",
+          "exact": true,
+          "human_sequence_nll": 0.00039389723679050803,
+          "delta_from_raw": {
+            "max_abs": 1.9404377937316895,
+            "mean_abs": 0.2985544800758362,
+            "argmax_equal": true
+          }
+        },
+        {
+          "attention_sees_silence": true,
+          "position_sees_silence": true,
+          "ids": [
+            13,
+            21,
+            14,
+            25,
+            12,
+            41
+          ],
+          "text": "아저씨",
+          "exact": true,
+          "human_sequence_nll": 0.0003418174455873668,
+          "delta_from_raw": {
+            "max_abs": 3.0361247062683105,
+            "mean_abs": 0.3477054834365845,
+            "argmax_equal": true
+          }
+        }
+      ],
+      "masked_latent_control_matches_raw": true
+    },
+    {
+      "id": "followup:8",
+      "speaker": "0f427d4e1430",
+      "cohort": "inline_train",
+      "surface": "누구이까요",
+      "seconds": 5.44,
+      "pcm_sha256": "d2427cd593b6b4277a2bf8812364857e8a93f4d37a75992c2a81d1f6ba00236b",
+      "baseline": {
+        "ids": [
+          4,
+          34,
+          2,
+          34,
+          13,
+          41,
+          7,
+          3,
+          21,
+          13,
+          33
+        ],
+        "text": "누구일까요",
+        "exact": false,
+        "human_sequence_nll": 12.829503059387207,
+        "greedy_sequence_nll": 0.01940053515136242
+      },
+      "beam_origin": "fresh width 50",
+      "beam50": [
+        {
+          "ids": [
+            4,
+            34,
+            2,
+            34,
+            13,
+            41,
+            7,
+            3,
+            21,
+            13,
+            33
+          ],
+          "jamo": "ㄴㅜㄱㅜㅇㅣㄹㄲㅏㅇㅛ",
+          "text": "누구일까요",
+          "log_probability": -0.019
+        },
+        {
+          "ids": [
+            4,
+            34,
+            2,
+            34,
+            13,
+            41,
+            7,
+            2,
+            21,
+            13,
+            33
+          ],
+          "jamo": "ㄴㅜㄱㅜㅇㅣㄹㄱㅏㅇㅛ",
+          "text": "누구일가요",
+          "log_probability": -4.212
+        },
+        {
+          "ids": [
+            4,
+            34,
+            2,
+            34,
+            13,
+            41,
+            7,
+            4,
+            3,
+            21,
+            13,
+            33
+          ],
+          "jamo": "ㄴㅜㄱㅜㅇㅣㄹㄴㄲㅏㅇㅛ",
+          "text": "누구일ㄴ까요",
+          "log_probability": -6.519
+        },
+        {
+          "ids": [
+            4,
+            34,
+            2,
+            34,
+            1,
+            13,
+            41,
+            7,
+            3,
+            21,
+            13,
+            33
+          ],
+          "jamo": "ㄴㅜㄱㅜ|ㅇㅣㄹㄲㅏㅇㅛ",
+          "text": "누구 일까요",
+          "log_probability": -6.863
+        },
+        {
+          "ids": [
+            4,
+            34,
+            2,
+            34,
+            13,
+            41,
+            7,
+            3,
+            21,
+            13,
+            27
+          ],
+          "jamo": "ㄴㅜㄱㅜㅇㅣㄹㄲㅏㅇㅕ",
+          "text": "누구일까여",
+          "log_probability": -8.054
+        }
+      ],
+      "beam_top_exact": false,
+      "beam_top_same_as_greedy": true,
+      "repeat_delta": {
+        "max_abs": 0.0,
+        "mean_abs": 0.0,
+        "argmax_equal": true
+      },
+      "wave_controls": {
+        "minus_12_db": {
+          "ids": [
+            4,
+            34,
+            2,
+            34,
+            13,
+            41,
+            7,
+            3,
+            21,
+            13,
+            33
+          ],
+          "text": "누구일까요",
+          "exact": false,
+          "human_sequence_nll": 11.183181762695312
+        },
+        "plus_half_second_silence_each_side": {
+          "ids": [
+            4,
+            34,
+            2,
+            34,
+            13,
+            41,
+            7,
+            3,
+            21,
+            13,
+            33
+          ],
+          "text": "누구일까요",
+          "exact": false,
+          "human_sequence_nll": 12.132547378540039
+        }
+      },
+      "masked_right_padding": {
+        "ids": [
+          4,
+          34,
+          2,
+          34,
+          13,
+          41,
+          7,
+          3,
+          21,
+          13,
+          33
+        ],
+        "text": "누구일까요",
+        "exact": false,
+        "human_sequence_nll": 12.829652786254883,
+        "delta": {
+          "max_abs": 0.0013980865478515625,
+          "mean_abs": 4.9778729589888826e-05,
+          "argmax_equal": true
+        }
+      },
+      "aligned_convolutional_feature_delta_before_copy": {
+        "max_abs": 1.004338264465332e-05,
+        "mean_abs": 2.5912112278092536e-07,
+        "argmax_equal": true
+      },
+      "latent_controls": [
+        {
+          "attention_sees_silence": false,
+          "position_sees_silence": false,
+          "ids": [
+            4,
+            34,
+            2,
+            34,
+            13,
+            41,
+            7,
+            3,
+            21,
+            13,
+            33
+          ],
+          "text": "누구일까요",
+          "exact": false,
+          "human_sequence_nll": 12.829506874084473,
+          "delta_from_raw": {
+            "max_abs": 7.62939453125e-06,
+            "mean_abs": 9.816064903134247e-07,
+            "argmax_equal": true
+          }
+        },
+        {
+          "attention_sees_silence": false,
+          "position_sees_silence": true,
+          "ids": [
+            4,
+            34,
+            2,
+            34,
+            13,
+            41,
+            7,
+            3,
+            21,
+            13,
+            33
+          ],
+          "text": "누구일까요",
+          "exact": false,
+          "human_sequence_nll": 10.793639183044434,
+          "delta_from_raw": {
+            "max_abs": 5.627867698669434,
+            "mean_abs": 0.9285529255867004,
+            "argmax_equal": false
+          }
+        },
+        {
+          "attention_sees_silence": true,
+          "position_sees_silence": false,
+          "ids": [
+            4,
+            34,
+            2,
+            34,
+            13,
+            41,
+            7,
+            3,
+            21,
+            13,
+            33
+          ],
+          "text": "누구일까요",
+          "exact": false,
+          "human_sequence_nll": 12.598152160644531,
+          "delta_from_raw": {
+            "max_abs": 3.724557876586914,
+            "mean_abs": 0.3278942406177521,
+            "argmax_equal": false
+          }
+        },
+        {
+          "attention_sees_silence": true,
+          "position_sees_silence": true,
+          "ids": [
+            4,
+            34,
+            2,
+            34,
+            13,
+            41,
+            7,
+            3,
+            21,
+            13,
+            33
+          ],
+          "text": "누구일까요",
+          "exact": false,
+          "human_sequence_nll": 12.13223934173584,
+          "delta_from_raw": {
+            "max_abs": 4.190051555633545,
+            "mean_abs": 0.4442250728607178,
+            "argmax_equal": true
+          }
+        }
+      ],
+      "masked_latent_control_matches_raw": true
+    },
+    {
+      "id": "followup:3",
+      "speaker": "884787790b63",
+      "cohort": "inline_valid",
+      "surface": "춤서요",
+      "seconds": 3.392,
+      "pcm_sha256": "de7d030a0f62c7cf7e33c7df0bfb236f6bd07d13bfd6af971e9dd1e625755c4a",
+      "baseline": {
+        "ids": [
+          16,
+          34,
+          8,
+          16,
+          35,
+          13,
+          33
+        ],
+        "text": "춤춰요",
+        "exact": false,
+        "human_sequence_nll": 21.866498947143555,
+        "greedy_sequence_nll": 0.009513670578598976
+      },
+      "beam_origin": "fresh width 50",
+      "beam50": [
+        {
+          "ids": [
+            16,
+            34,
+            8,
+            16,
+            35,
+            13,
+            33
+          ],
+          "jamo": "ㅊㅜㅁㅊㅝㅇㅛ",
+          "text": "춤춰요",
+          "log_probability": -0.01
+        },
+        {
+          "ids": [
+            16,
+            34,
+            8,
+            1,
+            16,
+            35,
+            13,
+            33
+          ],
+          "jamo": "ㅊㅜㅁ|ㅊㅝㅇㅛ",
+          "text": "춤 춰요",
+          "log_probability": -4.773
+        },
+        {
+          "ids": [
+            16,
+            34,
+            8,
+            16,
+            35,
+            13,
+            27
+          ],
+          "jamo": "ㅊㅜㅁㅊㅝㅇㅕ",
+          "text": "춤춰여",
+          "log_probability": -8.718
+        },
+        {
+          "ids": [
+            16,
+            34,
+            8,
+            16,
+            35,
+            13,
+            27,
+            33
+          ],
+          "jamo": "ㅊㅜㅁㅊㅝㅇㅕㅛ",
+          "text": "춤춰여ㅛ",
+          "log_probability": -8.724
+        },
+        {
+          "ids": [
+            16,
+            34,
+            8,
+            16,
+            35,
+            13,
+            33,
+            27
+          ],
+          "jamo": "ㅊㅜㅁㅊㅝㅇㅛㅕ",
+          "text": "춤춰요ㅕ",
+          "log_probability": -9.316
+        }
+      ],
+      "beam_top_exact": false,
+      "beam_top_same_as_greedy": true,
+      "repeat_delta": {
+        "max_abs": 0.0,
+        "mean_abs": 0.0,
+        "argmax_equal": true
+      },
+      "wave_controls": {
+        "minus_12_db": {
+          "ids": [
+            16,
+            34,
+            8,
+            16,
+            35,
+            13,
+            33
+          ],
+          "text": "춤춰요",
+          "exact": false,
+          "human_sequence_nll": 21.984325408935547
+        },
+        "plus_half_second_silence_each_side": {
+          "ids": [
+            16,
+            34,
+            8,
+            16,
+            35,
+            13,
+            33
+          ],
+          "text": "춤춰요",
+          "exact": false,
+          "human_sequence_nll": 22.407583236694336
+        }
+      },
+      "masked_right_padding": {
+        "ids": [
+          16,
+          34,
+          8,
+          16,
+          35,
+          13,
+          33
+        ],
+        "text": "춤춰요",
+        "exact": false,
+        "human_sequence_nll": 21.866483688354492,
+        "delta": {
+          "max_abs": 4.774332046508789e-05,
+          "mean_abs": 2.893803639381076e-06,
+          "argmax_equal": true
+        }
+      },
+      "aligned_convolutional_feature_delta_before_copy": {
+        "max_abs": 0.0,
+        "mean_abs": 0.0,
+        "argmax_equal": true
+      },
+      "latent_controls": [
+        {
+          "attention_sees_silence": false,
+          "position_sees_silence": false,
+          "ids": [
+            16,
+            34,
+            8,
+            16,
+            35,
+            13,
+            33
+          ],
+          "text": "춤춰요",
+          "exact": false,
+          "human_sequence_nll": 21.866491317749023,
+          "delta_from_raw": {
+            "max_abs": 4.9591064453125e-05,
+            "mean_abs": 2.9286377412063302e-06,
+            "argmax_equal": true
+          }
+        },
+        {
+          "attention_sees_silence": false,
+          "position_sees_silence": true,
+          "ids": [
+            16,
+            34,
+            8,
+            16,
+            35,
+            13,
+            33
+          ],
+          "text": "춤춰요",
+          "exact": false,
+          "human_sequence_nll": 22.713289260864258,
+          "delta_from_raw": {
+            "max_abs": 6.1547369956970215,
+            "mean_abs": 0.5734195113182068,
+            "argmax_equal": false
+          }
+        },
+        {
+          "attention_sees_silence": true,
+          "position_sees_silence": false,
+          "ids": [
+            16,
+            34,
+            8,
+            16,
+            35,
+            13,
+            33
+          ],
+          "text": "춤춰요",
+          "exact": false,
+          "human_sequence_nll": 22.10079574584961,
+          "delta_from_raw": {
+            "max_abs": 3.0704469680786133,
+            "mean_abs": 0.37113505601882935,
+            "argmax_equal": false
+          }
+        },
+        {
+          "attention_sees_silence": true,
+          "position_sees_silence": true,
+          "ids": [
+            16,
+            34,
+            8,
+            16,
+            35,
+            13,
+            33
+          ],
+          "text": "춤춰요",
+          "exact": false,
+          "human_sequence_nll": 22.407556533813477,
+          "delta_from_raw": {
+            "max_abs": 3.1707797050476074,
+            "mean_abs": 0.34700390696525574,
+            "argmax_equal": false
+          }
+        }
+      ],
+      "masked_latent_control_matches_raw": true
+    },
+    {
+      "id": "followup:12",
+      "speaker": "678fdf60f09b",
+      "cohort": "inline_valid",
+      "surface": "운등화",
+      "seconds": 3.072,
+      "pcm_sha256": "3460cd1900c5cb32e326a6d8aa3047666d5f449c58d629d1d859384c9ffcb095",
+      "baseline": {
+        "ids": [
+          13,
+          34,
+          4,
+          5,
+          29,
+          13,
+          20,
+          30
+        ],
+        "text": "운동화",
+        "exact": false,
+        "human_sequence_nll": 13.267263412475586,
+        "greedy_sequence_nll": 0.0010019242763519287
+      },
+      "beam_origin": "fresh width 50",
+      "beam50": [
+        {
+          "ids": [
+            13,
+            34,
+            4,
+            5,
+            29,
+            13,
+            20,
+            30
+          ],
+          "jamo": "ㅇㅜㄴㄷㅗㅇㅎㅘ",
+          "text": "운동화",
+          "log_probability": -0.001
+        },
+        {
+          "ids": [
+            13,
+            34,
+            4,
+            4,
+            29,
+            13,
+            20,
+            30
+          ],
+          "jamo": "ㅇㅜㄴㄴㅗㅇㅎㅘ",
+          "text": "운농화",
+          "log_probability": -8.322
+        },
+        {
+          "ids": [
+            13,
+            34,
+            4,
+            5,
+            29,
+            13,
+            20,
+            32,
+            30
+          ],
+          "jamo": "ㅇㅜㄴㄷㅗㅇㅎㅚㅘ",
+          "text": "운동회ㅘ",
+          "log_probability": -8.43
+        },
+        {
+          "ids": [
+            13,
+            34,
+            4,
+            11,
+            29,
+            13,
+            20,
+            30
+          ],
+          "jamo": "ㅇㅜㄴㅅㅗㅇㅎㅘ",
+          "text": "운송화",
+          "log_probability": -9.182
+        },
+        {
+          "ids": [
+            13,
+            34,
+            4,
+            5,
+            25,
+            13,
+            20,
+            30
+          ],
+          "jamo": "ㅇㅜㄴㄷㅓㅇㅎㅘ",
+          "text": "운덩화",
+          "log_probability": -9.356
+        }
+      ],
+      "beam_top_exact": false,
+      "beam_top_same_as_greedy": true,
+      "repeat_delta": {
+        "max_abs": 0.0,
+        "mean_abs": 0.0,
+        "argmax_equal": true
+      },
+      "wave_controls": {
+        "minus_12_db": {
+          "ids": [
+            13,
+            34,
+            4,
+            5,
+            29,
+            13,
+            20,
+            30
+          ],
+          "text": "운동화",
+          "exact": false,
+          "human_sequence_nll": 13.155256271362305
+        },
+        "plus_half_second_silence_each_side": {
+          "ids": [
+            13,
+            34,
+            4,
+            5,
+            29,
+            13,
+            20,
+            30
+          ],
+          "text": "운동화",
+          "exact": false,
+          "human_sequence_nll": 13.292585372924805
+        }
+      },
+      "masked_right_padding": {
+        "ids": [
+          13,
+          34,
+          4,
+          5,
+          29,
+          13,
+          20,
+          30
+        ],
+        "text": "운동화",
+        "exact": false,
+        "human_sequence_nll": 13.26725959777832,
+        "delta": {
+          "max_abs": 4.291534423828125e-05,
+          "mean_abs": 2.6303694085072493e-06,
+          "argmax_equal": true
+        }
+      },
+      "aligned_convolutional_feature_delta_before_copy": {
+        "max_abs": 0.0,
+        "mean_abs": 0.0,
+        "argmax_equal": true
+      },
+      "latent_controls": [
+        {
+          "attention_sees_silence": false,
+          "position_sees_silence": false,
+          "ids": [
+            13,
+            34,
+            4,
+            5,
+            29,
+            13,
+            20,
+            30
+          ],
+          "text": "운동화",
+          "exact": false,
+          "human_sequence_nll": 13.267255783081055,
+          "delta_from_raw": {
+            "max_abs": 4.291534423828125e-05,
+            "mean_abs": 2.5634144549258053e-06,
+            "argmax_equal": true
+          }
+        },
+        {
+          "attention_sees_silence": false,
+          "position_sees_silence": true,
+          "ids": [
+            13,
+            34,
+            4,
+            5,
+            29,
+            13,
+            20,
+            30
+          ],
+          "text": "운동화",
+          "exact": false,
+          "human_sequence_nll": 13.775086402893066,
+          "delta_from_raw": {
+            "max_abs": 7.9915924072265625,
+            "mean_abs": 1.1577028036117554,
+            "argmax_equal": false
+          }
+        },
+        {
+          "attention_sees_silence": true,
+          "position_sees_silence": false,
+          "ids": [
+            13,
+            34,
+            4,
+            5,
+            29,
+            13,
+            20,
+            30
+          ],
+          "text": "운동화",
+          "exact": false,
+          "human_sequence_nll": 13.06922721862793,
+          "delta_from_raw": {
+            "max_abs": 5.647453308105469,
+            "mean_abs": 0.44407474994659424,
+            "argmax_equal": true
+          }
+        },
+        {
+          "attention_sees_silence": true,
+          "position_sees_silence": true,
+          "ids": [
+            13,
+            34,
+            4,
+            5,
+            29,
+            13,
+            20,
+            30
+          ],
+          "text": "운동화",
+          "exact": false,
+          "human_sequence_nll": 13.292569160461426,
+          "delta_from_raw": {
+            "max_abs": 4.4359564781188965,
+            "mean_abs": 0.38533398509025574,
+            "argmax_equal": true
+          }
+        }
+      ],
+      "masked_latent_control_matches_raw": true
+    },
+    {
+      "id": "followup:4",
+      "speaker": "16e46c0fa2ce",
+      "cohort": "inline_valid",
+      "surface": "쿠레용",
+      "seconds": 5.44,
+      "pcm_sha256": "b69ded7736dbc63a0c661d01ba51023a3a6f3443fc2637923f099d6a14c12c9c",
+      "baseline": {
+        "ids": [
+          19,
+          29,
+          7,
+          26,
+          13,
+          33,
+          13
+        ],
+        "text": "포레용",
+        "exact": false,
+        "human_sequence_nll": 2.4268605709075928,
+        "greedy_sequence_nll": 1.575668454170227
+      },
+      "beam_origin": "fresh width 50",
+      "beam50": [
+        {
+          "ids": [
+            19,
+            29,
+            7,
+            26,
+            13,
+            33,
+            13
+          ],
+          "jamo": "ㅍㅗㄹㅔㅇㅛㅇ",
+          "text": "포레용",
+          "log_probability": -1.576
+        },
+        {
+          "ids": [
+            19,
+            34,
+            7,
+            26,
+            13,
+            33,
+            13
+          ],
+          "jamo": "ㅍㅜㄹㅔㅇㅛㅇ",
+          "text": "푸레용",
+          "log_probability": -1.703
+        },
+        {
+          "ids": [
+            19,
+            29,
+            7,
+            22,
+            13,
+            33,
+            13
+          ],
+          "jamo": "ㅍㅗㄹㅐㅇㅛㅇ",
+          "text": "포래용",
+          "log_probability": -2.29
+        },
+        {
+          "ids": [
+            17,
+            29,
+            7,
+            26,
+            13,
+            33,
+            13
+          ],
+          "jamo": "ㅋㅗㄹㅔㅇㅛㅇ",
+          "text": "코레용",
+          "log_probability": -2.3
+        },
+        {
+          "ids": [
+            19,
+            34,
+            7,
+            22,
+            13,
+            33,
+            13
+          ],
+          "jamo": "ㅍㅜㄹㅐㅇㅛㅇ",
+          "text": "푸래용",
+          "log_probability": -2.418
+        }
+      ],
+      "beam_top_exact": false,
+      "beam_top_same_as_greedy": true,
+      "repeat_delta": {
+        "max_abs": 0.0,
+        "mean_abs": 0.0,
+        "argmax_equal": true
+      },
+      "wave_controls": {
+        "minus_12_db": {
+          "ids": [
+            19,
+            29,
+            7,
+            26,
+            13,
+            33,
+            13
+          ],
+          "text": "포레용",
+          "exact": false,
+          "human_sequence_nll": 2.8004300594329834
+        },
+        "plus_half_second_silence_each_side": {
+          "ids": [
+            19,
+            29,
+            7,
+            26,
+            13,
+            33,
+            13
+          ],
+          "text": "포레용",
+          "exact": false,
+          "human_sequence_nll": 2.6469886302948
+        }
+      },
+      "masked_right_padding": {
+        "ids": [
+          19,
+          29,
+          7,
+          26,
+          13,
+          33,
+          13
+        ],
+        "text": "포레용",
+        "exact": false,
+        "human_sequence_nll": 2.426767349243164,
+        "delta": {
+          "max_abs": 0.00035309791564941406,
+          "mean_abs": 1.7055985154001974e-05,
+          "argmax_equal": true
+        }
+      },
+      "aligned_convolutional_feature_delta_before_copy": {
+        "max_abs": 5.111098289489746e-06,
+        "mean_abs": 5.8421811388598144e-08,
+        "argmax_equal": true
+      },
+      "latent_controls": [
+        {
+          "attention_sees_silence": false,
+          "position_sees_silence": false,
+          "ids": [
+            19,
+            29,
+            7,
+            26,
+            13,
+            33,
+            13
+          ],
+          "text": "포레용",
+          "exact": false,
+          "human_sequence_nll": 2.4268624782562256,
+          "delta_from_raw": {
+            "max_abs": 1.1444091796875e-05,
+            "mean_abs": 1.0019047067544307e-06,
+            "argmax_equal": true
+          }
+        },
+        {
+          "attention_sees_silence": false,
+          "position_sees_silence": true,
+          "ids": [
+            19,
+            29,
+            7,
+            22,
+            13,
+            33,
+            13
+          ],
+          "text": "포래용",
+          "exact": false,
+          "human_sequence_nll": 4.8047285079956055,
+          "delta_from_raw": {
+            "max_abs": 5.364803314208984,
+            "mean_abs": 0.7495951056480408,
+            "argmax_equal": false
+          }
+        },
+        {
+          "attention_sees_silence": true,
+          "position_sees_silence": false,
+          "ids": [
+            19,
+            29,
+            7,
+            26,
+            13,
+            33,
+            13
+          ],
+          "text": "포레용",
+          "exact": false,
+          "human_sequence_nll": 2.9083926677703857,
+          "delta_from_raw": {
+            "max_abs": 2.3768322467803955,
+            "mean_abs": 0.2560332417488098,
+            "argmax_equal": false
+          }
+        },
+        {
+          "attention_sees_silence": true,
+          "position_sees_silence": true,
+          "ids": [
+            19,
+            29,
+            7,
+            26,
+            13,
+            33,
+            13
+          ],
+          "text": "포레용",
+          "exact": false,
+          "human_sequence_nll": 2.6470963954925537,
+          "delta_from_raw": {
+            "max_abs": 4.179843425750732,
+            "mean_abs": 0.43833160400390625,
+            "argmax_equal": true
+          }
+        }
+      ],
+      "masked_latent_control_matches_raw": true
+    },
+    {
+      "id": "first:5",
+      "speaker": "5ad4fca71d72",
+      "cohort": "inline_valid",
+      "surface": "웡숭이",
+      "seconds": 3.648,
+      "pcm_sha256": "5a14da7bd89d5ea724e568c3e6be307761e0420103a920afe7ad839af384ac36",
+      "baseline": {
+        "ids": [
+          13,
+          35,
+          4,
+          11,
+          34,
+          13,
+          13,
+          41
+        ],
+        "text": "원숭이",
+        "exact": false,
+        "human_sequence_nll": 21.630016326904297,
+        "greedy_sequence_nll": 0.0013992611784487963
+      },
+      "beam_origin": "fresh width 50",
+      "beam50": [
+        {
+          "ids": [
+            13,
+            35,
+            4,
+            11,
+            34,
+            13,
+            13,
+            41
+          ],
+          "jamo": "ㅇㅝㄴㅅㅜㅇㅇㅣ",
+          "text": "원숭이",
+          "log_probability": -0.001
+        },
+        {
+          "ids": [
+            13,
+            4,
+            35,
+            4,
+            11,
+            34,
+            13,
+            13,
+            41
+          ],
+          "jamo": "ㅇㄴㅝㄴㅅㅜㅇㅇㅣ",
+          "text": "ㅇ눤숭이",
+          "log_probability": -8.394
+        },
+        {
+          "ids": [
+            13,
+            7,
+            35,
+            4,
+            11,
+            34,
+            13,
+            13,
+            41
+          ],
+          "jamo": "ㅇㄹㅝㄴㅅㅜㅇㅇㅣ",
+          "text": "ㅇ뤈숭이",
+          "log_probability": -8.707
+        },
+        {
+          "ids": [
+            13,
+            8,
+            35,
+            4,
+            11,
+            34,
+            13,
+            13,
+            41
+          ],
+          "jamo": "ㅇㅁㅝㄴㅅㅜㅇㅇㅣ",
+          "text": "ㅇ뭔숭이",
+          "log_probability": -8.712
+        },
+        {
+          "ids": [
+            13,
+            35,
+            4,
+            11,
+            34,
+            13,
+            13,
+            13,
+            41
+          ],
+          "jamo": "ㅇㅝㄴㅅㅜㅇㅇㅇㅣ",
+          "text": "원숭ㅇ이",
+          "log_probability": -9.109
+        }
+      ],
+      "beam_top_exact": false,
+      "beam_top_same_as_greedy": true,
+      "repeat_delta": {
+        "max_abs": 0.0,
+        "mean_abs": 0.0,
+        "argmax_equal": true
+      },
+      "wave_controls": {
+        "minus_12_db": {
+          "ids": [
+            13,
+            35,
+            4,
+            11,
+            34,
+            13,
+            13,
+            41
+          ],
+          "text": "원숭이",
+          "exact": false,
+          "human_sequence_nll": 20.97779655456543
+        },
+        "plus_half_second_silence_each_side": {
+          "ids": [
+            13,
+            35,
+            4,
+            11,
+            34,
+            13,
+            13,
+            41
+          ],
+          "text": "원숭이",
+          "exact": false,
+          "human_sequence_nll": 21.65626335144043
+        }
+      },
+      "masked_right_padding": {
+        "ids": [
+          13,
+          35,
+          4,
+          11,
+          34,
+          13,
+          13,
+          41
+        ],
+        "text": "원숭이",
+        "exact": false,
+        "human_sequence_nll": 21.629953384399414,
+        "delta": {
+          "max_abs": 0.000110626220703125,
+          "mean_abs": 4.13619864048087e-06,
+          "argmax_equal": true
+        }
+      },
+      "aligned_convolutional_feature_delta_before_copy": {
+        "max_abs": 0.0,
+        "mean_abs": 0.0,
+        "argmax_equal": true
+      },
+      "latent_controls": [
+        {
+          "attention_sees_silence": false,
+          "position_sees_silence": false,
+          "ids": [
+            13,
+            35,
+            4,
+            11,
+            34,
+            13,
+            13,
+            41
+          ],
+          "text": "원숭이",
+          "exact": false,
+          "human_sequence_nll": 21.629947662353516,
+          "delta_from_raw": {
+            "max_abs": 0.00011348724365234375,
+            "mean_abs": 4.2046290218422655e-06,
+            "argmax_equal": true
+          }
+        },
+        {
+          "attention_sees_silence": false,
+          "position_sees_silence": true,
+          "ids": [
+            13,
+            35,
+            4,
+            11,
+            34,
+            13,
+            13,
+            41
+          ],
+          "text": "원숭이",
+          "exact": false,
+          "human_sequence_nll": 20.70235252380371,
+          "delta_from_raw": {
+            "max_abs": 7.429078102111816,
+            "mean_abs": 0.5824499130249023,
+            "argmax_equal": false
+          }
+        },
+        {
+          "attention_sees_silence": true,
+          "position_sees_silence": false,
+          "ids": [
+            13,
+            35,
+            4,
+            11,
+            34,
+            13,
+            13,
+            41
+          ],
+          "text": "원숭이",
+          "exact": false,
+          "human_sequence_nll": 22.19497299194336,
+          "delta_from_raw": {
+            "max_abs": 2.753848075866699,
+            "mean_abs": 0.29527056217193604,
+            "argmax_equal": false
+          }
+        },
+        {
+          "attention_sees_silence": true,
+          "position_sees_silence": true,
+          "ids": [
+            13,
+            35,
+            4,
+            11,
+            34,
+            13,
+            13,
+            41
+          ],
+          "text": "원숭이",
+          "exact": false,
+          "human_sequence_nll": 21.656261444091797,
+          "delta_from_raw": {
+            "max_abs": 3.139214515686035,
+            "mean_abs": 0.3396950662136078,
+            "argmax_equal": true
+          }
+        }
+      ],
+      "masked_latent_control_matches_raw": true
+    },
+    {
+      "id": "training_review:1",
+      "speaker": "e0058e47da8c",
+      "cohort": "human_verified_training",
+      "surface": "책",
+      "seconds": 1.658,
+      "pcm_sha256": "19fe8cfa9fe7d03cd2198087aa1745e2951163517e0e93113b318e89557650ca",
+      "baseline": {
+        "ids": [
+          16,
+          22,
+          2
+        ],
+        "text": "책",
+        "exact": true,
+        "human_sequence_nll": 0.028511516749858856,
+        "greedy_sequence_nll": 0.028511516749858856
+      },
+      "repeat_delta": {
+        "max_abs": 0.0,
+        "mean_abs": 0.0,
+        "argmax_equal": true
+      },
+      "wave_controls": {
+        "minus_12_db": {
+          "ids": [
+            16,
+            22,
+            2
+          ],
+          "text": "책",
+          "exact": true,
+          "human_sequence_nll": 0.031238004565238953
+        },
+        "plus_half_second_silence_each_side": {
+          "ids": [
+            16,
+            22,
+            2
+          ],
+          "text": "책",
+          "exact": true,
+          "human_sequence_nll": 0.0028710647020488977
+        }
+      },
+      "masked_right_padding": {
+        "ids": [
+          16,
+          22,
+          2
+        ],
+        "text": "책",
+        "exact": true,
+        "human_sequence_nll": 0.028511518612504005,
+        "delta": {
+          "max_abs": 3.4332275390625e-05,
+          "mean_abs": 2.762151325441664e-06,
+          "argmax_equal": true
+        }
+      },
+      "aligned_convolutional_feature_delta_before_copy": {
+        "max_abs": 0.0,
+        "mean_abs": 0.0,
+        "argmax_equal": true
+      },
+      "latent_controls": [
+        {
+          "attention_sees_silence": false,
+          "position_sees_silence": false,
+          "ids": [
+            16,
+            22,
+            2
+          ],
+          "text": "책",
+          "exact": true,
+          "human_sequence_nll": 0.028511520475149155,
+          "delta_from_raw": {
+            "max_abs": 3.814697265625e-05,
+            "mean_abs": 2.762636995612411e-06,
+            "argmax_equal": true
+          }
+        },
+        {
+          "attention_sees_silence": false,
+          "position_sees_silence": true,
+          "ids": [
+            16,
+            22,
+            2
+          ],
+          "text": "책",
+          "exact": true,
+          "human_sequence_nll": 0.12429925799369812,
+          "delta_from_raw": {
+            "max_abs": 9.153016090393066,
+            "mean_abs": 1.0792527198791504,
+            "argmax_equal": false
+          }
+        },
+        {
+          "attention_sees_silence": true,
+          "position_sees_silence": false,
+          "ids": [
+            16,
+            22,
+            2
+          ],
+          "text": "책",
+          "exact": true,
+          "human_sequence_nll": 0.0029908623546361923,
+          "delta_from_raw": {
+            "max_abs": 5.583685398101807,
+            "mean_abs": 0.7258897423744202,
+            "argmax_equal": true
+          }
+        },
+        {
+          "attention_sees_silence": true,
+          "position_sees_silence": true,
+          "ids": [
+            16,
+            22,
+            2
+          ],
+          "text": "책",
+          "exact": true,
+          "human_sequence_nll": 0.001232723006978631,
+          "delta_from_raw": {
+            "max_abs": 9.684823036193848,
+            "mean_abs": 1.0727734565734863,
+            "argmax_equal": true
+          }
+        }
+      ],
+      "masked_latent_control_matches_raw": true
+    },
+    {
+      "id": "training_review:2",
+      "speaker": "e49e72095ac9",
+      "cohort": "human_verified_training",
+      "surface": "책",
+      "seconds": 1.792,
+      "pcm_sha256": "7624f5491311ddb305f294645e1ee20239e36ced4ed9f3127a9e67ac829ae936",
+      "baseline": {
+        "ids": [
+          16,
+          22,
+          2
+        ],
+        "text": "책",
+        "exact": true,
+        "human_sequence_nll": 0.000769302248954773,
+        "greedy_sequence_nll": 0.000769302248954773
+      },
+      "repeat_delta": {
+        "max_abs": 0.0,
+        "mean_abs": 0.0,
+        "argmax_equal": true
+      },
+      "wave_controls": {
+        "minus_12_db": {
+          "ids": [
+            16,
+            22,
+            2
+          ],
+          "text": "책",
+          "exact": true,
+          "human_sequence_nll": 0.0009783387649804354
+        },
+        "plus_half_second_silence_each_side": {
+          "ids": [
+            16,
+            22,
+            2
+          ],
+          "text": "책",
+          "exact": true,
+          "human_sequence_nll": 0.0005308239487931132
+        }
+      },
+      "masked_right_padding": {
+        "ids": [
+          16,
+          22,
+          2
+        ],
+        "text": "책",
+        "exact": true,
+        "human_sequence_nll": 0.0007690787315368652,
+        "delta": {
+          "max_abs": 6.198883056640625e-05,
+          "mean_abs": 3.498498244880466e-06,
+          "argmax_equal": true
+        }
+      },
+      "aligned_convolutional_feature_delta_before_copy": {
+        "max_abs": 0.0,
+        "mean_abs": 0.0,
+        "argmax_equal": true
+      },
+      "latent_controls": [
+        {
+          "attention_sees_silence": false,
+          "position_sees_silence": false,
+          "ids": [
+            16,
+            22,
+            2
+          ],
+          "text": "책",
+          "exact": true,
+          "human_sequence_nll": 0.0007691830396652222,
+          "delta_from_raw": {
+            "max_abs": 6.389617919921875e-05,
+            "mean_abs": 3.524182147884858e-06,
+            "argmax_equal": true
+          }
+        },
+        {
+          "attention_sees_silence": false,
+          "position_sees_silence": true,
+          "ids": [
+            16,
+            22,
+            2
+          ],
+          "text": "책",
+          "exact": true,
+          "human_sequence_nll": 0.013499237596988678,
+          "delta_from_raw": {
+            "max_abs": 6.577861785888672,
+            "mean_abs": 0.9613705277442932,
+            "argmax_equal": true
+          }
+        },
+        {
+          "attention_sees_silence": true,
+          "position_sees_silence": false,
+          "ids": [
+            16,
+            22,
+            2
+          ],
+          "text": "책",
+          "exact": true,
+          "human_sequence_nll": 0.0007469056872650981,
+          "delta_from_raw": {
+            "max_abs": 4.088407516479492,
+            "mean_abs": 0.5089071989059448,
+            "argmax_equal": false
+          }
+        },
+        {
+          "attention_sees_silence": true,
+          "position_sees_silence": true,
+          "ids": [
+            16,
+            22,
+            2
+          ],
+          "text": "책",
+          "exact": true,
+          "human_sequence_nll": 0.0004173368215560913,
+          "delta_from_raw": {
+            "max_abs": 12.260513305664062,
+            "mean_abs": 0.7410871982574463,
+            "argmax_equal": false
+          }
+        }
+      ],
+      "masked_latent_control_matches_raw": true
+    },
+    {
+      "id": "training_review:3",
+      "speaker": "817fbc1c4386",
+      "cohort": "human_verified_training",
+      "surface": "예쁜 나비",
+      "seconds": 2.048,
+      "pcm_sha256": "05d21852ddc58a9961fddb939b59c92172bc76cf8f887cab39aa934269451406",
+      "baseline": {
+        "ids": [
+          13,
+          28,
+          10,
+          39,
+          4,
+          1,
+          4,
+          21,
+          9,
+          41
+        ],
+        "text": "예쁜 나비",
+        "exact": true,
+        "human_sequence_nll": 0.00109582778532058,
+        "greedy_sequence_nll": 0.00109582778532058
+      },
+      "repeat_delta": {
+        "max_abs": 0.0,
+        "mean_abs": 0.0,
+        "argmax_equal": true
+      },
+      "wave_controls": {
+        "minus_12_db": {
+          "ids": [
+            13,
+            28,
+            10,
+            39,
+            4,
+            1,
+            4,
+            21,
+            9,
+            41
+          ],
+          "text": "예쁜 나비",
+          "exact": true,
+          "human_sequence_nll": 0.0011359195923432708
+        },
+        "plus_half_second_silence_each_side": {
+          "ids": [
+            13,
+            28,
+            10,
+            39,
+            4,
+            1,
+            4,
+            21,
+            9,
+            41
+          ],
+          "text": "예쁜 나비",
+          "exact": true,
+          "human_sequence_nll": 0.000534886377863586
+        }
+      },
+      "masked_right_padding": {
+        "ids": [
+          13,
+          28,
+          10,
+          39,
+          4,
+          1,
+          4,
+          21,
+          9,
+          41
+        ],
+        "text": "예쁜 나비",
+        "exact": true,
+        "human_sequence_nll": 0.0010967218549922109,
+        "delta": {
+          "max_abs": 0.002408623695373535,
+          "mean_abs": 0.0002761210489552468,
+          "argmax_equal": true
+        }
+      },
+      "aligned_convolutional_feature_delta_before_copy": {
+        "max_abs": 3.55355441570282e-05,
+        "mean_abs": 5.711314088330255e-07,
+        "argmax_equal": true
+      },
+      "latent_controls": [
+        {
+          "attention_sees_silence": false,
+          "position_sees_silence": false,
+          "ids": [
+            13,
+            28,
+            10,
+            39,
+            4,
+            1,
+            4,
+            21,
+            9,
+            41
+          ],
+          "text": "예쁜 나비",
+          "exact": true,
+          "human_sequence_nll": 0.0010959022911265492,
+          "delta_from_raw": {
+            "max_abs": 1.430511474609375e-05,
+            "mean_abs": 1.9313681605126476e-06,
+            "argmax_equal": true
+          }
+        },
+        {
+          "attention_sees_silence": false,
+          "position_sees_silence": true,
+          "ids": [
+            13,
+            28,
+            10,
+            39,
+            4,
+            1,
+            4,
+            21,
+            9,
+            41
+          ],
+          "text": "예쁜 나비",
+          "exact": true,
+          "human_sequence_nll": 0.010820427909493446,
+          "delta_from_raw": {
+            "max_abs": 7.649870872497559,
+            "mean_abs": 1.0071488618850708,
+            "argmax_equal": false
+          }
+        },
+        {
+          "attention_sees_silence": true,
+          "position_sees_silence": false,
+          "ids": [
+            13,
+            28,
+            10,
+            39,
+            4,
+            1,
+            4,
+            21,
+            9,
+            41
+          ],
+          "text": "예쁜 나비",
+          "exact": true,
+          "human_sequence_nll": 0.0007176466169767082,
+          "delta_from_raw": {
+            "max_abs": 3.2004261016845703,
+            "mean_abs": 0.5180875658988953,
+            "argmax_equal": false
+          }
+        },
+        {
+          "attention_sees_silence": true,
+          "position_sees_silence": true,
+          "ids": [
+            13,
+            28,
+            10,
+            39,
+            4,
+            1,
+            4,
+            21,
+            9,
+            41
+          ],
+          "text": "예쁜 나비",
+          "exact": true,
+          "human_sequence_nll": 0.0005048381863161922,
+          "delta_from_raw": {
+            "max_abs": 5.399313926696777,
+            "mean_abs": 0.6342931389808655,
+            "argmax_equal": false
+          }
+        }
+      ],
+      "masked_latent_control_matches_raw": true
+    },
+    {
+      "id": "training_review:4",
+      "speaker": "987f08bbb02c",
+      "cohort": "human_verified_training",
+      "surface": "예쁜 나비",
+      "seconds": 2.176,
+      "pcm_sha256": "680900111d2f9fe1bef4e298e3a3fe3c92ee3ecfc10aed8bc5322cb57ec64fb1",
+      "baseline": {
+        "ids": [
+          13,
+          28,
+          10,
+          39,
+          4,
+          1,
+          4,
+          21,
+          9,
+          41
+        ],
+        "text": "예쁜 나비",
+        "exact": true,
+        "human_sequence_nll": 0.004850788041949272,
+        "greedy_sequence_nll": 0.004850788041949272
+      },
+      "repeat_delta": {
+        "max_abs": 0.0,
+        "mean_abs": 0.0,
+        "argmax_equal": true
+      },
+      "wave_controls": {
+        "minus_12_db": {
+          "ids": [
+            13,
+            28,
+            10,
+            39,
+            4,
+            1,
+            4,
+            21,
+            9,
+            41
+          ],
+          "text": "예쁜 나비",
+          "exact": true,
+          "human_sequence_nll": 0.004833930172026157
+        },
+        "plus_half_second_silence_each_side": {
+          "ids": [
+            13,
+            28,
+            10,
+            39,
+            4,
+            1,
+            4,
+            21,
+            9,
+            41
+          ],
+          "text": "예쁜 나비",
+          "exact": true,
+          "human_sequence_nll": 0.00346786598674953
+        }
+      },
+      "masked_right_padding": {
+        "ids": [
+          13,
+          28,
+          10,
+          39,
+          4,
+          1,
+          4,
+          21,
+          9,
+          41
+        ],
+        "text": "예쁜 나비",
+        "exact": true,
+        "human_sequence_nll": 0.004850668832659721,
+        "delta": {
+          "max_abs": 0.0011444091796875,
+          "mean_abs": 8.1755752034951e-05,
+          "argmax_equal": true
+        }
+      },
+      "aligned_convolutional_feature_delta_before_copy": {
+        "max_abs": 2.7179718017578125e-05,
+        "mean_abs": 3.7653759932254616e-07,
+        "argmax_equal": true
+      },
+      "latent_controls": [
+        {
+          "attention_sees_silence": false,
+          "position_sees_silence": false,
+          "ids": [
+            13,
+            28,
+            10,
+            39,
+            4,
+            1,
+            4,
+            21,
+            9,
+            41
+          ],
+          "text": "예쁜 나비",
+          "exact": true,
+          "human_sequence_nll": 0.004850788041949272,
+          "delta_from_raw": {
+            "max_abs": 2.288818359375e-05,
+            "mean_abs": 2.3516297460446367e-06,
+            "argmax_equal": true
+          }
+        },
+        {
+          "attention_sees_silence": false,
+          "position_sees_silence": true,
+          "ids": [
+            13,
+            28,
+            10,
+            39,
+            4,
+            1,
+            4,
+            21,
+            9,
+            41
+          ],
+          "text": "예쁜 나비",
+          "exact": true,
+          "human_sequence_nll": 0.011784404516220093,
+          "delta_from_raw": {
+            "max_abs": 4.211333274841309,
+            "mean_abs": 0.4851958453655243,
+            "argmax_equal": false
+          }
+        },
+        {
+          "attention_sees_silence": true,
+          "position_sees_silence": false,
+          "ids": [
+            13,
+            28,
+            10,
+            39,
+            4,
+            1,
+            4,
+            21,
+            9,
+            41
+          ],
+          "text": "예쁜 나비",
+          "exact": true,
+          "human_sequence_nll": 0.002456588437780738,
+          "delta_from_raw": {
+            "max_abs": 2.9273900985717773,
+            "mean_abs": 0.5170190334320068,
+            "argmax_equal": false
+          }
+        },
+        {
+          "attention_sees_silence": true,
+          "position_sees_silence": true,
+          "ids": [
+            13,
+            28,
+            10,
+            39,
+            4,
+            1,
+            4,
+            21,
+            9,
+            41
+          ],
+          "text": "예쁜 나비",
+          "exact": true,
+          "human_sequence_nll": 0.0034203913528472185,
+          "delta_from_raw": {
+            "max_abs": 3.7108922004699707,
+            "mean_abs": 0.5388525128364563,
+            "argmax_equal": false
+          }
+        }
+      ],
+      "masked_latent_control_matches_raw": true
+    },
+    {
+      "id": "training_review:5",
+      "speaker": "987f08bbb02c",
+      "cohort": "human_verified_training",
+      "surface": "폴짝폴짝 뛰어가요",
+      "seconds": 2.816,
+      "pcm_sha256": "447f5e68e086da2d200a9455e462b68f14a76ce6757240b3f791f56793201a97",
+      "baseline": {
+        "ids": [
+          19,
+          29,
+          7,
+          15,
+          21,
+          2,
+          19,
+          29,
+          7,
+          15,
+          21,
+          2,
+          1,
+          6,
+          37,
+          13,
+          25,
+          2,
+          21,
+          13,
+          33
+        ],
+        "text": "폴짝폴짝 뛰어가요",
+        "exact": true,
+        "human_sequence_nll": 0.0906028002500534,
+        "greedy_sequence_nll": 0.0906028002500534
+      },
+      "repeat_delta": {
+        "max_abs": 0.0,
+        "mean_abs": 0.0,
+        "argmax_equal": true
+      },
+      "wave_controls": {
+        "minus_12_db": {
+          "ids": [
+            19,
+            29,
+            7,
+            15,
+            21,
+            2,
+            19,
+            29,
+            7,
+            15,
+            21,
+            2,
+            1,
+            6,
+            37,
+            13,
+            25,
+            2,
+            21,
+            13,
+            33
+          ],
+          "text": "폴짝폴짝 뛰어가요",
+          "exact": true,
+          "human_sequence_nll": 0.08063584566116333
+        },
+        "plus_half_second_silence_each_side": {
+          "ids": [
+            19,
+            29,
+            7,
+            15,
+            21,
+            2,
+            19,
+            29,
+            7,
+            15,
+            21,
+            2,
+            1,
+            6,
+            37,
+            13,
+            25,
+            2,
+            21,
+            13,
+            33
+          ],
+          "text": "폴짝폴짝 뛰어가요",
+          "exact": true,
+          "human_sequence_nll": 0.049294233322143555
+        }
+      },
+      "masked_right_padding": {
+        "ids": [
+          19,
+          29,
+          7,
+          15,
+          21,
+          2,
+          19,
+          29,
+          7,
+          15,
+          21,
+          2,
+          1,
+          6,
+          37,
+          13,
+          25,
+          2,
+          21,
+          13,
+          33
+        ],
+        "text": "폴짝폴짝 뛰어가요",
+        "exact": true,
+        "human_sequence_nll": 0.0906028002500534,
+        "delta": {
+          "max_abs": 0.0,
+          "mean_abs": 0.0,
+          "argmax_equal": true
+        }
+      },
+      "aligned_convolutional_feature_delta_before_copy": {
+        "max_abs": 0.0,
+        "mean_abs": 0.0,
+        "argmax_equal": true
+      },
+      "latent_controls": [
+        {
+          "attention_sees_silence": false,
+          "position_sees_silence": false,
+          "ids": [
+            19,
+            29,
+            7,
+            15,
+            21,
+            2,
+            19,
+            29,
+            7,
+            15,
+            21,
+            2,
+            1,
+            6,
+            37,
+            13,
+            25,
+            2,
+            21,
+            13,
+            33
+          ],
+          "text": "폴짝폴짝 뛰어가요",
+          "exact": true,
+          "human_sequence_nll": 0.09060248732566833,
+          "delta_from_raw": {
+            "max_abs": 1.52587890625e-05,
+            "mean_abs": 1.6515081142642885e-06,
+            "argmax_equal": true
+          }
+        },
+        {
+          "attention_sees_silence": false,
+          "position_sees_silence": true,
+          "ids": [
+            29,
+            7,
+            15,
+            21,
+            2,
+            19,
+            29,
+            7,
+            15,
+            21,
+            2,
+            1,
+            6,
+            37,
+            13,
+            25,
+            2,
+            21,
+            13,
+            33
+          ],
+          "text": "ㅗㄹ짝폴짝 뛰어가요",
+          "exact": false,
+          "human_sequence_nll": 3.064582109451294,
+          "delta_from_raw": {
+            "max_abs": 8.422653198242188,
+            "mean_abs": 0.8330289125442505,
+            "argmax_equal": false
+          }
+        },
+        {
+          "attention_sees_silence": true,
+          "position_sees_silence": false,
+          "ids": [
+            19,
+            29,
+            7,
+            15,
+            21,
+            2,
+            19,
+            29,
+            7,
+            15,
+            21,
+            2,
+            1,
+            6,
+            37,
+            13,
+            25,
+            2,
+            21,
+            13,
+            33
+          ],
+          "text": "폴짝폴짝 뛰어가요",
+          "exact": true,
+          "human_sequence_nll": 0.05326716601848602,
+          "delta_from_raw": {
+            "max_abs": 12.39560604095459,
+            "mean_abs": 0.6880538463592529,
+            "argmax_equal": false
+          }
+        },
+        {
+          "attention_sees_silence": true,
+          "position_sees_silence": true,
+          "ids": [
+            19,
+            29,
+            7,
+            15,
+            21,
+            2,
+            19,
+            29,
+            7,
+            15,
+            21,
+            2,
+            1,
+            6,
+            37,
+            13,
+            25,
+            2,
+            21,
+            13,
+            33
+          ],
+          "text": "폴짝폴짝 뛰어가요",
+          "exact": true,
+          "human_sequence_nll": 0.048912644386291504,
+          "delta_from_raw": {
+            "max_abs": 17.74044418334961,
+            "mean_abs": 0.7697544693946838,
+            "argmax_equal": false
+          }
+        }
+      ],
+      "masked_latent_control_matches_raw": true
+    },
+    {
+      "id": "training_review:6",
+      "speaker": "e4890f15c8a2",
+      "cohort": "human_verified_training",
+      "surface": "폴짝폴짝 뛰어가요",
+      "seconds": 3.072,
+      "pcm_sha256": "c42372ad79186892e30d4d2705b8b6d1837c57849f897ec58b658b1c02b81989",
+      "baseline": {
+        "ids": [
+          19,
+          29,
+          7,
+          15,
+          21,
+          2,
+          19,
+          29,
+          7,
+          15,
+          21,
+          2,
+          1,
+          6,
+          37,
+          13,
+          25,
+          2,
+          21,
+          13,
+          33
+        ],
+        "text": "폴짝폴짝 뛰어가요",
+        "exact": true,
+        "human_sequence_nll": 0.03201077878475189,
+        "greedy_sequence_nll": 0.03201077878475189
+      },
+      "repeat_delta": {
+        "max_abs": 0.0,
+        "mean_abs": 0.0,
+        "argmax_equal": true
+      },
+      "wave_controls": {
+        "minus_12_db": {
+          "ids": [
+            19,
+            29,
+            7,
+            15,
+            21,
+            2,
+            19,
+            29,
+            7,
+            15,
+            21,
+            2,
+            1,
+            6,
+            37,
+            13,
+            25,
+            2,
+            21,
+            13,
+            33
+          ],
+          "text": "폴짝폴짝 뛰어가요",
+          "exact": true,
+          "human_sequence_nll": 0.03716222569346428
+        },
+        "plus_half_second_silence_each_side": {
+          "ids": [
+            19,
+            29,
+            7,
+            15,
+            21,
+            2,
+            19,
+            29,
+            7,
+            15,
+            21,
+            2,
+            1,
+            6,
+            37,
+            13,
+            25,
+            2,
+            21,
+            13,
+            33
+          ],
+          "text": "폴짝폴짝 뛰어가요",
+          "exact": true,
+          "human_sequence_nll": 0.0254945270717144
+        }
+      },
+      "masked_right_padding": {
+        "ids": [
+          19,
+          29,
+          7,
+          15,
+          21,
+          2,
+          19,
+          29,
+          7,
+          15,
+          21,
+          2,
+          1,
+          6,
+          37,
+          13,
+          25,
+          2,
+          21,
+          13,
+          33
+        ],
+        "text": "폴짝폴짝 뛰어가요",
+        "exact": true,
+        "human_sequence_nll": 0.032011136412620544,
+        "delta": {
+          "max_abs": 3.62396240234375e-05,
+          "mean_abs": 2.650925807756721e-06,
+          "argmax_equal": true
+        }
+      },
+      "aligned_convolutional_feature_delta_before_copy": {
+        "max_abs": 0.0,
+        "mean_abs": 0.0,
+        "argmax_equal": true
+      },
+      "latent_controls": [
+        {
+          "attention_sees_silence": false,
+          "position_sees_silence": false,
+          "ids": [
+            19,
+            29,
+            7,
+            15,
+            21,
+            2,
+            19,
+            29,
+            7,
+            15,
+            21,
+            2,
+            1,
+            6,
+            37,
+            13,
+            25,
+            2,
+            21,
+            13,
+            33
+          ],
+          "text": "폴짝폴짝 뛰어가요",
+          "exact": true,
+          "human_sequence_nll": 0.03201065957546234,
+          "delta_from_raw": {
+            "max_abs": 3.4332275390625e-05,
+            "mean_abs": 2.699153583307634e-06,
+            "argmax_equal": true
+          }
+        },
+        {
+          "attention_sees_silence": false,
+          "position_sees_silence": true,
+          "ids": [
+            19,
+            29,
+            7,
+            15,
+            21,
+            2,
+            19,
+            29,
+            7,
+            15,
+            21,
+            2,
+            1,
+            6,
+            37,
+            13,
+            25,
+            2,
+            21,
+            13,
+            33
+          ],
+          "text": "폴짝폴짝 뛰어가요",
+          "exact": true,
+          "human_sequence_nll": 0.16259633004665375,
+          "delta_from_raw": {
+            "max_abs": 6.016883850097656,
+            "mean_abs": 1.0978227853775024,
+            "argmax_equal": false
+          }
+        },
+        {
+          "attention_sees_silence": true,
+          "position_sees_silence": false,
+          "ids": [
+            19,
+            29,
+            7,
+            15,
+            21,
+            2,
+            19,
+            29,
+            7,
+            15,
+            21,
+            2,
+            1,
+            6,
+            37,
+            13,
+            25,
+            2,
+            21,
+            13,
+            33
+          ],
+          "text": "폴짝폴짝 뛰어가요",
+          "exact": true,
+          "human_sequence_nll": 0.021679967641830444,
+          "delta_from_raw": {
+            "max_abs": 8.297384262084961,
+            "mean_abs": 0.648045539855957,
+            "argmax_equal": false
+          }
+        },
+        {
+          "attention_sees_silence": true,
+          "position_sees_silence": true,
+          "ids": [
+            19,
+            29,
+            7,
+            15,
+            21,
+            2,
+            19,
+            29,
+            7,
+            15,
+            21,
+            2,
+            1,
+            6,
+            37,
+            13,
+            25,
+            2,
+            21,
+            13,
+            33
+          ],
+          "text": "폴짝폴짝 뛰어가요",
+          "exact": true,
+          "human_sequence_nll": 0.025437425822019577,
+          "delta_from_raw": {
+            "max_abs": 11.557467460632324,
+            "mean_abs": 0.5390292406082153,
+            "argmax_equal": false
+          }
+        }
+      ],
+      "masked_latent_control_matches_raw": true
+    },
+    {
+      "id": "personal:child1_18",
+      "speaker": "child1",
+      "cohort": "personal_diagnostic",
+      "surface": "책",
+      "seconds": 0.87,
+      "pcm_sha256": "820c72500a561f6d12b5e2ce9e10a0c8ed8fd387159b0a2fc8f05cd5fb314a50",
+      "baseline": {
+        "ids": [
+          11,
+          22,
+          9
+        ],
+        "text": "샙",
+        "exact": false,
+        "human_sequence_nll": 7.766202926635742,
+        "greedy_sequence_nll": 1.8538472652435303
+      },
+      "beam_origin": "previous same-checkpoint same-prediction personal diagnosis",
+      "beam50": [
+        {
+          "ids": [
+            11,
+            22,
+            9
+          ],
+          "jamo": "ㅅㅐㅂ",
+          "text": "샙",
+          "log_probability": -1.855
+        },
+        {
+          "ids": [
+            11,
+            21,
+            9
+          ],
+          "jamo": "ㅅㅏㅂ",
+          "text": "삽",
+          "log_probability": -2.933
+        },
+        {
+          "ids": [
+            20,
+            22,
+            9
+          ],
+          "jamo": "ㅎㅐㅂ",
+          "text": "햅",
+          "log_probability": -3.048
+        },
+        {
+          "ids": [
+            11,
+            22
+          ],
+          "jamo": "ㅅㅐ",
+          "text": "새",
+          "log_probability": -3.081
+        },
+        {
+          "ids": [
+            9,
+            22,
+            9
+          ],
+          "jamo": "ㅂㅐㅂ",
+          "text": "뱁",
+          "log_probability": -3.401
+        }
+      ],
+      "beam_top_exact": false,
+      "beam_top_same_as_greedy": true,
+      "repeat_delta": {
+        "max_abs": 0.0,
+        "mean_abs": 0.0,
+        "argmax_equal": true
+      },
+      "wave_controls": {
+        "minus_12_db": {
+          "ids": [
+            11,
+            22,
+            9
+          ],
+          "text": "샙",
+          "exact": false,
+          "human_sequence_nll": 8.334405899047852
+        },
+        "plus_half_second_silence_each_side": {
+          "ids": [
+            17,
+            21,
+            9
+          ],
+          "text": "캅",
+          "exact": false,
+          "human_sequence_nll": 10.60318660736084
+        }
+      },
+      "masked_right_padding": {
+        "ids": [
+          11,
+          22,
+          9
+        ],
+        "text": "샙",
+        "exact": false,
+        "human_sequence_nll": 7.7661848068237305,
+        "delta": {
+          "max_abs": 8.20159912109375e-05,
+          "mean_abs": 5.104745014250511e-06,
+          "argmax_equal": true
+        }
+      },
+      "aligned_convolutional_feature_delta_before_copy": {
+        "max_abs": 0.0,
+        "mean_abs": 0.0,
+        "argmax_equal": true
+      },
+      "latent_controls": [
+        {
+          "attention_sees_silence": false,
+          "position_sees_silence": false,
+          "ids": [
+            11,
+            22,
+            9
+          ],
+          "text": "샙",
+          "exact": false,
+          "human_sequence_nll": 7.766182899475098,
+          "delta_from_raw": {
+            "max_abs": 8.106231689453125e-05,
+            "mean_abs": 5.147150659468025e-06,
+            "argmax_equal": true
+          }
+        },
+        {
+          "attention_sees_silence": false,
+          "position_sees_silence": true,
+          "ids": [
+            17,
+            21
+          ],
+          "text": "카",
+          "exact": false,
+          "human_sequence_nll": 8.92463207244873,
+          "delta_from_raw": {
+            "max_abs": 8.756235122680664,
+            "mean_abs": 1.0955466032028198,
+            "argmax_equal": false
+          }
+        },
+        {
+          "attention_sees_silence": true,
+          "position_sees_silence": false,
+          "ids": [
+            20,
+            22
+          ],
+          "text": "해",
+          "exact": false,
+          "human_sequence_nll": 13.163681983947754,
+          "delta_from_raw": {
+            "max_abs": 8.44917106628418,
+            "mean_abs": 1.6557341814041138,
+            "argmax_equal": false
+          }
+        },
+        {
+          "attention_sees_silence": true,
+          "position_sees_silence": true,
+          "ids": [
+            17,
+            21,
+            9
+          ],
+          "text": "캅",
+          "exact": false,
+          "human_sequence_nll": 10.6018705368042,
+          "delta_from_raw": {
+            "max_abs": 8.419787406921387,
+            "mean_abs": 1.1549416780471802,
+            "argmax_equal": false
+          }
+        }
+      ],
+      "masked_latent_control_matches_raw": true
+    },
+    {
+      "id": "personal:child1_22",
+      "speaker": "child1",
+      "cohort": "personal_diagnostic",
+      "surface": "뛰어가요",
+      "seconds": 1.69,
+      "pcm_sha256": "ceb99e9dbd8ba2e20c62dc2318f6de6d78d57e2b145673cf1b9d5b2a5b8c1ade",
+      "baseline": {
+        "ids": [
+          2,
+          37,
+          13,
+          25,
+          1,
+          2,
+          21,
+          13,
+          33
+        ],
+        "text": "귀어 가요",
+        "exact": false,
+        "human_sequence_nll": 5.885167121887207,
+        "greedy_sequence_nll": 1.6483415365219116
+      },
+      "beam_origin": "previous same-checkpoint same-prediction personal diagnosis",
+      "beam50": [
+        {
+          "ids": [
+            2,
+            37,
+            13,
+            25,
+            1,
+            2,
+            21,
+            13,
+            33
+          ],
+          "jamo": "ㄱㅟㅇㅓ|ㄱㅏㅇㅛ",
+          "text": "귀어 가요",
+          "log_probability": -1.653
+        },
+        {
+          "ids": [
+            2,
+            41,
+            13,
+            25,
+            1,
+            2,
+            21,
+            13,
+            33
+          ],
+          "jamo": "ㄱㅣㅇㅓ|ㄱㅏㅇㅛ",
+          "text": "기어 가요",
+          "log_probability": -2.809
+        },
+        {
+          "ids": [
+            2,
+            37,
+            13,
+            25,
+            2,
+            21,
+            13,
+            33
+          ],
+          "jamo": "ㄱㅟㅇㅓㄱㅏㅇㅛ",
+          "text": "귀어가요",
+          "log_probability": -3.017
+        },
+        {
+          "ids": [
+            14,
+            37,
+            13,
+            25,
+            1,
+            2,
+            21,
+            13,
+            33
+          ],
+          "jamo": "ㅈㅟㅇㅓ|ㄱㅏㅇㅛ",
+          "text": "쥐어 가요",
+          "log_probability": -3.092
+        },
+        {
+          "ids": [
+            5,
+            37,
+            13,
+            25,
+            1,
+            2,
+            21,
+            13,
+            33
+          ],
+          "jamo": "ㄷㅟㅇㅓ|ㄱㅏㅇㅛ",
+          "text": "뒤어 가요",
+          "log_probability": -3.148
+        }
+      ],
+      "beam_top_exact": false,
+      "beam_top_same_as_greedy": true,
+      "repeat_delta": {
+        "max_abs": 0.0,
+        "mean_abs": 0.0,
+        "argmax_equal": true
+      },
+      "wave_controls": {
+        "minus_12_db": {
+          "ids": [
+            2,
+            37,
+            13,
+            25,
+            1,
+            2,
+            21,
+            13,
+            33
+          ],
+          "text": "귀어 가요",
+          "exact": false,
+          "human_sequence_nll": 10.931331634521484
+        },
+        "plus_half_second_silence_each_side": {
+          "ids": [
+            2,
+            37,
+            13,
+            25,
+            1,
+            2,
+            21,
+            13,
+            33
+          ],
+          "text": "귀어 가요",
+          "exact": false,
+          "human_sequence_nll": 5.821446895599365
+        }
+      },
+      "masked_right_padding": {
+        "ids": [
+          2,
+          37,
+          13,
+          25,
+          1,
+          2,
+          21,
+          13,
+          33
+        ],
+        "text": "귀어 가요",
+        "exact": false,
+        "human_sequence_nll": 5.88516092300415,
+        "delta": {
+          "max_abs": 3.0517578125e-05,
+          "mean_abs": 2.460116547808866e-06,
+          "argmax_equal": true
+        }
+      },
+      "aligned_convolutional_feature_delta_before_copy": {
+        "max_abs": 0.0,
+        "mean_abs": 0.0,
+        "argmax_equal": true
+      },
+      "latent_controls": [
+        {
+          "attention_sees_silence": false,
+          "position_sees_silence": false,
+          "ids": [
+            2,
+            37,
+            13,
+            25,
+            1,
+            2,
+            21,
+            13,
+            33
+          ],
+          "text": "귀어 가요",
+          "exact": false,
+          "human_sequence_nll": 5.885153770446777,
+          "delta_from_raw": {
+            "max_abs": 2.47955322265625e-05,
+            "mean_abs": 2.4526887045794865e-06,
+            "argmax_equal": true
+          }
+        },
+        {
+          "attention_sees_silence": false,
+          "position_sees_silence": true,
+          "ids": [
+            6,
+            37,
+            13,
+            25,
+            2,
+            21,
+            13,
+            33
+          ],
+          "text": "뛰어가요",
+          "exact": true,
+          "human_sequence_nll": 1.0263087749481201,
+          "delta_from_raw": {
+            "max_abs": 6.930683135986328,
+            "mean_abs": 0.7161630392074585,
+            "argmax_equal": false
+          }
+        },
+        {
+          "attention_sees_silence": true,
+          "position_sees_silence": false,
+          "ids": [
+            2,
+            37,
+            13,
+            25,
+            1,
+            2,
+            21,
+            13,
+            33
+          ],
+          "text": "귀어 가요",
+          "exact": false,
+          "human_sequence_nll": 5.289060115814209,
+          "delta_from_raw": {
+            "max_abs": 6.959901809692383,
+            "mean_abs": 1.1055890321731567,
+            "argmax_equal": false
+          }
+        },
+        {
+          "attention_sees_silence": true,
+          "position_sees_silence": true,
+          "ids": [
+            2,
+            37,
+            13,
+            25,
+            1,
+            2,
+            21,
+            13,
+            33
+          ],
+          "text": "귀어 가요",
+          "exact": false,
+          "human_sequence_nll": 5.819619655609131,
+          "delta_from_raw": {
+            "max_abs": 7.340228080749512,
+            "mean_abs": 0.6973894238471985,
+            "argmax_equal": true
+          }
+        }
+      ],
+      "masked_latent_control_matches_raw": true
+    },
+    {
+      "id": "personal:child1_17",
+      "speaker": "child1",
+      "cohort": "personal_diagnostic",
+      "surface": "쌕",
+      "seconds": 1.09,
+      "pcm_sha256": "431d8ac5383cca89be4c8730dc5ba0cff46a89df8bdccaa796b1f60fc685b4b1",
+      "baseline": {
+        "ids": [
+          22,
+          2
+        ],
+        "text": "ㅐㄱ",
+        "exact": false,
+        "human_sequence_nll": 9.057326316833496,
+        "greedy_sequence_nll": 1.4091626405715942
+      },
+      "beam_origin": "previous same-checkpoint same-prediction personal diagnosis",
+      "beam50": [
+        {
+          "ids": [
+            16,
+            22,
+            2
+          ],
+          "jamo": "ㅊㅐㄱ",
+          "text": "책",
+          "log_probability": -0.864
+        },
+        {
+          "ids": [
+            22,
+            2
+          ],
+          "jamo": "ㅐㄱ",
+          "text": "ㅐㄱ",
+          "log_probability": -1.409
+        },
+        {
+          "ids": [
+            11,
+            22,
+            2
+          ],
+          "jamo": "ㅅㅐㄱ",
+          "text": "색",
+          "log_probability": -1.806
+        },
+        {
+          "ids": [
+            16,
+            11,
+            22,
+            2
+          ],
+          "jamo": "ㅊㅅㅐㄱ",
+          "text": "ㅊ색",
+          "log_probability": -2.141
+        },
+        {
+          "ids": [
+            11,
+            16,
+            22,
+            2
+          ],
+          "jamo": "ㅅㅊㅐㄱ",
+          "text": "ㅅ책",
+          "log_probability": -4.596
+        }
+      ],
+      "beam_top_exact": false,
+      "beam_top_same_as_greedy": false,
+      "repeat_delta": {
+        "max_abs": 0.0,
+        "mean_abs": 0.0,
+        "argmax_equal": true
+      },
+      "wave_controls": {
+        "minus_12_db": {
+          "ids": [
+            16,
+            22,
+            2
+          ],
+          "text": "책",
+          "exact": false,
+          "human_sequence_nll": 9.400495529174805
+        },
+        "plus_half_second_silence_each_side": {
+          "ids": [
+            16,
+            22,
+            2
+          ],
+          "text": "책",
+          "exact": false,
+          "human_sequence_nll": 7.089445114135742
+        }
+      },
+      "masked_right_padding": {
+        "ids": [
+          22,
+          2
+        ],
+        "text": "ㅐㄱ",
+        "exact": false,
+        "human_sequence_nll": 9.057351112365723,
+        "delta": {
+          "max_abs": 5.91278076171875e-05,
+          "mean_abs": 3.777160145546077e-06,
+          "argmax_equal": true
+        }
+      },
+      "aligned_convolutional_feature_delta_before_copy": {
+        "max_abs": 0.0,
+        "mean_abs": 0.0,
+        "argmax_equal": true
+      },
+      "latent_controls": [
+        {
+          "attention_sees_silence": false,
+          "position_sees_silence": false,
+          "ids": [
+            22,
+            2
+          ],
+          "text": "ㅐㄱ",
+          "exact": false,
+          "human_sequence_nll": 9.057334899902344,
+          "delta_from_raw": {
+            "max_abs": 4.7206878662109375e-05,
+            "mean_abs": 2.982589194289176e-06,
+            "argmax_equal": true
+          }
+        },
+        {
+          "attention_sees_silence": false,
+          "position_sees_silence": true,
+          "ids": [
+            16,
+            22,
+            2
+          ],
+          "text": "책",
+          "exact": false,
+          "human_sequence_nll": 2.100104570388794,
+          "delta_from_raw": {
+            "max_abs": 7.0459771156311035,
+            "mean_abs": 1.0059583187103271,
+            "argmax_equal": false
+          }
+        },
+        {
+          "attention_sees_silence": true,
+          "position_sees_silence": false,
+          "ids": [
+            16,
+            22,
+            2
+          ],
+          "text": "책",
+          "exact": false,
+          "human_sequence_nll": 10.784790992736816,
+          "delta_from_raw": {
+            "max_abs": 8.107561111450195,
+            "mean_abs": 1.152113914489746,
+            "argmax_equal": false
+          }
+        },
+        {
+          "attention_sees_silence": true,
+          "position_sees_silence": true,
+          "ids": [
+            16,
+            22,
+            2
+          ],
+          "text": "책",
+          "exact": false,
+          "human_sequence_nll": 7.087452411651611,
+          "delta_from_raw": {
+            "max_abs": 11.467881202697754,
+            "mean_abs": 1.088637113571167,
+            "argmax_equal": false
+          }
+        }
+      ],
+      "masked_latent_control_matches_raw": true
+    },
+    {
+      "id": "personal:child1_09",
+      "speaker": "child1",
+      "cohort": "personal_diagnostic",
+      "surface": "나비",
+      "seconds": 1.19,
+      "pcm_sha256": "d1645736547afdb4a37493b34a7b3c7e613824ad2ea2fb8a32c2a78f78f2770e",
+      "baseline": {
+        "ids": [
+          4,
+          21,
+          7,
+          41
+        ],
+        "text": "나리",
+        "exact": false,
+        "human_sequence_nll": 1.830404281616211,
+        "greedy_sequence_nll": 1.2377939224243164
+      },
+      "beam_origin": "previous same-checkpoint same-prediction personal diagnosis",
+      "beam50": [
+        {
+          "ids": [
+            4,
+            21,
+            7,
+            41
+          ],
+          "jamo": "ㄴㅏㄹㅣ",
+          "text": "나리",
+          "log_probability": -1.238
+        },
+        {
+          "ids": [
+            4,
+            21,
+            9,
+            41
+          ],
+          "jamo": "ㄴㅏㅂㅣ",
+          "text": "나비",
+          "log_probability": -1.83
+        },
+        {
+          "ids": [
+            4,
+            21,
+            7,
+            9,
+            41
+          ],
+          "jamo": "ㄴㅏㄹㅂㅣ",
+          "text": "날비",
+          "log_probability": -1.951
+        },
+        {
+          "ids": [
+            4,
+            21,
+            7,
+            9
+          ],
+          "jamo": "ㄴㅏㄹㅂ",
+          "text": "날ㅂ",
+          "log_probability": -3.107
+        },
+        {
+          "ids": [
+            4,
+            21,
+            41
+          ],
+          "jamo": "ㄴㅏㅣ",
+          "text": "나ㅣ",
+          "log_probability": -3.418
+        }
+      ],
+      "beam_top_exact": false,
+      "beam_top_same_as_greedy": true,
+      "repeat_delta": {
+        "max_abs": 0.0,
+        "mean_abs": 0.0,
+        "argmax_equal": true
+      },
+      "wave_controls": {
+        "minus_12_db": {
+          "ids": [
+            4,
+            21,
+            9,
+            41
+          ],
+          "text": "나비",
+          "exact": true,
+          "human_sequence_nll": 1.216042399406433
+        },
+        "plus_half_second_silence_each_side": {
+          "ids": [
+            4,
+            21,
+            9,
+            41
+          ],
+          "text": "나비",
+          "exact": true,
+          "human_sequence_nll": 0.27045929431915283
+        }
+      },
+      "masked_right_padding": {
+        "ids": [
+          4,
+          21,
+          7,
+          41
+        ],
+        "text": "나리",
+        "exact": false,
+        "human_sequence_nll": 1.8304083347320557,
+        "delta": {
+          "max_abs": 1.71661376953125e-05,
+          "mean_abs": 2.4977266548376065e-06,
+          "argmax_equal": true
+        }
+      },
+      "aligned_convolutional_feature_delta_before_copy": {
+        "max_abs": 0.0,
+        "mean_abs": 0.0,
+        "argmax_equal": true
+      },
+      "latent_controls": [
+        {
+          "attention_sees_silence": false,
+          "position_sees_silence": false,
+          "ids": [
+            4,
+            21,
+            7,
+            41
+          ],
+          "text": "나리",
+          "exact": false,
+          "human_sequence_nll": 1.830406904220581,
+          "delta_from_raw": {
+            "max_abs": 2.002716064453125e-05,
+            "mean_abs": 2.491532541171182e-06,
+            "argmax_equal": true
+          }
+        },
+        {
+          "attention_sees_silence": false,
+          "position_sees_silence": true,
+          "ids": [
+            4,
+            21,
+            7,
+            41
+          ],
+          "text": "나리",
+          "exact": false,
+          "human_sequence_nll": 5.315290927886963,
+          "delta_from_raw": {
+            "max_abs": 8.302497863769531,
+            "mean_abs": 0.8619413375854492,
+            "argmax_equal": false
+          }
+        },
+        {
+          "attention_sees_silence": true,
+          "position_sees_silence": false,
+          "ids": [
+            4,
+            21,
+            9,
+            41
+          ],
+          "text": "나비",
+          "exact": true,
+          "human_sequence_nll": 0.08782778680324554,
+          "delta_from_raw": {
+            "max_abs": 10.630297660827637,
+            "mean_abs": 1.5115121603012085,
+            "argmax_equal": false
+          }
+        },
+        {
+          "attention_sees_silence": true,
+          "position_sees_silence": true,
+          "ids": [
+            4,
+            21,
+            9,
+            41
+          ],
+          "text": "나비",
+          "exact": true,
+          "human_sequence_nll": 0.2704383134841919,
+          "delta_from_raw": {
+            "max_abs": 15.96755313873291,
+            "mean_abs": 1.4951413869857788,
+            "argmax_equal": false
+          }
+        }
+      ],
+      "masked_latent_control_matches_raw": true
+    },
+    {
+      "id": "personal:child2_20",
+      "speaker": "child2",
+      "cohort": "personal_diagnostic",
+      "surface": "가",
+      "seconds": 0.78,
+      "pcm_sha256": "c3e3cf24ea737ff92c475d7ece99ada6b6d4c161a0efda1b147f3e7ee9d0b7a1",
+      "baseline": {
+        "ids": [
+          20,
+          21
+        ],
+        "text": "하",
+        "exact": false,
+        "human_sequence_nll": 7.397429466247559,
+        "greedy_sequence_nll": 0.5433962941169739
+      },
+      "beam_origin": "previous same-checkpoint same-prediction personal diagnosis",
+      "beam50": [
+        {
+          "ids": [
+            20,
+            21
+          ],
+          "jamo": "ㅎㅏ",
+          "text": "하",
+          "log_probability": -0.543
+        },
+        {
+          "ids": [
+            17,
+            21
+          ],
+          "jamo": "ㅋㅏ",
+          "text": "카",
+          "log_probability": -1.139
+        },
+        {
+          "ids": [
+            16,
+            21
+          ],
+          "jamo": "ㅊㅏ",
+          "text": "차",
+          "log_probability": -4.355
+        },
+        {
+          "ids": [
+            11,
+            21
+          ],
+          "jamo": "ㅅㅏ",
+          "text": "사",
+          "log_probability": -4.373
+        },
+        {
+          "ids": [
+            18,
+            21
+          ],
+          "jamo": "ㅌㅏ",
+          "text": "타",
+          "log_probability": -4.762
+        }
+      ],
+      "beam_top_exact": false,
+      "beam_top_same_as_greedy": true,
+      "repeat_delta": {
+        "max_abs": 0.0,
+        "mean_abs": 0.0,
+        "argmax_equal": true
+      },
+      "wave_controls": {
+        "minus_12_db": {
+          "ids": [
+            20,
+            21
+          ],
+          "text": "하",
+          "exact": false,
+          "human_sequence_nll": 7.6417555809021
+        },
+        "plus_half_second_silence_each_side": {
+          "ids": [
+            17,
+            21
+          ],
+          "text": "카",
+          "exact": false,
+          "human_sequence_nll": 5.561432838439941
+        }
+      },
+      "masked_right_padding": {
+        "ids": [
+          20,
+          21
+        ],
+        "text": "하",
+        "exact": false,
+        "human_sequence_nll": 7.39739990234375,
+        "delta": {
+          "max_abs": 0.00012993812561035156,
+          "mean_abs": 6.686461802019039e-06,
+          "argmax_equal": true
+        }
+      },
+      "aligned_convolutional_feature_delta_before_copy": {
+        "max_abs": 0.0,
+        "mean_abs": 0.0,
+        "argmax_equal": true
+      },
+      "latent_controls": [
+        {
+          "attention_sees_silence": false,
+          "position_sees_silence": false,
+          "ids": [
+            20,
+            21
+          ],
+          "text": "하",
+          "exact": false,
+          "human_sequence_nll": 7.39739990234375,
+          "delta_from_raw": {
+            "max_abs": 0.0001277923583984375,
+            "mean_abs": 6.47738806947018e-06,
+            "argmax_equal": true
+          }
+        },
+        {
+          "attention_sees_silence": false,
+          "position_sees_silence": true,
+          "ids": [
+            11,
+            21
+          ],
+          "text": "사",
+          "exact": false,
+          "human_sequence_nll": 4.896936893463135,
+          "delta_from_raw": {
+            "max_abs": 12.367494583129883,
+            "mean_abs": 1.0290852785110474,
+            "argmax_equal": false
+          }
+        },
+        {
+          "attention_sees_silence": true,
+          "position_sees_silence": false,
+          "ids": [
+            17,
+            21
+          ],
+          "text": "카",
+          "exact": false,
+          "human_sequence_nll": 3.4077165126800537,
+          "delta_from_raw": {
+            "max_abs": 11.09167766571045,
+            "mean_abs": 0.8896812200546265,
+            "argmax_equal": false
+          }
+        },
+        {
+          "attention_sees_silence": true,
+          "position_sees_silence": true,
+          "ids": [
+            17,
+            21
+          ],
+          "text": "카",
+          "exact": false,
+          "human_sequence_nll": 5.561208724975586,
+          "delta_from_raw": {
+            "max_abs": 11.530778884887695,
+            "mean_abs": 1.8515304327011108,
+            "argmax_equal": false
+          }
+        }
+      ],
+      "masked_latent_control_matches_raw": true
+    },
+    {
+      "id": "personal:child1_19",
+      "speaker": "child1",
+      "cohort": "personal_diagnostic",
+      "surface": "실로폰",
+      "seconds": 1.27,
+      "pcm_sha256": "37eed4563b2e5245d9007a3c8aa4b2df077476ec519a8030395cbbceba0b894f",
+      "baseline": {
+        "ids": [
+          17,
+          26,
+          7,
+          7,
+          41,
+          19,
+          29,
+          4
+        ],
+        "text": "켈리폰",
+        "exact": false,
+        "human_sequence_nll": 17.11405372619629,
+        "greedy_sequence_nll": 0.2642398774623871
+      },
+      "beam_origin": "previous same-checkpoint same-prediction personal diagnosis",
+      "beam50": [
+        {
+          "ids": [
+            17,
+            26,
+            7,
+            7,
+            41,
+            19,
+            29,
+            4
+          ],
+          "jamo": "ㅋㅔㄹㄹㅣㅍㅗㄴ",
+          "text": "켈리폰",
+          "log_probability": -0.264
+        },
+        {
+          "ids": [
+            17,
+            26,
+            7,
+            7,
+            41,
+            1,
+            19,
+            29,
+            4
+          ],
+          "jamo": "ㅋㅔㄹㄹㅣ|ㅍㅗㄴ",
+          "text": "켈리 폰",
+          "log_probability": -3.304
+        },
+        {
+          "ids": [
+            17,
+            26,
+            7,
+            7,
+            39,
+            19,
+            29,
+            4
+          ],
+          "jamo": "ㅋㅔㄹㄹㅡㅍㅗㄴ",
+          "text": "켈르폰",
+          "log_probability": -3.506
+        },
+        {
+          "ids": [
+            17,
+            26,
+            7,
+            7,
+            34,
+            19,
+            29,
+            4
+          ],
+          "jamo": "ㅋㅔㄹㄹㅜㅍㅗㄴ",
+          "text": "켈루폰",
+          "log_probability": -3.815
+        },
+        {
+          "ids": [
+            17,
+            26,
+            7,
+            7,
+            29,
+            19,
+            29,
+            4
+          ],
+          "jamo": "ㅋㅔㄹㄹㅗㅍㅗㄴ",
+          "text": "켈로폰",
+          "log_probability": -3.991
+        }
+      ],
+      "beam_top_exact": false,
+      "beam_top_same_as_greedy": true,
+      "repeat_delta": {
+        "max_abs": 0.0,
+        "mean_abs": 0.0,
+        "argmax_equal": true
+      },
+      "wave_controls": {
+        "minus_12_db": {
+          "ids": [
+            17,
+            26,
+            7,
+            7,
+            41,
+            19,
+            29,
+            4
+          ],
+          "text": "켈리폰",
+          "exact": false,
+          "human_sequence_nll": 17.665250778198242
+        },
+        "plus_half_second_silence_each_side": {
+          "ids": [
+            17,
+            26,
+            7,
+            7,
+            41,
+            19,
+            29,
+            4
+          ],
+          "text": "켈리폰",
+          "exact": false,
+          "human_sequence_nll": 14.318909645080566
+        }
+      },
+      "masked_right_padding": {
+        "ids": [
+          17,
+          26,
+          7,
+          7,
+          41,
+          19,
+          29,
+          4
+        ],
+        "text": "켈리폰",
+        "exact": false,
+        "human_sequence_nll": 17.11409568786621,
+        "delta": {
+          "max_abs": 3.0517578125e-05,
+          "mean_abs": 3.3145695397251984e-06,
+          "argmax_equal": true
+        }
+      },
+      "aligned_convolutional_feature_delta_before_copy": {
+        "max_abs": 0.0,
+        "mean_abs": 0.0,
+        "argmax_equal": true
+      },
+      "latent_controls": [
+        {
+          "attention_sees_silence": false,
+          "position_sees_silence": false,
+          "ids": [
+            17,
+            26,
+            7,
+            7,
+            41,
+            19,
+            29,
+            4
+          ],
+          "text": "켈리폰",
+          "exact": false,
+          "human_sequence_nll": 17.114103317260742,
+          "delta_from_raw": {
+            "max_abs": 3.62396240234375e-05,
+            "mean_abs": 3.250379904784495e-06,
+            "argmax_equal": true
+          }
+        },
+        {
+          "attention_sees_silence": false,
+          "position_sees_silence": true,
+          "ids": [
+            17,
+            41,
+            7,
+            7,
+            29,
+            19,
+            29,
+            4,
+            1
+          ],
+          "text": "킬로폰 ",
+          "exact": false,
+          "human_sequence_nll": 15.556861877441406,
+          "delta_from_raw": {
+            "max_abs": 9.95991039276123,
+            "mean_abs": 0.9451372623443604,
+            "argmax_equal": false
+          }
+        },
+        {
+          "attention_sees_silence": true,
+          "position_sees_silence": false,
+          "ids": [
+            20,
+            26,
+            7,
+            7,
+            41,
+            19,
+            29,
+            4
+          ],
+          "text": "헬리폰",
+          "exact": false,
+          "human_sequence_nll": 15.561233520507812,
+          "delta_from_raw": {
+            "max_abs": 11.256499290466309,
+            "mean_abs": 0.920261800289154,
+            "argmax_equal": false
+          }
+        },
+        {
+          "attention_sees_silence": true,
+          "position_sees_silence": true,
+          "ids": [
+            17,
+            26,
+            7,
+            7,
+            41,
+            19,
+            29,
+            4
+          ],
+          "text": "켈리폰",
+          "exact": false,
+          "human_sequence_nll": 14.318443298339844,
+          "delta_from_raw": {
+            "max_abs": 10.647608757019043,
+            "mean_abs": 0.9092203974723816,
+            "argmax_equal": false
+          }
+        }
+      ],
+      "masked_latent_control_matches_raw": true
+    },
+    {
+      "id": "personal:child2_28",
+      "speaker": "child2",
+      "cohort": "personal_diagnostic",
+      "surface": "놔요",
+      "seconds": 1.12,
+      "pcm_sha256": "39134be4731713aeeaf9dc2890c412aacb24d0eec72cbc4f746805e76163ccc9",
+      "baseline": {
+        "ids": [
+          13,
+          30,
+          13,
+          33
+        ],
+        "text": "와요",
+        "exact": false,
+        "human_sequence_nll": 8.981393814086914,
+        "greedy_sequence_nll": 0.006352405529469252
+      },
+      "beam_origin": "previous same-checkpoint same-prediction personal diagnosis",
+      "beam50": [
+        {
+          "ids": [
+            13,
+            30,
+            13,
+            33
+          ],
+          "jamo": "ㅇㅘㅇㅛ",
+          "text": "와요",
+          "log_probability": -0.006
+        },
+        {
+          "ids": [
+            13,
+            13,
+            30,
+            13,
+            33
+          ],
+          "jamo": "ㅇㅇㅘㅇㅛ",
+          "text": "ㅇ와요",
+          "log_probability": -7.45
+        },
+        {
+          "ids": [
+            13,
+            21,
+            13,
+            33
+          ],
+          "jamo": "ㅇㅏㅇㅛ",
+          "text": "아요",
+          "log_probability": -7.529
+        },
+        {
+          "ids": [
+            13,
+            30,
+            13
+          ],
+          "jamo": "ㅇㅘㅇ",
+          "text": "왕",
+          "log_probability": -7.556
+        },
+        {
+          "ids": [
+            13,
+            35,
+            13,
+            33
+          ],
+          "jamo": "ㅇㅝㅇㅛ",
+          "text": "워요",
+          "log_probability": -7.695
+        }
+      ],
+      "beam_top_exact": false,
+      "beam_top_same_as_greedy": true,
+      "repeat_delta": {
+        "max_abs": 0.0,
+        "mean_abs": 0.0,
+        "argmax_equal": true
+      },
+      "wave_controls": {
+        "minus_12_db": {
+          "ids": [
+            13,
+            30,
+            13,
+            33
+          ],
+          "text": "와요",
+          "exact": false,
+          "human_sequence_nll": 8.9400634765625
+        },
+        "plus_half_second_silence_each_side": {
+          "ids": [
+            13,
+            30,
+            13,
+            33
+          ],
+          "text": "와요",
+          "exact": false,
+          "human_sequence_nll": 8.154488563537598
+        }
+      },
+      "masked_right_padding": {
+        "ids": [
+          13,
+          30,
+          13,
+          33
+        ],
+        "text": "와요",
+        "exact": false,
+        "human_sequence_nll": 8.981389999389648,
+        "delta": {
+          "max_abs": 2.956390380859375e-05,
+          "mean_abs": 2.737140448516584e-06,
+          "argmax_equal": true
+        }
+      },
+      "aligned_convolutional_feature_delta_before_copy": {
+        "max_abs": 0.0,
+        "mean_abs": 0.0,
+        "argmax_equal": true
+      },
+      "latent_controls": [
+        {
+          "attention_sees_silence": false,
+          "position_sees_silence": false,
+          "ids": [
+            13,
+            30,
+            13,
+            33
+          ],
+          "text": "와요",
+          "exact": false,
+          "human_sequence_nll": 8.9813871383667,
+          "delta_from_raw": {
+            "max_abs": 2.956390380859375e-05,
+            "mean_abs": 2.818556140482542e-06,
+            "argmax_equal": true
+          }
+        },
+        {
+          "attention_sees_silence": false,
+          "position_sees_silence": true,
+          "ids": [
+            9,
+            30,
+            13
+          ],
+          "text": "봥",
+          "exact": false,
+          "human_sequence_nll": 7.660540580749512,
+          "delta_from_raw": {
+            "max_abs": 15.315317153930664,
+            "mean_abs": 1.831414818763733,
+            "argmax_equal": false
+          }
+        },
+        {
+          "attention_sees_silence": true,
+          "position_sees_silence": false,
+          "ids": [
+            13,
+            30,
+            13,
+            33
+          ],
+          "text": "와요",
+          "exact": false,
+          "human_sequence_nll": 6.269583225250244,
+          "delta_from_raw": {
+            "max_abs": 6.131738662719727,
+            "mean_abs": 1.0099248886108398,
+            "argmax_equal": true
+          }
+        },
+        {
+          "attention_sees_silence": true,
+          "position_sees_silence": true,
+          "ids": [
+            13,
+            30,
+            13,
+            33
+          ],
+          "text": "와요",
+          "exact": false,
+          "human_sequence_nll": 8.15446662902832,
+          "delta_from_raw": {
+            "max_abs": 8.067869186401367,
+            "mean_abs": 1.295141339302063,
+            "argmax_equal": true
+          }
+        }
+      ],
+      "masked_latent_control_matches_raw": true
+    },
+    {
+      "id": "personal:child1_21",
+      "speaker": "child1",
+      "cohort": "personal_diagnostic",
+      "surface": "가요",
+      "seconds": 1.11,
+      "pcm_sha256": "d5d684de311a747dab813e9bf1f04368290b2880802abc9dd97ffc20addbca82",
+      "baseline": {
+        "ids": [
+          9,
+          30,
+          13,
+          33
+        ],
+        "text": "봐요",
+        "exact": false,
+        "human_sequence_nll": 6.1022467613220215,
+        "greedy_sequence_nll": 0.45803728699684143
+      },
+      "beam_origin": "previous same-checkpoint same-prediction personal diagnosis",
+      "beam50": [
+        {
+          "ids": [
+            9,
+            30,
+            13,
+            33
+          ],
+          "jamo": "ㅂㅘㅇㅛ",
+          "text": "봐요",
+          "log_probability": -0.458
+        },
+        {
+          "ids": [
+            9,
+            21,
+            13,
+            33
+          ],
+          "jamo": "ㅂㅏㅇㅛ",
+          "text": "바요",
+          "log_probability": -1.168
+        },
+        {
+          "ids": [
+            1,
+            9,
+            30,
+            13,
+            33
+          ],
+          "jamo": "|ㅂㅘㅇㅛ",
+          "text": " 봐요",
+          "log_probability": -5.393
+        },
+        {
+          "ids": [
+            2,
+            30,
+            13,
+            33
+          ],
+          "jamo": "ㄱㅘㅇㅛ",
+          "text": "과요",
+          "log_probability": -5.393
+        },
+        {
+          "ids": [
+            13,
+            30,
+            13,
+            33
+          ],
+          "jamo": "ㅇㅘㅇㅛ",
+          "text": "와요",
+          "log_probability": -5.712
+        }
+      ],
+      "beam_top_exact": false,
+      "beam_top_same_as_greedy": true,
+      "repeat_delta": {
+        "max_abs": 0.0,
+        "mean_abs": 0.0,
+        "argmax_equal": true
+      },
+      "wave_controls": {
+        "minus_12_db": {
+          "ids": [
+            9,
+            30,
+            13,
+            33
+          ],
+          "text": "봐요",
+          "exact": false,
+          "human_sequence_nll": 6.4670610427856445
+        },
+        "plus_half_second_silence_each_side": {
+          "ids": [
+            9,
+            30,
+            13,
+            33
+          ],
+          "text": "봐요",
+          "exact": false,
+          "human_sequence_nll": 3.5914974212646484
+        }
+      },
+      "masked_right_padding": {
+        "ids": [
+          9,
+          30,
+          13,
+          33
+        ],
+        "text": "봐요",
+        "exact": false,
+        "human_sequence_nll": 6.102230072021484,
+        "delta": {
+          "max_abs": 1.52587890625e-05,
+          "mean_abs": 2.5757874482223997e-06,
+          "argmax_equal": true
+        }
+      },
+      "aligned_convolutional_feature_delta_before_copy": {
+        "max_abs": 0.0,
+        "mean_abs": 0.0,
+        "argmax_equal": true
+      },
+      "latent_controls": [
+        {
+          "attention_sees_silence": false,
+          "position_sees_silence": false,
+          "ids": [
+            9,
+            30,
+            13,
+            33
+          ],
+          "text": "봐요",
+          "exact": false,
+          "human_sequence_nll": 6.102230072021484,
+          "delta_from_raw": {
+            "max_abs": 1.71661376953125e-05,
+            "mean_abs": 2.5217611892003333e-06,
+            "argmax_equal": true
+          }
+        },
+        {
+          "attention_sees_silence": false,
+          "position_sees_silence": true,
+          "ids": [
+            2,
+            21,
+            13,
+            33
+          ],
+          "text": "가요",
+          "exact": true,
+          "human_sequence_nll": 0.13552060723304749,
+          "delta_from_raw": {
+            "max_abs": 6.424951076507568,
+            "mean_abs": 0.7661312222480774,
+            "argmax_equal": false
+          }
+        },
+        {
+          "attention_sees_silence": true,
+          "position_sees_silence": false,
+          "ids": [
+            9,
+            30,
+            13,
+            33
+          ],
+          "text": "봐요",
+          "exact": false,
+          "human_sequence_nll": 5.5694990158081055,
+          "delta_from_raw": {
+            "max_abs": 5.667428970336914,
+            "mean_abs": 0.902388870716095,
+            "argmax_equal": true
+          }
+        },
+        {
+          "attention_sees_silence": true,
+          "position_sees_silence": true,
+          "ids": [
+            9,
+            30,
+            13,
+            33
+          ],
+          "text": "봐요",
+          "exact": false,
+          "human_sequence_nll": 3.591350555419922,
+          "delta_from_raw": {
+            "max_abs": 9.624373435974121,
+            "mean_abs": 1.3351099491119385,
+            "argmax_equal": true
+          }
+        }
+      ],
+      "masked_latent_control_matches_raw": true
+    },
+    {
+      "id": "personal:child2_29",
+      "speaker": "child2",
+      "cohort": "personal_diagnostic",
+      "surface": "놔",
+      "seconds": 0.74,
+      "pcm_sha256": "2ef1c4a98334aa67d78d3822848dbf6661663ead107825472832b7eb68c4db0f",
+      "baseline": {
+        "ids": [
+          9,
+          30
+        ],
+        "text": "봐",
+        "exact": false,
+        "human_sequence_nll": 6.403860569000244,
+        "greedy_sequence_nll": 2.151139259338379
+      },
+      "beam_origin": "previous same-checkpoint same-prediction personal diagnosis",
+      "beam50": [
+        {
+          "ids": [
+            9,
+            30
+          ],
+          "jamo": "ㅂㅘ",
+          "text": "봐",
+          "log_probability": -2.151
+        },
+        {
+          "ids": [
+            13,
+            9,
+            30
+          ],
+          "jamo": "ㅇㅂㅘ",
+          "text": "ㅇ봐",
+          "log_probability": -3.45
+        },
+        {
+          "ids": [
+            1,
+            9,
+            30
+          ],
+          "jamo": "|ㅂㅘ",
+          "text": " 봐",
+          "log_probability": -3.49
+        },
+        {
+          "ids": [
+            9,
+            21
+          ],
+          "jamo": "ㅂㅏ",
+          "text": "바",
+          "log_probability": -4.103
+        },
+        {
+          "ids": [
+            21,
+            9,
+            30
+          ],
+          "jamo": "ㅏㅂㅘ",
+          "text": "ㅏ봐",
+          "log_probability": -4.233
+        }
+      ],
+      "beam_top_exact": false,
+      "beam_top_same_as_greedy": true,
+      "repeat_delta": {
+        "max_abs": 0.0,
+        "mean_abs": 0.0,
+        "argmax_equal": true
+      },
+      "wave_controls": {
+        "minus_12_db": {
+          "ids": [
+            30
+          ],
+          "text": "ㅘ",
+          "exact": false,
+          "human_sequence_nll": 4.61440372467041
+        },
+        "plus_half_second_silence_each_side": {
+          "ids": [
+            9,
+            30
+          ],
+          "text": "봐",
+          "exact": false,
+          "human_sequence_nll": 7.593723297119141
+        }
+      },
+      "masked_right_padding": {
+        "ids": [
+          9,
+          30
+        ],
+        "text": "봐",
+        "exact": false,
+        "human_sequence_nll": 6.403864860534668,
+        "delta": {
+          "max_abs": 8.58306884765625e-06,
+          "mean_abs": 1.4518529951601522e-06,
+          "argmax_equal": true
+        }
+      },
+      "aligned_convolutional_feature_delta_before_copy": {
+        "max_abs": 0.0,
+        "mean_abs": 0.0,
+        "argmax_equal": true
+      },
+      "latent_controls": [
+        {
+          "attention_sees_silence": false,
+          "position_sees_silence": false,
+          "ids": [
+            9,
+            30
+          ],
+          "text": "봐",
+          "exact": false,
+          "human_sequence_nll": 6.40386438369751,
+          "delta_from_raw": {
+            "max_abs": 9.059906005859375e-06,
+            "mean_abs": 1.533814383947174e-06,
+            "argmax_equal": true
+          }
+        },
+        {
+          "attention_sees_silence": false,
+          "position_sees_silence": true,
+          "ids": [
+            9,
+            21
+          ],
+          "text": "바",
+          "exact": false,
+          "human_sequence_nll": 6.137552738189697,
+          "delta_from_raw": {
+            "max_abs": 3.955904483795166,
+            "mean_abs": 0.6382148265838623,
+            "argmax_equal": false
+          }
+        },
+        {
+          "attention_sees_silence": true,
+          "position_sees_silence": false,
+          "ids": [
+            9,
+            30
+          ],
+          "text": "봐",
+          "exact": false,
+          "human_sequence_nll": 5.02128791809082,
+          "delta_from_raw": {
+            "max_abs": 3.35487699508667,
+            "mean_abs": 0.45667770504951477,
+            "argmax_equal": false
+          }
+        },
+        {
+          "attention_sees_silence": true,
+          "position_sees_silence": true,
+          "ids": [
+            9,
+            30
+          ],
+          "text": "봐",
+          "exact": false,
+          "human_sequence_nll": 6.951569080352783,
+          "delta_from_raw": {
+            "max_abs": 8.530166625976562,
+            "mean_abs": 1.60735023021698,
+            "argmax_equal": false
+          }
+        }
+      ],
+      "masked_latent_control_matches_raw": true
+    },
+    {
+      "id": "personal:child1_01",
+      "speaker": "child1",
+      "cohort": "personal_diagnostic",
+      "surface": "아빠",
+      "seconds": 1.35,
+      "pcm_sha256": "ef0ed9bab36f7df3a8520d9b6cc9556c252bc1db45bcb677705c55c1ac863465",
+      "baseline": {
+        "ids": [
+          13,
+          21,
+          10,
+          21
+        ],
+        "text": "아빠",
+        "exact": true,
+        "human_sequence_nll": 0.16090327501296997,
+        "greedy_sequence_nll": 0.16090327501296997
+      },
+      "repeat_delta": {
+        "max_abs": 0.0,
+        "mean_abs": 0.0,
+        "argmax_equal": true
+      },
+      "wave_controls": {
+        "minus_12_db": {
+          "ids": [
+            13,
+            21,
+            10,
+            21
+          ],
+          "text": "아빠",
+          "exact": true,
+          "human_sequence_nll": 0.048604149371385574
+        },
+        "plus_half_second_silence_each_side": {
+          "ids": [
+            13,
+            21,
+            10,
+            21
+          ],
+          "text": "아빠",
+          "exact": true,
+          "human_sequence_nll": 0.19592468440532684
+        }
+      },
+      "masked_right_padding": {
+        "ids": [
+          13,
+          21,
+          10,
+          21
+        ],
+        "text": "아빠",
+        "exact": true,
+        "human_sequence_nll": 0.16090381145477295,
+        "delta": {
+          "max_abs": 2.6702880859375e-05,
+          "mean_abs": 2.4436124022031436e-06,
+          "argmax_equal": true
+        }
+      },
+      "aligned_convolutional_feature_delta_before_copy": {
+        "max_abs": 0.0,
+        "mean_abs": 0.0,
+        "argmax_equal": true
+      },
+      "latent_controls": [
+        {
+          "attention_sees_silence": false,
+          "position_sees_silence": false,
+          "ids": [
+            13,
+            21,
+            10,
+            21
+          ],
+          "text": "아빠",
+          "exact": true,
+          "human_sequence_nll": 0.16090267896652222,
+          "delta_from_raw": {
+            "max_abs": 4.1961669921875e-05,
+            "mean_abs": 2.810489831972518e-06,
+            "argmax_equal": true
+          }
+        },
+        {
+          "attention_sees_silence": false,
+          "position_sees_silence": true,
+          "ids": [
+            13,
+            21,
+            10,
+            21
+          ],
+          "text": "아빠",
+          "exact": true,
+          "human_sequence_nll": 0.04237975925207138,
+          "delta_from_raw": {
+            "max_abs": 8.73597240447998,
+            "mean_abs": 0.7763637900352478,
+            "argmax_equal": false
+          }
+        },
+        {
+          "attention_sees_silence": true,
+          "position_sees_silence": false,
+          "ids": [
+            13,
+            21,
+            10,
+            21
+          ],
+          "text": "아빠",
+          "exact": true,
+          "human_sequence_nll": 0.0055054062977433205,
+          "delta_from_raw": {
+            "max_abs": 7.335973739624023,
+            "mean_abs": 1.2167794704437256,
+            "argmax_equal": false
+          }
+        },
+        {
+          "attention_sees_silence": true,
+          "position_sees_silence": true,
+          "ids": [
+            13,
+            21,
+            10,
+            21
+          ],
+          "text": "아빠",
+          "exact": true,
+          "human_sequence_nll": 0.1956891268491745,
+          "delta_from_raw": {
+            "max_abs": 9.71759033203125,
+            "mean_abs": 1.6994967460632324,
+            "argmax_equal": false
+          }
+        }
+      ],
+      "masked_latent_control_matches_raw": true
+    },
+    {
+      "id": "personal:child1_02",
+      "speaker": "child1",
+      "cohort": "personal_diagnostic",
+      "surface": "엄마",
+      "seconds": 1.49,
+      "pcm_sha256": "507452a125666ed5a017c747719661b5d35e7828dcdb9b9f95145709a67c2ee3",
+      "baseline": {
+        "ids": [
+          13,
+          25,
+          8,
+          8,
+          21
+        ],
+        "text": "엄마",
+        "exact": true,
+        "human_sequence_nll": 0.004825056530535221,
+        "greedy_sequence_nll": 0.004825056530535221
+      },
+      "repeat_delta": {
+        "max_abs": 0.0,
+        "mean_abs": 0.0,
+        "argmax_equal": true
+      },
+      "wave_controls": {
+        "minus_12_db": {
+          "ids": [
+            13,
+            25,
+            8,
+            8,
+            21
+          ],
+          "text": "엄마",
+          "exact": true,
+          "human_sequence_nll": 0.006303755100816488
+        },
+        "plus_half_second_silence_each_side": {
+          "ids": [
+            13,
+            25,
+            8,
+            8,
+            21
+          ],
+          "text": "엄마",
+          "exact": true,
+          "human_sequence_nll": 0.0005516312667168677
+        }
+      },
+      "masked_right_padding": {
+        "ids": [
+          13,
+          25,
+          8,
+          8,
+          21
+        ],
+        "text": "엄마",
+        "exact": true,
+        "human_sequence_nll": 0.004825167823582888,
+        "delta": {
+          "max_abs": 2.384185791015625e-05,
+          "mean_abs": 2.5151714453386376e-06,
+          "argmax_equal": true
+        }
+      },
+      "aligned_convolutional_feature_delta_before_copy": {
+        "max_abs": 0.0,
+        "mean_abs": 0.0,
+        "argmax_equal": true
+      },
+      "latent_controls": [
+        {
+          "attention_sees_silence": false,
+          "position_sees_silence": false,
+          "ids": [
+            13,
+            25,
+            8,
+            8,
+            21
+          ],
+          "text": "엄마",
+          "exact": true,
+          "human_sequence_nll": 0.004825167823582888,
+          "delta_from_raw": {
+            "max_abs": 2.288818359375e-05,
+            "mean_abs": 2.607409442134667e-06,
+            "argmax_equal": true
+          }
+        },
+        {
+          "attention_sees_silence": false,
+          "position_sees_silence": true,
+          "ids": [
+            13,
+            25,
+            8,
+            8,
+            21
+          ],
+          "text": "엄마",
+          "exact": true,
+          "human_sequence_nll": 0.07253479212522507,
+          "delta_from_raw": {
+            "max_abs": 9.018243789672852,
+            "mean_abs": 1.0101490020751953,
+            "argmax_equal": false
+          }
+        },
+        {
+          "attention_sees_silence": true,
+          "position_sees_silence": false,
+          "ids": [
+            13,
+            25,
+            8,
+            8,
+            21
+          ],
+          "text": "엄마",
+          "exact": true,
+          "human_sequence_nll": 0.0015996834263205528,
+          "delta_from_raw": {
+            "max_abs": 4.682519912719727,
+            "mean_abs": 0.7045670747756958,
+            "argmax_equal": false
+          }
+        },
+        {
+          "attention_sees_silence": true,
+          "position_sees_silence": true,
+          "ids": [
+            13,
+            25,
+            8,
+            8,
+            21
+          ],
+          "text": "엄마",
+          "exact": true,
+          "human_sequence_nll": 0.0002809100551530719,
+          "delta_from_raw": {
+            "max_abs": 7.010648727416992,
+            "mean_abs": 1.0824344158172607,
+            "argmax_equal": true
+          }
+        }
+      ],
+      "masked_latent_control_matches_raw": true
+    }
+  ],
+  "progress": {
+    "done": 27,
+    "total": 27,
+    "elapsed_seconds": 39.2
+  },
+  "elapsed_seconds": 39.18,
+  "summary": {
+    "recordings": 27,
+    "baseline_exact": 11,
+    "baseline_errors": 16,
+    "beam_corrected": 0,
+    "beam_same_as_greedy_on_errors": 15,
+    "repeat_predictions_identical": 27,
+    "masked_right_predictions_identical": 27,
+    "masked_latent_control_predictions_identical": 27,
+    "attention_only_changes": 5,
+    "position_only_changes": 10,
+    "joint_context_changes": 4,
+    "minus_12_db_changes": 3,
+    "natural_padding_changes": 4
+  }
+}

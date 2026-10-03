@@ -1,0 +1,601 @@
+{
+  "complete": true,
+  "predeclared_checks": {
+    "stress_improved_beyond_control": true,
+    "clean_validation_within_tolerance": true,
+    "personal_improved_without_regression": false,
+    "not_canonicalizing_human_ssaek": false
+  },
+  "all_checks_passed": false,
+  "clean_jer": {
+    "parent": 0.029503947923573023,
+    "control": 0.029323126996564402,
+    "augmented": 0.029413537460068712
+  },
+  "stress_jer": {
+    "parent": 0.050793650793650794,
+    "control": 0.050793650793650794,
+    "augmented": 0.05012025012025012
+  },
+  "personal_improved": [],
+  "personal_regressed": [],
+  "personal_predictions": {
+    "parent": [
+      {
+        "id": "personal:child1_18",
+        "human_target": "책",
+        "ids": [
+          11,
+          22,
+          9
+        ],
+        "text": "샙",
+        "jamo": "ㅅㅐㅂ",
+        "human_exact": false
+      },
+      {
+        "id": "personal:child1_22",
+        "human_target": "뛰어가요",
+        "ids": [
+          2,
+          37,
+          13,
+          25,
+          1,
+          2,
+          21,
+          13,
+          33
+        ],
+        "text": "귀어 가요",
+        "jamo": "ㄱㅟㅇㅓ|ㄱㅏㅇㅛ",
+        "human_exact": false
+      },
+      {
+        "id": "personal:child1_17",
+        "human_target": "쌕",
+        "ids": [
+          22,
+          2
+        ],
+        "text": "ㅐㄱ",
+        "jamo": "ㅐㄱ",
+        "human_exact": false
+      },
+      {
+        "id": "personal:child1_09",
+        "human_target": "나비",
+        "ids": [
+          4,
+          21,
+          7,
+          41
+        ],
+        "text": "나리",
+        "jamo": "ㄴㅏㄹㅣ",
+        "human_exact": false
+      },
+      {
+        "id": "personal:child2_16",
+        "human_target": null,
+        "ids": [
+          17,
+          22,
+          2
+        ],
+        "text": "캑",
+        "jamo": "ㅋㅐㄱ",
+        "human_exact": null
+      },
+      {
+        "id": "personal:child2_20",
+        "human_target": "가",
+        "ids": [
+          20,
+          21
+        ],
+        "text": "하",
+        "jamo": "ㅎㅏ",
+        "human_exact": false
+      },
+      {
+        "id": "personal:child1_19",
+        "human_target": "실로폰",
+        "ids": [
+          17,
+          26,
+          7,
+          7,
+          41,
+          19,
+          29,
+          4
+        ],
+        "text": "켈리폰",
+        "jamo": "ㅋㅔㄹㄹㅣㅍㅗㄴ",
+        "human_exact": false
+      },
+      {
+        "id": "personal:child2_28",
+        "human_target": "놔요",
+        "ids": [
+          13,
+          30,
+          13,
+          33
+        ],
+        "text": "와요",
+        "jamo": "ㅇㅘㅇㅛ",
+        "human_exact": false
+      },
+      {
+        "id": "personal:child1_21",
+        "human_target": "가요",
+        "ids": [
+          9,
+          30,
+          13,
+          33
+        ],
+        "text": "봐요",
+        "jamo": "ㅂㅘㅇㅛ",
+        "human_exact": false
+      },
+      {
+        "id": "personal:child2_29",
+        "human_target": "놔",
+        "ids": [
+          9,
+          30
+        ],
+        "text": "봐",
+        "jamo": "ㅂㅘ",
+        "human_exact": false
+      },
+      {
+        "id": "personal:child1_01",
+        "human_target": "아빠",
+        "ids": [
+          13,
+          21,
+          10,
+          21
+        ],
+        "text": "아빠",
+        "jamo": "ㅇㅏㅃㅏ",
+        "human_exact": true
+      },
+      {
+        "id": "personal:child1_02",
+        "human_target": "엄마",
+        "ids": [
+          13,
+          25,
+          8,
+          8,
+          21
+        ],
+        "text": "엄마",
+        "jamo": "ㅇㅓㅁㅁㅏ",
+        "human_exact": true
+      },
+      {
+        "id": "personal:child2_09",
+        "human_target": null,
+        "ids": [
+          4,
+          21,
+          9,
+          41
+        ],
+        "text": "나비",
+        "jamo": "ㄴㅏㅂㅣ",
+        "human_exact": null
+      }
+    ],
+    "control": [
+      {
+        "id": "personal:child1_18",
+        "human_target": "책",
+        "ids": [
+          11,
+          22,
+          9
+        ],
+        "text": "샙",
+        "jamo": "ㅅㅐㅂ",
+        "human_exact": false
+      },
+      {
+        "id": "personal:child1_22",
+        "human_target": "뛰어가요",
+        "ids": [
+          2,
+          37,
+          13,
+          25,
+          1,
+          2,
+          21,
+          13,
+          33
+        ],
+        "text": "귀어 가요",
+        "jamo": "ㄱㅟㅇㅓ|ㄱㅏㅇㅛ",
+        "human_exact": false
+      },
+      {
+        "id": "personal:child1_17",
+        "human_target": "쌕",
+        "ids": [
+          22,
+          2
+        ],
+        "text": "ㅐㄱ",
+        "jamo": "ㅐㄱ",
+        "human_exact": false
+      },
+      {
+        "id": "personal:child1_09",
+        "human_target": "나비",
+        "ids": [
+          4,
+          21,
+          7,
+          9,
+          41
+        ],
+        "text": "날비",
+        "jamo": "ㄴㅏㄹㅂㅣ",
+        "human_exact": false
+      },
+      {
+        "id": "personal:child2_16",
+        "human_target": null,
+        "ids": [
+          17,
+          22,
+          2
+        ],
+        "text": "캑",
+        "jamo": "ㅋㅐㄱ",
+        "human_exact": null
+      },
+      {
+        "id": "personal:child2_20",
+        "human_target": "가",
+        "ids": [
+          20,
+          21
+        ],
+        "text": "하",
+        "jamo": "ㅎㅏ",
+        "human_exact": false
+      },
+      {
+        "id": "personal:child1_19",
+        "human_target": "실로폰",
+        "ids": [
+          17,
+          26,
+          7,
+          7,
+          41,
+          19,
+          29,
+          4
+        ],
+        "text": "켈리폰",
+        "jamo": "ㅋㅔㄹㄹㅣㅍㅗㄴ",
+        "human_exact": false
+      },
+      {
+        "id": "personal:child2_28",
+        "human_target": "놔요",
+        "ids": [
+          13,
+          30,
+          13,
+          33
+        ],
+        "text": "와요",
+        "jamo": "ㅇㅘㅇㅛ",
+        "human_exact": false
+      },
+      {
+        "id": "personal:child1_21",
+        "human_target": "가요",
+        "ids": [
+          9,
+          30,
+          13,
+          33
+        ],
+        "text": "봐요",
+        "jamo": "ㅂㅘㅇㅛ",
+        "human_exact": false
+      },
+      {
+        "id": "personal:child2_29",
+        "human_target": "놔",
+        "ids": [
+          9,
+          30
+        ],
+        "text": "봐",
+        "jamo": "ㅂㅘ",
+        "human_exact": false
+      },
+      {
+        "id": "personal:child1_01",
+        "human_target": "아빠",
+        "ids": [
+          13,
+          21,
+          10,
+          21
+        ],
+        "text": "아빠",
+        "jamo": "ㅇㅏㅃㅏ",
+        "human_exact": true
+      },
+      {
+        "id": "personal:child1_02",
+        "human_target": "엄마",
+        "ids": [
+          13,
+          25,
+          8,
+          8,
+          21
+        ],
+        "text": "엄마",
+        "jamo": "ㅇㅓㅁㅁㅏ",
+        "human_exact": true
+      },
+      {
+        "id": "personal:child2_09",
+        "human_target": null,
+        "ids": [
+          4,
+          21,
+          9,
+          41
+        ],
+        "text": "나비",
+        "jamo": "ㄴㅏㅂㅣ",
+        "human_exact": null
+      }
+    ],
+    "augmented": [
+      {
+        "id": "personal:child1_18",
+        "human_target": "책",
+        "ids": [
+          11,
+          22,
+          9
+        ],
+        "text": "샙",
+        "jamo": "ㅅㅐㅂ",
+        "human_exact": false
+      },
+      {
+        "id": "personal:child1_22",
+        "human_target": "뛰어가요",
+        "ids": [
+          2,
+          37,
+          13,
+          25,
+          1,
+          2,
+          21,
+          13,
+          33
+        ],
+        "text": "귀어 가요",
+        "jamo": "ㄱㅟㅇㅓ|ㄱㅏㅇㅛ",
+        "human_exact": false
+      },
+      {
+        "id": "personal:child1_17",
+        "human_target": "쌕",
+        "ids": [
+          16,
+          22,
+          2
+        ],
+        "text": "책",
+        "jamo": "ㅊㅐㄱ",
+        "human_exact": false
+      },
+      {
+        "id": "personal:child1_09",
+        "human_target": "나비",
+        "ids": [
+          4,
+          21,
+          7,
+          41
+        ],
+        "text": "나리",
+        "jamo": "ㄴㅏㄹㅣ",
+        "human_exact": false
+      },
+      {
+        "id": "personal:child2_16",
+        "human_target": null,
+        "ids": [
+          17,
+          22,
+          2
+        ],
+        "text": "캑",
+        "jamo": "ㅋㅐㄱ",
+        "human_exact": null
+      },
+      {
+        "id": "personal:child2_20",
+        "human_target": "가",
+        "ids": [
+          17,
+          21
+        ],
+        "text": "카",
+        "jamo": "ㅋㅏ",
+        "human_exact": false
+      },
+      {
+        "id": "personal:child1_19",
+        "human_target": "실로폰",
+        "ids": [
+          17,
+          26,
+          7,
+          7,
+          41,
+          19,
+          29,
+          4
+        ],
+        "text": "켈리폰",
+        "jamo": "ㅋㅔㄹㄹㅣㅍㅗㄴ",
+        "human_exact": false
+      },
+      {
+        "id": "personal:child2_28",
+        "human_target": "놔요",
+        "ids": [
+          13,
+          30,
+          13,
+          33
+        ],
+        "text": "와요",
+        "jamo": "ㅇㅘㅇㅛ",
+        "human_exact": false
+      },
+      {
+        "id": "personal:child1_21",
+        "human_target": "가요",
+        "ids": [
+          9,
+          30,
+          13,
+          33
+        ],
+        "text": "봐요",
+        "jamo": "ㅂㅘㅇㅛ",
+        "human_exact": false
+      },
+      {
+        "id": "personal:child2_29",
+        "human_target": "놔",
+        "ids": [
+          9,
+          30
+        ],
+        "text": "봐",
+        "jamo": "ㅂㅘ",
+        "human_exact": false
+      },
+      {
+        "id": "personal:child1_01",
+        "human_target": "아빠",
+        "ids": [
+          13,
+          21,
+          10,
+          21
+        ],
+        "text": "아빠",
+        "jamo": "ㅇㅏㅃㅏ",
+        "human_exact": true
+      },
+      {
+        "id": "personal:child1_02",
+        "human_target": "엄마",
+        "ids": [
+          13,
+          25,
+          8,
+          8,
+          21
+        ],
+        "text": "엄마",
+        "jamo": "ㅇㅓㅁㅁㅏ",
+        "human_exact": true
+      },
+      {
+        "id": "personal:child2_09",
+        "human_target": null,
+        "ids": [
+          4,
+          21,
+          9,
+          41
+        ],
+        "text": "나비",
+        "jamo": "ㄴㅏㅂㅣ",
+        "human_exact": null
+      }
+    ]
+  },
+  "deployed": false,
+  "test_scored": false,
+  "interpretation": "Pilot checks only. A failure rejects this candidate; it does not establish that more training or augmentation can never help.",
+  "parent_checkpoint_preserved": true,
+  "paired_configuration_verified": true,
+  "planned_training_pool": 2048,
+  "actual_training_exposures_each": 645,
+  "distinct_training_recordings_each": 645,
+  "actual_augmentation_counts": {
+    "identity": 336,
+    "pitch_up_2": 64,
+    "rate_up_2": 66,
+    "tempo_0.65": 56,
+    "rate_down_2": 53,
+    "pitch_down_2": 70
+  },
+  "actual_word_coverage": {
+    "책": {
+      "standalone": 1,
+      "substring": 2
+    },
+    "나비": {
+      "standalone": 0,
+      "substring": 2
+    },
+    "뛰어가요": {
+      "standalone": 0,
+      "substring": 0
+    },
+    "실로폰": {
+      "standalone": 0,
+      "substring": 0
+    },
+    "놔요": {
+      "standalone": 0,
+      "substring": 0
+    }
+  },
+  "checkpoint_sha256": {
+    "control": "73c29f47005b3ae6a714252a0a9f790e7ddc13477cb5899d22aa6f2e9e1cb693",
+    "augmented": "24759197ccc33eb24d5f5d80584cb9869496b36e04dcccdbfe5d124c289fa4d3"
+  },
+  "training_seconds": {
+    "control": 81.83948609989602,
+    "augmented": 89.10365569998976
+  },
+  "source_result_sha256": {
+    "control": "a95ed45de0dbd951fffb1c4144d0dd403dcc5c848fa41ef25194d89e513d85f1",
+    "augmented": "04c6414a2c2dd03c8bc96eff707c559e85f6561ba613e2e6d8a8c8cfdaf98113"
+  },
+  "limitations": [
+    "The 128-update pilot sees only part of the preselected training pool.",
+    "One seed and eight trainable transformer layers do not establish the result of full retraining.",
+    "Development diagnostics have been examined repeatedly; they are not a new untouched test set.",
+    "Failure means this candidate is not a demonstrated fix, not that every larger experiment must fail."
+  ]
+}

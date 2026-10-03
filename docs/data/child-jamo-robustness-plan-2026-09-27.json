@@ -1,0 +1,22 @@
+{
+  "name": "robustness-pilot-20260927",
+  "created_at_utc": "2026-09-27T06:17:28.359858+00:00",
+  "arms": [
+    "control",
+    "augmented"
+  ],
+  "updates_each": 128,
+  "train_pool_selection": 2048,
+  "trainable": "last 8 transformer layers and CTC head",
+  "parent": "main/best.pt",
+  "personal_training_examples": 0,
+  "evaluation": "1500 clean validation recordings; fixed 96 with five acoustic variants; existing human diagnostics",
+  "success_checks": [
+    "Augmented stress JER below both parent and additional-training control.",
+    "Clean validation JER no more than 0.001 absolute above parent.",
+    "At least one additional correct personal diagnostic, without regression of previously correct cases.",
+    "Human 쌕 must not be rewritten as canonical 책."
+  ],
+  "deployment": "Never automatically replace the current model.",
+  "limitation": "Development pilot, not an untouched test-set result or a complete retraining of all 150252 records."
+}

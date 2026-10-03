@@ -1,0 +1,679 @@
+{
+  "complete": true,
+  "captured_at_utc": "2026-09-27T08:49:15.959739+00:00",
+  "history": [
+    {
+      "revision": 1,
+      "item_id": "1",
+      "binding": "8133a574a8a56cbf453d48be34c9068b0cdfd3967e89b11619792aa448f65c12",
+      "choice": "a",
+      "heard": "",
+      "note": "",
+      "at": "2026-09-27 08:44:34"
+    },
+    {
+      "revision": 2,
+      "item_id": "2",
+      "binding": "09856be5ca329ce464cda6b2d9f9d645cabc5d475a509e2e6f654dc97beddcfb",
+      "choice": "b",
+      "heard": "",
+      "note": "",
+      "at": "2026-09-27 08:44:45"
+    },
+    {
+      "revision": 3,
+      "item_id": "3",
+      "binding": "f0fcda3d3b27ad39d43a76409492a2600564764b122f06e69f2bcce5b6c8b7e6",
+      "choice": "both",
+      "heard": "",
+      "note": "",
+      "at": "2026-09-27 08:45:01"
+    },
+    {
+      "revision": 4,
+      "item_id": "4",
+      "binding": "d75653f89536eeb504e7b9dc16222992c37658cc6cfd318af7e98b393adb089d",
+      "choice": "both",
+      "heard": "",
+      "note": "",
+      "at": "2026-09-27 08:45:10"
+    },
+    {
+      "revision": 5,
+      "item_id": "5",
+      "binding": "191493a47b2f7d85abed9a90ec4794ea20fb67bccb3ac6b2a9441aa301b88473",
+      "choice": "a",
+      "heard": "",
+      "note": "",
+      "at": "2026-09-27 08:45:20"
+    },
+    {
+      "revision": 6,
+      "item_id": "6",
+      "binding": "1323ebf7317a10f334926c530373f0a974aac50ffe2c17d58e0c7d953dd8c351",
+      "choice": "both",
+      "heard": "",
+      "note": "",
+      "at": "2026-09-27 08:45:30"
+    },
+    {
+      "revision": 7,
+      "item_id": "7",
+      "binding": "b971f6948a15ea11fef9b7189e5f6b707c0589422b2aee20825c6d1b059ab7f7",
+      "choice": "neither",
+      "heard": "",
+      "note": "",
+      "at": "2026-09-27 08:45:38"
+    },
+    {
+      "revision": 8,
+      "item_id": "8",
+      "binding": "6c77787b40e5f284af973515f1642b839f740f7d5d0d9e70835d3f1076d7129a",
+      "choice": "neither",
+      "heard": "",
+      "note": "",
+      "at": "2026-09-27 08:45:47"
+    },
+    {
+      "revision": 9,
+      "item_id": "8",
+      "binding": "6c77787b40e5f284af973515f1642b839f740f7d5d0d9e70835d3f1076d7129a",
+      "choice": "neither",
+      "heard": "",
+      "note": "",
+      "at": "2026-09-27 08:45:48"
+    }
+  ],
+  "history_sha256": "aefc5c619833f5a9f32b3aac542798cb96e6ae283f9a7277399c46eeb89c2bd6",
+  "source_items_sha256": "fa0b05bf9f8d4667b248c790afecc3817a2d428d7acee2b06f11668c390eccd0",
+  "source_evidence_sha256": "d9268089051e306e3a9486bad2d917c6a504266ed8c9840d38216339354f194a",
+  "user_interpretation_caveat": "청취·한글 표기는 전문 음성 전사가 아니며, 모호함을 강제 정답으로 바꾸지 않는다.",
+  "items": [
+    {
+      "number": 1,
+      "wav": "K04900631-AMG10-L5N1D1-E-K0KK-00100034.wav",
+      "speaker": "5760f930210f",
+      "split": "train",
+      "source_transcript": "싸워요(사워요).",
+      "canonical": "싸워요",
+      "annotation": "사워요",
+      "answer": {
+        "revision": 1,
+        "item_id": "1",
+        "binding": "8133a574a8a56cbf453d48be34c9068b0cdfd3967e89b11619792aa448f65c12",
+        "choice": "a",
+        "heard": "",
+        "note": "",
+        "at": "2026-09-27 08:44:34"
+      },
+      "classification": "exclusive_annotation",
+      "selected_surface": "사워요",
+      "selected_role": "annotation",
+      "has_note_or_free_text": false,
+      "source_pcm_sha256": "f025996666ef6e5938a57d82f024880e5872e1ef93e1c597f0dd9d8cd1bee9bd",
+      "seconds": 4.288,
+      "source_and_playback_binding_verified": true
+    },
+    {
+      "number": 2,
+      "wav": "K02412568-AFG11-L5N1D1-E-K0KK-01458075.wav",
+      "speaker": "9028dce6614e",
+      "split": "train",
+      "source_transcript": "아저씨(아저찌).",
+      "canonical": "아저씨",
+      "annotation": "아저찌",
+      "answer": {
+        "revision": 2,
+        "item_id": "2",
+        "binding": "09856be5ca329ce464cda6b2d9f9d645cabc5d475a509e2e6f654dc97beddcfb",
+        "choice": "b",
+        "heard": "",
+        "note": "",
+        "at": "2026-09-27 08:44:45"
+      },
+      "classification": "exclusive_canonical",
+      "selected_surface": "아저씨",
+      "selected_role": "canonical",
+      "has_note_or_free_text": false,
+      "source_pcm_sha256": "fc3739abe2098a8e531746018dbfb78a404f8793546aa4f39764be8e5ff905c8",
+      "seconds": 4.864,
+      "source_and_playback_binding_verified": true
+    },
+    {
+      "number": 3,
+      "wav": "K03820863-AFG10-L1N2D1-E-K0KK-00191755.wav",
+      "speaker": "72e0b5f69935",
+      "split": "train",
+      "source_transcript": "풍선(푼선).",
+      "canonical": "풍선",
+      "annotation": "푼선",
+      "answer": {
+        "revision": 3,
+        "item_id": "3",
+        "binding": "f0fcda3d3b27ad39d43a76409492a2600564764b122f06e69f2bcce5b6c8b7e6",
+        "choice": "both",
+        "heard": "",
+        "note": "",
+        "at": "2026-09-27 08:45:01"
+      },
+      "classification": "ambiguous_between_alternatives",
+      "selected_surface": null,
+      "selected_role": null,
+      "has_note_or_free_text": false,
+      "source_pcm_sha256": "5291887ad9c49a262771d0d77ba6246eb94f2edb04da98b58c13c1f19585c52b",
+      "seconds": 5.184,
+      "source_and_playback_binding_verified": true
+    },
+    {
+      "number": 4,
+      "wav": "K03911482-AFG13-L1N2D1-E-K0KK-00531465.wav",
+      "speaker": "e3e69eaf6c36",
+      "split": "valid",
+      "source_transcript": "우주선(우두선).",
+      "canonical": "우주선",
+      "annotation": "우두선",
+      "answer": {
+        "revision": 4,
+        "item_id": "4",
+        "binding": "d75653f89536eeb504e7b9dc16222992c37658cc6cfd318af7e98b393adb089d",
+        "choice": "both",
+        "heard": "",
+        "note": "",
+        "at": "2026-09-27 08:45:10"
+      },
+      "classification": "ambiguous_between_alternatives",
+      "selected_surface": null,
+      "selected_role": null,
+      "has_note_or_free_text": false,
+      "source_pcm_sha256": "5aa58ed7436e1a4331a315b540c1f1542a8c1470c24818d0919e239c68bf2a62",
+      "seconds": 3.072,
+      "source_and_playback_binding_verified": true
+    },
+    {
+      "number": 5,
+      "wav": "K06713112-AFG10-L1N2D1-E-K0KK-01503345.wav",
+      "speaker": "5ad4fca71d72",
+      "split": "valid",
+      "source_transcript": "원숭이(웡숭이).",
+      "canonical": "원숭이",
+      "annotation": "웡숭이",
+      "answer": {
+        "revision": 5,
+        "item_id": "5",
+        "binding": "191493a47b2f7d85abed9a90ec4794ea20fb67bccb3ac6b2a9441aa301b88473",
+        "choice": "a",
+        "heard": "",
+        "note": "",
+        "at": "2026-09-27 08:45:20"
+      },
+      "classification": "exclusive_annotation",
+      "selected_surface": "웡숭이",
+      "selected_role": "annotation",
+      "has_note_or_free_text": false,
+      "source_pcm_sha256": "5a14da7bd89d5ea724e568c3e6be307761e0420103a920afe7ad839af384ac36",
+      "seconds": 3.648,
+      "source_and_playback_binding_verified": true
+    },
+    {
+      "number": 6,
+      "wav": "K09663010-AFG10-L1N2D1-E-K0KK-01676901.wav",
+      "speaker": "ff4b467b7a59",
+      "split": "valid",
+      "source_transcript": "크레용(크에용).",
+      "canonical": "크레용",
+      "annotation": "크에용",
+      "answer": {
+        "revision": 6,
+        "item_id": "6",
+        "binding": "1323ebf7317a10f334926c530373f0a974aac50ffe2c17d58e0c7d953dd8c351",
+        "choice": "both",
+        "heard": "",
+        "note": "",
+        "at": "2026-09-27 08:45:30"
+      },
+      "classification": "ambiguous_between_alternatives",
+      "selected_surface": null,
+      "selected_role": null,
+      "has_note_or_free_text": false,
+      "source_pcm_sha256": "f2d4c02e4e370db6f4e40722f21214d9ab7101cec305a82978c5aa795f262474",
+      "seconds": 3.072,
+      "source_and_playback_binding_verified": true
+    },
+    {
+      "number": 7,
+      "wav": "K08053352-AFG10-L1N2D3-E-K0KK-01950422.wav",
+      "speaker": "ce0def455fe6",
+      "split": "valid",
+      "source_transcript": "싱글벙글(싱글벙그).",
+      "canonical": "싱글벙글",
+      "annotation": "싱글벙그",
+      "answer": {
+        "revision": 7,
+        "item_id": "7",
+        "binding": "b971f6948a15ea11fef9b7189e5f6b707c0589422b2aee20825c6d1b059ab7f7",
+        "choice": "neither",
+        "heard": "",
+        "note": "",
+        "at": "2026-09-27 08:45:38"
+      },
+      "classification": "neither_alternative_no_replacement_known",
+      "selected_surface": null,
+      "selected_role": null,
+      "has_note_or_free_text": false,
+      "source_pcm_sha256": "1675bfee2d8518ba2b33fd797ad17695902296636b97fd0e5d0c6c3f887a9d7a",
+      "seconds": 2.944,
+      "source_and_playback_binding_verified": true
+    },
+    {
+      "number": 8,
+      "wav": "K09402463-AMG10-L1N2D1-E-K0KK-01290396.wav",
+      "speaker": "1b13011c30bd",
+      "split": "train",
+      "source_transcript": "친구(치구).",
+      "canonical": "친구",
+      "annotation": "치구",
+      "answer": {
+        "revision": 9,
+        "item_id": "8",
+        "binding": "6c77787b40e5f284af973515f1642b839f740f7d5d0d9e70835d3f1076d7129a",
+        "choice": "neither",
+        "heard": "",
+        "note": "",
+        "at": "2026-09-27 08:45:48"
+      },
+      "classification": "neither_alternative_no_replacement_known",
+      "selected_surface": null,
+      "selected_role": null,
+      "has_note_or_free_text": false,
+      "source_pcm_sha256": "27e84bb612f2677a66094a91f89c4930c007848ba61b00b1cdc99d4cb9957882",
+      "seconds": 3.072,
+      "source_and_playback_binding_verified": true
+    }
+  ],
+  "candidate_supervision": [
+    {
+      "number": 1,
+      "wav": "K04900631-AMG10-L5N1D1-E-K0KK-00100034.wav",
+      "speaker": "5760f930210f",
+      "split": "train",
+      "binding": "8133a574a8a56cbf453d48be34c9068b0cdfd3967e89b11619792aa448f65c12",
+      "answer_revision": 1,
+      "surface_as_selected": "사워요",
+      "candidate_token_ids": [
+        11,
+        21,
+        13,
+        35,
+        13,
+        33
+      ],
+      "tokenization": "Direct Hangul decomposition of the selected option; no G2P applied.",
+      "canonical_comparator": "싸워요",
+      "label_differs": true,
+      "audio_sha256": "41eeb19cf713e4d0c034a06c8f3bdf51529df0af2ed78c128ffcc79b6b63f1fc",
+      "pcm_sha256": "f025996666ef6e5938a57d82f024880e5872e1ef93e1c597f0dd9d8cd1bee9bd",
+      "status": "single_listener_exclusive_whole_word_judgment_provisional",
+      "expert_phonetic_transcription": false,
+      "training_manifest_created": false
+    },
+    {
+      "number": 2,
+      "wav": "K02412568-AFG11-L5N1D1-E-K0KK-01458075.wav",
+      "speaker": "9028dce6614e",
+      "split": "train",
+      "binding": "09856be5ca329ce464cda6b2d9f9d645cabc5d475a509e2e6f654dc97beddcfb",
+      "answer_revision": 2,
+      "surface_as_selected": "아저씨",
+      "candidate_token_ids": [
+        13,
+        21,
+        14,
+        25,
+        12,
+        41
+      ],
+      "tokenization": "Direct Hangul decomposition of the selected option; no G2P applied.",
+      "canonical_comparator": "아저씨",
+      "label_differs": false,
+      "audio_sha256": "970c7d746564bcee742a16f9f12886a8730feb80fdf7c59e0b780ed9c597f1ab",
+      "pcm_sha256": "fc3739abe2098a8e531746018dbfb78a404f8793546aa4f39764be8e5ff905c8",
+      "status": "single_listener_exclusive_whole_word_judgment_provisional",
+      "expert_phonetic_transcription": false,
+      "training_manifest_created": false
+    },
+    {
+      "number": 5,
+      "wav": "K06713112-AFG10-L1N2D1-E-K0KK-01503345.wav",
+      "speaker": "5ad4fca71d72",
+      "split": "valid",
+      "binding": "191493a47b2f7d85abed9a90ec4794ea20fb67bccb3ac6b2a9441aa301b88473",
+      "answer_revision": 5,
+      "surface_as_selected": "웡숭이",
+      "candidate_token_ids": [
+        13,
+        35,
+        13,
+        11,
+        34,
+        13,
+        13,
+        41
+      ],
+      "tokenization": "Direct Hangul decomposition of the selected option; no G2P applied.",
+      "canonical_comparator": "원숭이",
+      "label_differs": true,
+      "audio_sha256": "e7b41f1748f2f93e48ebd4d2f81486b58a6335b80380f83da5a79d842c3517e4",
+      "pcm_sha256": "5a14da7bd89d5ea724e568c3e6be307761e0420103a920afe7ad839af384ac36",
+      "status": "single_listener_exclusive_whole_word_judgment_provisional",
+      "expert_phonetic_transcription": false,
+      "training_manifest_created": false
+    }
+  ],
+  "source_answers_changed": false,
+  "training_manifests_changed": false,
+  "training_started": false,
+  "model_changed": false,
+  "choice_counts": {
+    "a": 2,
+    "b": 1,
+    "both": 3,
+    "neither": 2
+  },
+  "classification_counts": {
+    "exclusive_annotation": 2,
+    "exclusive_canonical": 1,
+    "ambiguous_between_alternatives": 3,
+    "neither_alternative_no_replacement_known": 2
+  },
+  "candidate_counts": {
+    "train": 2,
+    "valid": 1
+  },
+  "changed_label_candidate_counts": {
+    "train": 1,
+    "valid": 1
+  },
+  "eligible_seconds": {
+    "train": 9.152,
+    "valid": 3.648
+  },
+  "sufficiency": {
+    "ready_for_generalization_training_comparison": false,
+    "reason": "Only one changed-label training utterance and one changed-label validation utterance; the other clear training utterance has identical labels. This cannot distinguish a general effect from memorizing one example.",
+    "next_action": "Probe baseline predictions after review, then prepare a bounded additional review set if label acquisition remains useful. Preserve all five unresolved answers and all answer history."
+  },
+  "limitations": [
+    "Eight annotation-enriched, deliberately selected examples; no population error-rate estimate.",
+    "These eight files were absent from the existing train/valid/test manifests; they are not eight incorrect training labels.",
+    "A/B judgments compare provided spellings, not expert phone boundaries or complete acoustic transcriptions.",
+    "Parenthesized forms are not automatically adopted, including on other recordings by the same speaker."
+  ],
+  "model_probe": {
+    "complete": true,
+    "checkpoint_sha256": "5a330f1bea3a17d1d063fdfd71a0cc25394695b0b797de01b293f6f688257aa7",
+    "precision": "float32, no autocast",
+    "human_history_sha256": "aefc5c619833f5a9f32b3aac542798cb96e6ae283f9a7277399c46eeb89c2bd6",
+    "used_in_selection_or_shown_before_answers": false,
+    "ctc_scores_interpretation": "Full-sequence log likelihood under this fixed model, not probability a label is true. No G2P applied to either displayed alternative.",
+    "ambiguous_cases_scored_as_human_errors": false,
+    "items": [
+      {
+        "number": 1,
+        "split": "train",
+        "human_classification": "exclusive_annotation",
+        "human_selected": "사워요",
+        "canonical": "싸워요",
+        "annotation": "사워요",
+        "prediction_text": "싸워요",
+        "prediction_ids": [
+          12,
+          21,
+          13,
+          35,
+          13,
+          33
+        ],
+        "matches_options_ignoring_spaces": {
+          "canonical": true,
+          "annotation": false
+        },
+        "matches_exclusive_human_choice": false,
+        "ctc_sequence_log_likelihood": {
+          "canonical": -0.0007710676873102784,
+          "annotation": -7.853141784667969
+        },
+        "ctc_annotation_minus_canonical_log_likelihood": -7.8523707169806585
+      },
+      {
+        "number": 2,
+        "split": "train",
+        "human_classification": "exclusive_canonical",
+        "human_selected": "아저씨",
+        "canonical": "아저씨",
+        "annotation": "아저찌",
+        "prediction_text": "아저씨",
+        "prediction_ids": [
+          13,
+          21,
+          14,
+          25,
+          12,
+          41
+        ],
+        "matches_options_ignoring_spaces": {
+          "canonical": true,
+          "annotation": false
+        },
+        "matches_exclusive_human_choice": true,
+        "ctc_sequence_log_likelihood": {
+          "canonical": -0.0005002613179385662,
+          "annotation": -17.579559326171875
+        },
+        "ctc_annotation_minus_canonical_log_likelihood": -17.579059064853936
+      },
+      {
+        "number": 3,
+        "split": "train",
+        "human_classification": "ambiguous_between_alternatives",
+        "human_selected": null,
+        "canonical": "풍선",
+        "annotation": "푼선",
+        "prediction_text": "풍선",
+        "prediction_ids": [
+          19,
+          34,
+          13,
+          11,
+          25,
+          4
+        ],
+        "matches_options_ignoring_spaces": {
+          "canonical": true,
+          "annotation": false
+        },
+        "matches_exclusive_human_choice": null,
+        "ctc_sequence_log_likelihood": {
+          "canonical": -0.0012969821691513062,
+          "annotation": -28.619384765625
+        },
+        "ctc_annotation_minus_canonical_log_likelihood": -28.61808778345585
+      },
+      {
+        "number": 4,
+        "split": "valid",
+        "human_classification": "ambiguous_between_alternatives",
+        "human_selected": null,
+        "canonical": "우주선",
+        "annotation": "우두선",
+        "prediction_text": "우주선",
+        "prediction_ids": [
+          13,
+          34,
+          14,
+          34,
+          11,
+          25,
+          4
+        ],
+        "matches_options_ignoring_spaces": {
+          "canonical": true,
+          "annotation": false
+        },
+        "matches_exclusive_human_choice": null,
+        "ctc_sequence_log_likelihood": {
+          "canonical": -0.01948397606611252,
+          "annotation": -8.392215728759766
+        },
+        "ctc_annotation_minus_canonical_log_likelihood": -8.372731752693653
+      },
+      {
+        "number": 5,
+        "split": "valid",
+        "human_classification": "exclusive_annotation",
+        "human_selected": "웡숭이",
+        "canonical": "원숭이",
+        "annotation": "웡숭이",
+        "prediction_text": "원숭이",
+        "prediction_ids": [
+          13,
+          35,
+          4,
+          11,
+          34,
+          13,
+          13,
+          41
+        ],
+        "matches_options_ignoring_spaces": {
+          "canonical": true,
+          "annotation": false
+        },
+        "matches_exclusive_human_choice": false,
+        "ctc_sequence_log_likelihood": {
+          "canonical": -0.0013992611784487963,
+          "annotation": -21.630016326904297
+        },
+        "ctc_annotation_minus_canonical_log_likelihood": -21.628617065725848
+      },
+      {
+        "number": 6,
+        "split": "valid",
+        "human_classification": "ambiguous_between_alternatives",
+        "human_selected": null,
+        "canonical": "크레용",
+        "annotation": "크에용",
+        "prediction_text": "크레용",
+        "prediction_ids": [
+          17,
+          39,
+          7,
+          26,
+          13,
+          33,
+          13
+        ],
+        "matches_options_ignoring_spaces": {
+          "canonical": true,
+          "annotation": false
+        },
+        "matches_exclusive_human_choice": null,
+        "ctc_sequence_log_likelihood": {
+          "canonical": -0.0042541418224573135,
+          "annotation": -14.966470718383789
+        },
+        "ctc_annotation_minus_canonical_log_likelihood": -14.962216576561332
+      },
+      {
+        "number": 7,
+        "split": "valid",
+        "human_classification": "neither_alternative_no_replacement_known",
+        "human_selected": null,
+        "canonical": "싱글벙글",
+        "annotation": "싱글벙그",
+        "prediction_text": "싱급ㅇ그",
+        "prediction_ids": [
+          11,
+          41,
+          13,
+          2,
+          39,
+          9,
+          13,
+          2,
+          39
+        ],
+        "matches_options_ignoring_spaces": {
+          "canonical": false,
+          "annotation": false
+        },
+        "matches_exclusive_human_choice": null,
+        "ctc_sequence_log_likelihood": {
+          "canonical": -12.271275520324707,
+          "annotation": -8.468154907226562
+        },
+        "ctc_annotation_minus_canonical_log_likelihood": 3.8031206130981445
+      },
+      {
+        "number": 8,
+        "split": "train",
+        "human_classification": "neither_alternative_no_replacement_known",
+        "human_selected": null,
+        "canonical": "친구",
+        "annotation": "치구",
+        "prediction_text": "키쿠",
+        "prediction_ids": [
+          17,
+          41,
+          17,
+          34
+        ],
+        "matches_options_ignoring_spaces": {
+          "canonical": false,
+          "annotation": false
+        },
+        "matches_exclusive_human_choice": null,
+        "ctc_sequence_log_likelihood": {
+          "canonical": -15.62693977355957,
+          "annotation": -7.867750644683838
+        },
+        "ctc_annotation_minus_canonical_log_likelihood": 7.759189128875732
+      }
+    ],
+    "elapsed_seconds": 12.26,
+    "model_or_targets_changed": false
+  },
+  "conclusion": {
+    "human_selected_variant_but_model_emits_canonical_numbers": [
+      1,
+      5
+    ],
+    "clear_judgment_numbers": [
+      1,
+      2,
+      5
+    ],
+    "unresolved_numbers": [
+      3,
+      4,
+      6,
+      7,
+      8
+    ],
+    "bracket_contents_safe_to_apply_globally": false,
+    "this_batch_proves_original_error_root_cause": false,
+    "these_eight_were_in_original_training_manifest": false,
+    "crop_or_audio_transform_explains_this_batch": false,
+    "recommendation": "Acquire a bounded twelve additional human judgments on new speakers. Only one changed-label training and one changed-label validation candidate exist so far; do not report a causal/generalization training result from those two."
+  },
+  "followup": {
+    "directory": "inline-contrast-followup",
+    "url": "http://127.0.0.1:8775/",
+    "questions": 12,
+    "seconds": 43.584,
+    "train_candidates": 6,
+    "valid_candidates": 6,
+    "fresh_speakers": 12,
+    "live_verified": true,
+    "automatically_expand_before_reviewing_answers": false
+  }
+}

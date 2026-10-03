@@ -1,0 +1,25 @@
+{
+  "complete": true,
+  "baseline_recordings": 150253,
+  "repaired_recordings": 150252,
+  "manifest": ".venv\\hubert-child-20260914\\manifest-train-repaired-20260927.jsonl",
+  "manifest_sha256": "095ab47072b4f24b0624fe6afb9d26dc3a16982dd75e6af3b255f94ee201b892",
+  "exactly_one_restored_row_and_one_excluded_row": true,
+  "other_rows_unchanged": 150251,
+  "training_loader_matches_original_full_pcm": true,
+  "restored_samples": 46080,
+  "restored_seconds": 2.88,
+  "restored_pcm_sha256": "25ac29b254ff3f8faeaa696244ebbbd15e47dd6721255cf6e44f3259a2e21e2a",
+  "target_jamo_unchanged": true,
+  "fresh_training_guard_rejections": [
+    "K08181705-AMG13-L5N1D1-E-K0KK-00761681.wav",
+    "K00770201-AMG10-L1N2D4-E-K0KK-00005765.wav"
+  ],
+  "baseline_manifests_and_holdouts_unchanged": true,
+  "original_checkpoint_sha256": "5a330f1bea3a17d1d063fdfd71a0cc25394695b0b797de01b293f6f688257aa7",
+  "model_retrained": false,
+  "remaining_review_candidates": 50,
+  "remaining_candidates_match_prior_screen": true,
+  "related_tests_passed": 39,
+  "audit": ".venv/hubert-child-20260914/audit-train-repaired-20260927.json"
+}

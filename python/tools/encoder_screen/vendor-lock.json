@@ -1,0 +1,16 @@
+{
+  "repo": "espnet/espnet",
+  "revision": "5fd502819d3bbf5b745097197abda31d82cb2800",
+  "files": [
+    {
+      "file": "main_espnet2_asr_frontend_cnn.py",
+      "source_path": "espnet2/asr/frontend/cnn.py",
+      "sha256": "7e3728e9d1550f9acee8dfb39547fb0ff19b21fc07eaa003dd1cd3f0928935f4"
+    },
+    {
+      "file": "main_espnet2_legacy_nets_pytorch_backend_transformer_embedding.py",
+      "source_path": "espnet2/legacy/nets/pytorch_backend/transformer/embedding.py",
+      "sha256": "f97658cd2307303aac8782ebbf4b1d2c6fb4a8aaff4f38f324cd374d76d23055"
+    }
+  ]
+}

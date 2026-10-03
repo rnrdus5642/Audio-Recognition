@@ -23,6 +23,7 @@ ENV/
 *.swo
 .claude/
 .gradio/
+.workspace-location.json
 
 # OS
 .DS_Store

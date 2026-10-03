@@ -1,0 +1,167 @@
+{
+  "complete": true,
+  "closed_at_utc": "2026-09-27T09:37:30.416579+00:00",
+  "decision": "Reject both pilot candidates; retain the original model.",
+  "all_expansion_checks_passed": false,
+  "deployed": false,
+  "original_problem_solved": false,
+  "training_running": false,
+  "automatic_diagnostics_running": false,
+  "completed_human_questions": 72,
+  "pending_human_questions": 0,
+  "inline_reviewed": 20,
+  "inline_provisional_train": 6,
+  "inline_provisional_valid": 4,
+  "inline_unresolved": 10,
+  "user_interpretation_caveat": "Single-listener spelling choices are provisional whole-word judgments, not certified phonetic truth.",
+  "metrics": {
+    "parent": {
+      "train_summary": {
+        "recordings": 6,
+        "exact": 3,
+        "errors": 4,
+        "reference_jamo": 41,
+        "jer": 0.0975609756097561
+      },
+      "valid_summary": {
+        "recordings": 4,
+        "exact": 0,
+        "errors": 6,
+        "reference_jamo": 30,
+        "jer": 0.2
+      },
+      "clean_valid": {
+        "jer": 0.029503947923573023,
+        "errors": 979,
+        "reference_jamo": 33182,
+        "exact": 1164,
+        "recordings": 1500,
+        "precision": "float32"
+      },
+      "personal_exact": 2,
+      "personal_judged": 11
+    },
+    "canonical": {
+      "train_summary": {
+        "recordings": 6,
+        "exact": 3,
+        "errors": 4,
+        "reference_jamo": 41,
+        "jer": 0.0975609756097561
+      },
+      "valid_summary": {
+        "recordings": 4,
+        "exact": 0,
+        "errors": 6,
+        "reference_jamo": 30,
+        "jer": 0.2
+      },
+      "clean_valid": {
+        "jer": 0.030016273883430776,
+        "errors": 996,
+        "reference_jamo": 33182,
+        "exact": 1152,
+        "recordings": 1500,
+        "precision": "float32"
+      },
+      "personal_exact": 2,
+      "personal_judged": 11
+    },
+    "realized": {
+      "train_summary": {
+        "recordings": 6,
+        "exact": 4,
+        "errors": 2,
+        "reference_jamo": 41,
+        "jer": 0.04878048780487805
+      },
+      "valid_summary": {
+        "recordings": 4,
+        "exact": 0,
+        "errors": 6,
+        "reference_jamo": 30,
+        "jer": 0.2
+      },
+      "clean_valid": {
+        "jer": 0.03052859984328853,
+        "errors": 1013,
+        "reference_jamo": 33182,
+        "exact": 1147,
+        "recordings": 1500,
+        "precision": "float32"
+      },
+      "personal_exact": 2,
+      "personal_judged": 11
+    }
+  },
+  "harmful_realized_output": {
+    "human_choice": "쌕",
+    "parent_output": "ㅐㄱ",
+    "realized_output": "책"
+  },
+  "residual_training_items": [
+    {
+      "id": "first:1",
+      "split": "train",
+      "human_target": "사워요",
+      "canonical": "싸워요",
+      "prediction": "싸워요",
+      "exact": false,
+      "parent_human_nll": 7.853141784667969,
+      "human_nll": 1.715968370437622,
+      "canonical_nll": 0.19934587180614471,
+      "human_minus_canonical_log_likelihood": -1.5166224986314774,
+      "human_nll_per_jamo": 0.2859947284062703
+    },
+    {
+      "id": "followup:10",
+      "split": "train",
+      "human_target": "웡충이",
+      "canonical": "원숭이",
+      "prediction": "웡숭이",
+      "exact": false,
+      "parent_human_nll": 23.446643829345703,
+      "human_nll": 4.053290367126465,
+      "canonical_nll": 0.924327552318573,
+      "human_minus_canonical_log_likelihood": -3.128962814807892,
+      "human_nll_per_jamo": 0.5066612958908081
+    }
+  ],
+  "heldout_items_fully_covered_by_new_training_spelling_changes": 1,
+  "causal_limit": "The intervention affected training fit but did not transfer to four held-out speakers or fix original diagnostic errors. Two training errors remain and contrast coverage is narrow. This neither proves nor excludes transcript supervision as an original cause.",
+  "next_recommendation": [
+    "Use the existing six reviewed clips for a bounded fit comparison: selected-label training alone versus mixing the original replay loss, with reviewed exposures and learning schedule controlled. Do not treat memorization as generalization.",
+    "Design subsequent train and different-speaker evaluation coverage around the original consonant contrasts, including initial b/r, initial tt/g and final g/b; the current filtered bracket pool is insufficient.",
+    "Do not automatically enlarge listening batches or scale the rejected candidate. Request human review only after identifying specific necessary contrasts."
+  ],
+  "next_experiment_started": false,
+  "checks": {
+    "answers_still_match_frozen_history": true,
+    "frozen_review_reports_and_probes_unchanged": true,
+    "manifests_unchanged": {
+      "manifest-train.jsonl": "6b15a65983f64d8b01603161fbb901e1dbcee164fce605d39560ac2a71681a04",
+      "manifest-train-repaired-20260927.jsonl": "095ab47072b4f24b0624fe6afb9d26dc3a16982dd75e6af3b255f94ee201b892",
+      "manifest-valid.jsonl": "4d7839eb53b468a783b5683455c2e63ba6b348c7a34b1fc4d34c6fa3366bfcbb",
+      "manifest-test.jsonl": "b1997497c874bb61167f5c04aeb8d144603c778d63cc5ebaba6479f8d75e650c"
+    },
+    "paired_config_audio_order_rng_verified": true,
+    "saved_checkpoint_predictions_reproduced": 20,
+    "related_tests_passed": 8,
+    "related_test_command": ".venv-gpu/Scripts/python.exe -X utf8 -m pytest -q python/tools/child_jamo_finetune/test_label_pilot.py python/tools/child_jamo_finetune/test_robustness.py"
+  },
+  "evidence": {
+    "comparison": {
+      "path": "docs/data/child-jamo-label-comparison-20260927.json",
+      "sha256": "df11ea9eb13c67c3d59b4f6f91381e89e71768e8bc6d709c76d661ece9cf6f57"
+    },
+    "fit": {
+      "path": "docs/data/child-jamo-label-comparison-fit-20260927.json",
+      "sha256": "4ef568a87068487c2f378d037c806fecc975f6a8735bd805fbc612f4015922cd"
+    },
+    "coverage": {
+      "path": "docs/data/child-jamo-label-contrast-coverage-20260927.json",
+      "sha256": "d937e3690bc99e932c1fc0ad660b9a55a5421077641ba482d77231ed9f81c40d"
+    }
+  },
+  "report": "docs/CHILD_JAMO_LABEL_COMPARISON_2026-09-27.md"
+}

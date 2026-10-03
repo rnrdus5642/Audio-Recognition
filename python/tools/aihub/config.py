@@ -5,16 +5,22 @@ than passing paths around.
 """
 
 import os
+from pathlib import Path
+import sys
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[3]))
+from python.workspace import DATASETS, physical_path
 
 # Wherever the AI Hub download landed. The scripts look for archives
 # anywhere underneath, so the vendor's nested folder layout is fine as-is.
-RAW = os.environ.get("AIHUB_RAW", r"C:\Users\user\Desktop\AIHUB")
+RAW = str(physical_path(os.environ.get("AIHUB_RAW", DATASETS / 'AIHUB')))
 
 # Where the tidied corpus is written.
-OUT = os.environ.get("AIHUB_OUT", r"C:\Users\user\Desktop\AIHUB정리")
+OUT = str(physical_path(os.environ.get("AIHUB_OUT", DATASETS / 'AIHUB정리')))
 
 INDEX = os.path.join(OUT, "index.csv")
-AUDIO = os.path.join(OUT, "audio")
+_audio_default = Path(OUT) / 'audio' if os.environ.get('AIHUB_OUT') else DATASETS / 'audio'
+AUDIO = str(physical_path(os.environ.get('AIHUB_AUDIO', _audio_default)))
 SPLITS = os.path.join(OUT, "splits.json")
 
 # Ages to pull audio for. The full corpus holds 738 children aged 5-7

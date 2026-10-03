@@ -39,7 +39,10 @@ import numpy as np
 import soundfile as sf
 import torch
 from torch.utils.data import DataLoader, Dataset
-from transformers import Wav2Vec2ForCTC, Wav2Vec2Processor
+from transformers import Wav2Vec2Config, Wav2Vec2ForCTC, Wav2Vec2Processor
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[3]))
+from python.workspace import physical_path
 
 MODEL = "kresnik/wav2vec2-large-xlsr-korean"
 HERE = Path(__file__).resolve().parent
@@ -83,7 +86,7 @@ class Utterances(Dataset):
 
     def __getitem__(self, i: int) -> dict:
         row = self.rows[i]
-        audio, rate = sf.read(row["wav"], dtype="float32")
+        audio, rate = sf.read(physical_path(row["wav"]), dtype="float32")
         if audio.ndim > 1:
             audio = audio.mean(axis=1)
 
@@ -199,7 +202,94 @@ def character_error(model, processor, data: Utterances,
             if len(samples) < 8:
                 samples.append((reference, hypothesis))
     model.train()
-    return (wrong / max(total, 1)), samples
+    if total == 0:
+        # Dividing by a floor of 1 would report a perfect 0.00% for a dev
+        # set with nothing in it, and the run would look like it worked.
+        raise ValueError("dev 에 채점할 글자가 없습니다")
+    return (wrong / total), samples
+
+
+def characters(paths: list[Path]) -> set[str]:
+    """Every distinct character the manifests will ask the model to emit."""
+    seen: set[str] = set()
+    for path in paths:
+        with open(path, encoding="utf-8") as handle:
+            for row in csv.DictReader(handle):
+                seen.update(row["text"])
+    return seen
+
+
+def unknown(chars: set[str], tokenizer, vocab_size: int) -> list[str]:
+    """Characters this tokenizer cannot turn into an emittable id.
+
+    Anything it cannot map becomes `[UNK]`, and CTC will then dutifully
+    learn to emit the placeholder wherever that syllable was spoken -
+    silently, and worse than not training on the utterance at all. The
+    same goes for an id past the head's width: the loss would index a
+    column that does not exist.
+
+    Only an ASCII space becomes the delimiter, because that is the only
+    thing `Wav2Vec2CTCTokenizer._tokenize` replaces. A tab or a
+    non-breaking space is looked up as itself and is not in any of these
+    vocabularies, which is the answer this should give.
+    """
+    encoder = tokenizer.get_vocab()
+    delimiter = tokenizer.word_delimiter_token
+    bad = []
+    for char in sorted(chars):
+        token = delimiter if char == " " else char
+        i = encoder.get(token)
+        if not isinstance(i, int) or isinstance(i, bool) \
+                or i < 0 or i >= vocab_size:
+            bad.append(char)
+    return bad
+
+
+def check_manifests(paths: list[Path]) -> str | None:
+    """Refuse a manifest with no utterances, or one with blank targets."""
+    for path in paths:
+        with open(path, encoding="utf-8") as handle:
+            rows = list(csv.DictReader(handle))
+        if not rows:
+            return f"{path} 에 발화가 한 줄도 없습니다"
+        blank = sum(1 for row in rows if not (row.get("text") or "").strip())
+        if blank:
+            return f"{path} 에 전사가 빈 줄이 {blank}개 있습니다"
+    return None
+
+
+def check_out(out: Path, start: Path | str, force: bool,
+              fresh: bool = True) -> str | None:
+    """Where a run may write, given where it started.
+
+    Containment is checked in both directions for a fresh run and
+    `--force` does not waive it: a new run numbers epochs from one again,
+    so `--init-model runs/child/epoch-08 --out runs/child` would write
+    over the very checkpoint it started from.
+
+    A resume is different on purpose. Carrying on from `epoch-03` into
+    the run directory that contains it is the documented way to use it,
+    so only the reverse - writing inside the checkpoint itself - is
+    refused there.
+    """
+    if isinstance(start, (str, Path)) and Path(start).exists():
+        here, source = out.resolve(), Path(start).resolve()
+        if here == source:
+            return f"{out} 이 시작 체크포인트와 같은 디렉터리입니다"
+        if source in here.parents:
+            return f"{out} 이 시작 체크포인트 {start} 안에 있습니다"
+        if fresh and here in source.parents:
+            return (f"시작 체크포인트 {start} 이 {out} 안에 있습니다. 새 "
+                    "실행은 epoch 을 다시 1부터 세므로 원본을 덮어씁니다")
+
+    if not fresh:
+        return None
+    done = [name for name in ("history.json", "log.jsonl")
+            if (out / name).exists()]
+    if done and not force:
+        return (f"{out} 에 이미 {', '.join(done)} 이 있습니다. 새 --out 을 "
+                "주거나 --force 를 붙이세요")
+    return None
 
 
 def main() -> int:
@@ -215,11 +305,75 @@ def main() -> int:
     parser.add_argument("--warmup", type=int, default=500)
     parser.add_argument("--eval-every", type=int, default=1000)
     parser.add_argument("--out", type=Path, default=RUNS / "child")
-    parser.add_argument("--resume", type=Path, default=None,
-                        help="an epoch-NN directory to carry on from; "
-                             "picks up its weights, optimiser and step "
-                             "count and starts the epoch after it")
+    parser.add_argument("--data", type=Path, default=DATA,
+                        help="manifest directory holding train.csv and "
+                             "dev.csv")
+    parser.add_argument("--force", action="store_true",
+                        help="이미 기록이 있는 --out 에 이어 쓰기")
+    start_from = parser.add_mutually_exclusive_group()
+    start_from.add_argument("--resume", type=Path, default=None,
+                            help="an epoch-NN directory to carry on from; "
+                                 "picks up its weights, optimiser and step "
+                                 "count and starts the epoch after it")
+    start_from.add_argument("--init-model", type=Path, default=None,
+                            help="start a NEW run from this checkpoint's "
+                                 "weights only. The optimiser, schedule "
+                                 "and epoch count all begin again, which "
+                                 "is what a changed head width needs - "
+                                 "Adam's moments do not fit a wider one")
     args = parser.parse_args()
+
+    start = args.resume or args.init_model or MODEL
+    if args.init_model:
+        # Resolved: `data`, `./data` and the absolute path are the same
+        # directory, and only one of them loses a string comparison.
+        if args.data.resolve() == DATA.resolve():
+            print("ERROR: --init-model 은 --data 도 함께 지정하세요. 기본 "
+                  "manifest 는 배포 어휘로 만들어져 새 음절이 들어 있지 "
+                  "않습니다", file=sys.stderr)
+            return 1
+    problem = None
+    if args.init_model:
+        problem = check_out(args.out, args.init_model, args.force)
+    elif args.resume:
+        problem = check_out(args.out, args.resume, args.force, fresh=False)
+    if problem:
+        print(f"ERROR: {problem}", file=sys.stderr)
+        return 1
+
+    # The processor comes from whatever we are starting from, not from a
+    # constant. Reading it from the adult model while resuming a child
+    # one happened to work while their id maps were identical; the moment
+    # a checkpoint has a syllable the constant does not, every label for
+    # it silently becomes [UNK].
+    processor = Wav2Vec2Processor.from_pretrained(start)
+    width = Wav2Vec2Config.from_pretrained(start).vocab_size
+    if processor.tokenizer.vocab_size != width:
+        print(f"ERROR: 토크나이저 {processor.tokenizer.vocab_size} 와 "
+              f"config.vocab_size {width} 이 다릅니다", file=sys.stderr)
+        return 1
+
+    manifests = [args.data / "train.csv", args.data / "dev.csv"]
+    absent = [path for path in manifests if not path.exists()]
+    if absent:
+        print(f"ERROR: {absent[0]} 없음. manifest 를 먼저 만드세요",
+              file=sys.stderr)
+        return 1
+
+    empty = check_manifests(manifests)
+    if empty:
+        print(f"ERROR: {empty}", file=sys.stderr)
+        return 1
+
+    # Before any GPU work: a manifest the tokenizer cannot spell is a
+    # night of training on placeholders.
+    offenders = unknown(characters(manifests), processor.tokenizer, width)
+    if offenders:
+        print(f"ERROR: manifest 에 어휘 밖 문자 {len(offenders)}종 "
+              f"{offenders[:10]}. 이대로 학습하면 [UNK] 을 배웁니다",
+              file=sys.stderr)
+        return 1
+    print(f"시작 {start} · 음향 출력 {width} · manifest 문자 전부 확인")
 
     if not torch.cuda.is_available():
         print("CUDA 없음. GPU 빌드 torch 가 필요합니다.", file=sys.stderr)
@@ -228,8 +382,6 @@ def main() -> int:
     torch.backends.cuda.matmul.allow_tf32 = True
     torch.backends.cudnn.allow_tf32 = True
 
-    processor = Wav2Vec2Processor.from_pretrained(MODEL)
-    start = args.resume or MODEL
     if args.resume:
         print(f"이어받기 {args.resume}")
     model = Wav2Vec2ForCTC.from_pretrained(
@@ -252,8 +404,8 @@ def main() -> int:
     total = sum(p.numel() for p in model.parameters())
     print(f"학습 파라미터 {trainable/1e6:.0f}M / {total/1e6:.0f}M")
 
-    train = Utterances(DATA / "train.csv", processor)
-    dev = Utterances(DATA / "dev.csv", processor)
+    train = Utterances(manifests[0], processor)
+    dev = Utterances(manifests[1], processor)
     print(f"train {len(train):,} 발화 · dev {len(dev):,} 발화")
 
     optimiser = torch.optim.AdamW(model.parameters(), lr=args.lr,

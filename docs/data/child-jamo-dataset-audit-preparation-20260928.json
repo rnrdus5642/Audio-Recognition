@@ -1,0 +1,183 @@
+{
+  "version": "original-training-pronunciation-audit-20260928-v1",
+  "prepared_at_utc": "2026-09-28T08:31:55.548271+00:00",
+  "questions": 20,
+  "random_questions": 10,
+  "focused_questions": 10,
+  "distinct_speakers": 20,
+  "selection_sha256": "fe1a0c71f9a90300507b488dd147be98525b29d8bfea9c86f23088ff5d54ba15",
+  "original_manifest_sha256": "6b15a65983f64d8b01603161fbb901e1dbcee164fce605d39560ac2a71681a04",
+  "source_and_training_pcm_verified": 20,
+  "source_and_g2p_verified": 20,
+  "total_training_audio_seconds": 79.814,
+  "cropped_items_with_original_available": 15,
+  "previously_presented_training_wavs_excluded": 28,
+  "model_predictions_used_in_selection": false,
+  "human_answers_created": false,
+  "labels_changed": false,
+  "training_started": false,
+  "status": "ready_for_human_listening",
+  "items": [
+    {
+      "number": 1,
+      "group": "velar_tense",
+      "wav": "K04578239-AMG11-L1N2D4-E-K0KK-04108330.wav",
+      "age": "5",
+      "style": "formatted"
+    },
+    {
+      "number": 2,
+      "group": "random:6:formatted",
+      "wav": "K03854773-AMG10-L1N2D2-E-K0KK-02173406.wav",
+      "age": "6",
+      "style": "formatted"
+    },
+    {
+      "number": 3,
+      "group": "onset_presence",
+      "wav": "K03157268-AMG13-L1N2D1-E-K0KK-04103233.wav",
+      "age": "6",
+      "style": "formatted"
+    },
+    {
+      "number": 4,
+      "group": "random:5:formatted",
+      "wav": "K02450631-AMG10-L5N1D1-E-K0KK-01027544.wav",
+      "age": "5",
+      "style": "formatted"
+    },
+    {
+      "number": 5,
+      "group": "coda_presence",
+      "wav": "K03918018-AFG10-L5N1D1-E-K0KK-03907025.wav",
+      "age": "5",
+      "style": "formatted"
+    },
+    {
+      "number": 6,
+      "group": "random:5:formatted",
+      "wav": "K02814180-AMG10-L1N2D1-E-K0KK-02169043.wav",
+      "age": "5",
+      "style": "formatted"
+    },
+    {
+      "number": 7,
+      "group": "random:5:formatted",
+      "wav": "K04120041-AFG10-L1N2D1-E-K0KK-00197889.wav",
+      "age": "5",
+      "style": "formatted"
+    },
+    {
+      "number": 8,
+      "group": "onset_presence",
+      "wav": "K02340391-AMG13-L1N2D1-E-K0KK-00176511.wav",
+      "age": "6",
+      "style": "formatted"
+    },
+    {
+      "number": 9,
+      "group": "vowel_quality",
+      "wav": "K06363619-AFG10-L1N2D3-E-K0KK-01967708.wav",
+      "age": "5",
+      "style": "formatted"
+    },
+    {
+      "number": 10,
+      "group": "random:6:formatted",
+      "wav": "K04112272-AMG10-L4N1D1-E-K0KK-01619039.wav",
+      "age": "6",
+      "style": "formatted"
+    },
+    {
+      "number": 11,
+      "group": "random:5:formatted",
+      "wav": "K02742285-AFG10-L5N1D1-E-K0KK-01032264.wav",
+      "age": "5",
+      "style": "formatted"
+    },
+    {
+      "number": 12,
+      "group": "affricate_stop",
+      "wav": "K07871900-AFG10-L1N2D2-E-K0KK-02243366.wav",
+      "age": "6",
+      "style": "formatted"
+    },
+    {
+      "number": 13,
+      "group": "random:6:formatted",
+      "wav": "K05027224-AMG10-L1N2D1-E-K0KK-04287293.wav",
+      "age": "6",
+      "style": "formatted"
+    },
+    {
+      "number": 14,
+      "group": "affricate_stop",
+      "wav": "K00103131-AMG10-L1N2D2-E-K0KK-01411970.wav",
+      "age": "6",
+      "style": "formatted"
+    },
+    {
+      "number": 15,
+      "group": "velar_tense",
+      "wav": "K04460288-AFG10-L1N2D1-E-K0KK-00429233.wav",
+      "age": "6",
+      "style": "formatted"
+    },
+    {
+      "number": 16,
+      "group": "vowel_quality",
+      "wav": "K06373629-AMG10-L5N1D1-E-K0KK-01924309.wav",
+      "age": "5",
+      "style": "formatted"
+    },
+    {
+      "number": 17,
+      "group": "random:7:formatted",
+      "wav": "K01602347-AFG22-L5N1D2-E-K0KK-01095822.wav",
+      "age": "7",
+      "style": "formatted"
+    },
+    {
+      "number": 18,
+      "group": "random:6:free",
+      "wav": "K0001A007-BMG23-L1N2D2-E-K0KK-04673053.wav",
+      "age": "6",
+      "style": "free"
+    },
+    {
+      "number": 19,
+      "group": "random:7:free",
+      "wav": "K0001A391-BFG22-L1N2D1-E-K0KK-05192412.wav",
+      "age": "7",
+      "style": "free"
+    },
+    {
+      "number": 20,
+      "group": "coda_presence",
+      "wav": "K02740095-AFG10-L1N2D4-E-K0KK-00447915.wav",
+      "age": "5",
+      "style": "formatted"
+    }
+  ],
+  "limitations": [
+    "Exploratory detection, not an estimate of population prevalence.",
+    "No model disagreement filter; agreement is assessed only after freezing.",
+    "Focused alternatives are hypothetical literal contrasts, not known mistakes.",
+    "One listener and optional approximate text do not establish expert phonetic labels."
+  ],
+  "url": "http://127.0.0.1:8777/",
+  "server": {
+    "ok": true,
+    "app": "training-pronunciation-audit",
+    "pid": 20400,
+    "questions": 20,
+    "review_sha256": "167ff2b5720be1cc22563ec39815bfab500a420ae0e57d8200e16a40768e97b9",
+    "exec_session_id": 8834
+  },
+  "unit_tests_passed": 8,
+  "browser_checks_passed": 8,
+  "browser_qa": ".venv\\child-jamo-web-20260916\\dataset-audit-20260928\\qa\\20260928T083925Z\\report.json",
+  "live_http_audio_hashes_verified": 40,
+  "actual_answers_at_handoff": 0,
+  "live_check_at_utc": "2026-09-28T08:44:15.509192+00:00"
+}

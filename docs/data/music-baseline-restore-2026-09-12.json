@@ -1,0 +1,70 @@
+{
+  "date": "2026-09-12",
+  "status": "baseline_restored_with_validation_limits",
+  "baseline_commit": "5bdea0084f9828045c891ee38247038e22897aa1",
+  "preserved_head_commit": "366a046f806c536bf9d88269e2c87e7017e0d922",
+  "package": {
+    "name": "com.domicube.phoneme-matching",
+    "version": "0.7.0",
+    "artifact": "com.domicube.phoneme-matching-0.7.0.tgz",
+    "files": 114,
+    "bytes": 124609,
+    "sha256": "39f0d49865de7f97e1892d959254fb76fa07a0919215188d5bbf9ca89f4ccd9a",
+    "matches_current_package_byte_for_byte": true,
+    "source_equals_baseline_commit": true
+  },
+  "restore": {
+    "paths_equal_baseline": 130,
+    "history_rewritten": false,
+    "independent_training_and_vocabulary_files_preserved": 9,
+    "generated_base_and_child_catalogs_restored": true,
+    "music_catalog_removed_from_active_data": true,
+    "music_web_server_stopped": true,
+    "separate_game_project_modified": false
+  },
+  "tests": {
+    "python": {
+      "passed": 317,
+      "failed": 0,
+      "seconds": 30.051
+    },
+    "csharp": {
+      "passed": 46,
+      "failed": 0
+    },
+    "unity_editmode": {
+      "passed": 28,
+      "failed": 0,
+      "skipped": 0,
+      "seconds": 9.0747465
+    },
+    "unity_playmode": {
+      "passed": 47,
+      "failed": 0,
+      "skipped": 0,
+      "seconds": 0.3798515
+    }
+  },
+  "runtime": {
+    "unity": "2022.3.62f2",
+    "inference_engine": "Sentis 1.2.0-exp.2",
+    "backend": "GPUCompute",
+    "recordings": 8,
+    "actual_audio_inferences": 35,
+    "warmup_inferences": 1,
+    "raw_text_phonemes_scores_decisions_and_streak_match_python": true,
+    "schema_version": 2,
+    "confirmed_recordings_in_smoke_sample": 3,
+    "purpose": "Restored package integration and baseline parity, not music-word accuracy evaluation"
+  },
+  "limits": [
+    "No new live microphone or unseen-speaker accuracy test",
+    "No CRC_Music integration or final game Player build",
+    "No new Unity 6, IL2CPP or device test",
+    "Existing Sentis shader performance warnings remain",
+    "0.8.x music APIs and schema-3 feedback are not provided by 0.7.0",
+    "0.7.0 LessonExample requires the compatible inference engine to be installed first"
+  ],
+  "new_commit_created": false,
+  "remote_push_performed": false
+}

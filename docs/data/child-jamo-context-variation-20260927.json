@@ -1,0 +1,3920 @@
+{
+  "version": "context-variation-analysis-v1",
+  "experiment": "context-variation-20260927",
+  "plan_sha256": "5ab6a513edb2f3f9a24a4430fd791122c5b689d125150a7017cff24576e0dc4a",
+  "selection_sha256": "871ba9adc59542be27976d95f4f73a8e4bb7c1d5b74fc56c3c008398e39271a5",
+  "seeds_complete": 2,
+  "results": [
+    {
+      "seed": 92801,
+      "source_sha256": "617650f95185db296907d954443c31c1c6de9e051e775c13bd7898314f9b33e5",
+      "paired_input_schedule_verified": true,
+      "gates": {
+        "stress_at_least_10pct_fewer_errors_than_parent": false,
+        "stress_at_least_10pct_fewer_errors_than_control": false,
+        "clean_regression_within_0_1_percentage_point": true,
+        "personal_original_at_least_one_more_exact_than_parent_and_control": false,
+        "preserves_all_previously_correct_human_original": true,
+        "ssaek_never_rewritten_to_chaek_in_seven_conditions": false
+      },
+      "all_gates_passed": false,
+      "clean_valid": {
+        "parent": {
+          "jer": 0.029503947923573023,
+          "errors": 979,
+          "reference_jamo": 33182,
+          "exact": 1164,
+          "recordings": 1500,
+          "precision": "float32"
+        },
+        "control": {
+          "jer": 0.029835452956422155,
+          "errors": 990,
+          "reference_jamo": 33182,
+          "exact": 1157,
+          "recordings": 1500,
+          "precision": "float32"
+        },
+        "combined": {
+          "jer": 0.02959435838707733,
+          "errors": 982,
+          "reference_jamo": 33182,
+          "exact": 1159,
+          "recordings": 1500,
+          "precision": "float32"
+        }
+      },
+      "stress": {
+        "parent": {
+          "original": {
+            "recordings": 256,
+            "exact": 192,
+            "errors": 190,
+            "reference_jamo": 5775,
+            "jer": 0.0329004329004329,
+            "changed_from_original": 0,
+            "original_correct_lost": 0
+          },
+          "left_370ms": {
+            "recordings": 256,
+            "exact": 189,
+            "errors": 194,
+            "reference_jamo": 5775,
+            "jer": 0.03359307359307359,
+            "changed_from_original": 31,
+            "original_correct_lost": 6
+          },
+          "right_830ms": {
+            "recordings": 256,
+            "exact": 190,
+            "errors": 200,
+            "reference_jamo": 5775,
+            "jer": 0.03463203463203463,
+            "changed_from_original": 22,
+            "original_correct_lost": 4
+          },
+          "both_310_670ms": {
+            "recordings": 256,
+            "exact": 188,
+            "errors": 199,
+            "reference_jamo": 5775,
+            "jer": 0.03445887445887446,
+            "changed_from_original": 36,
+            "original_correct_lost": 7
+          },
+          "gain_minus12": {
+            "recordings": 256,
+            "exact": 192,
+            "errors": 185,
+            "reference_jamo": 5775,
+            "jer": 0.032034632034632034,
+            "changed_from_original": 37,
+            "original_correct_lost": 6
+          },
+          "gain_plus6": {
+            "recordings": 256,
+            "exact": 190,
+            "errors": 188,
+            "reference_jamo": 5775,
+            "jer": 0.03255411255411256,
+            "changed_from_original": 13,
+            "original_correct_lost": 3
+          },
+          "both_gain_minus9": {
+            "recordings": 256,
+            "exact": 187,
+            "errors": 199,
+            "reference_jamo": 5775,
+            "jer": 0.03445887445887446,
+            "changed_from_original": 40,
+            "original_correct_lost": 9
+          },
+          "transformed_total": {
+            "recordings": 1536,
+            "exact": 1136,
+            "errors": 1165,
+            "reference_jamo": 34650,
+            "jer": 0.03362193362193362,
+            "changed_from_original": 179
+          }
+        },
+        "control": {
+          "original": {
+            "recordings": 256,
+            "exact": 193,
+            "errors": 190,
+            "reference_jamo": 5775,
+            "jer": 0.0329004329004329,
+            "changed_from_original": 0,
+            "original_correct_lost": 0
+          },
+          "left_370ms": {
+            "recordings": 256,
+            "exact": 193,
+            "errors": 189,
+            "reference_jamo": 5775,
+            "jer": 0.03272727272727273,
+            "changed_from_original": 30,
+            "original_correct_lost": 5
+          },
+          "right_830ms": {
+            "recordings": 256,
+            "exact": 192,
+            "errors": 200,
+            "reference_jamo": 5775,
+            "jer": 0.03463203463203463,
+            "changed_from_original": 16,
+            "original_correct_lost": 2
+          },
+          "both_310_670ms": {
+            "recordings": 256,
+            "exact": 192,
+            "errors": 196,
+            "reference_jamo": 5775,
+            "jer": 0.03393939393939394,
+            "changed_from_original": 29,
+            "original_correct_lost": 5
+          },
+          "gain_minus12": {
+            "recordings": 256,
+            "exact": 192,
+            "errors": 191,
+            "reference_jamo": 5775,
+            "jer": 0.033073593073593074,
+            "changed_from_original": 32,
+            "original_correct_lost": 5
+          },
+          "gain_plus6": {
+            "recordings": 256,
+            "exact": 191,
+            "errors": 186,
+            "reference_jamo": 5775,
+            "jer": 0.032207792207792206,
+            "changed_from_original": 15,
+            "original_correct_lost": 3
+          },
+          "both_gain_minus9": {
+            "recordings": 256,
+            "exact": 190,
+            "errors": 200,
+            "reference_jamo": 5775,
+            "jer": 0.03463203463203463,
+            "changed_from_original": 39,
+            "original_correct_lost": 9
+          },
+          "transformed_total": {
+            "recordings": 1536,
+            "exact": 1150,
+            "errors": 1162,
+            "reference_jamo": 34650,
+            "jer": 0.033535353535353536,
+            "changed_from_original": 161
+          }
+        },
+        "combined": {
+          "original": {
+            "recordings": 256,
+            "exact": 191,
+            "errors": 191,
+            "reference_jamo": 5775,
+            "jer": 0.033073593073593074,
+            "changed_from_original": 0,
+            "original_correct_lost": 0
+          },
+          "left_370ms": {
+            "recordings": 256,
+            "exact": 193,
+            "errors": 190,
+            "reference_jamo": 5775,
+            "jer": 0.0329004329004329,
+            "changed_from_original": 33,
+            "original_correct_lost": 5
+          },
+          "right_830ms": {
+            "recordings": 256,
+            "exact": 194,
+            "errors": 195,
+            "reference_jamo": 5775,
+            "jer": 0.033766233766233764,
+            "changed_from_original": 18,
+            "original_correct_lost": 1
+          },
+          "both_310_670ms": {
+            "recordings": 256,
+            "exact": 193,
+            "errors": 195,
+            "reference_jamo": 5775,
+            "jer": 0.033766233766233764,
+            "changed_from_original": 34,
+            "original_correct_lost": 5
+          },
+          "gain_minus12": {
+            "recordings": 256,
+            "exact": 190,
+            "errors": 193,
+            "reference_jamo": 5775,
+            "jer": 0.03341991341991342,
+            "changed_from_original": 28,
+            "original_correct_lost": 5
+          },
+          "gain_plus6": {
+            "recordings": 256,
+            "exact": 190,
+            "errors": 189,
+            "reference_jamo": 5775,
+            "jer": 0.03272727272727273,
+            "changed_from_original": 18,
+            "original_correct_lost": 4
+          },
+          "both_gain_minus9": {
+            "recordings": 256,
+            "exact": 191,
+            "errors": 195,
+            "reference_jamo": 5775,
+            "jer": 0.033766233766233764,
+            "changed_from_original": 39,
+            "original_correct_lost": 7
+          },
+          "transformed_total": {
+            "recordings": 1536,
+            "exact": 1151,
+            "errors": 1157,
+            "reference_jamo": 34650,
+            "jer": 0.03339105339105339,
+            "changed_from_original": 170
+          }
+        }
+      },
+      "human": {
+        "parent": {
+          "human_verified_training": {
+            "original": {
+              "recordings": 6,
+              "exact": 6,
+              "errors": 0,
+              "reference_jamo": 64,
+              "jer": 0.0,
+              "changed_from_original": 0,
+              "original_correct_lost": 0
+            },
+            "left_370ms": {
+              "recordings": 6,
+              "exact": 6,
+              "errors": 0,
+              "reference_jamo": 64,
+              "jer": 0.0,
+              "changed_from_original": 0,
+              "original_correct_lost": 0
+            },
+            "right_830ms": {
+              "recordings": 6,
+              "exact": 6,
+              "errors": 0,
+              "reference_jamo": 64,
+              "jer": 0.0,
+              "changed_from_original": 0,
+              "original_correct_lost": 0
+            },
+            "both_310_670ms": {
+              "recordings": 6,
+              "exact": 6,
+              "errors": 0,
+              "reference_jamo": 64,
+              "jer": 0.0,
+              "changed_from_original": 0,
+              "original_correct_lost": 0
+            },
+            "gain_minus12": {
+              "recordings": 6,
+              "exact": 6,
+              "errors": 0,
+              "reference_jamo": 64,
+              "jer": 0.0,
+              "changed_from_original": 0,
+              "original_correct_lost": 0
+            },
+            "gain_plus6": {
+              "recordings": 6,
+              "exact": 6,
+              "errors": 0,
+              "reference_jamo": 64,
+              "jer": 0.0,
+              "changed_from_original": 0,
+              "original_correct_lost": 0
+            },
+            "both_gain_minus9": {
+              "recordings": 6,
+              "exact": 6,
+              "errors": 0,
+              "reference_jamo": 64,
+              "jer": 0.0,
+              "changed_from_original": 0,
+              "original_correct_lost": 0
+            },
+            "transformed_total": {
+              "recordings": 36,
+              "exact": 36,
+              "errors": 0,
+              "reference_jamo": 384,
+              "jer": 0.0,
+              "changed_from_original": 0
+            }
+          },
+          "inline_train": {
+            "original": {
+              "recordings": 6,
+              "exact": 3,
+              "errors": 4,
+              "reference_jamo": 41,
+              "jer": 0.0975609756097561,
+              "changed_from_original": 0,
+              "original_correct_lost": 0
+            },
+            "left_370ms": {
+              "recordings": 6,
+              "exact": 3,
+              "errors": 4,
+              "reference_jamo": 41,
+              "jer": 0.0975609756097561,
+              "changed_from_original": 0,
+              "original_correct_lost": 0
+            },
+            "right_830ms": {
+              "recordings": 6,
+              "exact": 3,
+              "errors": 4,
+              "reference_jamo": 41,
+              "jer": 0.0975609756097561,
+              "changed_from_original": 0,
+              "original_correct_lost": 0
+            },
+            "both_310_670ms": {
+              "recordings": 6,
+              "exact": 3,
+              "errors": 4,
+              "reference_jamo": 41,
+              "jer": 0.0975609756097561,
+              "changed_from_original": 0,
+              "original_correct_lost": 0
+            },
+            "gain_minus12": {
+              "recordings": 6,
+              "exact": 3,
+              "errors": 4,
+              "reference_jamo": 41,
+              "jer": 0.0975609756097561,
+              "changed_from_original": 0,
+              "original_correct_lost": 0
+            },
+            "gain_plus6": {
+              "recordings": 6,
+              "exact": 3,
+              "errors": 4,
+              "reference_jamo": 41,
+              "jer": 0.0975609756097561,
+              "changed_from_original": 0,
+              "original_correct_lost": 0
+            },
+            "both_gain_minus9": {
+              "recordings": 6,
+              "exact": 3,
+              "errors": 4,
+              "reference_jamo": 41,
+              "jer": 0.0975609756097561,
+              "changed_from_original": 0,
+              "original_correct_lost": 0
+            },
+            "transformed_total": {
+              "recordings": 36,
+              "exact": 18,
+              "errors": 24,
+              "reference_jamo": 246,
+              "jer": 0.0975609756097561,
+              "changed_from_original": 0
+            }
+          },
+          "inline_valid": {
+            "original": {
+              "recordings": 4,
+              "exact": 0,
+              "errors": 6,
+              "reference_jamo": 30,
+              "jer": 0.2,
+              "changed_from_original": 0,
+              "original_correct_lost": 0
+            },
+            "left_370ms": {
+              "recordings": 4,
+              "exact": 0,
+              "errors": 6,
+              "reference_jamo": 30,
+              "jer": 0.2,
+              "changed_from_original": 0,
+              "original_correct_lost": 0
+            },
+            "right_830ms": {
+              "recordings": 4,
+              "exact": 0,
+              "errors": 6,
+              "reference_jamo": 30,
+              "jer": 0.2,
+              "changed_from_original": 0,
+              "original_correct_lost": 0
+            },
+            "both_310_670ms": {
+              "recordings": 4,
+              "exact": 0,
+              "errors": 6,
+              "reference_jamo": 30,
+              "jer": 0.2,
+              "changed_from_original": 0,
+              "original_correct_lost": 0
+            },
+            "gain_minus12": {
+              "recordings": 4,
+              "exact": 0,
+              "errors": 6,
+              "reference_jamo": 30,
+              "jer": 0.2,
+              "changed_from_original": 0,
+              "original_correct_lost": 0
+            },
+            "gain_plus6": {
+              "recordings": 4,
+              "exact": 0,
+              "errors": 6,
+              "reference_jamo": 30,
+              "jer": 0.2,
+              "changed_from_original": 0,
+              "original_correct_lost": 0
+            },
+            "both_gain_minus9": {
+              "recordings": 4,
+              "exact": 0,
+              "errors": 6,
+              "reference_jamo": 30,
+              "jer": 0.2,
+              "changed_from_original": 0,
+              "original_correct_lost": 0
+            },
+            "transformed_total": {
+              "recordings": 24,
+              "exact": 0,
+              "errors": 36,
+              "reference_jamo": 180,
+              "jer": 0.2,
+              "changed_from_original": 0
+            }
+          },
+          "personal_diagnostic": {
+            "original": {
+              "recordings": 11,
+              "exact": 2,
+              "errors": 13,
+              "reference_jamo": 47,
+              "jer": 0.2765957446808511,
+              "changed_from_original": 0,
+              "original_correct_lost": 0
+            },
+            "left_370ms": {
+              "recordings": 11,
+              "exact": 2,
+              "errors": 13,
+              "reference_jamo": 47,
+              "jer": 0.2765957446808511,
+              "changed_from_original": 2,
+              "original_correct_lost": 0
+            },
+            "right_830ms": {
+              "recordings": 11,
+              "exact": 1,
+              "errors": 14,
+              "reference_jamo": 47,
+              "jer": 0.2978723404255319,
+              "changed_from_original": 5,
+              "original_correct_lost": 1
+            },
+            "both_310_670ms": {
+              "recordings": 11,
+              "exact": 2,
+              "errors": 16,
+              "reference_jamo": 47,
+              "jer": 0.3404255319148936,
+              "changed_from_original": 4,
+              "original_correct_lost": 0
+            },
+            "gain_minus12": {
+              "recordings": 11,
+              "exact": 3,
+              "errors": 12,
+              "reference_jamo": 47,
+              "jer": 0.2553191489361702,
+              "changed_from_original": 3,
+              "original_correct_lost": 0
+            },
+            "gain_plus6": {
+              "recordings": 11,
+              "exact": 2,
+              "errors": 14,
+              "reference_jamo": 47,
+              "jer": 0.2978723404255319,
+              "changed_from_original": 3,
+              "original_correct_lost": 0
+            },
+            "both_gain_minus9": {
+              "recordings": 11,
+              "exact": 2,
+              "errors": 15,
+              "reference_jamo": 47,
+              "jer": 0.3191489361702128,
+              "changed_from_original": 5,
+              "original_correct_lost": 0
+            },
+            "transformed_total": {
+              "recordings": 66,
+              "exact": 12,
+              "errors": 84,
+              "reference_jamo": 282,
+              "jer": 0.2978723404255319,
+              "changed_from_original": 22
+            }
+          }
+        },
+        "control": {
+          "human_verified_training": {
+            "original": {
+              "recordings": 6,
+              "exact": 6,
+              "errors": 0,
+              "reference_jamo": 64,
+              "jer": 0.0,
+              "changed_from_original": 0,
+              "original_correct_lost": 0
+            },
+            "left_370ms": {
+              "recordings": 6,
+              "exact": 6,
+              "errors": 0,
+              "reference_jamo": 64,
+              "jer": 0.0,
+              "changed_from_original": 0,
+              "original_correct_lost": 0
+            },
+            "right_830ms": {
+              "recordings": 6,
+              "exact": 6,
+              "errors": 0,
+              "reference_jamo": 64,
+              "jer": 0.0,
+              "changed_from_original": 0,
+              "original_correct_lost": 0
+            },
+            "both_310_670ms": {
+              "recordings": 6,
+              "exact": 6,
+              "errors": 0,
+              "reference_jamo": 64,
+              "jer": 0.0,
+              "changed_from_original": 0,
+              "original_correct_lost": 0
+            },
+            "gain_minus12": {
+              "recordings": 6,
+              "exact": 6,
+              "errors": 0,
+              "reference_jamo": 64,
+              "jer": 0.0,
+              "changed_from_original": 0,
+              "original_correct_lost": 0
+            },
+            "gain_plus6": {
+              "recordings": 6,
+              "exact": 6,
+              "errors": 0,
+              "reference_jamo": 64,
+              "jer": 0.0,
+              "changed_from_original": 0,
+              "original_correct_lost": 0
+            },
+            "both_gain_minus9": {
+              "recordings": 6,
+              "exact": 6,
+              "errors": 0,
+              "reference_jamo": 64,
+              "jer": 0.0,
+              "changed_from_original": 0,
+              "original_correct_lost": 0
+            },
+            "transformed_total": {
+              "recordings": 36,
+              "exact": 36,
+              "errors": 0,
+              "reference_jamo": 384,
+              "jer": 0.0,
+              "changed_from_original": 0
+            }
+          },
+          "inline_train": {
+            "original": {
+              "recordings": 6,
+              "exact": 3,
+              "errors": 4,
+              "reference_jamo": 41,
+              "jer": 0.0975609756097561,
+              "changed_from_original": 0,
+              "original_correct_lost": 0
+            },
+            "left_370ms": {
+              "recordings": 6,
+              "exact": 3,
+              "errors": 4,
+              "reference_jamo": 41,
+              "jer": 0.0975609756097561,
+              "changed_from_original": 0,
+              "original_correct_lost": 0
+            },
+            "right_830ms": {
+              "recordings": 6,
+              "exact": 3,
+              "errors": 4,
+              "reference_jamo": 41,
+              "jer": 0.0975609756097561,
+              "changed_from_original": 0,
+              "original_correct_lost": 0
+            },
+            "both_310_670ms": {
+              "recordings": 6,
+              "exact": 3,
+              "errors": 3,
+              "reference_jamo": 41,
+              "jer": 0.07317073170731707,
+              "changed_from_original": 1,
+              "original_correct_lost": 0
+            },
+            "gain_minus12": {
+              "recordings": 6,
+              "exact": 3,
+              "errors": 4,
+              "reference_jamo": 41,
+              "jer": 0.0975609756097561,
+              "changed_from_original": 0,
+              "original_correct_lost": 0
+            },
+            "gain_plus6": {
+              "recordings": 6,
+              "exact": 3,
+              "errors": 4,
+              "reference_jamo": 41,
+              "jer": 0.0975609756097561,
+              "changed_from_original": 0,
+              "original_correct_lost": 0
+            },
+            "both_gain_minus9": {
+              "recordings": 6,
+              "exact": 3,
+              "errors": 4,
+              "reference_jamo": 41,
+              "jer": 0.0975609756097561,
+              "changed_from_original": 0,
+              "original_correct_lost": 0
+            },
+            "transformed_total": {
+              "recordings": 36,
+              "exact": 18,
+              "errors": 23,
+              "reference_jamo": 246,
+              "jer": 0.09349593495934959,
+              "changed_from_original": 1
+            }
+          },
+          "inline_valid": {
+            "original": {
+              "recordings": 4,
+              "exact": 0,
+              "errors": 5,
+              "reference_jamo": 30,
+              "jer": 0.16666666666666666,
+              "changed_from_original": 0,
+              "original_correct_lost": 0
+            },
+            "left_370ms": {
+              "recordings": 4,
+              "exact": 0,
+              "errors": 6,
+              "reference_jamo": 30,
+              "jer": 0.2,
+              "changed_from_original": 1,
+              "original_correct_lost": 0
+            },
+            "right_830ms": {
+              "recordings": 4,
+              "exact": 0,
+              "errors": 5,
+              "reference_jamo": 30,
+              "jer": 0.16666666666666666,
+              "changed_from_original": 0,
+              "original_correct_lost": 0
+            },
+            "both_310_670ms": {
+              "recordings": 4,
+              "exact": 0,
+              "errors": 6,
+              "reference_jamo": 30,
+              "jer": 0.2,
+              "changed_from_original": 1,
+              "original_correct_lost": 0
+            },
+            "gain_minus12": {
+              "recordings": 4,
+              "exact": 0,
+              "errors": 5,
+              "reference_jamo": 30,
+              "jer": 0.16666666666666666,
+              "changed_from_original": 0,
+              "original_correct_lost": 0
+            },
+            "gain_plus6": {
+              "recordings": 4,
+              "exact": 0,
+              "errors": 5,
+              "reference_jamo": 30,
+              "jer": 0.16666666666666666,
+              "changed_from_original": 0,
+              "original_correct_lost": 0
+            },
+            "both_gain_minus9": {
+              "recordings": 4,
+              "exact": 0,
+              "errors": 6,
+              "reference_jamo": 30,
+              "jer": 0.2,
+              "changed_from_original": 1,
+              "original_correct_lost": 0
+            },
+            "transformed_total": {
+              "recordings": 24,
+              "exact": 0,
+              "errors": 33,
+              "reference_jamo": 180,
+              "jer": 0.18333333333333332,
+              "changed_from_original": 3
+            }
+          },
+          "personal_diagnostic": {
+            "original": {
+              "recordings": 11,
+              "exact": 3,
+              "errors": 12,
+              "reference_jamo": 47,
+              "jer": 0.2553191489361702,
+              "changed_from_original": 0,
+              "original_correct_lost": 0
+            },
+            "left_370ms": {
+              "recordings": 11,
+              "exact": 2,
+              "errors": 13,
+              "reference_jamo": 47,
+              "jer": 0.2765957446808511,
+              "changed_from_original": 2,
+              "original_correct_lost": 1
+            },
+            "right_830ms": {
+              "recordings": 11,
+              "exact": 1,
+              "errors": 14,
+              "reference_jamo": 47,
+              "jer": 0.2978723404255319,
+              "changed_from_original": 6,
+              "original_correct_lost": 2
+            },
+            "both_310_670ms": {
+              "recordings": 11,
+              "exact": 2,
+              "errors": 16,
+              "reference_jamo": 47,
+              "jer": 0.3404255319148936,
+              "changed_from_original": 5,
+              "original_correct_lost": 1
+            },
+            "gain_minus12": {
+              "recordings": 11,
+              "exact": 3,
+              "errors": 13,
+              "reference_jamo": 47,
+              "jer": 0.2765957446808511,
+              "changed_from_original": 2,
+              "original_correct_lost": 0
+            },
+            "gain_plus6": {
+              "recordings": 11,
+              "exact": 2,
+              "errors": 14,
+              "reference_jamo": 47,
+              "jer": 0.2978723404255319,
+              "changed_from_original": 3,
+              "original_correct_lost": 1
+            },
+            "both_gain_minus9": {
+              "recordings": 11,
+              "exact": 2,
+              "errors": 14,
+              "reference_jamo": 47,
+              "jer": 0.2978723404255319,
+              "changed_from_original": 6,
+              "original_correct_lost": 1
+            },
+            "transformed_total": {
+              "recordings": 66,
+              "exact": 12,
+              "errors": 84,
+              "reference_jamo": 282,
+              "jer": 0.2978723404255319,
+              "changed_from_original": 24
+            }
+          }
+        },
+        "combined": {
+          "human_verified_training": {
+            "original": {
+              "recordings": 6,
+              "exact": 6,
+              "errors": 0,
+              "reference_jamo": 64,
+              "jer": 0.0,
+              "changed_from_original": 0,
+              "original_correct_lost": 0
+            },
+            "left_370ms": {
+              "recordings": 6,
+              "exact": 6,
+              "errors": 0,
+              "reference_jamo": 64,
+              "jer": 0.0,
+              "changed_from_original": 0,
+              "original_correct_lost": 0
+            },
+            "right_830ms": {
+              "recordings": 6,
+              "exact": 6,
+              "errors": 0,
+              "reference_jamo": 64,
+              "jer": 0.0,
+              "changed_from_original": 0,
+              "original_correct_lost": 0
+            },
+            "both_310_670ms": {
+              "recordings": 6,
+              "exact": 6,
+              "errors": 0,
+              "reference_jamo": 64,
+              "jer": 0.0,
+              "changed_from_original": 0,
+              "original_correct_lost": 0
+            },
+            "gain_minus12": {
+              "recordings": 6,
+              "exact": 6,
+              "errors": 0,
+              "reference_jamo": 64,
+              "jer": 0.0,
+              "changed_from_original": 0,
+              "original_correct_lost": 0
+            },
+            "gain_plus6": {
+              "recordings": 6,
+              "exact": 6,
+              "errors": 0,
+              "reference_jamo": 64,
+              "jer": 0.0,
+              "changed_from_original": 0,
+              "original_correct_lost": 0
+            },
+            "both_gain_minus9": {
+              "recordings": 6,
+              "exact": 6,
+              "errors": 0,
+              "reference_jamo": 64,
+              "jer": 0.0,
+              "changed_from_original": 0,
+              "original_correct_lost": 0
+            },
+            "transformed_total": {
+              "recordings": 36,
+              "exact": 36,
+              "errors": 0,
+              "reference_jamo": 384,
+              "jer": 0.0,
+              "changed_from_original": 0
+            }
+          },
+          "inline_train": {
+            "original": {
+              "recordings": 6,
+              "exact": 3,
+              "errors": 4,
+              "reference_jamo": 41,
+              "jer": 0.0975609756097561,
+              "changed_from_original": 0,
+              "original_correct_lost": 0
+            },
+            "left_370ms": {
+              "recordings": 6,
+              "exact": 3,
+              "errors": 4,
+              "reference_jamo": 41,
+              "jer": 0.0975609756097561,
+              "changed_from_original": 0,
+              "original_correct_lost": 0
+            },
+            "right_830ms": {
+              "recordings": 6,
+              "exact": 3,
+              "errors": 4,
+              "reference_jamo": 41,
+              "jer": 0.0975609756097561,
+              "changed_from_original": 0,
+              "original_correct_lost": 0
+            },
+            "both_310_670ms": {
+              "recordings": 6,
+              "exact": 3,
+              "errors": 4,
+              "reference_jamo": 41,
+              "jer": 0.0975609756097561,
+              "changed_from_original": 0,
+              "original_correct_lost": 0
+            },
+            "gain_minus12": {
+              "recordings": 6,
+              "exact": 3,
+              "errors": 4,
+              "reference_jamo": 41,
+              "jer": 0.0975609756097561,
+              "changed_from_original": 0,
+              "original_correct_lost": 0
+            },
+            "gain_plus6": {
+              "recordings": 6,
+              "exact": 3,
+              "errors": 4,
+              "reference_jamo": 41,
+              "jer": 0.0975609756097561,
+              "changed_from_original": 0,
+              "original_correct_lost": 0
+            },
+            "both_gain_minus9": {
+              "recordings": 6,
+              "exact": 3,
+              "errors": 4,
+              "reference_jamo": 41,
+              "jer": 0.0975609756097561,
+              "changed_from_original": 0,
+              "original_correct_lost": 0
+            },
+            "transformed_total": {
+              "recordings": 36,
+              "exact": 18,
+              "errors": 24,
+              "reference_jamo": 246,
+              "jer": 0.0975609756097561,
+              "changed_from_original": 0
+            }
+          },
+          "inline_valid": {
+            "original": {
+              "recordings": 4,
+              "exact": 0,
+              "errors": 5,
+              "reference_jamo": 30,
+              "jer": 0.16666666666666666,
+              "changed_from_original": 0,
+              "original_correct_lost": 0
+            },
+            "left_370ms": {
+              "recordings": 4,
+              "exact": 0,
+              "errors": 6,
+              "reference_jamo": 30,
+              "jer": 0.2,
+              "changed_from_original": 1,
+              "original_correct_lost": 0
+            },
+            "right_830ms": {
+              "recordings": 4,
+              "exact": 0,
+              "errors": 5,
+              "reference_jamo": 30,
+              "jer": 0.16666666666666666,
+              "changed_from_original": 0,
+              "original_correct_lost": 0
+            },
+            "both_310_670ms": {
+              "recordings": 4,
+              "exact": 0,
+              "errors": 6,
+              "reference_jamo": 30,
+              "jer": 0.2,
+              "changed_from_original": 1,
+              "original_correct_lost": 0
+            },
+            "gain_minus12": {
+              "recordings": 4,
+              "exact": 0,
+              "errors": 6,
+              "reference_jamo": 30,
+              "jer": 0.2,
+              "changed_from_original": 1,
+              "original_correct_lost": 0
+            },
+            "gain_plus6": {
+              "recordings": 4,
+              "exact": 0,
+              "errors": 5,
+              "reference_jamo": 30,
+              "jer": 0.16666666666666666,
+              "changed_from_original": 0,
+              "original_correct_lost": 0
+            },
+            "both_gain_minus9": {
+              "recordings": 4,
+              "exact": 0,
+              "errors": 6,
+              "reference_jamo": 30,
+              "jer": 0.2,
+              "changed_from_original": 1,
+              "original_correct_lost": 0
+            },
+            "transformed_total": {
+              "recordings": 24,
+              "exact": 0,
+              "errors": 34,
+              "reference_jamo": 180,
+              "jer": 0.18888888888888888,
+              "changed_from_original": 4
+            }
+          },
+          "personal_diagnostic": {
+            "original": {
+              "recordings": 11,
+              "exact": 3,
+              "errors": 12,
+              "reference_jamo": 47,
+              "jer": 0.2553191489361702,
+              "changed_from_original": 0,
+              "original_correct_lost": 0
+            },
+            "left_370ms": {
+              "recordings": 11,
+              "exact": 2,
+              "errors": 13,
+              "reference_jamo": 47,
+              "jer": 0.2765957446808511,
+              "changed_from_original": 2,
+              "original_correct_lost": 1
+            },
+            "right_830ms": {
+              "recordings": 11,
+              "exact": 1,
+              "errors": 15,
+              "reference_jamo": 47,
+              "jer": 0.3191489361702128,
+              "changed_from_original": 5,
+              "original_correct_lost": 2
+            },
+            "both_310_670ms": {
+              "recordings": 11,
+              "exact": 2,
+              "errors": 15,
+              "reference_jamo": 47,
+              "jer": 0.3191489361702128,
+              "changed_from_original": 5,
+              "original_correct_lost": 1
+            },
+            "gain_minus12": {
+              "recordings": 11,
+              "exact": 3,
+              "errors": 14,
+              "reference_jamo": 47,
+              "jer": 0.2978723404255319,
+              "changed_from_original": 2,
+              "original_correct_lost": 0
+            },
+            "gain_plus6": {
+              "recordings": 11,
+              "exact": 2,
+              "errors": 14,
+              "reference_jamo": 47,
+              "jer": 0.2978723404255319,
+              "changed_from_original": 3,
+              "original_correct_lost": 1
+            },
+            "both_gain_minus9": {
+              "recordings": 11,
+              "exact": 2,
+              "errors": 15,
+              "reference_jamo": 47,
+              "jer": 0.3191489361702128,
+              "changed_from_original": 5,
+              "original_correct_lost": 1
+            },
+            "transformed_total": {
+              "recordings": 66,
+              "exact": 12,
+              "errors": 86,
+              "reference_jamo": 282,
+              "jer": 0.3049645390070922,
+              "changed_from_original": 22
+            }
+          }
+        }
+      },
+      "fit": {
+        "parent": {
+          "original": {
+            "recordings": 32,
+            "exact": 29,
+            "errors": 6,
+            "reference_jamo": 425,
+            "jer": 0.01411764705882353,
+            "changed_from_original": 0,
+            "original_correct_lost": 0
+          },
+          "left_370ms": {
+            "recordings": 32,
+            "exact": 29,
+            "errors": 6,
+            "reference_jamo": 425,
+            "jer": 0.01411764705882353,
+            "changed_from_original": 0,
+            "original_correct_lost": 0
+          },
+          "right_830ms": {
+            "recordings": 32,
+            "exact": 29,
+            "errors": 7,
+            "reference_jamo": 425,
+            "jer": 0.01647058823529412,
+            "changed_from_original": 1,
+            "original_correct_lost": 0
+          },
+          "both_310_670ms": {
+            "recordings": 32,
+            "exact": 29,
+            "errors": 6,
+            "reference_jamo": 425,
+            "jer": 0.01411764705882353,
+            "changed_from_original": 0,
+            "original_correct_lost": 0
+          },
+          "gain_minus12": {
+            "recordings": 32,
+            "exact": 29,
+            "errors": 6,
+            "reference_jamo": 425,
+            "jer": 0.01411764705882353,
+            "changed_from_original": 0,
+            "original_correct_lost": 0
+          },
+          "gain_plus6": {
+            "recordings": 32,
+            "exact": 29,
+            "errors": 7,
+            "reference_jamo": 425,
+            "jer": 0.01647058823529412,
+            "changed_from_original": 1,
+            "original_correct_lost": 0
+          },
+          "both_gain_minus9": {
+            "recordings": 32,
+            "exact": 29,
+            "errors": 6,
+            "reference_jamo": 425,
+            "jer": 0.01411764705882353,
+            "changed_from_original": 0,
+            "original_correct_lost": 0
+          },
+          "transformed_total": {
+            "recordings": 192,
+            "exact": 174,
+            "errors": 38,
+            "reference_jamo": 2550,
+            "jer": 0.014901960784313726,
+            "changed_from_original": 2
+          }
+        },
+        "control": {
+          "original": {
+            "recordings": 32,
+            "exact": 30,
+            "errors": 2,
+            "reference_jamo": 425,
+            "jer": 0.004705882352941176,
+            "changed_from_original": 0,
+            "original_correct_lost": 0
+          },
+          "left_370ms": {
+            "recordings": 32,
+            "exact": 30,
+            "errors": 3,
+            "reference_jamo": 425,
+            "jer": 0.007058823529411765,
+            "changed_from_original": 1,
+            "original_correct_lost": 0
+          },
+          "right_830ms": {
+            "recordings": 32,
+            "exact": 30,
+            "errors": 2,
+            "reference_jamo": 425,
+            "jer": 0.004705882352941176,
+            "changed_from_original": 0,
+            "original_correct_lost": 0
+          },
+          "both_310_670ms": {
+            "recordings": 32,
+            "exact": 30,
+            "errors": 4,
+            "reference_jamo": 425,
+            "jer": 0.009411764705882352,
+            "changed_from_original": 1,
+            "original_correct_lost": 0
+          },
+          "gain_minus12": {
+            "recordings": 32,
+            "exact": 31,
+            "errors": 1,
+            "reference_jamo": 425,
+            "jer": 0.002352941176470588,
+            "changed_from_original": 1,
+            "original_correct_lost": 0
+          },
+          "gain_plus6": {
+            "recordings": 32,
+            "exact": 30,
+            "errors": 2,
+            "reference_jamo": 425,
+            "jer": 0.004705882352941176,
+            "changed_from_original": 0,
+            "original_correct_lost": 0
+          },
+          "both_gain_minus9": {
+            "recordings": 32,
+            "exact": 30,
+            "errors": 4,
+            "reference_jamo": 425,
+            "jer": 0.009411764705882352,
+            "changed_from_original": 1,
+            "original_correct_lost": 0
+          },
+          "transformed_total": {
+            "recordings": 192,
+            "exact": 181,
+            "errors": 16,
+            "reference_jamo": 2550,
+            "jer": 0.006274509803921568,
+            "changed_from_original": 4
+          }
+        },
+        "combined": {
+          "original": {
+            "recordings": 32,
+            "exact": 30,
+            "errors": 2,
+            "reference_jamo": 425,
+            "jer": 0.004705882352941176,
+            "changed_from_original": 0,
+            "original_correct_lost": 0
+          },
+          "left_370ms": {
+            "recordings": 32,
+            "exact": 30,
+            "errors": 4,
+            "reference_jamo": 425,
+            "jer": 0.009411764705882352,
+            "changed_from_original": 1,
+            "original_correct_lost": 0
+          },
+          "right_830ms": {
+            "recordings": 32,
+            "exact": 30,
+            "errors": 2,
+            "reference_jamo": 425,
+            "jer": 0.004705882352941176,
+            "changed_from_original": 0,
+            "original_correct_lost": 0
+          },
+          "both_310_670ms": {
+            "recordings": 32,
+            "exact": 30,
+            "errors": 4,
+            "reference_jamo": 425,
+            "jer": 0.009411764705882352,
+            "changed_from_original": 1,
+            "original_correct_lost": 0
+          },
+          "gain_minus12": {
+            "recordings": 32,
+            "exact": 31,
+            "errors": 1,
+            "reference_jamo": 425,
+            "jer": 0.002352941176470588,
+            "changed_from_original": 1,
+            "original_correct_lost": 0
+          },
+          "gain_plus6": {
+            "recordings": 32,
+            "exact": 30,
+            "errors": 2,
+            "reference_jamo": 425,
+            "jer": 0.004705882352941176,
+            "changed_from_original": 0,
+            "original_correct_lost": 0
+          },
+          "both_gain_minus9": {
+            "recordings": 32,
+            "exact": 30,
+            "errors": 3,
+            "reference_jamo": 425,
+            "jer": 0.007058823529411765,
+            "changed_from_original": 1,
+            "original_correct_lost": 0
+          },
+          "transformed_total": {
+            "recordings": 192,
+            "exact": 181,
+            "errors": 16,
+            "reference_jamo": 2550,
+            "jer": 0.006274509803921568,
+            "changed_from_original": 4
+          }
+        }
+      },
+      "new_correct_human_original": [
+        "personal:child1_09"
+      ],
+      "lost_correct_human_original": [],
+      "stress_uncertainty": {
+        "versus_parent": {
+          "candidate_minus_comparator_jer": -0.00023088023088023088,
+          "speaker_cluster_bootstrap_95ci": [
+            -0.0013012579746672186,
+            0.0008299776519559681
+          ],
+          "speakers": 150,
+          "resamples": 10000,
+          "scope": "Exploratory interval on the fixed validation subset; repeated variants are not independent samples."
+        },
+        "versus_control": {
+          "candidate_minus_comparator_jer": -0.0001443001443001443,
+          "speaker_cluster_bootstrap_95ci": [
+            -0.0006184497056881043,
+            0.0002989032167202902
+          ],
+          "speakers": 150,
+          "resamples": 10000,
+          "scope": "Exploratory interval on the fixed validation subset; repeated variants are not independent samples."
+        }
+      },
+      "personal_predictions": [
+        {
+          "id": "personal:child1_18",
+          "human_target": "책",
+          "parent": "샙",
+          "control": "새",
+          "combined": "새"
+        },
+        {
+          "id": "personal:child1_22",
+          "human_target": "뛰어가요",
+          "parent": "귀어 가요",
+          "control": "귀어 가요",
+          "combined": "귀어 가요"
+        },
+        {
+          "id": "personal:child1_17",
+          "human_target": "쌕",
+          "parent": "ㅐㄱ",
+          "control": "책",
+          "combined": "책"
+        },
+        {
+          "id": "personal:child1_09",
+          "human_target": "나비",
+          "parent": "나리",
+          "control": "나비",
+          "combined": "나비"
+        },
+        {
+          "id": "personal:child2_20",
+          "human_target": "가",
+          "parent": "하",
+          "control": "하",
+          "combined": "하"
+        },
+        {
+          "id": "personal:child1_19",
+          "human_target": "실로폰",
+          "parent": "켈리폰",
+          "control": "켈리폰",
+          "combined": "켈리폰"
+        },
+        {
+          "id": "personal:child2_28",
+          "human_target": "놔요",
+          "parent": "와요",
+          "control": "와요",
+          "combined": "와요"
+        },
+        {
+          "id": "personal:child1_21",
+          "human_target": "가요",
+          "parent": "봐요",
+          "control": "봐요",
+          "combined": "봐요"
+        },
+        {
+          "id": "personal:child2_29",
+          "human_target": "놔",
+          "parent": "봐",
+          "control": "봐",
+          "combined": "봐"
+        },
+        {
+          "id": "personal:child1_01",
+          "human_target": "아빠",
+          "parent": "아빠",
+          "control": "아빠",
+          "combined": "아빠"
+        },
+        {
+          "id": "personal:child1_02",
+          "human_target": "엄마",
+          "parent": "엄마",
+          "control": "엄마",
+          "combined": "엄마"
+        }
+      ],
+      "personal_condition_outputs": [
+        {
+          "id": "personal:child1_18",
+          "human_target": "책",
+          "conditions": {
+            "original": {
+              "parent": "샙",
+              "control": "새",
+              "combined": "새"
+            },
+            "left_370ms": {
+              "parent": "샙",
+              "control": "새",
+              "combined": "새"
+            },
+            "right_830ms": {
+              "parent": "캅",
+              "control": "캅",
+              "combined": "캅"
+            },
+            "both_310_670ms": {
+              "parent": "밥",
+              "control": "밥",
+              "combined": "밥"
+            },
+            "gain_minus12": {
+              "parent": "샙",
+              "control": "새",
+              "combined": "새"
+            },
+            "gain_plus6": {
+              "parent": "삽",
+              "control": "삽",
+              "combined": "삽"
+            },
+            "both_gain_minus9": {
+              "parent": "켑",
+              "control": "캡",
+              "combined": "뱁"
+            }
+          }
+        },
+        {
+          "id": "personal:child1_22",
+          "human_target": "뛰어가요",
+          "conditions": {
+            "original": {
+              "parent": "귀어 가요",
+              "control": "귀어 가요",
+              "combined": "귀어 가요"
+            },
+            "left_370ms": {
+              "parent": "귀어 가요",
+              "control": "귀어 가요",
+              "combined": "귀어 가요"
+            },
+            "right_830ms": {
+              "parent": "귀어 가요",
+              "control": "귀어가요",
+              "combined": "귀어가요"
+            },
+            "both_310_670ms": {
+              "parent": "귀어 가요",
+              "control": "귀어 가요",
+              "combined": "귀어 가요"
+            },
+            "gain_minus12": {
+              "parent": "귀어 가요",
+              "control": "기어 가요",
+              "combined": "기러 가요"
+            },
+            "gain_plus6": {
+              "parent": "귀어 가요",
+              "control": "귀어 가요",
+              "combined": "귀어 가요"
+            },
+            "both_gain_minus9": {
+              "parent": "기어 가요",
+              "control": "기어 가요",
+              "combined": "기러 가요"
+            }
+          }
+        },
+        {
+          "id": "personal:child1_17",
+          "human_target": "쌕",
+          "conditions": {
+            "original": {
+              "parent": "ㅐㄱ",
+              "control": "책",
+              "combined": "책"
+            },
+            "left_370ms": {
+              "parent": "책",
+              "control": "책",
+              "combined": "책"
+            },
+            "right_830ms": {
+              "parent": "색",
+              "control": "색",
+              "combined": "색"
+            },
+            "both_310_670ms": {
+              "parent": "색",
+              "control": "색",
+              "combined": "색"
+            },
+            "gain_minus12": {
+              "parent": "책",
+              "control": "책",
+              "combined": "책"
+            },
+            "gain_plus6": {
+              "parent": "책",
+              "control": "책",
+              "combined": "책"
+            },
+            "both_gain_minus9": {
+              "parent": "색",
+              "control": "색",
+              "combined": "색"
+            }
+          }
+        },
+        {
+          "id": "personal:child1_09",
+          "human_target": "나비",
+          "conditions": {
+            "original": {
+              "parent": "나리",
+              "control": "나비",
+              "combined": "나비"
+            },
+            "left_370ms": {
+              "parent": "나리",
+              "control": "나리",
+              "combined": "나리"
+            },
+            "right_830ms": {
+              "parent": "나리",
+              "control": "나리",
+              "combined": "나리"
+            },
+            "both_310_670ms": {
+              "parent": "나리",
+              "control": "나리",
+              "combined": "나리"
+            },
+            "gain_minus12": {
+              "parent": "나비",
+              "control": "나비",
+              "combined": "나비"
+            },
+            "gain_plus6": {
+              "parent": "나리",
+              "control": "날비",
+              "combined": "날비"
+            },
+            "both_gain_minus9": {
+              "parent": "나리",
+              "control": "나리",
+              "combined": "나리"
+            }
+          }
+        },
+        {
+          "id": "personal:child2_20",
+          "human_target": "가",
+          "conditions": {
+            "original": {
+              "parent": "하",
+              "control": "하",
+              "combined": "하"
+            },
+            "left_370ms": {
+              "parent": "카",
+              "control": "카",
+              "combined": "카"
+            },
+            "right_830ms": {
+              "parent": "카",
+              "control": "카",
+              "combined": "카"
+            },
+            "both_310_670ms": {
+              "parent": "카",
+              "control": "카",
+              "combined": "카"
+            },
+            "gain_minus12": {
+              "parent": "하",
+              "control": "하",
+              "combined": "하"
+            },
+            "gain_plus6": {
+              "parent": "카",
+              "control": "카",
+              "combined": "카"
+            },
+            "both_gain_minus9": {
+              "parent": "카",
+              "control": "카",
+              "combined": "카"
+            }
+          }
+        },
+        {
+          "id": "personal:child1_19",
+          "human_target": "실로폰",
+          "conditions": {
+            "original": {
+              "parent": "켈리폰",
+              "control": "켈리폰",
+              "combined": "켈리폰"
+            },
+            "left_370ms": {
+              "parent": "켈리폰",
+              "control": "켈리폰",
+              "combined": "켈리폰"
+            },
+            "right_830ms": {
+              "parent": "켈리폰",
+              "control": "켈리폰",
+              "combined": "켈리폰"
+            },
+            "both_310_670ms": {
+              "parent": "켈리폰",
+              "control": "켈리폰",
+              "combined": "켈리폰"
+            },
+            "gain_minus12": {
+              "parent": "켈리폰",
+              "control": "켈리폰",
+              "combined": "켈리폰"
+            },
+            "gain_plus6": {
+              "parent": "켈리폰",
+              "control": "켈리폰",
+              "combined": "켈리폰"
+            },
+            "both_gain_minus9": {
+              "parent": "켈리폰",
+              "control": "켈리폰",
+              "combined": "켈리폰"
+            }
+          }
+        },
+        {
+          "id": "personal:child2_28",
+          "human_target": "놔요",
+          "conditions": {
+            "original": {
+              "parent": "와요",
+              "control": "와요",
+              "combined": "와요"
+            },
+            "left_370ms": {
+              "parent": "와요",
+              "control": "와요",
+              "combined": "와요"
+            },
+            "right_830ms": {
+              "parent": "와요",
+              "control": "와요",
+              "combined": "와요"
+            },
+            "both_310_670ms": {
+              "parent": "와요",
+              "control": "와요",
+              "combined": "와요"
+            },
+            "gain_minus12": {
+              "parent": "와요",
+              "control": "와요",
+              "combined": "와요"
+            },
+            "gain_plus6": {
+              "parent": "와요",
+              "control": "와요",
+              "combined": "와요"
+            },
+            "both_gain_minus9": {
+              "parent": "와요",
+              "control": "와요",
+              "combined": "와요"
+            }
+          }
+        },
+        {
+          "id": "personal:child1_21",
+          "human_target": "가요",
+          "conditions": {
+            "original": {
+              "parent": "봐요",
+              "control": "봐요",
+              "combined": "봐요"
+            },
+            "left_370ms": {
+              "parent": "봐요",
+              "control": "봐요",
+              "combined": "봐요"
+            },
+            "right_830ms": {
+              "parent": "바요",
+              "control": "바요",
+              "combined": "봐요"
+            },
+            "both_310_670ms": {
+              "parent": "봐요",
+              "control": "봐요",
+              "combined": "봐요"
+            },
+            "gain_minus12": {
+              "parent": "봐요",
+              "control": "봐요",
+              "combined": "봐요"
+            },
+            "gain_plus6": {
+              "parent": "봐요",
+              "control": "봐요",
+              "combined": "봐요"
+            },
+            "both_gain_minus9": {
+              "parent": "봐요",
+              "control": "봐요",
+              "combined": "봐요"
+            }
+          }
+        },
+        {
+          "id": "personal:child2_29",
+          "human_target": "놔",
+          "conditions": {
+            "original": {
+              "parent": "봐",
+              "control": "봐",
+              "combined": "봐"
+            },
+            "left_370ms": {
+              "parent": "봐",
+              "control": "봐",
+              "combined": "봐"
+            },
+            "right_830ms": {
+              "parent": "봐",
+              "control": "봐",
+              "combined": "봐"
+            },
+            "both_310_670ms": {
+              "parent": "따뽜",
+              "control": "따봐",
+              "combined": "ㅏ봐"
+            },
+            "gain_minus12": {
+              "parent": "ㅘ",
+              "control": "와",
+              "combined": "와"
+            },
+            "gain_plus6": {
+              "parent": "봐",
+              "control": "봐",
+              "combined": "봐"
+            },
+            "both_gain_minus9": {
+              "parent": "뽜",
+              "control": "뽜",
+              "combined": "봐"
+            }
+          }
+        },
+        {
+          "id": "personal:child1_01",
+          "human_target": "아빠",
+          "conditions": {
+            "original": {
+              "parent": "아빠",
+              "control": "아빠",
+              "combined": "아빠"
+            },
+            "left_370ms": {
+              "parent": "아빠",
+              "control": "아빠",
+              "combined": "아빠"
+            },
+            "right_830ms": {
+              "parent": "아파",
+              "control": "아파",
+              "combined": "아파"
+            },
+            "both_310_670ms": {
+              "parent": "아빠",
+              "control": "아빠",
+              "combined": "아빠"
+            },
+            "gain_minus12": {
+              "parent": "아빠",
+              "control": "아빠",
+              "combined": "아빠"
+            },
+            "gain_plus6": {
+              "parent": "아빠",
+              "control": "아빠",
+              "combined": "아빠"
+            },
+            "both_gain_minus9": {
+              "parent": "아빠",
+              "control": "아빠",
+              "combined": "아빠"
+            }
+          }
+        },
+        {
+          "id": "personal:child1_02",
+          "human_target": "엄마",
+          "conditions": {
+            "original": {
+              "parent": "엄마",
+              "control": "엄마",
+              "combined": "엄마"
+            },
+            "left_370ms": {
+              "parent": "엄마",
+              "control": "엄마",
+              "combined": "엄마"
+            },
+            "right_830ms": {
+              "parent": "엄마",
+              "control": "엄마",
+              "combined": "엄마"
+            },
+            "both_310_670ms": {
+              "parent": "엄마",
+              "control": "엄마",
+              "combined": "엄마"
+            },
+            "gain_minus12": {
+              "parent": "엄마",
+              "control": "엄마",
+              "combined": "엄마"
+            },
+            "gain_plus6": {
+              "parent": "엄마",
+              "control": "엄마",
+              "combined": "엄마"
+            },
+            "both_gain_minus9": {
+              "parent": "엄마",
+              "control": "엄마",
+              "combined": "엄마"
+            }
+          }
+        }
+      ],
+      "training": {
+        "control": {
+          "seconds": 362.69446889997926,
+          "updates": 1702,
+          "exposures": 8192,
+          "transform_counts": {
+            "original": 8192
+          },
+          "gain_capped": 0
+        },
+        "combined": {
+          "seconds": 400.49061089998577,
+          "updates": 1702,
+          "exposures": 8192,
+          "transform_counts": {
+            "gain": 1378,
+            "original": 4076,
+            "both": 1388,
+            "padding": 1350
+          },
+          "gain_capped": 424
+        }
+      },
+      "deployment": false
+    },
+    {
+      "seed": 92802,
+      "source_sha256": "a9255b3e2e47bceca54e210ad5a7159f18fdf206650d5fc84e00ed8e73de3eb2",
+      "paired_input_schedule_verified": true,
+      "gates": {
+        "stress_at_least_10pct_fewer_errors_than_parent": false,
+        "stress_at_least_10pct_fewer_errors_than_control": false,
+        "clean_regression_within_0_1_percentage_point": true,
+        "personal_original_at_least_one_more_exact_than_parent_and_control": false,
+        "preserves_all_previously_correct_human_original": true,
+        "ssaek_never_rewritten_to_chaek_in_seven_conditions": false
+      },
+      "all_gates_passed": false,
+      "clean_valid": {
+        "parent": {
+          "jer": 0.029503947923573023,
+          "errors": 979,
+          "reference_jamo": 33182,
+          "exact": 1164,
+          "recordings": 1500,
+          "precision": "float32"
+        },
+        "control": {
+          "jer": 0.02959435838707733,
+          "errors": 982,
+          "reference_jamo": 33182,
+          "exact": 1154,
+          "recordings": 1500,
+          "precision": "float32"
+        },
+        "combined": {
+          "jer": 0.029714905671749742,
+          "errors": 986,
+          "reference_jamo": 33182,
+          "exact": 1150,
+          "recordings": 1500,
+          "precision": "float32"
+        }
+      },
+      "stress": {
+        "parent": {
+          "original": {
+            "recordings": 256,
+            "exact": 192,
+            "errors": 190,
+            "reference_jamo": 5775,
+            "jer": 0.0329004329004329,
+            "changed_from_original": 0,
+            "original_correct_lost": 0
+          },
+          "left_370ms": {
+            "recordings": 256,
+            "exact": 189,
+            "errors": 194,
+            "reference_jamo": 5775,
+            "jer": 0.03359307359307359,
+            "changed_from_original": 31,
+            "original_correct_lost": 6
+          },
+          "right_830ms": {
+            "recordings": 256,
+            "exact": 190,
+            "errors": 200,
+            "reference_jamo": 5775,
+            "jer": 0.03463203463203463,
+            "changed_from_original": 22,
+            "original_correct_lost": 4
+          },
+          "both_310_670ms": {
+            "recordings": 256,
+            "exact": 188,
+            "errors": 199,
+            "reference_jamo": 5775,
+            "jer": 0.03445887445887446,
+            "changed_from_original": 36,
+            "original_correct_lost": 7
+          },
+          "gain_minus12": {
+            "recordings": 256,
+            "exact": 192,
+            "errors": 185,
+            "reference_jamo": 5775,
+            "jer": 0.032034632034632034,
+            "changed_from_original": 37,
+            "original_correct_lost": 6
+          },
+          "gain_plus6": {
+            "recordings": 256,
+            "exact": 190,
+            "errors": 188,
+            "reference_jamo": 5775,
+            "jer": 0.03255411255411256,
+            "changed_from_original": 13,
+            "original_correct_lost": 3
+          },
+          "both_gain_minus9": {
+            "recordings": 256,
+            "exact": 187,
+            "errors": 199,
+            "reference_jamo": 5775,
+            "jer": 0.03445887445887446,
+            "changed_from_original": 40,
+            "original_correct_lost": 9
+          },
+          "transformed_total": {
+            "recordings": 1536,
+            "exact": 1136,
+            "errors": 1165,
+            "reference_jamo": 34650,
+            "jer": 0.03362193362193362,
+            "changed_from_original": 179
+          }
+        },
+        "control": {
+          "original": {
+            "recordings": 256,
+            "exact": 189,
+            "errors": 197,
+            "reference_jamo": 5775,
+            "jer": 0.034112554112554115,
+            "changed_from_original": 0,
+            "original_correct_lost": 0
+          },
+          "left_370ms": {
+            "recordings": 256,
+            "exact": 192,
+            "errors": 195,
+            "reference_jamo": 5775,
+            "jer": 0.033766233766233764,
+            "changed_from_original": 31,
+            "original_correct_lost": 3
+          },
+          "right_830ms": {
+            "recordings": 256,
+            "exact": 191,
+            "errors": 207,
+            "reference_jamo": 5775,
+            "jer": 0.035844155844155845,
+            "changed_from_original": 18,
+            "original_correct_lost": 1
+          },
+          "both_310_670ms": {
+            "recordings": 256,
+            "exact": 192,
+            "errors": 197,
+            "reference_jamo": 5775,
+            "jer": 0.034112554112554115,
+            "changed_from_original": 34,
+            "original_correct_lost": 4
+          },
+          "gain_minus12": {
+            "recordings": 256,
+            "exact": 191,
+            "errors": 190,
+            "reference_jamo": 5775,
+            "jer": 0.0329004329004329,
+            "changed_from_original": 31,
+            "original_correct_lost": 5
+          },
+          "gain_plus6": {
+            "recordings": 256,
+            "exact": 192,
+            "errors": 189,
+            "reference_jamo": 5775,
+            "jer": 0.03272727272727273,
+            "changed_from_original": 17,
+            "original_correct_lost": 1
+          },
+          "both_gain_minus9": {
+            "recordings": 256,
+            "exact": 188,
+            "errors": 201,
+            "reference_jamo": 5775,
+            "jer": 0.034805194805194804,
+            "changed_from_original": 44,
+            "original_correct_lost": 9
+          },
+          "transformed_total": {
+            "recordings": 1536,
+            "exact": 1146,
+            "errors": 1179,
+            "reference_jamo": 34650,
+            "jer": 0.03402597402597403,
+            "changed_from_original": 175
+          }
+        },
+        "combined": {
+          "original": {
+            "recordings": 256,
+            "exact": 188,
+            "errors": 198,
+            "reference_jamo": 5775,
+            "jer": 0.03428571428571429,
+            "changed_from_original": 0,
+            "original_correct_lost": 0
+          },
+          "left_370ms": {
+            "recordings": 256,
+            "exact": 191,
+            "errors": 197,
+            "reference_jamo": 5775,
+            "jer": 0.034112554112554115,
+            "changed_from_original": 34,
+            "original_correct_lost": 4
+          },
+          "right_830ms": {
+            "recordings": 256,
+            "exact": 192,
+            "errors": 201,
+            "reference_jamo": 5775,
+            "jer": 0.034805194805194804,
+            "changed_from_original": 17,
+            "original_correct_lost": 0
+          },
+          "both_310_670ms": {
+            "recordings": 256,
+            "exact": 191,
+            "errors": 198,
+            "reference_jamo": 5775,
+            "jer": 0.03428571428571429,
+            "changed_from_original": 36,
+            "original_correct_lost": 4
+          },
+          "gain_minus12": {
+            "recordings": 256,
+            "exact": 191,
+            "errors": 192,
+            "reference_jamo": 5775,
+            "jer": 0.03324675324675325,
+            "changed_from_original": 30,
+            "original_correct_lost": 4
+          },
+          "gain_plus6": {
+            "recordings": 256,
+            "exact": 190,
+            "errors": 191,
+            "reference_jamo": 5775,
+            "jer": 0.033073593073593074,
+            "changed_from_original": 14,
+            "original_correct_lost": 1
+          },
+          "both_gain_minus9": {
+            "recordings": 256,
+            "exact": 188,
+            "errors": 201,
+            "reference_jamo": 5775,
+            "jer": 0.034805194805194804,
+            "changed_from_original": 40,
+            "original_correct_lost": 6
+          },
+          "transformed_total": {
+            "recordings": 1536,
+            "exact": 1143,
+            "errors": 1180,
+            "reference_jamo": 34650,
+            "jer": 0.03405483405483405,
+            "changed_from_original": 171
+          }
+        }
+      },
+      "human": {
+        "parent": {
+          "human_verified_training": {
+            "original": {
+              "recordings": 6,
+              "exact": 6,
+              "errors": 0,
+              "reference_jamo": 64,
+              "jer": 0.0,
+              "changed_from_original": 0,
+              "original_correct_lost": 0
+            },
+            "left_370ms": {
+              "recordings": 6,
+              "exact": 6,
+              "errors": 0,
+              "reference_jamo": 64,
+              "jer": 0.0,
+              "changed_from_original": 0,
+              "original_correct_lost": 0
+            },
+            "right_830ms": {
+              "recordings": 6,
+              "exact": 6,
+              "errors": 0,
+              "reference_jamo": 64,
+              "jer": 0.0,
+              "changed_from_original": 0,
+              "original_correct_lost": 0
+            },
+            "both_310_670ms": {
+              "recordings": 6,
+              "exact": 6,
+              "errors": 0,
+              "reference_jamo": 64,
+              "jer": 0.0,
+              "changed_from_original": 0,
+              "original_correct_lost": 0
+            },
+            "gain_minus12": {
+              "recordings": 6,
+              "exact": 6,
+              "errors": 0,
+              "reference_jamo": 64,
+              "jer": 0.0,
+              "changed_from_original": 0,
+              "original_correct_lost": 0
+            },
+            "gain_plus6": {
+              "recordings": 6,
+              "exact": 6,
+              "errors": 0,
+              "reference_jamo": 64,
+              "jer": 0.0,
+              "changed_from_original": 0,
+              "original_correct_lost": 0
+            },
+            "both_gain_minus9": {
+              "recordings": 6,
+              "exact": 6,
+              "errors": 0,
+              "reference_jamo": 64,
+              "jer": 0.0,
+              "changed_from_original": 0,
+              "original_correct_lost": 0
+            },
+            "transformed_total": {
+              "recordings": 36,
+              "exact": 36,
+              "errors": 0,
+              "reference_jamo": 384,
+              "jer": 0.0,
+              "changed_from_original": 0
+            }
+          },
+          "inline_train": {
+            "original": {
+              "recordings": 6,
+              "exact": 3,
+              "errors": 4,
+              "reference_jamo": 41,
+              "jer": 0.0975609756097561,
+              "changed_from_original": 0,
+              "original_correct_lost": 0
+            },
+            "left_370ms": {
+              "recordings": 6,
+              "exact": 3,
+              "errors": 4,
+              "reference_jamo": 41,
+              "jer": 0.0975609756097561,
+              "changed_from_original": 0,
+              "original_correct_lost": 0
+            },
+            "right_830ms": {
+              "recordings": 6,
+              "exact": 3,
+              "errors": 4,
+              "reference_jamo": 41,
+              "jer": 0.0975609756097561,
+              "changed_from_original": 0,
+              "original_correct_lost": 0
+            },
+            "both_310_670ms": {
+              "recordings": 6,
+              "exact": 3,
+              "errors": 4,
+              "reference_jamo": 41,
+              "jer": 0.0975609756097561,
+              "changed_from_original": 0,
+              "original_correct_lost": 0
+            },
+            "gain_minus12": {
+              "recordings": 6,
+              "exact": 3,
+              "errors": 4,
+              "reference_jamo": 41,
+              "jer": 0.0975609756097561,
+              "changed_from_original": 0,
+              "original_correct_lost": 0
+            },
+            "gain_plus6": {
+              "recordings": 6,
+              "exact": 3,
+              "errors": 4,
+              "reference_jamo": 41,
+              "jer": 0.0975609756097561,
+              "changed_from_original": 0,
+              "original_correct_lost": 0
+            },
+            "both_gain_minus9": {
+              "recordings": 6,
+              "exact": 3,
+              "errors": 4,
+              "reference_jamo": 41,
+              "jer": 0.0975609756097561,
+              "changed_from_original": 0,
+              "original_correct_lost": 0
+            },
+            "transformed_total": {
+              "recordings": 36,
+              "exact": 18,
+              "errors": 24,
+              "reference_jamo": 246,
+              "jer": 0.0975609756097561,
+              "changed_from_original": 0
+            }
+          },
+          "inline_valid": {
+            "original": {
+              "recordings": 4,
+              "exact": 0,
+              "errors": 6,
+              "reference_jamo": 30,
+              "jer": 0.2,
+              "changed_from_original": 0,
+              "original_correct_lost": 0
+            },
+            "left_370ms": {
+              "recordings": 4,
+              "exact": 0,
+              "errors": 6,
+              "reference_jamo": 30,
+              "jer": 0.2,
+              "changed_from_original": 0,
+              "original_correct_lost": 0
+            },
+            "right_830ms": {
+              "recordings": 4,
+              "exact": 0,
+              "errors": 6,
+              "reference_jamo": 30,
+              "jer": 0.2,
+              "changed_from_original": 0,
+              "original_correct_lost": 0
+            },
+            "both_310_670ms": {
+              "recordings": 4,
+              "exact": 0,
+              "errors": 6,
+              "reference_jamo": 30,
+              "jer": 0.2,
+              "changed_from_original": 0,
+              "original_correct_lost": 0
+            },
+            "gain_minus12": {
+              "recordings": 4,
+              "exact": 0,
+              "errors": 6,
+              "reference_jamo": 30,
+              "jer": 0.2,
+              "changed_from_original": 0,
+              "original_correct_lost": 0
+            },
+            "gain_plus6": {
+              "recordings": 4,
+              "exact": 0,
+              "errors": 6,
+              "reference_jamo": 30,
+              "jer": 0.2,
+              "changed_from_original": 0,
+              "original_correct_lost": 0
+            },
+            "both_gain_minus9": {
+              "recordings": 4,
+              "exact": 0,
+              "errors": 6,
+              "reference_jamo": 30,
+              "jer": 0.2,
+              "changed_from_original": 0,
+              "original_correct_lost": 0
+            },
+            "transformed_total": {
+              "recordings": 24,
+              "exact": 0,
+              "errors": 36,
+              "reference_jamo": 180,
+              "jer": 0.2,
+              "changed_from_original": 0
+            }
+          },
+          "personal_diagnostic": {
+            "original": {
+              "recordings": 11,
+              "exact": 2,
+              "errors": 13,
+              "reference_jamo": 47,
+              "jer": 0.2765957446808511,
+              "changed_from_original": 0,
+              "original_correct_lost": 0
+            },
+            "left_370ms": {
+              "recordings": 11,
+              "exact": 2,
+              "errors": 13,
+              "reference_jamo": 47,
+              "jer": 0.2765957446808511,
+              "changed_from_original": 2,
+              "original_correct_lost": 0
+            },
+            "right_830ms": {
+              "recordings": 11,
+              "exact": 1,
+              "errors": 14,
+              "reference_jamo": 47,
+              "jer": 0.2978723404255319,
+              "changed_from_original": 5,
+              "original_correct_lost": 1
+            },
+            "both_310_670ms": {
+              "recordings": 11,
+              "exact": 2,
+              "errors": 16,
+              "reference_jamo": 47,
+              "jer": 0.3404255319148936,
+              "changed_from_original": 4,
+              "original_correct_lost": 0
+            },
+            "gain_minus12": {
+              "recordings": 11,
+              "exact": 3,
+              "errors": 12,
+              "reference_jamo": 47,
+              "jer": 0.2553191489361702,
+              "changed_from_original": 3,
+              "original_correct_lost": 0
+            },
+            "gain_plus6": {
+              "recordings": 11,
+              "exact": 2,
+              "errors": 14,
+              "reference_jamo": 47,
+              "jer": 0.2978723404255319,
+              "changed_from_original": 3,
+              "original_correct_lost": 0
+            },
+            "both_gain_minus9": {
+              "recordings": 11,
+              "exact": 2,
+              "errors": 15,
+              "reference_jamo": 47,
+              "jer": 0.3191489361702128,
+              "changed_from_original": 5,
+              "original_correct_lost": 0
+            },
+            "transformed_total": {
+              "recordings": 66,
+              "exact": 12,
+              "errors": 84,
+              "reference_jamo": 282,
+              "jer": 0.2978723404255319,
+              "changed_from_original": 22
+            }
+          }
+        },
+        "control": {
+          "human_verified_training": {
+            "original": {
+              "recordings": 6,
+              "exact": 6,
+              "errors": 0,
+              "reference_jamo": 64,
+              "jer": 0.0,
+              "changed_from_original": 0,
+              "original_correct_lost": 0
+            },
+            "left_370ms": {
+              "recordings": 6,
+              "exact": 6,
+              "errors": 0,
+              "reference_jamo": 64,
+              "jer": 0.0,
+              "changed_from_original": 0,
+              "original_correct_lost": 0
+            },
+            "right_830ms": {
+              "recordings": 6,
+              "exact": 6,
+              "errors": 0,
+              "reference_jamo": 64,
+              "jer": 0.0,
+              "changed_from_original": 0,
+              "original_correct_lost": 0
+            },
+            "both_310_670ms": {
+              "recordings": 6,
+              "exact": 6,
+              "errors": 0,
+              "reference_jamo": 64,
+              "jer": 0.0,
+              "changed_from_original": 0,
+              "original_correct_lost": 0
+            },
+            "gain_minus12": {
+              "recordings": 6,
+              "exact": 6,
+              "errors": 0,
+              "reference_jamo": 64,
+              "jer": 0.0,
+              "changed_from_original": 0,
+              "original_correct_lost": 0
+            },
+            "gain_plus6": {
+              "recordings": 6,
+              "exact": 6,
+              "errors": 0,
+              "reference_jamo": 64,
+              "jer": 0.0,
+              "changed_from_original": 0,
+              "original_correct_lost": 0
+            },
+            "both_gain_minus9": {
+              "recordings": 6,
+              "exact": 6,
+              "errors": 0,
+              "reference_jamo": 64,
+              "jer": 0.0,
+              "changed_from_original": 0,
+              "original_correct_lost": 0
+            },
+            "transformed_total": {
+              "recordings": 36,
+              "exact": 36,
+              "errors": 0,
+              "reference_jamo": 384,
+              "jer": 0.0,
+              "changed_from_original": 0
+            }
+          },
+          "inline_train": {
+            "original": {
+              "recordings": 6,
+              "exact": 3,
+              "errors": 4,
+              "reference_jamo": 41,
+              "jer": 0.0975609756097561,
+              "changed_from_original": 0,
+              "original_correct_lost": 0
+            },
+            "left_370ms": {
+              "recordings": 6,
+              "exact": 3,
+              "errors": 4,
+              "reference_jamo": 41,
+              "jer": 0.0975609756097561,
+              "changed_from_original": 0,
+              "original_correct_lost": 0
+            },
+            "right_830ms": {
+              "recordings": 6,
+              "exact": 3,
+              "errors": 4,
+              "reference_jamo": 41,
+              "jer": 0.0975609756097561,
+              "changed_from_original": 0,
+              "original_correct_lost": 0
+            },
+            "both_310_670ms": {
+              "recordings": 6,
+              "exact": 3,
+              "errors": 3,
+              "reference_jamo": 41,
+              "jer": 0.07317073170731707,
+              "changed_from_original": 1,
+              "original_correct_lost": 0
+            },
+            "gain_minus12": {
+              "recordings": 6,
+              "exact": 3,
+              "errors": 4,
+              "reference_jamo": 41,
+              "jer": 0.0975609756097561,
+              "changed_from_original": 0,
+              "original_correct_lost": 0
+            },
+            "gain_plus6": {
+              "recordings": 6,
+              "exact": 3,
+              "errors": 4,
+              "reference_jamo": 41,
+              "jer": 0.0975609756097561,
+              "changed_from_original": 0,
+              "original_correct_lost": 0
+            },
+            "both_gain_minus9": {
+              "recordings": 6,
+              "exact": 3,
+              "errors": 4,
+              "reference_jamo": 41,
+              "jer": 0.0975609756097561,
+              "changed_from_original": 0,
+              "original_correct_lost": 0
+            },
+            "transformed_total": {
+              "recordings": 36,
+              "exact": 18,
+              "errors": 23,
+              "reference_jamo": 246,
+              "jer": 0.09349593495934959,
+              "changed_from_original": 1
+            }
+          },
+          "inline_valid": {
+            "original": {
+              "recordings": 4,
+              "exact": 0,
+              "errors": 5,
+              "reference_jamo": 30,
+              "jer": 0.16666666666666666,
+              "changed_from_original": 0,
+              "original_correct_lost": 0
+            },
+            "left_370ms": {
+              "recordings": 4,
+              "exact": 0,
+              "errors": 6,
+              "reference_jamo": 30,
+              "jer": 0.2,
+              "changed_from_original": 1,
+              "original_correct_lost": 0
+            },
+            "right_830ms": {
+              "recordings": 4,
+              "exact": 0,
+              "errors": 5,
+              "reference_jamo": 30,
+              "jer": 0.16666666666666666,
+              "changed_from_original": 0,
+              "original_correct_lost": 0
+            },
+            "both_310_670ms": {
+              "recordings": 4,
+              "exact": 0,
+              "errors": 6,
+              "reference_jamo": 30,
+              "jer": 0.2,
+              "changed_from_original": 1,
+              "original_correct_lost": 0
+            },
+            "gain_minus12": {
+              "recordings": 4,
+              "exact": 0,
+              "errors": 5,
+              "reference_jamo": 30,
+              "jer": 0.16666666666666666,
+              "changed_from_original": 0,
+              "original_correct_lost": 0
+            },
+            "gain_plus6": {
+              "recordings": 4,
+              "exact": 0,
+              "errors": 5,
+              "reference_jamo": 30,
+              "jer": 0.16666666666666666,
+              "changed_from_original": 0,
+              "original_correct_lost": 0
+            },
+            "both_gain_minus9": {
+              "recordings": 4,
+              "exact": 0,
+              "errors": 6,
+              "reference_jamo": 30,
+              "jer": 0.2,
+              "changed_from_original": 1,
+              "original_correct_lost": 0
+            },
+            "transformed_total": {
+              "recordings": 24,
+              "exact": 0,
+              "errors": 33,
+              "reference_jamo": 180,
+              "jer": 0.18333333333333332,
+              "changed_from_original": 3
+            }
+          },
+          "personal_diagnostic": {
+            "original": {
+              "recordings": 11,
+              "exact": 3,
+              "errors": 12,
+              "reference_jamo": 47,
+              "jer": 0.2553191489361702,
+              "changed_from_original": 0,
+              "original_correct_lost": 0
+            },
+            "left_370ms": {
+              "recordings": 11,
+              "exact": 2,
+              "errors": 13,
+              "reference_jamo": 47,
+              "jer": 0.2765957446808511,
+              "changed_from_original": 2,
+              "original_correct_lost": 1
+            },
+            "right_830ms": {
+              "recordings": 11,
+              "exact": 1,
+              "errors": 15,
+              "reference_jamo": 47,
+              "jer": 0.3191489361702128,
+              "changed_from_original": 5,
+              "original_correct_lost": 2
+            },
+            "both_310_670ms": {
+              "recordings": 11,
+              "exact": 2,
+              "errors": 16,
+              "reference_jamo": 47,
+              "jer": 0.3404255319148936,
+              "changed_from_original": 5,
+              "original_correct_lost": 1
+            },
+            "gain_minus12": {
+              "recordings": 11,
+              "exact": 3,
+              "errors": 14,
+              "reference_jamo": 47,
+              "jer": 0.2978723404255319,
+              "changed_from_original": 2,
+              "original_correct_lost": 0
+            },
+            "gain_plus6": {
+              "recordings": 11,
+              "exact": 2,
+              "errors": 14,
+              "reference_jamo": 47,
+              "jer": 0.2978723404255319,
+              "changed_from_original": 3,
+              "original_correct_lost": 1
+            },
+            "both_gain_minus9": {
+              "recordings": 11,
+              "exact": 2,
+              "errors": 15,
+              "reference_jamo": 47,
+              "jer": 0.3191489361702128,
+              "changed_from_original": 5,
+              "original_correct_lost": 1
+            },
+            "transformed_total": {
+              "recordings": 66,
+              "exact": 12,
+              "errors": 87,
+              "reference_jamo": 282,
+              "jer": 0.30851063829787234,
+              "changed_from_original": 22
+            }
+          }
+        },
+        "combined": {
+          "human_verified_training": {
+            "original": {
+              "recordings": 6,
+              "exact": 6,
+              "errors": 0,
+              "reference_jamo": 64,
+              "jer": 0.0,
+              "changed_from_original": 0,
+              "original_correct_lost": 0
+            },
+            "left_370ms": {
+              "recordings": 6,
+              "exact": 6,
+              "errors": 0,
+              "reference_jamo": 64,
+              "jer": 0.0,
+              "changed_from_original": 0,
+              "original_correct_lost": 0
+            },
+            "right_830ms": {
+              "recordings": 6,
+              "exact": 6,
+              "errors": 0,
+              "reference_jamo": 64,
+              "jer": 0.0,
+              "changed_from_original": 0,
+              "original_correct_lost": 0
+            },
+            "both_310_670ms": {
+              "recordings": 6,
+              "exact": 6,
+              "errors": 0,
+              "reference_jamo": 64,
+              "jer": 0.0,
+              "changed_from_original": 0,
+              "original_correct_lost": 0
+            },
+            "gain_minus12": {
+              "recordings": 6,
+              "exact": 6,
+              "errors": 0,
+              "reference_jamo": 64,
+              "jer": 0.0,
+              "changed_from_original": 0,
+              "original_correct_lost": 0
+            },
+            "gain_plus6": {
+              "recordings": 6,
+              "exact": 6,
+              "errors": 0,
+              "reference_jamo": 64,
+              "jer": 0.0,
+              "changed_from_original": 0,
+              "original_correct_lost": 0
+            },
+            "both_gain_minus9": {
+              "recordings": 6,
+              "exact": 6,
+              "errors": 0,
+              "reference_jamo": 64,
+              "jer": 0.0,
+              "changed_from_original": 0,
+              "original_correct_lost": 0
+            },
+            "transformed_total": {
+              "recordings": 36,
+              "exact": 36,
+              "errors": 0,
+              "reference_jamo": 384,
+              "jer": 0.0,
+              "changed_from_original": 0
+            }
+          },
+          "inline_train": {
+            "original": {
+              "recordings": 6,
+              "exact": 3,
+              "errors": 4,
+              "reference_jamo": 41,
+              "jer": 0.0975609756097561,
+              "changed_from_original": 0,
+              "original_correct_lost": 0
+            },
+            "left_370ms": {
+              "recordings": 6,
+              "exact": 3,
+              "errors": 4,
+              "reference_jamo": 41,
+              "jer": 0.0975609756097561,
+              "changed_from_original": 0,
+              "original_correct_lost": 0
+            },
+            "right_830ms": {
+              "recordings": 6,
+              "exact": 3,
+              "errors": 4,
+              "reference_jamo": 41,
+              "jer": 0.0975609756097561,
+              "changed_from_original": 0,
+              "original_correct_lost": 0
+            },
+            "both_310_670ms": {
+              "recordings": 6,
+              "exact": 3,
+              "errors": 3,
+              "reference_jamo": 41,
+              "jer": 0.07317073170731707,
+              "changed_from_original": 1,
+              "original_correct_lost": 0
+            },
+            "gain_minus12": {
+              "recordings": 6,
+              "exact": 3,
+              "errors": 4,
+              "reference_jamo": 41,
+              "jer": 0.0975609756097561,
+              "changed_from_original": 0,
+              "original_correct_lost": 0
+            },
+            "gain_plus6": {
+              "recordings": 6,
+              "exact": 3,
+              "errors": 4,
+              "reference_jamo": 41,
+              "jer": 0.0975609756097561,
+              "changed_from_original": 0,
+              "original_correct_lost": 0
+            },
+            "both_gain_minus9": {
+              "recordings": 6,
+              "exact": 3,
+              "errors": 4,
+              "reference_jamo": 41,
+              "jer": 0.0975609756097561,
+              "changed_from_original": 0,
+              "original_correct_lost": 0
+            },
+            "transformed_total": {
+              "recordings": 36,
+              "exact": 18,
+              "errors": 23,
+              "reference_jamo": 246,
+              "jer": 0.09349593495934959,
+              "changed_from_original": 1
+            }
+          },
+          "inline_valid": {
+            "original": {
+              "recordings": 4,
+              "exact": 0,
+              "errors": 5,
+              "reference_jamo": 30,
+              "jer": 0.16666666666666666,
+              "changed_from_original": 0,
+              "original_correct_lost": 0
+            },
+            "left_370ms": {
+              "recordings": 4,
+              "exact": 0,
+              "errors": 6,
+              "reference_jamo": 30,
+              "jer": 0.2,
+              "changed_from_original": 1,
+              "original_correct_lost": 0
+            },
+            "right_830ms": {
+              "recordings": 4,
+              "exact": 0,
+              "errors": 5,
+              "reference_jamo": 30,
+              "jer": 0.16666666666666666,
+              "changed_from_original": 0,
+              "original_correct_lost": 0
+            },
+            "both_310_670ms": {
+              "recordings": 4,
+              "exact": 0,
+              "errors": 6,
+              "reference_jamo": 30,
+              "jer": 0.2,
+              "changed_from_original": 1,
+              "original_correct_lost": 0
+            },
+            "gain_minus12": {
+              "recordings": 4,
+              "exact": 0,
+              "errors": 5,
+              "reference_jamo": 30,
+              "jer": 0.16666666666666666,
+              "changed_from_original": 0,
+              "original_correct_lost": 0
+            },
+            "gain_plus6": {
+              "recordings": 4,
+              "exact": 0,
+              "errors": 5,
+              "reference_jamo": 30,
+              "jer": 0.16666666666666666,
+              "changed_from_original": 0,
+              "original_correct_lost": 0
+            },
+            "both_gain_minus9": {
+              "recordings": 4,
+              "exact": 0,
+              "errors": 6,
+              "reference_jamo": 30,
+              "jer": 0.2,
+              "changed_from_original": 1,
+              "original_correct_lost": 0
+            },
+            "transformed_total": {
+              "recordings": 24,
+              "exact": 0,
+              "errors": 33,
+              "reference_jamo": 180,
+              "jer": 0.18333333333333332,
+              "changed_from_original": 3
+            }
+          },
+          "personal_diagnostic": {
+            "original": {
+              "recordings": 11,
+              "exact": 2,
+              "errors": 13,
+              "reference_jamo": 47,
+              "jer": 0.2765957446808511,
+              "changed_from_original": 0,
+              "original_correct_lost": 0
+            },
+            "left_370ms": {
+              "recordings": 11,
+              "exact": 2,
+              "errors": 13,
+              "reference_jamo": 47,
+              "jer": 0.2765957446808511,
+              "changed_from_original": 1,
+              "original_correct_lost": 0
+            },
+            "right_830ms": {
+              "recordings": 11,
+              "exact": 1,
+              "errors": 14,
+              "reference_jamo": 47,
+              "jer": 0.2978723404255319,
+              "changed_from_original": 4,
+              "original_correct_lost": 1
+            },
+            "both_310_670ms": {
+              "recordings": 11,
+              "exact": 2,
+              "errors": 15,
+              "reference_jamo": 47,
+              "jer": 0.3191489361702128,
+              "changed_from_original": 3,
+              "original_correct_lost": 0
+            },
+            "gain_minus12": {
+              "recordings": 11,
+              "exact": 3,
+              "errors": 14,
+              "reference_jamo": 47,
+              "jer": 0.2978723404255319,
+              "changed_from_original": 3,
+              "original_correct_lost": 0
+            },
+            "gain_plus6": {
+              "recordings": 11,
+              "exact": 2,
+              "errors": 14,
+              "reference_jamo": 47,
+              "jer": 0.2978723404255319,
+              "changed_from_original": 2,
+              "original_correct_lost": 0
+            },
+            "both_gain_minus9": {
+              "recordings": 11,
+              "exact": 2,
+              "errors": 15,
+              "reference_jamo": 47,
+              "jer": 0.3191489361702128,
+              "changed_from_original": 3,
+              "original_correct_lost": 0
+            },
+            "transformed_total": {
+              "recordings": 66,
+              "exact": 12,
+              "errors": 85,
+              "reference_jamo": 282,
+              "jer": 0.30141843971631205,
+              "changed_from_original": 16
+            }
+          }
+        }
+      },
+      "fit": {
+        "parent": {
+          "original": {
+            "recordings": 32,
+            "exact": 29,
+            "errors": 6,
+            "reference_jamo": 425,
+            "jer": 0.01411764705882353,
+            "changed_from_original": 0,
+            "original_correct_lost": 0
+          },
+          "left_370ms": {
+            "recordings": 32,
+            "exact": 29,
+            "errors": 6,
+            "reference_jamo": 425,
+            "jer": 0.01411764705882353,
+            "changed_from_original": 0,
+            "original_correct_lost": 0
+          },
+          "right_830ms": {
+            "recordings": 32,
+            "exact": 29,
+            "errors": 7,
+            "reference_jamo": 425,
+            "jer": 0.01647058823529412,
+            "changed_from_original": 1,
+            "original_correct_lost": 0
+          },
+          "both_310_670ms": {
+            "recordings": 32,
+            "exact": 29,
+            "errors": 6,
+            "reference_jamo": 425,
+            "jer": 0.01411764705882353,
+            "changed_from_original": 0,
+            "original_correct_lost": 0
+          },
+          "gain_minus12": {
+            "recordings": 32,
+            "exact": 29,
+            "errors": 6,
+            "reference_jamo": 425,
+            "jer": 0.01411764705882353,
+            "changed_from_original": 0,
+            "original_correct_lost": 0
+          },
+          "gain_plus6": {
+            "recordings": 32,
+            "exact": 29,
+            "errors": 7,
+            "reference_jamo": 425,
+            "jer": 0.01647058823529412,
+            "changed_from_original": 1,
+            "original_correct_lost": 0
+          },
+          "both_gain_minus9": {
+            "recordings": 32,
+            "exact": 29,
+            "errors": 6,
+            "reference_jamo": 425,
+            "jer": 0.01411764705882353,
+            "changed_from_original": 0,
+            "original_correct_lost": 0
+          },
+          "transformed_total": {
+            "recordings": 192,
+            "exact": 174,
+            "errors": 38,
+            "reference_jamo": 2550,
+            "jer": 0.014901960784313726,
+            "changed_from_original": 2
+          }
+        },
+        "control": {
+          "original": {
+            "recordings": 32,
+            "exact": 30,
+            "errors": 3,
+            "reference_jamo": 425,
+            "jer": 0.007058823529411765,
+            "changed_from_original": 0,
+            "original_correct_lost": 0
+          },
+          "left_370ms": {
+            "recordings": 32,
+            "exact": 30,
+            "errors": 3,
+            "reference_jamo": 425,
+            "jer": 0.007058823529411765,
+            "changed_from_original": 0,
+            "original_correct_lost": 0
+          },
+          "right_830ms": {
+            "recordings": 32,
+            "exact": 30,
+            "errors": 2,
+            "reference_jamo": 425,
+            "jer": 0.004705882352941176,
+            "changed_from_original": 1,
+            "original_correct_lost": 0
+          },
+          "both_310_670ms": {
+            "recordings": 32,
+            "exact": 30,
+            "errors": 3,
+            "reference_jamo": 425,
+            "jer": 0.007058823529411765,
+            "changed_from_original": 0,
+            "original_correct_lost": 0
+          },
+          "gain_minus12": {
+            "recordings": 32,
+            "exact": 31,
+            "errors": 1,
+            "reference_jamo": 425,
+            "jer": 0.002352941176470588,
+            "changed_from_original": 1,
+            "original_correct_lost": 0
+          },
+          "gain_plus6": {
+            "recordings": 32,
+            "exact": 30,
+            "errors": 4,
+            "reference_jamo": 425,
+            "jer": 0.009411764705882352,
+            "changed_from_original": 1,
+            "original_correct_lost": 0
+          },
+          "both_gain_minus9": {
+            "recordings": 32,
+            "exact": 30,
+            "errors": 4,
+            "reference_jamo": 425,
+            "jer": 0.009411764705882352,
+            "changed_from_original": 1,
+            "original_correct_lost": 0
+          },
+          "transformed_total": {
+            "recordings": 192,
+            "exact": 181,
+            "errors": 17,
+            "reference_jamo": 2550,
+            "jer": 0.006666666666666667,
+            "changed_from_original": 4
+          }
+        },
+        "combined": {
+          "original": {
+            "recordings": 32,
+            "exact": 30,
+            "errors": 3,
+            "reference_jamo": 425,
+            "jer": 0.007058823529411765,
+            "changed_from_original": 0,
+            "original_correct_lost": 0
+          },
+          "left_370ms": {
+            "recordings": 32,
+            "exact": 30,
+            "errors": 3,
+            "reference_jamo": 425,
+            "jer": 0.007058823529411765,
+            "changed_from_original": 0,
+            "original_correct_lost": 0
+          },
+          "right_830ms": {
+            "recordings": 32,
+            "exact": 30,
+            "errors": 3,
+            "reference_jamo": 425,
+            "jer": 0.007058823529411765,
+            "changed_from_original": 0,
+            "original_correct_lost": 0
+          },
+          "both_310_670ms": {
+            "recordings": 32,
+            "exact": 30,
+            "errors": 3,
+            "reference_jamo": 425,
+            "jer": 0.007058823529411765,
+            "changed_from_original": 0,
+            "original_correct_lost": 0
+          },
+          "gain_minus12": {
+            "recordings": 32,
+            "exact": 30,
+            "errors": 2,
+            "reference_jamo": 425,
+            "jer": 0.004705882352941176,
+            "changed_from_original": 1,
+            "original_correct_lost": 0
+          },
+          "gain_plus6": {
+            "recordings": 32,
+            "exact": 30,
+            "errors": 3,
+            "reference_jamo": 425,
+            "jer": 0.007058823529411765,
+            "changed_from_original": 0,
+            "original_correct_lost": 0
+          },
+          "both_gain_minus9": {
+            "recordings": 32,
+            "exact": 30,
+            "errors": 3,
+            "reference_jamo": 425,
+            "jer": 0.007058823529411765,
+            "changed_from_original": 0,
+            "original_correct_lost": 0
+          },
+          "transformed_total": {
+            "recordings": 192,
+            "exact": 180,
+            "errors": 17,
+            "reference_jamo": 2550,
+            "jer": 0.006666666666666667,
+            "changed_from_original": 1
+          }
+        }
+      },
+      "new_correct_human_original": [],
+      "lost_correct_human_original": [],
+      "stress_uncertainty": {
+        "versus_parent": {
+          "candidate_minus_comparator_jer": 0.0004329004329004329,
+          "speaker_cluster_bootstrap_95ci": [
+            -0.0004747789289826286,
+            0.0013812368964905733
+          ],
+          "speakers": 150,
+          "resamples": 10000,
+          "scope": "Exploratory interval on the fixed validation subset; repeated variants are not independent samples."
+        },
+        "versus_control": {
+          "candidate_minus_comparator_jer": 2.886002886002886e-05,
+          "speaker_cluster_bootstrap_95ci": [
+            -0.0005035394797695785,
+            0.0005186435850070755
+          ],
+          "speakers": 150,
+          "resamples": 10000,
+          "scope": "Exploratory interval on the fixed validation subset; repeated variants are not independent samples."
+        }
+      },
+      "personal_predictions": [
+        {
+          "id": "personal:child1_18",
+          "human_target": "책",
+          "parent": "샙",
+          "control": "새",
+          "combined": "새"
+        },
+        {
+          "id": "personal:child1_22",
+          "human_target": "뛰어가요",
+          "parent": "귀어 가요",
+          "control": "귀어 가요",
+          "combined": "귀어 가요"
+        },
+        {
+          "id": "personal:child1_17",
+          "human_target": "쌕",
+          "parent": "ㅐㄱ",
+          "control": "책",
+          "combined": "책"
+        },
+        {
+          "id": "personal:child1_09",
+          "human_target": "나비",
+          "parent": "나리",
+          "control": "나비",
+          "combined": "나리"
+        },
+        {
+          "id": "personal:child2_20",
+          "human_target": "가",
+          "parent": "하",
+          "control": "하",
+          "combined": "하"
+        },
+        {
+          "id": "personal:child1_19",
+          "human_target": "실로폰",
+          "parent": "켈리폰",
+          "control": "켈리폰",
+          "combined": "켈리폰"
+        },
+        {
+          "id": "personal:child2_28",
+          "human_target": "놔요",
+          "parent": "와요",
+          "control": "와요",
+          "combined": "와요"
+        },
+        {
+          "id": "personal:child1_21",
+          "human_target": "가요",
+          "parent": "봐요",
+          "control": "봐요",
+          "combined": "봐요"
+        },
+        {
+          "id": "personal:child2_29",
+          "human_target": "놔",
+          "parent": "봐",
+          "control": "봐",
+          "combined": "봐"
+        },
+        {
+          "id": "personal:child1_01",
+          "human_target": "아빠",
+          "parent": "아빠",
+          "control": "아빠",
+          "combined": "아빠"
+        },
+        {
+          "id": "personal:child1_02",
+          "human_target": "엄마",
+          "parent": "엄마",
+          "control": "엄마",
+          "combined": "엄마"
+        }
+      ],
+      "personal_condition_outputs": [
+        {
+          "id": "personal:child1_18",
+          "human_target": "책",
+          "conditions": {
+            "original": {
+              "parent": "샙",
+              "control": "새",
+              "combined": "새"
+            },
+            "left_370ms": {
+              "parent": "샙",
+              "control": "새",
+              "combined": "새"
+            },
+            "right_830ms": {
+              "parent": "캅",
+              "control": "카",
+              "combined": "캐"
+            },
+            "both_310_670ms": {
+              "parent": "밥",
+              "control": "밥",
+              "combined": "밥"
+            },
+            "gain_minus12": {
+              "parent": "샙",
+              "control": "새",
+              "combined": "새"
+            },
+            "gain_plus6": {
+              "parent": "삽",
+              "control": "삽",
+              "combined": "ㅏㅂ"
+            },
+            "both_gain_minus9": {
+              "parent": "켑",
+              "control": "캡",
+              "combined": "뱁"
+            }
+          }
+        },
+        {
+          "id": "personal:child1_22",
+          "human_target": "뛰어가요",
+          "conditions": {
+            "original": {
+              "parent": "귀어 가요",
+              "control": "귀어 가요",
+              "combined": "귀어 가요"
+            },
+            "left_370ms": {
+              "parent": "귀어 가요",
+              "control": "귀어 가요",
+              "combined": "귀어 가요"
+            },
+            "right_830ms": {
+              "parent": "귀어 가요",
+              "control": "귀어가요",
+              "combined": "귀어가요"
+            },
+            "both_310_670ms": {
+              "parent": "귀어 가요",
+              "control": "귀어 가요",
+              "combined": "귀어 가요"
+            },
+            "gain_minus12": {
+              "parent": "귀어 가요",
+              "control": "기러 가요",
+              "combined": "기러 가요"
+            },
+            "gain_plus6": {
+              "parent": "귀어 가요",
+              "control": "귀어 가요",
+              "combined": "귀어 가요"
+            },
+            "both_gain_minus9": {
+              "parent": "기어 가요",
+              "control": "기러 가요",
+              "combined": "ㄱ러 가요"
+            }
+          }
+        },
+        {
+          "id": "personal:child1_17",
+          "human_target": "쌕",
+          "conditions": {
+            "original": {
+              "parent": "ㅐㄱ",
+              "control": "책",
+              "combined": "책"
+            },
+            "left_370ms": {
+              "parent": "책",
+              "control": "책",
+              "combined": "책"
+            },
+            "right_830ms": {
+              "parent": "색",
+              "control": "색",
+              "combined": "색"
+            },
+            "both_310_670ms": {
+              "parent": "색",
+              "control": "색",
+              "combined": "책"
+            },
+            "gain_minus12": {
+              "parent": "책",
+              "control": "책",
+              "combined": "책"
+            },
+            "gain_plus6": {
+              "parent": "책",
+              "control": "책",
+              "combined": "책"
+            },
+            "both_gain_minus9": {
+              "parent": "색",
+              "control": "책",
+              "combined": "책"
+            }
+          }
+        },
+        {
+          "id": "personal:child1_09",
+          "human_target": "나비",
+          "conditions": {
+            "original": {
+              "parent": "나리",
+              "control": "나비",
+              "combined": "나리"
+            },
+            "left_370ms": {
+              "parent": "나리",
+              "control": "나리",
+              "combined": "나리"
+            },
+            "right_830ms": {
+              "parent": "나리",
+              "control": "나리",
+              "combined": "나리"
+            },
+            "both_310_670ms": {
+              "parent": "나리",
+              "control": "나리",
+              "combined": "나리"
+            },
+            "gain_minus12": {
+              "parent": "나비",
+              "control": "나비",
+              "combined": "나비"
+            },
+            "gain_plus6": {
+              "parent": "나리",
+              "control": "날비",
+              "combined": "나리"
+            },
+            "both_gain_minus9": {
+              "parent": "나리",
+              "control": "나리",
+              "combined": "나리"
+            }
+          }
+        },
+        {
+          "id": "personal:child2_20",
+          "human_target": "가",
+          "conditions": {
+            "original": {
+              "parent": "하",
+              "control": "하",
+              "combined": "하"
+            },
+            "left_370ms": {
+              "parent": "카",
+              "control": "카",
+              "combined": "카"
+            },
+            "right_830ms": {
+              "parent": "카",
+              "control": "카",
+              "combined": "카"
+            },
+            "both_310_670ms": {
+              "parent": "카",
+              "control": "카",
+              "combined": "카"
+            },
+            "gain_minus12": {
+              "parent": "하",
+              "control": "하",
+              "combined": "하"
+            },
+            "gain_plus6": {
+              "parent": "카",
+              "control": "카",
+              "combined": "카"
+            },
+            "both_gain_minus9": {
+              "parent": "카",
+              "control": "카",
+              "combined": "카"
+            }
+          }
+        },
+        {
+          "id": "personal:child1_19",
+          "human_target": "실로폰",
+          "conditions": {
+            "original": {
+              "parent": "켈리폰",
+              "control": "켈리폰",
+              "combined": "켈리폰"
+            },
+            "left_370ms": {
+              "parent": "켈리폰",
+              "control": "켈리폰",
+              "combined": "켈리폰"
+            },
+            "right_830ms": {
+              "parent": "켈리폰",
+              "control": "켈리폰",
+              "combined": "켈리폰"
+            },
+            "both_310_670ms": {
+              "parent": "켈리폰",
+              "control": "켈리폰",
+              "combined": "켈리폰"
+            },
+            "gain_minus12": {
+              "parent": "켈리폰",
+              "control": "켈리폰",
+              "combined": "켈리폰"
+            },
+            "gain_plus6": {
+              "parent": "켈리폰",
+              "control": "켈리폰",
+              "combined": "켈리폰"
+            },
+            "both_gain_minus9": {
+              "parent": "켈리폰",
+              "control": "켈리폰",
+              "combined": "켈리폰"
+            }
+          }
+        },
+        {
+          "id": "personal:child2_28",
+          "human_target": "놔요",
+          "conditions": {
+            "original": {
+              "parent": "와요",
+              "control": "와요",
+              "combined": "와요"
+            },
+            "left_370ms": {
+              "parent": "와요",
+              "control": "와요",
+              "combined": "와요"
+            },
+            "right_830ms": {
+              "parent": "와요",
+              "control": "와요",
+              "combined": "와요"
+            },
+            "both_310_670ms": {
+              "parent": "와요",
+              "control": "와요",
+              "combined": "와요"
+            },
+            "gain_minus12": {
+              "parent": "와요",
+              "control": "와요",
+              "combined": "와요"
+            },
+            "gain_plus6": {
+              "parent": "와요",
+              "control": "와요",
+              "combined": "와요"
+            },
+            "both_gain_minus9": {
+              "parent": "와요",
+              "control": "와요",
+              "combined": "와요"
+            }
+          }
+        },
+        {
+          "id": "personal:child1_21",
+          "human_target": "가요",
+          "conditions": {
+            "original": {
+              "parent": "봐요",
+              "control": "봐요",
+              "combined": "봐요"
+            },
+            "left_370ms": {
+              "parent": "봐요",
+              "control": "봐요",
+              "combined": "봐요"
+            },
+            "right_830ms": {
+              "parent": "바요",
+              "control": "봐요",
+              "combined": "봐요"
+            },
+            "both_310_670ms": {
+              "parent": "봐요",
+              "control": "봐요",
+              "combined": "봐요"
+            },
+            "gain_minus12": {
+              "parent": "봐요",
+              "control": "봐요",
+              "combined": "봐요"
+            },
+            "gain_plus6": {
+              "parent": "봐요",
+              "control": "봐요",
+              "combined": "봐요"
+            },
+            "both_gain_minus9": {
+              "parent": "봐요",
+              "control": "봐요",
+              "combined": "봐요"
+            }
+          }
+        },
+        {
+          "id": "personal:child2_29",
+          "human_target": "놔",
+          "conditions": {
+            "original": {
+              "parent": "봐",
+              "control": "봐",
+              "combined": "봐"
+            },
+            "left_370ms": {
+              "parent": "봐",
+              "control": "봐",
+              "combined": "봐"
+            },
+            "right_830ms": {
+              "parent": "봐",
+              "control": "봐",
+              "combined": "봐"
+            },
+            "both_310_670ms": {
+              "parent": "따뽜",
+              "control": "따봐",
+              "combined": "ㅏ봐"
+            },
+            "gain_minus12": {
+              "parent": "ㅘ",
+              "control": "ㅘ",
+              "combined": "ㅘ"
+            },
+            "gain_plus6": {
+              "parent": "봐",
+              "control": "봐",
+              "combined": "봐"
+            },
+            "both_gain_minus9": {
+              "parent": "뽜",
+              "control": "뽜",
+              "combined": "봐"
+            }
+          }
+        },
+        {
+          "id": "personal:child1_01",
+          "human_target": "아빠",
+          "conditions": {
+            "original": {
+              "parent": "아빠",
+              "control": "아빠",
+              "combined": "아빠"
+            },
+            "left_370ms": {
+              "parent": "아빠",
+              "control": "아빠",
+              "combined": "아빠"
+            },
+            "right_830ms": {
+              "parent": "아파",
+              "control": "아파",
+              "combined": "아파"
+            },
+            "both_310_670ms": {
+              "parent": "아빠",
+              "control": "아빠",
+              "combined": "아빠"
+            },
+            "gain_minus12": {
+              "parent": "아빠",
+              "control": "아빠",
+              "combined": "아빠"
+            },
+            "gain_plus6": {
+              "parent": "아빠",
+              "control": "아빠",
+              "combined": "아빠"
+            },
+            "both_gain_minus9": {
+              "parent": "아빠",
+              "control": "아빠",
+              "combined": "아빠"
+            }
+          }
+        },
+        {
+          "id": "personal:child1_02",
+          "human_target": "엄마",
+          "conditions": {
+            "original": {
+              "parent": "엄마",
+              "control": "엄마",
+              "combined": "엄마"
+            },
+            "left_370ms": {
+              "parent": "엄마",
+              "control": "엄마",
+              "combined": "엄마"
+            },
+            "right_830ms": {
+              "parent": "엄마",
+              "control": "엄마",
+              "combined": "엄마"
+            },
+            "both_310_670ms": {
+              "parent": "엄마",
+              "control": "엄마",
+              "combined": "엄마"
+            },
+            "gain_minus12": {
+              "parent": "엄마",
+              "control": "엄마",
+              "combined": "엄마"
+            },
+            "gain_plus6": {
+              "parent": "엄마",
+              "control": "엄마",
+              "combined": "엄마"
+            },
+            "both_gain_minus9": {
+              "parent": "엄마",
+              "control": "엄마",
+              "combined": "엄마"
+            }
+          }
+        }
+      ],
+      "training": {
+        "control": {
+          "seconds": 366.3934257000219,
+          "updates": 1702,
+          "exposures": 8192,
+          "transform_counts": {
+            "original": 8192
+          },
+          "gain_capped": 0
+        },
+        "combined": {
+          "seconds": 398.02221899991855,
+          "updates": 1702,
+          "exposures": 8192,
+          "transform_counts": {
+            "original": 4034,
+            "both": 1377,
+            "gain": 1431,
+            "padding": 1350
+          },
+          "gain_capped": 423
+        }
+      },
+      "deployment": false
+    }
+  ],
+  "training_selection": {
+    "recordings": 4096,
+    "speakers": 625,
+    "audio_hours": 4.900666111111112,
+    "single_word_recordings": 2048,
+    "under_1_5_seconds": 5,
+    "jamo_types": 40,
+    "human_clips_used_for_training": 0
+  },
+  "original_model_sha256": "5a330f1bea3a17d1d063fdfd71a0cc25394695b0b797de01b293f6f688257aa7",
+  "original_model_unchanged": true,
+  "limitations": [
+    "Corpus scores compare transcript-derived jamo, not expert phonetic labels.",
+    "Twenty-seven human diagnoses are selected development cases and single-listener spellings.",
+    "Seed replication reuses the same validation speakers; it is not a new independent test.",
+    "No original problem is declared solved based only on stable or improved stress predictions."
+  ]
+}

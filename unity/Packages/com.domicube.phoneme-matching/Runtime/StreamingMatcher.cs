@@ -9,7 +9,6 @@ namespace DomiCube.PhonemeMatching
         public MatchResult Result;
         public int Frames;  // frames consumed before confirming
         public int Streak;  // consecutive frames the winner held
-        public int RequiredFrames = 2;
         public PronunciationFeedback Feedback; // snapshot of the confirming frame
     }
 
@@ -34,7 +33,6 @@ namespace DomiCube.PhonemeMatching
         private string _streakId;
         private int _streak;
         private int _frames;
-        private readonly ModelErrorProfile _feedbackErrors;
 
         public Matcher Matcher { get; }
         public IReadOnlyList<Answer> Candidates { get; }
@@ -58,7 +56,7 @@ namespace DomiCube.PhonemeMatching
 
         public StreamingMatcher(
             Matcher matcher, IReadOnlyList<Answer> candidates,
-            int consecutive = 2, ModelErrorProfile feedbackErrors = null)
+            int consecutive = 2)
         {
             if (matcher == null)
             {
@@ -75,149 +73,7 @@ namespace DomiCube.PhonemeMatching
             Matcher = matcher;
             Candidates = candidates ?? new List<Answer>();
             Consecutive = consecutive;
-            _feedbackErrors = feedbackErrors;
-            foreach (var candidate in Candidates) AnswerPolicy.Validate(candidate);
             Reset();
-        }
-
-        /// <summary>Word override; ambiguous or absent IDs use the session default.</summary>
-        public int RequiredFrames(string targetId = null)
-        {
-            if (targetId == null) return Consecutive;
-            Answer winner = null;
-            foreach (var candidate in Candidates)
-            {
-                if (candidate.Id != targetId) continue;
-                if (winner != null) return Consecutive;
-                winner = candidate;
-            }
-            if (winner == null) return Consecutive;
-            AnswerPolicy.Validate(winner);
-            return winner.ConfirmationFrames ?? Consecutive;
-        }
-
-        private static double ContextOf(double? value)
-        {
-            return value.HasValue ? value.Value : 0.0;
-        }
-
-        /// <summary>
-        /// A lone frame that reproduced the target exactly.
-        ///
-        /// Everything is re-read from the winning candidate on the frame
-        /// that would confirm, so nothing approved when this object was
-        /// built can go stale if the caller edits a candidate or the
-        /// matcher afterwards. Everything is checked against the snapshot
-        /// calibration wrote - the matrix it named, its streaming profile,
-        /// the streak length, the word and its threshold - never against
-        /// whatever matrix this matcher happens to hold. A caller who tuned
-        /// skip cost or coverage by hand, or who is running a different
-        /// matrix, is outside what was measured, so the escape switches
-        /// itself off.
-        /// </summary>
-        private bool IsExactSingleFrame(MatchResult result)
-        {
-            if (!result.Passed || result.Score != 1.0 || Consecutive != 2
-                || result.TargetId == null)
-            {
-                return false;
-            }
-
-            // An id shared by two candidates cannot say which one won, so
-            // neither may borrow the other's approval.
-            Answer winner = null;
-            foreach (var candidate in Candidates)
-            {
-                if (candidate != null && string.Equals(
-                        candidate.Id, result.TargetId, StringComparison.Ordinal))
-                {
-                    if (winner != null)
-                    {
-                        return false;
-                    }
-
-                    winner = candidate;
-                }
-            }
-
-            if (winner == null || winner.ConfirmationFrames.HasValue || !winner.AllowExactSingleFrame)
-            {
-                return false;
-            }
-
-            // The snapshot calibration wrote, not whatever matrix this
-            // matcher happens to hold: an approval belongs to one word,
-            // scored one way, under one matrix.
-            var snapshot = winner.ExactSingleFrameCalibration;
-            if (snapshot == null || snapshot.Consecutive != 2
-                || !string.Equals(snapshot.Text, winner.Text, StringComparison.Ordinal)
-                || snapshot.Threshold != winner.Threshold
-                || snapshot.Phonemes == null || snapshot.Phonemes.Count == 0
-                || !SamePhonemes(snapshot.Phonemes, winner.Phonemes))
-            {
-                return false;
-            }
-
-            if (Matcher.Mode != MatchMode.Substring || Matcher.Matrix == null)
-            {
-                return false;
-            }
-
-            // Both sides have to name a matrix, and the same one. An
-            // anonymous file read through LoadMatrix(json) with no id to
-            // fall back on is "unknown", which identifies nothing: it must
-            // not pass the comparison, or every unnamed matrix would
-            // inherit this word's approval. The shipped child matrix JSON
-            // carries "matrix_id", so the one-argument call names itself.
-            if (!ConfusionMatrix.NamesAMatrix(Matcher.Matrix.MatrixId)
-                || !ConfusionMatrix.NamesAMatrix(snapshot.MatrixId)
-                || !string.Equals(Matcher.Matrix.MatrixId, snapshot.MatrixId,
-                                  StringComparison.Ordinal))
-            {
-                return false;
-            }
-
-            // All three values, checked here rather than only in the JSON
-            // parser: the snapshot fields are public and mutable, and a
-            // context multiplier that has gone missing must not read as the
-            // 0 an unset matcher would report. Python refuses the same
-            // snapshot.
-            if (!Measured(snapshot.SkipCost) || !Measured(snapshot.Coverage)
-                || !Measured(snapshot.ContextMult))
-            {
-                return false;
-            }
-
-            return Matcher.SkipCost == snapshot.SkipCost.Value
-                   && Matcher.Coverage == snapshot.Coverage.Value
-                   && ContextOf(Matcher.ContextMult)
-                      == ContextOf(snapshot.ContextMult);
-        }
-
-        /// <summary>A profile value that is present and a real number.</summary>
-        private static bool Measured(double? value)
-        {
-            return value.HasValue && !double.IsNaN(value.Value)
-                   && !double.IsInfinity(value.Value);
-        }
-
-        private static bool SamePhonemes(
-            IReadOnlyList<string> a, IReadOnlyList<string> b)
-        {
-            if (a == null || b == null || a.Count != b.Count)
-            {
-                return false;
-            }
-
-            for (int i = 0; i < a.Count; i++)
-            {
-                if (!string.Equals(a[i], b[i], StringComparison.Ordinal))
-                {
-                    return false;
-                }
-            }
-
-            return true;
         }
 
         /// <summary>Clear the streak. Call between questions.</summary>
@@ -241,11 +97,10 @@ namespace DomiCube.PhonemeMatching
         /// After a hit the streak stays intact, so further pushes keep
         /// returning hits; call <see cref="Reset"/> when moving on.
         /// </summary>
-        public StreamingHit Push(IReadOnlyList<string> phonemes,
-            IReadOnlyDictionary<string, AcousticEvidence> acousticEvidence = null)
+        public StreamingHit Push(IReadOnlyList<string> phonemes)
         {
             _frames++;
-            var result = Matcher.BestMatch(phonemes, Candidates, acousticEvidence);
+            var result = Matcher.BestMatch(phonemes, Candidates);
 
             if (result.Passed && result.TargetId != null)
             {
@@ -266,17 +121,14 @@ namespace DomiCube.PhonemeMatching
                 _streak = 0;
             }
 
-            if (_streak >= RequiredFrames(result.TargetId) || IsExactSingleFrame(result))
+            if (_streak >= Consecutive)
             {
                 return new StreamingHit
                 {
                     Result = result,
                     Frames = _frames,
-                    // The real streak, not a fabricated second frame: a
-                    // display that said "2 of 2" for one frame would lie.
                     Streak = _streak,
-                    RequiredFrames = RequiredFrames(result.TargetId),
-                    Feedback = PronunciationFeedback.FromMatch(result, _frames, _streak, Matcher.Matrix.MatrixId, _feedbackErrors)
+                    Feedback = PronunciationFeedback.FromMatch(result, _frames, _streak)
                 };
             }
 
