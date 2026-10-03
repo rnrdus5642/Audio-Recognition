@@ -1,95 +1,32 @@
-# Python
-__pycache__/
-*.py[cod]
-*$py.class
-*.egg-info/
-.pytest_cache/
-.ruff_cache/
-.mypy_cache/
-.coverage
-htmlcov/
+# Local datasets, recordings, and audit backups. Keep their folder guides in Git.
+/02_Datasets/*
+!/02_Datasets/README.md
+/03_Recordings/*
+!/03_Recordings/README.md
+/04_Models_and_Experiments/*
+!/04_Models_and_Experiments/README.md
+/99_Organization/*
+!/99_Organization/README.md
 
-# Environments
-.venv/
-.venv-gpu/
-venv/
-env/
-ENV/
+# Windows shortcuts contain machine-specific absolute paths.
+# Portable scripts, URL files, and documentation are tracked instead.
+/05_Run/*
+!/05_Run/README.md
+!/05_Run/*.ps1
+!/05_Run/*.url
 
-# IDE
-.vscode/
-.idea/
-*.swp
-*.swo
-.claude/
-.gradio/
-.workspace-location.json
+# Model weights and generated inference exports are local artifacts.
+*.pt
+*.pth
+*.safetensors
+*.onnx
+*.onnx.data
+*.sentis
 
-# OS
+# Local credentials and operating-system files.
+.env
+.env.*
+!.env.example
 .DS_Store
 Thumbs.db
-
-# Project artifacts
-# Sentis가 임포트하는 사본도 같은 이유로 제외한다. export_onnx.py로 다시
-# 만들 수 있고, 1.27GB라 LFS 없이는 커밋할 수 없다. 에셋을 커밋하지 않으므로
-# 짝이 되는 .meta 도 함께 제외한다.
-unity/Assets/Models/*.onnx
-unity/Assets/Models/*.onnx.meta
-unity/Assets/Resources/Models/*.onnx
-unity/Assets/Resources/Models/*.onnx.meta
-# 폴더 안이 전부 제외되므로 폴더 meta 도 제외한다. 커밋하면 폴더 없는
-# .meta 가 되어 에디터가 지운다. 모델을 복사하면 Unity가 다시 만든다.
-unity/Assets/Models.meta
-shared/models/*.onnx
-shared/models/*.bin
-shared/models/*/
-!shared/models/.gitkeep
-python/tests/fixtures/audio/*.wav
-!python/tests/fixtures/audio/.gitkeep
-
-# Evaluation outputs (regenerable)
-python/tests/fixtures/recognizer_cache.json
-python/tests/fixtures/eval_*.json
-eval_run*.log
-
-# Real-audio test outputs (user-specific)
-test_results.json
-my_tests.csv
-recordings/
-
-# Build artifacts
-# targets*.json covers experiment variants (targets_norules.json etc.);
-# the copy under unity/Assets/StreamingAssets IS committed - the app
-# needs it and consumers have no Python.
-shared/targets*.json
-*.log
-
-# Unity
-unity/Library/
-unity/Temp/
-unity/Logs/
-unity/UserSettings/
-unity/obj/
-unity/Build/
-unity/Builds/
-unity/MemoryCaptures/
-unity/Recordings/
-# 에디터가 다시 만들어내는 솔루션 파일. csharp/ 쪽 csproj는 커밋해야 하므로
-# 전역 패턴이 아니라 unity/ 아래로만 한정한다.
-unity/*.csproj
-unity/*.sln
-unity/*.user
-unity/.vsconfig
-unity/.vs/
-unity/.idea/
-# 반대로 .meta 파일은 반드시 커밋한다. GUID가 들어 있어서 빠지면
-# asmdef 참조와 에셋 연결이 프로젝트마다 어긋난다.
-
-# .NET (패키지 테스트를 Unity 없이 돌리기 위한 프로젝트)
-bin/
-obj/
-*.user
-
-# Tuning run outputs; the thresholds that matter are committed as
-# shared/thresholds_child.json instead.
-python/tools/child_tuning/autotune_best_*.json
+desktop.ini

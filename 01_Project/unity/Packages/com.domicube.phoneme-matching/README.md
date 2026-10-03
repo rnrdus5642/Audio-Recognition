@@ -12,6 +12,10 @@
 패키지 버전 표기는 `0.7.0`이지만 기존 `v0.7.0` 태그와 같은 소스라는 뜻은 아닙니다.
 이번 변경을 포함한 커밋/브랜치가 원격에 게시된 뒤 해당 Git 참조로 갱신해야 합니다.
 
+2026-10-03부터 저장소 소스는 `01_Project/` 아래에 있습니다. 아래 새 Git 패키지 URL은
+이 구조의 커밋을 원격에 반영한 뒤 사용합니다. 이전 태그·커밋에는 당시의 `/unity/Packages/...` 경로를 사용하세요.
+Python 명령은 `Audio-Recognition/01_Project`에서 실행합니다.
+
 ## 실행 구조
 
 ```
@@ -35,7 +39,7 @@ g2pkk는 Python의 별도 비교 실험 경로에서만 사용합니다.
 
 ```
 Window > Package Manager > + > Add package from git URL…
-https://github.com/rnrdus5642/Audio-Recognition.git?path=/unity/Packages/com.domicube.phoneme-matching
+https://github.com/rnrdus5642/Audio-Recognition.git?path=/01_Project/unity/Packages/com.domicube.phoneme-matching
 
 Tools > Phoneme Matching > 초기 세팅
 ```
@@ -104,13 +108,13 @@ JSON이 누락되면 해당 파일을 안내하며 다른 모델용 설정으로
 `Window > Package Manager` > `+` > **Add package from git URL…**
 
 ```
-https://github.com/rnrdus5642/Audio-Recognition.git?path=/unity/Packages/com.domicube.phoneme-matching
+https://github.com/rnrdus5642/Audio-Recognition.git?path=/01_Project/unity/Packages/com.domicube.phoneme-matching
 ```
 
 `manifest.json` 에 직접 적어도 같습니다:
 
 ```json
-"com.domicube.phoneme-matching": "https://github.com/rnrdus5642/Audio-Recognition.git?path=/unity/Packages/com.domicube.phoneme-matching"
+"com.domicube.phoneme-matching": "https://github.com/rnrdus5642/Audio-Recognition.git?path=/01_Project/unity/Packages/com.domicube.phoneme-matching"
 ```
 
 새로 설치할 때는 원격 기본 브랜치를 사용하지만, 설치 후에는 `packages-lock.json`의

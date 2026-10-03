@@ -48,7 +48,7 @@ namespace DomiCube.PhonemeMatching.Editor
                 + "정답 단어를 바꿀 때만 필요합니다.\n"
                 + "한 사람이 바꿔서 targets.json 을 커밋하면\n"
                 + "나머지는 받기만 하면 됩니다.\n\n"
-                + "저장소가 없으면 여기서 받을 수 있습니다 (약 3MB).",
+                + "저장소가 없으면 여기서 받을 수 있습니다.",
                 "저장소 받기", "취소", "이미 있음 - 폴더 고르기");
 
             if (choice == 2)
@@ -94,10 +94,11 @@ namespace DomiCube.PhonemeMatching.Editor
             string target = Path.Combine(parent, "Audio-Recognition");
             if (Directory.Exists(target))
             {
-                if (IsRepository(target))
+                string existingProject = ResolveProjectDirectory(target);
+                if (existingProject != null)
                 {
-                    EditorPrefs.SetString(RepoKey, target);
-                    Debug.Log($"[PhonemeMatching] 이미 있어서 그대로 씁니다: {target}");
+                    EditorPrefs.SetString(RepoKey, existingProject);
+                    Debug.Log($"[PhonemeMatching] 이미 있어서 그대로 씁니다: {existingProject}");
                     return true;
                 }
 
@@ -124,17 +125,18 @@ namespace DomiCube.PhonemeMatching.Editor
                 EditorUtility.ClearProgressBar();
             }
 
-            if (!ok || !IsRepository(target))
+            string project = ResolveProjectDirectory(target);
+            if (!ok || project == null)
             {
                 return false;
             }
 
-            EditorPrefs.SetString(RepoKey, target);
+            EditorPrefs.SetString(RepoKey, project);
             Debug.Log(
-                $"[PhonemeMatching] 저장소를 받았습니다: {target}\n"
+                $"[PhonemeMatching] 저장소를 받았습니다: {project}\n"
                 + "정답 데이터를 다시 만들려면 파이썬 의존성도 한 번 "
                 + "설치해야 합니다 (torch 는 필요 없습니다):\n"
-                + $"    cd \"{target}\"\n"
+                + $"    cd \"{project}\"\n"
                 + "    python -m venv .venv\n"
                 + "    .venv\\Scripts\\pip install -r requirements.txt");
             return true;
@@ -226,16 +228,17 @@ namespace DomiCube.PhonemeMatching.Editor
                 return;
             }
 
-            if (!IsRepository(picked))
+            string project = ResolveProjectDirectory(picked);
+            if (project == null)
             {
                 Debug.LogError(
-                    $"[PhonemeMatching] {picked} 에 shared/words.csv 와 "
+                    $"[PhonemeMatching] {picked} 또는 그 안의 01_Project 에 shared/words.csv 와 "
                     + "python/build/build_targets.py 가 없습니다.");
                 return;
             }
 
-            EditorPrefs.SetString(RepoKey, picked);
-            Debug.Log($"[PhonemeMatching] 저장소: {picked}");
+            EditorPrefs.SetString(RepoKey, project);
+            Debug.Log($"[PhonemeMatching] 저장소: {project}");
         }
 
         /// <summary>
@@ -244,8 +247,8 @@ namespace DomiCube.PhonemeMatching.Editor
         /// </summary>
         private static string FindRepository()
         {
-            string saved = EditorPrefs.GetString(RepoKey, "");
-            if (!string.IsNullOrEmpty(saved) && IsRepository(saved))
+            string saved = ResolveProjectDirectory(EditorPrefs.GetString(RepoKey, ""));
+            if (saved != null)
             {
                 return saved;
             }
@@ -254,15 +257,35 @@ namespace DomiCube.PhonemeMatching.Editor
                 Path.GetFullPath("Packages/com.domicube.phoneme-matching"));
             while (dir != null)
             {
-                if (IsRepository(dir.FullName))
+                string project = ResolveProjectDirectory(dir.FullName);
+                if (project != null)
                 {
-                    return dir.FullName;
+                    return project;
                 }
 
                 dir = dir.Parent;
             }
 
             return null;
+        }
+
+        // Return the source directory, which can differ from the Git root.
+        // Existing releases have sources at the root; consolidated workspaces
+        // keep the same source layout inside 01_Project.
+        internal static string ResolveProjectDirectory(string path)
+        {
+            if (string.IsNullOrEmpty(path))
+            {
+                return null;
+            }
+
+            if (IsRepository(path))
+            {
+                return path;
+            }
+
+            string nested = Path.Combine(path, "01_Project");
+            return IsRepository(nested) ? nested : null;
         }
 
         private static bool IsRepository(string path)

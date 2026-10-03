@@ -16,7 +16,7 @@
 쓰는 것이 이 시스템이 성립하는 전제**입니다. 직접 편집하면 그 대칭이
 깨집니다.
 
-저장소(https://github.com/rnrdus5642/Audio-Recognition)에서:
+저장소(https://github.com/rnrdus5642/Audio-Recognition)의 `01_Project` 폴더에서:
 
 ```powershell
 # shared/words.csv 편집 후

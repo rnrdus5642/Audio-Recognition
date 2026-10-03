@@ -3,6 +3,8 @@
 갱신: 2026-10-03. **이전 경로 연결 없이 바탕화면 폴더만 사용한다.**
 
 실제 프로젝트: `C:\Users\user\Desktop\Audio-Recognition\01_Project`.
+Git 저장소의 기준 폴더는 10월 3일 상위 `Audio-Recognition`으로 전환했다.
+소스·실행·데이터 파일의 위치는 유지한다. [Git 관리 범위](GIT_WORKSPACE_2026-10-03.md).
 AIHub 원본·색인·추출 음성은 상위 `02_Datasets`, 관련 아동·악기놀이 녹음은
 `03_Recordings`에 모았다. 모델·실험 결과의 상대 경로는 유지했으며 상위
 `04_Models_and_Experiments`에 찾기 쉬운 바로가기를 만들었다.
