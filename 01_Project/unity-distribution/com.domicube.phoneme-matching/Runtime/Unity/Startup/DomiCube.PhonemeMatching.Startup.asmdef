@@ -1,0 +1,13 @@
+{
+  "name": "DomiCube.PhonemeMatching.Startup",
+  "rootNamespace": "DomiCube.PhonemeMatching.Unity",
+  "references": [
+    "DomiCube.PhonemeMatching",
+    "Unity.ugui",
+    "Unity.TextMeshPro"
+  ],
+  "includePlatforms": [],
+  "excludePlatforms": [],
+  "autoReferenced": true,
+  "noEngineReferences": false
+}

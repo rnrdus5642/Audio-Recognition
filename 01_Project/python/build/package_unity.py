@@ -1,6 +1,7 @@
-"""Create a local UPM .tgz from the Unity package, without models or recordings.
+"""Create a local UPM .tgz from the maintained distribution package.
 
 Usage: python -m python.build.package_unity --output-dir C:/some/shared/folder
+Use --package-dir to explicitly build a legacy or experimental package instead.
 """
 import argparse
 import gzip
@@ -9,19 +10,21 @@ import json
 import tarfile
 from pathlib import Path
 
-PACKAGE = Path(__file__).resolve().parents[2] / "unity/Packages/com.domicube.phoneme-matching"
+PACKAGE = Path(__file__).resolve().parents[2] / "unity-distribution/com.domicube.phoneme-matching"
 
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--output-dir", type=Path, required=True)
+    parser.add_argument("--package-dir", type=Path, default=PACKAGE)
     args = parser.parse_args()
-    manifest = json.loads((PACKAGE / "package.json").read_text(encoding="utf-8"))
+    package = args.package_dir.resolve()
+    manifest = json.loads((package / "package.json").read_text(encoding="utf-8"))
     roots = {"Runtime", "Editor", "Tests", "Samples~", "Documentation~"}
     root_files = {"package.json", "README.md", "CHANGELOG.md", "LICENSE", "LICENSE.md"}
     files = []
-    for path in sorted(PACKAGE.rglob("*")):
-        rel = path.relative_to(PACKAGE)
+    for path in sorted(package.rglob("*")):
+        rel = path.relative_to(package)
         if path.is_symlink():
             raise ValueError(f"Package must not contain symlinks: {rel}")
         if not path.is_file():
@@ -38,12 +41,12 @@ def main() -> int:
 
     args.output_dir.mkdir(parents=True, exist_ok=True)
     output = args.output_dir / f"{manifest['name']}-{manifest['version']}.tgz"
-    if output.resolve().is_relative_to(PACKAGE.resolve()):
+    if output.resolve().is_relative_to(package):
         raise ValueError("Write the archive outside the package source directory")
     with output.open("wb") as raw, gzip.GzipFile(fileobj=raw, mode="wb", mtime=0, filename="") as gz:
         with tarfile.open(fileobj=gz, mode="w", format=tarfile.PAX_FORMAT) as archive:
             for path in files:
-                info = archive.gettarinfo(str(path), "package/" + path.relative_to(PACKAGE).as_posix())
+                info = archive.gettarinfo(str(path), "package/" + path.relative_to(package).as_posix())
                 info.uid = info.gid = 0
                 info.uname = info.gname = ""
                 info.mtime = 0

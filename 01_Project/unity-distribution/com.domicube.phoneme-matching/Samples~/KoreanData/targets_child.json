@@ -1,0 +1,2940 @@
+{
+  "version": "2.0.0",
+  "phoneme_set": "ipa",
+  "languages": [
+    "ko"
+  ],
+  "confusion_matrix_id": "ko_child_v2",
+  "build_date": "2026-09-07",
+  "answers": [
+    {
+      "id": "mom",
+      "text": "엄마",
+      "language": "ko",
+      "phonemes": [
+        "ʌ",
+        "m",
+        "m",
+        "a"
+      ],
+      "syllables": [
+        {
+          "text": "엄",
+          "spoken": "엄",
+          "span": [
+            0,
+            2
+          ]
+        },
+        {
+          "text": "마",
+          "spoken": "마",
+          "span": [
+            2,
+            4
+          ]
+        }
+      ],
+      "min_phonemes": 4,
+      "threshold": 0.9,
+      "allow_exact_single_frame": true,
+      "exact_single_frame_calibration": {
+        "matrix_id": "ko_child_v2",
+        "streaming_profile": {
+          "skip_cost": 0.005,
+          "coverage": 0.8,
+          "context_mult": 8.0
+        },
+        "consecutive": 2,
+        "text": "엄마",
+        "phonemes": [
+          "ʌ",
+          "m",
+          "m",
+          "a"
+        ],
+        "threshold": 0.9
+      }
+    },
+    {
+      "id": "dad",
+      "text": "아빠",
+      "language": "ko",
+      "phonemes": [
+        "a",
+        "p͈",
+        "a"
+      ],
+      "syllables": [
+        {
+          "text": "아",
+          "spoken": "아",
+          "span": [
+            0,
+            1
+          ]
+        },
+        {
+          "text": "빠",
+          "spoken": "빠",
+          "span": [
+            1,
+            3
+          ]
+        }
+      ],
+      "min_phonemes": 3,
+      "threshold": 0.925,
+      "allow_exact_single_frame": true,
+      "exact_single_frame_calibration": {
+        "matrix_id": "ko_child_v2",
+        "streaming_profile": {
+          "skip_cost": 0.005,
+          "coverage": 0.8,
+          "context_mult": 8.0
+        },
+        "consecutive": 2,
+        "text": "아빠",
+        "phonemes": [
+          "a",
+          "p͈",
+          "a"
+        ],
+        "threshold": 0.925
+      }
+    },
+    {
+      "id": "grandma",
+      "text": "할머니",
+      "language": "ko",
+      "phonemes": [
+        "h",
+        "a",
+        "l",
+        "m",
+        "ʌ",
+        "n",
+        "i"
+      ],
+      "syllables": [
+        {
+          "text": "할",
+          "spoken": "할",
+          "span": [
+            0,
+            3
+          ]
+        },
+        {
+          "text": "머",
+          "spoken": "머",
+          "span": [
+            3,
+            5
+          ]
+        },
+        {
+          "text": "니",
+          "spoken": "니",
+          "span": [
+            5,
+            7
+          ]
+        }
+      ],
+      "min_phonemes": 7,
+      "threshold": 0.85,
+      "allow_exact_single_frame": true,
+      "exact_single_frame_calibration": {
+        "matrix_id": "ko_child_v2",
+        "streaming_profile": {
+          "skip_cost": 0.005,
+          "coverage": 0.8,
+          "context_mult": 8.0
+        },
+        "consecutive": 2,
+        "text": "할머니",
+        "phonemes": [
+          "h",
+          "a",
+          "l",
+          "m",
+          "ʌ",
+          "n",
+          "i"
+        ],
+        "threshold": 0.85
+      }
+    },
+    {
+      "id": "grandpa",
+      "text": "할아버지",
+      "language": "ko",
+      "phonemes": [
+        "h",
+        "a",
+        "ɾ",
+        "a",
+        "p",
+        "ʌ",
+        "tɕ",
+        "i"
+      ],
+      "syllables": [
+        {
+          "text": "할",
+          "spoken": "하",
+          "span": [
+            0,
+            2
+          ]
+        },
+        {
+          "text": "아",
+          "spoken": "라",
+          "span": [
+            2,
+            4
+          ]
+        },
+        {
+          "text": "버",
+          "spoken": "버",
+          "span": [
+            4,
+            6
+          ]
+        },
+        {
+          "text": "지",
+          "spoken": "지",
+          "span": [
+            6,
+            8
+          ]
+        }
+      ],
+      "min_phonemes": 8,
+      "threshold": 0.775,
+      "allow_exact_single_frame": true,
+      "exact_single_frame_calibration": {
+        "matrix_id": "ko_child_v2",
+        "streaming_profile": {
+          "skip_cost": 0.005,
+          "coverage": 0.8,
+          "context_mult": 8.0
+        },
+        "consecutive": 2,
+        "text": "할아버지",
+        "phonemes": [
+          "h",
+          "a",
+          "ɾ",
+          "a",
+          "p",
+          "ʌ",
+          "tɕ",
+          "i"
+        ],
+        "threshold": 0.775
+      }
+    },
+    {
+      "id": "puppy",
+      "text": "강아지",
+      "language": "ko",
+      "phonemes": [
+        "k",
+        "a",
+        "ŋ",
+        "a",
+        "tɕ",
+        "i"
+      ],
+      "syllables": [
+        {
+          "text": "강",
+          "spoken": "강",
+          "span": [
+            0,
+            3
+          ]
+        },
+        {
+          "text": "아",
+          "spoken": "아",
+          "span": [
+            3,
+            4
+          ]
+        },
+        {
+          "text": "지",
+          "spoken": "지",
+          "span": [
+            4,
+            6
+          ]
+        }
+      ],
+      "min_phonemes": 6,
+      "threshold": 0.8,
+      "allow_exact_single_frame": true,
+      "exact_single_frame_calibration": {
+        "matrix_id": "ko_child_v2",
+        "streaming_profile": {
+          "skip_cost": 0.005,
+          "coverage": 0.8,
+          "context_mult": 8.0
+        },
+        "consecutive": 2,
+        "text": "강아지",
+        "phonemes": [
+          "k",
+          "a",
+          "ŋ",
+          "a",
+          "tɕ",
+          "i"
+        ],
+        "threshold": 0.8
+      }
+    },
+    {
+      "id": "cat",
+      "text": "고양이",
+      "language": "ko",
+      "phonemes": [
+        "k",
+        "o",
+        "j",
+        "a",
+        "ŋ",
+        "i"
+      ],
+      "syllables": [
+        {
+          "text": "고",
+          "spoken": "고",
+          "span": [
+            0,
+            2
+          ]
+        },
+        {
+          "text": "양",
+          "spoken": "양",
+          "span": [
+            2,
+            5
+          ]
+        },
+        {
+          "text": "이",
+          "spoken": "이",
+          "span": [
+            5,
+            6
+          ]
+        }
+      ],
+      "min_phonemes": 6,
+      "threshold": 0.775,
+      "allow_exact_single_frame": true,
+      "exact_single_frame_calibration": {
+        "matrix_id": "ko_child_v2",
+        "streaming_profile": {
+          "skip_cost": 0.005,
+          "coverage": 0.8,
+          "context_mult": 8.0
+        },
+        "consecutive": 2,
+        "text": "고양이",
+        "phonemes": [
+          "k",
+          "o",
+          "j",
+          "a",
+          "ŋ",
+          "i"
+        ],
+        "threshold": 0.775
+      }
+    },
+    {
+      "id": "rabbit",
+      "text": "토끼",
+      "language": "ko",
+      "phonemes": [
+        "tʰ",
+        "o",
+        "k͈",
+        "i"
+      ],
+      "syllables": [
+        {
+          "text": "토",
+          "spoken": "토",
+          "span": [
+            0,
+            2
+          ]
+        },
+        {
+          "text": "끼",
+          "spoken": "끼",
+          "span": [
+            2,
+            4
+          ]
+        }
+      ],
+      "min_phonemes": 4,
+      "threshold": 0.8,
+      "allow_exact_single_frame": true,
+      "exact_single_frame_calibration": {
+        "matrix_id": "ko_child_v2",
+        "streaming_profile": {
+          "skip_cost": 0.005,
+          "coverage": 0.8,
+          "context_mult": 8.0
+        },
+        "consecutive": 2,
+        "text": "토끼",
+        "phonemes": [
+          "tʰ",
+          "o",
+          "k͈",
+          "i"
+        ],
+        "threshold": 0.8
+      }
+    },
+    {
+      "id": "butterfly",
+      "text": "나비",
+      "language": "ko",
+      "phonemes": [
+        "n",
+        "a",
+        "p",
+        "i"
+      ],
+      "syllables": [
+        {
+          "text": "나",
+          "spoken": "나",
+          "span": [
+            0,
+            2
+          ]
+        },
+        {
+          "text": "비",
+          "spoken": "비",
+          "span": [
+            2,
+            4
+          ]
+        }
+      ],
+      "min_phonemes": 4,
+      "threshold": 0.825,
+      "allow_exact_single_frame": true,
+      "exact_single_frame_calibration": {
+        "matrix_id": "ko_child_v2",
+        "streaming_profile": {
+          "skip_cost": 0.005,
+          "coverage": 0.8,
+          "context_mult": 8.0
+        },
+        "consecutive": 2,
+        "text": "나비",
+        "phonemes": [
+          "n",
+          "a",
+          "p",
+          "i"
+        ],
+        "threshold": 0.825
+      }
+    },
+    {
+      "id": "apple",
+      "text": "사과",
+      "language": "ko",
+      "phonemes": [
+        "s",
+        "a",
+        "k",
+        "w",
+        "a"
+      ],
+      "syllables": [
+        {
+          "text": "사",
+          "spoken": "사",
+          "span": [
+            0,
+            2
+          ]
+        },
+        {
+          "text": "과",
+          "spoken": "과",
+          "span": [
+            2,
+            5
+          ]
+        }
+      ],
+      "min_phonemes": 5,
+      "threshold": 0.875,
+      "allow_exact_single_frame": true,
+      "exact_single_frame_calibration": {
+        "matrix_id": "ko_child_v2",
+        "streaming_profile": {
+          "skip_cost": 0.005,
+          "coverage": 0.8,
+          "context_mult": 8.0
+        },
+        "consecutive": 2,
+        "text": "사과",
+        "phonemes": [
+          "s",
+          "a",
+          "k",
+          "w",
+          "a"
+        ],
+        "threshold": 0.875
+      }
+    },
+    {
+      "id": "banana",
+      "text": "바나나",
+      "language": "ko",
+      "phonemes": [
+        "p",
+        "a",
+        "n",
+        "a",
+        "n",
+        "a"
+      ],
+      "syllables": [
+        {
+          "text": "바",
+          "spoken": "바",
+          "span": [
+            0,
+            2
+          ]
+        },
+        {
+          "text": "나",
+          "spoken": "나",
+          "span": [
+            2,
+            4
+          ]
+        },
+        {
+          "text": "나",
+          "spoken": "나",
+          "span": [
+            4,
+            6
+          ]
+        }
+      ],
+      "min_phonemes": 6,
+      "threshold": 0.825,
+      "allow_exact_single_frame": true,
+      "exact_single_frame_calibration": {
+        "matrix_id": "ko_child_v2",
+        "streaming_profile": {
+          "skip_cost": 0.005,
+          "coverage": 0.8,
+          "context_mult": 8.0
+        },
+        "consecutive": 2,
+        "text": "바나나",
+        "phonemes": [
+          "p",
+          "a",
+          "n",
+          "a",
+          "n",
+          "a"
+        ],
+        "threshold": 0.825
+      }
+    },
+    {
+      "id": "milk",
+      "text": "우유",
+      "language": "ko",
+      "phonemes": [
+        "u",
+        "j",
+        "u"
+      ],
+      "syllables": [
+        {
+          "text": "우",
+          "spoken": "우",
+          "span": [
+            0,
+            1
+          ]
+        },
+        {
+          "text": "유",
+          "spoken": "유",
+          "span": [
+            1,
+            3
+          ]
+        }
+      ],
+      "min_phonemes": 3,
+      "threshold": 0.725,
+      "allow_exact_single_frame": true,
+      "exact_single_frame_calibration": {
+        "matrix_id": "ko_child_v2",
+        "streaming_profile": {
+          "skip_cost": 0.005,
+          "coverage": 0.8,
+          "context_mult": 8.0
+        },
+        "consecutive": 2,
+        "text": "우유",
+        "phonemes": [
+          "u",
+          "j",
+          "u"
+        ],
+        "threshold": 0.725
+      }
+    },
+    {
+      "id": "bread",
+      "text": "빵",
+      "language": "ko",
+      "phonemes": [
+        "p͈",
+        "a",
+        "ŋ"
+      ],
+      "syllables": [
+        {
+          "text": "빵",
+          "spoken": "빵",
+          "span": [
+            0,
+            3
+          ]
+        }
+      ],
+      "min_phonemes": 3,
+      "threshold": 0.975,
+      "allow_exact_single_frame": true,
+      "exact_single_frame_calibration": {
+        "matrix_id": "ko_child_v2",
+        "streaming_profile": {
+          "skip_cost": 0.005,
+          "coverage": 0.8,
+          "context_mult": 8.0
+        },
+        "consecutive": 2,
+        "text": "빵",
+        "phonemes": [
+          "p͈",
+          "a",
+          "ŋ"
+        ],
+        "threshold": 0.975
+      }
+    },
+    {
+      "id": "go",
+      "text": "가요",
+      "language": "ko",
+      "phonemes": [
+        "k",
+        "a",
+        "j",
+        "o"
+      ],
+      "syllables": [
+        {
+          "text": "가",
+          "spoken": "가",
+          "span": [
+            0,
+            2
+          ]
+        },
+        {
+          "text": "요",
+          "spoken": "요",
+          "span": [
+            2,
+            4
+          ]
+        }
+      ],
+      "min_phonemes": 4,
+      "threshold": 0.875,
+      "allow_exact_single_frame": true,
+      "exact_single_frame_calibration": {
+        "matrix_id": "ko_child_v2",
+        "streaming_profile": {
+          "skip_cost": 0.005,
+          "coverage": 0.8,
+          "context_mult": 8.0
+        },
+        "consecutive": 2,
+        "text": "가요",
+        "phonemes": [
+          "k",
+          "a",
+          "j",
+          "o"
+        ],
+        "threshold": 0.875
+      }
+    },
+    {
+      "id": "come",
+      "text": "와요",
+      "language": "ko",
+      "phonemes": [
+        "w",
+        "a",
+        "j",
+        "o"
+      ],
+      "syllables": [
+        {
+          "text": "와",
+          "spoken": "와",
+          "span": [
+            0,
+            2
+          ]
+        },
+        {
+          "text": "요",
+          "spoken": "요",
+          "span": [
+            2,
+            4
+          ]
+        }
+      ],
+      "min_phonemes": 4,
+      "threshold": 0.9
+    },
+    {
+      "id": "eat",
+      "text": "먹어요",
+      "language": "ko",
+      "phonemes": [
+        "m",
+        "ʌ",
+        "k",
+        "ʌ",
+        "j",
+        "o"
+      ],
+      "syllables": [
+        {
+          "text": "먹",
+          "spoken": "머",
+          "span": [
+            0,
+            2
+          ]
+        },
+        {
+          "text": "어",
+          "spoken": "거",
+          "span": [
+            2,
+            4
+          ]
+        },
+        {
+          "text": "요",
+          "spoken": "요",
+          "span": [
+            4,
+            6
+          ]
+        }
+      ],
+      "min_phonemes": 6,
+      "threshold": 0.8,
+      "allow_exact_single_frame": true,
+      "exact_single_frame_calibration": {
+        "matrix_id": "ko_child_v2",
+        "streaming_profile": {
+          "skip_cost": 0.005,
+          "coverage": 0.8,
+          "context_mult": 8.0
+        },
+        "consecutive": 2,
+        "text": "먹어요",
+        "phonemes": [
+          "m",
+          "ʌ",
+          "k",
+          "ʌ",
+          "j",
+          "o"
+        ],
+        "threshold": 0.8
+      }
+    },
+    {
+      "id": "school",
+      "text": "학교",
+      "language": "ko",
+      "phonemes": [
+        "h",
+        "a",
+        "k̚",
+        "k͈",
+        "j",
+        "o"
+      ],
+      "syllables": [
+        {
+          "text": "학",
+          "spoken": "학",
+          "span": [
+            0,
+            3
+          ]
+        },
+        {
+          "text": "교",
+          "spoken": "꾜",
+          "span": [
+            3,
+            6
+          ]
+        }
+      ],
+      "min_phonemes": 6,
+      "threshold": 0.75,
+      "allow_exact_single_frame": true,
+      "exact_single_frame_calibration": {
+        "matrix_id": "ko_child_v2",
+        "streaming_profile": {
+          "skip_cost": 0.005,
+          "coverage": 0.8,
+          "context_mult": 8.0
+        },
+        "consecutive": 2,
+        "text": "학교",
+        "phonemes": [
+          "h",
+          "a",
+          "k̚",
+          "k͈",
+          "j",
+          "o"
+        ],
+        "threshold": 0.75
+      }
+    },
+    {
+      "id": "friend",
+      "text": "친구",
+      "language": "ko",
+      "phonemes": [
+        "tɕʰ",
+        "i",
+        "n",
+        "k",
+        "u"
+      ],
+      "syllables": [
+        {
+          "text": "친",
+          "spoken": "친",
+          "span": [
+            0,
+            3
+          ]
+        },
+        {
+          "text": "구",
+          "spoken": "구",
+          "span": [
+            3,
+            5
+          ]
+        }
+      ],
+      "min_phonemes": 5,
+      "threshold": 0.825,
+      "allow_exact_single_frame": true,
+      "exact_single_frame_calibration": {
+        "matrix_id": "ko_child_v2",
+        "streaming_profile": {
+          "skip_cost": 0.005,
+          "coverage": 0.8,
+          "context_mult": 8.0
+        },
+        "consecutive": 2,
+        "text": "친구",
+        "phonemes": [
+          "tɕʰ",
+          "i",
+          "n",
+          "k",
+          "u"
+        ],
+        "threshold": 0.825
+      }
+    },
+    {
+      "id": "book",
+      "text": "책",
+      "language": "ko",
+      "phonemes": [
+        "tɕʰ",
+        "ɛ",
+        "k̚"
+      ],
+      "syllables": [
+        {
+          "text": "책",
+          "spoken": "책",
+          "span": [
+            0,
+            3
+          ]
+        }
+      ],
+      "min_phonemes": 3,
+      "threshold": 0.826,
+      "allow_exact_single_frame": true,
+      "exact_single_frame_calibration": {
+        "matrix_id": "ko_child_v2",
+        "streaming_profile": {
+          "skip_cost": 0.005,
+          "coverage": 0.8,
+          "context_mult": 8.0
+        },
+        "consecutive": 2,
+        "text": "책",
+        "phonemes": [
+          "tɕʰ",
+          "ɛ",
+          "k̚"
+        ],
+        "threshold": 0.826
+      }
+    },
+    {
+      "id": "lift_polite",
+      "text": "들어요",
+      "language": "ko",
+      "phonemes": [
+        "t",
+        "ɯ",
+        "ɾ",
+        "ʌ",
+        "j",
+        "o"
+      ],
+      "syllables": [
+        {
+          "text": "들",
+          "spoken": "드",
+          "span": [
+            0,
+            2
+          ]
+        },
+        {
+          "text": "어",
+          "spoken": "러",
+          "span": [
+            2,
+            4
+          ]
+        },
+        {
+          "text": "요",
+          "spoken": "요",
+          "span": [
+            4,
+            6
+          ]
+        }
+      ],
+      "min_phonemes": 6,
+      "threshold": 0.825,
+      "allow_exact_single_frame": true,
+      "exact_single_frame_calibration": {
+        "matrix_id": "ko_child_v2",
+        "streaming_profile": {
+          "skip_cost": 0.005,
+          "coverage": 0.8,
+          "context_mult": 8.0
+        },
+        "consecutive": 2,
+        "text": "들어요",
+        "phonemes": [
+          "t",
+          "ɯ",
+          "ɾ",
+          "ʌ",
+          "j",
+          "o"
+        ],
+        "threshold": 0.825
+      }
+    },
+    {
+      "id": "lift_plain",
+      "text": "들어",
+      "language": "ko",
+      "phonemes": [
+        "t",
+        "ɯ",
+        "ɾ",
+        "ʌ"
+      ],
+      "syllables": [
+        {
+          "text": "들",
+          "spoken": "드",
+          "span": [
+            0,
+            2
+          ]
+        },
+        {
+          "text": "어",
+          "spoken": "러",
+          "span": [
+            2,
+            4
+          ]
+        }
+      ],
+      "min_phonemes": 4,
+      "threshold": 1.0,
+      "action_group": "lift",
+      "allow_exact_single_frame": true,
+      "exact_single_frame_calibration": {
+        "matrix_id": "ko_child_v2",
+        "streaming_profile": {
+          "skip_cost": 0.005,
+          "coverage": 0.8,
+          "context_mult": 8.0
+        },
+        "consecutive": 2,
+        "text": "들어",
+        "phonemes": [
+          "t",
+          "ɯ",
+          "ɾ",
+          "ʌ"
+        ],
+        "threshold": 1.0
+      },
+      "contrastive_alternatives": [
+        {
+          "text": "들어",
+          "phonemes": [
+            "t",
+            "ɯ",
+            "ɾ",
+            "ʌ"
+          ],
+          "action_group": "lift"
+        },
+        {
+          "text": "들기",
+          "phonemes": [
+            "t",
+            "ɯ",
+            "l",
+            "k",
+            "i"
+          ],
+          "action_group": "lift"
+        },
+        {
+          "text": "쳐",
+          "phonemes": [
+            "tɕʰ",
+            "ʌ"
+          ],
+          "action_group": "strike"
+        },
+        {
+          "text": "치기",
+          "phonemes": [
+            "tɕʰ",
+            "i",
+            "k",
+            "i"
+          ],
+          "action_group": "strike"
+        },
+        {
+          "text": "놓아",
+          "phonemes": [
+            "n",
+            "o",
+            "a"
+          ],
+          "action_group": "put_down"
+        },
+        {
+          "text": "놓기",
+          "phonemes": [
+            "n",
+            "o",
+            "kʰ",
+            "i"
+          ],
+          "action_group": "put_down"
+        },
+        {
+          "text": "흔들어",
+          "phonemes": [
+            "h",
+            "ɯ",
+            "n",
+            "t",
+            "ɯ",
+            "ɾ",
+            "ʌ"
+          ],
+          "action_group": "shake"
+        },
+        {
+          "text": "흔들기",
+          "phonemes": [
+            "h",
+            "ɯ",
+            "n",
+            "t",
+            "ɯ",
+            "l",
+            "k",
+            "i"
+          ],
+          "action_group": "shake"
+        },
+        {
+          "text": "두드려",
+          "phonemes": [
+            "t",
+            "u",
+            "t",
+            "ɯ",
+            "ɾ",
+            "j",
+            "ʌ"
+          ],
+          "action_group": "drum"
+        },
+        {
+          "text": "두드리기",
+          "phonemes": [
+            "t",
+            "u",
+            "t",
+            "ɯ",
+            "ɾ",
+            "i",
+            "k",
+            "i"
+          ],
+          "action_group": "drum"
+        }
+      ]
+    },
+    {
+      "id": "lift_gerund",
+      "text": "들기",
+      "language": "ko",
+      "phonemes": [
+        "t",
+        "ɯ",
+        "l",
+        "k",
+        "i"
+      ],
+      "syllables": [
+        {
+          "text": "들",
+          "spoken": "들",
+          "span": [
+            0,
+            3
+          ]
+        },
+        {
+          "text": "기",
+          "spoken": "기",
+          "span": [
+            3,
+            5
+          ]
+        }
+      ],
+      "min_phonemes": 5,
+      "threshold": 0.875,
+      "action_group": "lift",
+      "contrastive_alternatives": [
+        {
+          "text": "들어",
+          "phonemes": [
+            "t",
+            "ɯ",
+            "ɾ",
+            "ʌ"
+          ],
+          "action_group": "lift"
+        },
+        {
+          "text": "들기",
+          "phonemes": [
+            "t",
+            "ɯ",
+            "l",
+            "k",
+            "i"
+          ],
+          "action_group": "lift"
+        },
+        {
+          "text": "쳐",
+          "phonemes": [
+            "tɕʰ",
+            "ʌ"
+          ],
+          "action_group": "strike"
+        },
+        {
+          "text": "치기",
+          "phonemes": [
+            "tɕʰ",
+            "i",
+            "k",
+            "i"
+          ],
+          "action_group": "strike"
+        },
+        {
+          "text": "놓아",
+          "phonemes": [
+            "n",
+            "o",
+            "a"
+          ],
+          "action_group": "put_down"
+        },
+        {
+          "text": "놓기",
+          "phonemes": [
+            "n",
+            "o",
+            "kʰ",
+            "i"
+          ],
+          "action_group": "put_down"
+        },
+        {
+          "text": "흔들어",
+          "phonemes": [
+            "h",
+            "ɯ",
+            "n",
+            "t",
+            "ɯ",
+            "ɾ",
+            "ʌ"
+          ],
+          "action_group": "shake"
+        },
+        {
+          "text": "흔들기",
+          "phonemes": [
+            "h",
+            "ɯ",
+            "n",
+            "t",
+            "ɯ",
+            "l",
+            "k",
+            "i"
+          ],
+          "action_group": "shake"
+        },
+        {
+          "text": "두드려",
+          "phonemes": [
+            "t",
+            "u",
+            "t",
+            "ɯ",
+            "ɾ",
+            "j",
+            "ʌ"
+          ],
+          "action_group": "drum"
+        },
+        {
+          "text": "두드리기",
+          "phonemes": [
+            "t",
+            "u",
+            "t",
+            "ɯ",
+            "ɾ",
+            "i",
+            "k",
+            "i"
+          ],
+          "action_group": "drum"
+        }
+      ]
+    },
+    {
+      "id": "hit_polite",
+      "text": "쳐요",
+      "language": "ko",
+      "phonemes": [
+        "tɕʰ",
+        "ʌ",
+        "j",
+        "o"
+      ],
+      "syllables": [
+        {
+          "text": "쳐",
+          "spoken": "처",
+          "span": [
+            0,
+            2
+          ]
+        },
+        {
+          "text": "요",
+          "spoken": "요",
+          "span": [
+            2,
+            4
+          ]
+        }
+      ],
+      "min_phonemes": 4,
+      "threshold": 0.8,
+      "allow_exact_single_frame": true,
+      "exact_single_frame_calibration": {
+        "matrix_id": "ko_child_v2",
+        "streaming_profile": {
+          "skip_cost": 0.005,
+          "coverage": 0.8,
+          "context_mult": 8.0
+        },
+        "consecutive": 2,
+        "text": "쳐요",
+        "phonemes": [
+          "tɕʰ",
+          "ʌ",
+          "j",
+          "o"
+        ],
+        "threshold": 0.8
+      }
+    },
+    {
+      "id": "hit_plain",
+      "text": "쳐",
+      "language": "ko",
+      "phonemes": [
+        "tɕʰ",
+        "ʌ"
+      ],
+      "syllables": [
+        {
+          "text": "쳐",
+          "spoken": "처",
+          "span": [
+            0,
+            2
+          ]
+        }
+      ],
+      "min_phonemes": 2,
+      "threshold": 1.0,
+      "action_group": "strike",
+      "allow_exact_single_frame": true,
+      "exact_single_frame_calibration": {
+        "matrix_id": "ko_child_v2",
+        "streaming_profile": {
+          "skip_cost": 0.005,
+          "coverage": 0.8,
+          "context_mult": 8.0
+        },
+        "consecutive": 2,
+        "text": "쳐",
+        "phonemes": [
+          "tɕʰ",
+          "ʌ"
+        ],
+        "threshold": 1.0
+      },
+      "contrastive_alternatives": [
+        {
+          "text": "들어",
+          "phonemes": [
+            "t",
+            "ɯ",
+            "ɾ",
+            "ʌ"
+          ],
+          "action_group": "lift"
+        },
+        {
+          "text": "들기",
+          "phonemes": [
+            "t",
+            "ɯ",
+            "l",
+            "k",
+            "i"
+          ],
+          "action_group": "lift"
+        },
+        {
+          "text": "쳐",
+          "phonemes": [
+            "tɕʰ",
+            "ʌ"
+          ],
+          "action_group": "strike"
+        },
+        {
+          "text": "치기",
+          "phonemes": [
+            "tɕʰ",
+            "i",
+            "k",
+            "i"
+          ],
+          "action_group": "strike"
+        },
+        {
+          "text": "놓아",
+          "phonemes": [
+            "n",
+            "o",
+            "a"
+          ],
+          "action_group": "put_down"
+        },
+        {
+          "text": "놓기",
+          "phonemes": [
+            "n",
+            "o",
+            "kʰ",
+            "i"
+          ],
+          "action_group": "put_down"
+        },
+        {
+          "text": "흔들어",
+          "phonemes": [
+            "h",
+            "ɯ",
+            "n",
+            "t",
+            "ɯ",
+            "ɾ",
+            "ʌ"
+          ],
+          "action_group": "shake"
+        },
+        {
+          "text": "흔들기",
+          "phonemes": [
+            "h",
+            "ɯ",
+            "n",
+            "t",
+            "ɯ",
+            "l",
+            "k",
+            "i"
+          ],
+          "action_group": "shake"
+        },
+        {
+          "text": "두드려",
+          "phonemes": [
+            "t",
+            "u",
+            "t",
+            "ɯ",
+            "ɾ",
+            "j",
+            "ʌ"
+          ],
+          "action_group": "drum"
+        },
+        {
+          "text": "두드리기",
+          "phonemes": [
+            "t",
+            "u",
+            "t",
+            "ɯ",
+            "ɾ",
+            "i",
+            "k",
+            "i"
+          ],
+          "action_group": "drum"
+        }
+      ]
+    },
+    {
+      "id": "hit_gerund",
+      "text": "치기",
+      "language": "ko",
+      "phonemes": [
+        "tɕʰ",
+        "i",
+        "k",
+        "i"
+      ],
+      "syllables": [
+        {
+          "text": "치",
+          "spoken": "치",
+          "span": [
+            0,
+            2
+          ]
+        },
+        {
+          "text": "기",
+          "spoken": "기",
+          "span": [
+            2,
+            4
+          ]
+        }
+      ],
+      "min_phonemes": 4,
+      "threshold": 0.875,
+      "action_group": "strike",
+      "contrastive_alternatives": [
+        {
+          "text": "들어",
+          "phonemes": [
+            "t",
+            "ɯ",
+            "ɾ",
+            "ʌ"
+          ],
+          "action_group": "lift"
+        },
+        {
+          "text": "들기",
+          "phonemes": [
+            "t",
+            "ɯ",
+            "l",
+            "k",
+            "i"
+          ],
+          "action_group": "lift"
+        },
+        {
+          "text": "쳐",
+          "phonemes": [
+            "tɕʰ",
+            "ʌ"
+          ],
+          "action_group": "strike"
+        },
+        {
+          "text": "치기",
+          "phonemes": [
+            "tɕʰ",
+            "i",
+            "k",
+            "i"
+          ],
+          "action_group": "strike"
+        },
+        {
+          "text": "놓아",
+          "phonemes": [
+            "n",
+            "o",
+            "a"
+          ],
+          "action_group": "put_down"
+        },
+        {
+          "text": "놓기",
+          "phonemes": [
+            "n",
+            "o",
+            "kʰ",
+            "i"
+          ],
+          "action_group": "put_down"
+        },
+        {
+          "text": "흔들어",
+          "phonemes": [
+            "h",
+            "ɯ",
+            "n",
+            "t",
+            "ɯ",
+            "ɾ",
+            "ʌ"
+          ],
+          "action_group": "shake"
+        },
+        {
+          "text": "흔들기",
+          "phonemes": [
+            "h",
+            "ɯ",
+            "n",
+            "t",
+            "ɯ",
+            "l",
+            "k",
+            "i"
+          ],
+          "action_group": "shake"
+        },
+        {
+          "text": "두드려",
+          "phonemes": [
+            "t",
+            "u",
+            "t",
+            "ɯ",
+            "ɾ",
+            "j",
+            "ʌ"
+          ],
+          "action_group": "drum"
+        },
+        {
+          "text": "두드리기",
+          "phonemes": [
+            "t",
+            "u",
+            "t",
+            "ɯ",
+            "ɾ",
+            "i",
+            "k",
+            "i"
+          ],
+          "action_group": "drum"
+        }
+      ]
+    },
+    {
+      "id": "put_polite",
+      "text": "놔요",
+      "language": "ko",
+      "phonemes": [
+        "n",
+        "w",
+        "a",
+        "j",
+        "o"
+      ],
+      "syllables": [
+        {
+          "text": "놔",
+          "spoken": "놔",
+          "span": [
+            0,
+            3
+          ]
+        },
+        {
+          "text": "요",
+          "spoken": "요",
+          "span": [
+            3,
+            5
+          ]
+        }
+      ],
+      "min_phonemes": 5,
+      "threshold": 0.925,
+      "allow_exact_single_frame": true,
+      "exact_single_frame_calibration": {
+        "matrix_id": "ko_child_v2",
+        "streaming_profile": {
+          "skip_cost": 0.005,
+          "coverage": 0.8,
+          "context_mult": 8.0
+        },
+        "consecutive": 2,
+        "text": "놔요",
+        "phonemes": [
+          "n",
+          "w",
+          "a",
+          "j",
+          "o"
+        ],
+        "threshold": 0.925
+      }
+    },
+    {
+      "id": "put_plain",
+      "text": "놔",
+      "language": "ko",
+      "phonemes": [
+        "n",
+        "w",
+        "a"
+      ],
+      "syllables": [
+        {
+          "text": "놔",
+          "spoken": "놔",
+          "span": [
+            0,
+            3
+          ]
+        }
+      ],
+      "min_phonemes": 3,
+      "threshold": 0.85,
+      "allow_exact_single_frame": true,
+      "exact_single_frame_calibration": {
+        "matrix_id": "ko_child_v2",
+        "streaming_profile": {
+          "skip_cost": 0.005,
+          "coverage": 0.8,
+          "context_mult": 8.0
+        },
+        "consecutive": 2,
+        "text": "놔",
+        "phonemes": [
+          "n",
+          "w",
+          "a"
+        ],
+        "threshold": 0.85
+      }
+    },
+    {
+      "id": "put_uncontracted",
+      "text": "놓아",
+      "language": "ko",
+      "phonemes": [
+        "n",
+        "o",
+        "a"
+      ],
+      "syllables": [
+        {
+          "text": "놓",
+          "spoken": "노",
+          "span": [
+            0,
+            2
+          ]
+        },
+        {
+          "text": "아",
+          "spoken": "아",
+          "span": [
+            2,
+            3
+          ]
+        }
+      ],
+      "min_phonemes": 3,
+      "threshold": 0.8,
+      "action_group": "put_down",
+      "contrastive_alternatives": [
+        {
+          "text": "들어",
+          "phonemes": [
+            "t",
+            "ɯ",
+            "ɾ",
+            "ʌ"
+          ],
+          "action_group": "lift"
+        },
+        {
+          "text": "들기",
+          "phonemes": [
+            "t",
+            "ɯ",
+            "l",
+            "k",
+            "i"
+          ],
+          "action_group": "lift"
+        },
+        {
+          "text": "쳐",
+          "phonemes": [
+            "tɕʰ",
+            "ʌ"
+          ],
+          "action_group": "strike"
+        },
+        {
+          "text": "치기",
+          "phonemes": [
+            "tɕʰ",
+            "i",
+            "k",
+            "i"
+          ],
+          "action_group": "strike"
+        },
+        {
+          "text": "놓아",
+          "phonemes": [
+            "n",
+            "o",
+            "a"
+          ],
+          "action_group": "put_down"
+        },
+        {
+          "text": "놓기",
+          "phonemes": [
+            "n",
+            "o",
+            "kʰ",
+            "i"
+          ],
+          "action_group": "put_down"
+        },
+        {
+          "text": "흔들어",
+          "phonemes": [
+            "h",
+            "ɯ",
+            "n",
+            "t",
+            "ɯ",
+            "ɾ",
+            "ʌ"
+          ],
+          "action_group": "shake"
+        },
+        {
+          "text": "흔들기",
+          "phonemes": [
+            "h",
+            "ɯ",
+            "n",
+            "t",
+            "ɯ",
+            "l",
+            "k",
+            "i"
+          ],
+          "action_group": "shake"
+        },
+        {
+          "text": "두드려",
+          "phonemes": [
+            "t",
+            "u",
+            "t",
+            "ɯ",
+            "ɾ",
+            "j",
+            "ʌ"
+          ],
+          "action_group": "drum"
+        },
+        {
+          "text": "두드리기",
+          "phonemes": [
+            "t",
+            "u",
+            "t",
+            "ɯ",
+            "ɾ",
+            "i",
+            "k",
+            "i"
+          ],
+          "action_group": "drum"
+        }
+      ]
+    },
+    {
+      "id": "put_gerund",
+      "text": "놓기",
+      "language": "ko",
+      "phonemes": [
+        "n",
+        "o",
+        "kʰ",
+        "i"
+      ],
+      "syllables": [
+        {
+          "text": "놓",
+          "spoken": "노",
+          "span": [
+            0,
+            2
+          ]
+        },
+        {
+          "text": "기",
+          "spoken": "키",
+          "span": [
+            2,
+            4
+          ]
+        }
+      ],
+      "min_phonemes": 4,
+      "threshold": 1.0,
+      "action_group": "put_down",
+      "contrastive_alternatives": [
+        {
+          "text": "들어",
+          "phonemes": [
+            "t",
+            "ɯ",
+            "ɾ",
+            "ʌ"
+          ],
+          "action_group": "lift"
+        },
+        {
+          "text": "들기",
+          "phonemes": [
+            "t",
+            "ɯ",
+            "l",
+            "k",
+            "i"
+          ],
+          "action_group": "lift"
+        },
+        {
+          "text": "쳐",
+          "phonemes": [
+            "tɕʰ",
+            "ʌ"
+          ],
+          "action_group": "strike"
+        },
+        {
+          "text": "치기",
+          "phonemes": [
+            "tɕʰ",
+            "i",
+            "k",
+            "i"
+          ],
+          "action_group": "strike"
+        },
+        {
+          "text": "놓아",
+          "phonemes": [
+            "n",
+            "o",
+            "a"
+          ],
+          "action_group": "put_down"
+        },
+        {
+          "text": "놓기",
+          "phonemes": [
+            "n",
+            "o",
+            "kʰ",
+            "i"
+          ],
+          "action_group": "put_down"
+        },
+        {
+          "text": "흔들어",
+          "phonemes": [
+            "h",
+            "ɯ",
+            "n",
+            "t",
+            "ɯ",
+            "ɾ",
+            "ʌ"
+          ],
+          "action_group": "shake"
+        },
+        {
+          "text": "흔들기",
+          "phonemes": [
+            "h",
+            "ɯ",
+            "n",
+            "t",
+            "ɯ",
+            "l",
+            "k",
+            "i"
+          ],
+          "action_group": "shake"
+        },
+        {
+          "text": "두드려",
+          "phonemes": [
+            "t",
+            "u",
+            "t",
+            "ɯ",
+            "ɾ",
+            "j",
+            "ʌ"
+          ],
+          "action_group": "drum"
+        },
+        {
+          "text": "두드리기",
+          "phonemes": [
+            "t",
+            "u",
+            "t",
+            "ɯ",
+            "ɾ",
+            "i",
+            "k",
+            "i"
+          ],
+          "action_group": "drum"
+        }
+      ]
+    },
+    {
+      "id": "shake_polite",
+      "text": "흔들어요",
+      "language": "ko",
+      "phonemes": [
+        "h",
+        "ɯ",
+        "n",
+        "t",
+        "ɯ",
+        "ɾ",
+        "ʌ",
+        "j",
+        "o"
+      ],
+      "syllables": [
+        {
+          "text": "흔",
+          "spoken": "흔",
+          "span": [
+            0,
+            3
+          ]
+        },
+        {
+          "text": "들",
+          "spoken": "드",
+          "span": [
+            3,
+            5
+          ]
+        },
+        {
+          "text": "어",
+          "spoken": "러",
+          "span": [
+            5,
+            7
+          ]
+        },
+        {
+          "text": "요",
+          "spoken": "요",
+          "span": [
+            7,
+            9
+          ]
+        }
+      ],
+      "min_phonemes": 9,
+      "threshold": 0.875,
+      "allow_exact_single_frame": true,
+      "exact_single_frame_calibration": {
+        "matrix_id": "ko_child_v2",
+        "streaming_profile": {
+          "skip_cost": 0.005,
+          "coverage": 0.8,
+          "context_mult": 8.0
+        },
+        "consecutive": 2,
+        "text": "흔들어요",
+        "phonemes": [
+          "h",
+          "ɯ",
+          "n",
+          "t",
+          "ɯ",
+          "ɾ",
+          "ʌ",
+          "j",
+          "o"
+        ],
+        "threshold": 0.875
+      }
+    },
+    {
+      "id": "shake_plain",
+      "text": "흔들어",
+      "language": "ko",
+      "phonemes": [
+        "h",
+        "ɯ",
+        "n",
+        "t",
+        "ɯ",
+        "ɾ",
+        "ʌ"
+      ],
+      "syllables": [
+        {
+          "text": "흔",
+          "spoken": "흔",
+          "span": [
+            0,
+            3
+          ]
+        },
+        {
+          "text": "들",
+          "spoken": "드",
+          "span": [
+            3,
+            5
+          ]
+        },
+        {
+          "text": "어",
+          "spoken": "러",
+          "span": [
+            5,
+            7
+          ]
+        }
+      ],
+      "min_phonemes": 7,
+      "threshold": 0.9,
+      "action_group": "shake",
+      "allow_exact_single_frame": true,
+      "exact_single_frame_calibration": {
+        "matrix_id": "ko_child_v2",
+        "streaming_profile": {
+          "skip_cost": 0.005,
+          "coverage": 0.8,
+          "context_mult": 8.0
+        },
+        "consecutive": 2,
+        "text": "흔들어",
+        "phonemes": [
+          "h",
+          "ɯ",
+          "n",
+          "t",
+          "ɯ",
+          "ɾ",
+          "ʌ"
+        ],
+        "threshold": 0.9
+      },
+      "contrastive_alternatives": [
+        {
+          "text": "들어",
+          "phonemes": [
+            "t",
+            "ɯ",
+            "ɾ",
+            "ʌ"
+          ],
+          "action_group": "lift"
+        },
+        {
+          "text": "들기",
+          "phonemes": [
+            "t",
+            "ɯ",
+            "l",
+            "k",
+            "i"
+          ],
+          "action_group": "lift"
+        },
+        {
+          "text": "쳐",
+          "phonemes": [
+            "tɕʰ",
+            "ʌ"
+          ],
+          "action_group": "strike"
+        },
+        {
+          "text": "치기",
+          "phonemes": [
+            "tɕʰ",
+            "i",
+            "k",
+            "i"
+          ],
+          "action_group": "strike"
+        },
+        {
+          "text": "놓아",
+          "phonemes": [
+            "n",
+            "o",
+            "a"
+          ],
+          "action_group": "put_down"
+        },
+        {
+          "text": "놓기",
+          "phonemes": [
+            "n",
+            "o",
+            "kʰ",
+            "i"
+          ],
+          "action_group": "put_down"
+        },
+        {
+          "text": "흔들어",
+          "phonemes": [
+            "h",
+            "ɯ",
+            "n",
+            "t",
+            "ɯ",
+            "ɾ",
+            "ʌ"
+          ],
+          "action_group": "shake"
+        },
+        {
+          "text": "흔들기",
+          "phonemes": [
+            "h",
+            "ɯ",
+            "n",
+            "t",
+            "ɯ",
+            "l",
+            "k",
+            "i"
+          ],
+          "action_group": "shake"
+        },
+        {
+          "text": "두드려",
+          "phonemes": [
+            "t",
+            "u",
+            "t",
+            "ɯ",
+            "ɾ",
+            "j",
+            "ʌ"
+          ],
+          "action_group": "drum"
+        },
+        {
+          "text": "두드리기",
+          "phonemes": [
+            "t",
+            "u",
+            "t",
+            "ɯ",
+            "ɾ",
+            "i",
+            "k",
+            "i"
+          ],
+          "action_group": "drum"
+        }
+      ]
+    },
+    {
+      "id": "shake_gerund",
+      "text": "흔들기",
+      "language": "ko",
+      "phonemes": [
+        "h",
+        "ɯ",
+        "n",
+        "t",
+        "ɯ",
+        "l",
+        "k",
+        "i"
+      ],
+      "syllables": [
+        {
+          "text": "흔",
+          "spoken": "흔",
+          "span": [
+            0,
+            3
+          ]
+        },
+        {
+          "text": "들",
+          "spoken": "들",
+          "span": [
+            3,
+            6
+          ]
+        },
+        {
+          "text": "기",
+          "spoken": "기",
+          "span": [
+            6,
+            8
+          ]
+        }
+      ],
+      "min_phonemes": 8,
+      "threshold": 0.775,
+      "action_group": "shake",
+      "contrastive_alternatives": [
+        {
+          "text": "들어",
+          "phonemes": [
+            "t",
+            "ɯ",
+            "ɾ",
+            "ʌ"
+          ],
+          "action_group": "lift"
+        },
+        {
+          "text": "들기",
+          "phonemes": [
+            "t",
+            "ɯ",
+            "l",
+            "k",
+            "i"
+          ],
+          "action_group": "lift"
+        },
+        {
+          "text": "쳐",
+          "phonemes": [
+            "tɕʰ",
+            "ʌ"
+          ],
+          "action_group": "strike"
+        },
+        {
+          "text": "치기",
+          "phonemes": [
+            "tɕʰ",
+            "i",
+            "k",
+            "i"
+          ],
+          "action_group": "strike"
+        },
+        {
+          "text": "놓아",
+          "phonemes": [
+            "n",
+            "o",
+            "a"
+          ],
+          "action_group": "put_down"
+        },
+        {
+          "text": "놓기",
+          "phonemes": [
+            "n",
+            "o",
+            "kʰ",
+            "i"
+          ],
+          "action_group": "put_down"
+        },
+        {
+          "text": "흔들어",
+          "phonemes": [
+            "h",
+            "ɯ",
+            "n",
+            "t",
+            "ɯ",
+            "ɾ",
+            "ʌ"
+          ],
+          "action_group": "shake"
+        },
+        {
+          "text": "흔들기",
+          "phonemes": [
+            "h",
+            "ɯ",
+            "n",
+            "t",
+            "ɯ",
+            "l",
+            "k",
+            "i"
+          ],
+          "action_group": "shake"
+        },
+        {
+          "text": "두드려",
+          "phonemes": [
+            "t",
+            "u",
+            "t",
+            "ɯ",
+            "ɾ",
+            "j",
+            "ʌ"
+          ],
+          "action_group": "drum"
+        },
+        {
+          "text": "두드리기",
+          "phonemes": [
+            "t",
+            "u",
+            "t",
+            "ɯ",
+            "ɾ",
+            "i",
+            "k",
+            "i"
+          ],
+          "action_group": "drum"
+        }
+      ]
+    },
+    {
+      "id": "knock_polite",
+      "text": "두드려요",
+      "language": "ko",
+      "phonemes": [
+        "t",
+        "u",
+        "t",
+        "ɯ",
+        "ɾ",
+        "j",
+        "ʌ",
+        "j",
+        "o"
+      ],
+      "syllables": [
+        {
+          "text": "두",
+          "spoken": "두",
+          "span": [
+            0,
+            2
+          ]
+        },
+        {
+          "text": "드",
+          "spoken": "드",
+          "span": [
+            2,
+            4
+          ]
+        },
+        {
+          "text": "려",
+          "spoken": "려",
+          "span": [
+            4,
+            7
+          ]
+        },
+        {
+          "text": "요",
+          "spoken": "요",
+          "span": [
+            7,
+            9
+          ]
+        }
+      ],
+      "min_phonemes": 9,
+      "threshold": 0.8,
+      "allow_exact_single_frame": true,
+      "exact_single_frame_calibration": {
+        "matrix_id": "ko_child_v2",
+        "streaming_profile": {
+          "skip_cost": 0.005,
+          "coverage": 0.8,
+          "context_mult": 8.0
+        },
+        "consecutive": 2,
+        "text": "두드려요",
+        "phonemes": [
+          "t",
+          "u",
+          "t",
+          "ɯ",
+          "ɾ",
+          "j",
+          "ʌ",
+          "j",
+          "o"
+        ],
+        "threshold": 0.8
+      }
+    },
+    {
+      "id": "knock_plain",
+      "text": "두드려",
+      "language": "ko",
+      "phonemes": [
+        "t",
+        "u",
+        "t",
+        "ɯ",
+        "ɾ",
+        "j",
+        "ʌ"
+      ],
+      "syllables": [
+        {
+          "text": "두",
+          "spoken": "두",
+          "span": [
+            0,
+            2
+          ]
+        },
+        {
+          "text": "드",
+          "spoken": "드",
+          "span": [
+            2,
+            4
+          ]
+        },
+        {
+          "text": "려",
+          "spoken": "려",
+          "span": [
+            4,
+            7
+          ]
+        }
+      ],
+      "min_phonemes": 7,
+      "threshold": 0.8,
+      "action_group": "drum",
+      "allow_exact_single_frame": true,
+      "exact_single_frame_calibration": {
+        "matrix_id": "ko_child_v2",
+        "streaming_profile": {
+          "skip_cost": 0.005,
+          "coverage": 0.8,
+          "context_mult": 8.0
+        },
+        "consecutive": 2,
+        "text": "두드려",
+        "phonemes": [
+          "t",
+          "u",
+          "t",
+          "ɯ",
+          "ɾ",
+          "j",
+          "ʌ"
+        ],
+        "threshold": 0.8
+      },
+      "contrastive_alternatives": [
+        {
+          "text": "들어",
+          "phonemes": [
+            "t",
+            "ɯ",
+            "ɾ",
+            "ʌ"
+          ],
+          "action_group": "lift"
+        },
+        {
+          "text": "들기",
+          "phonemes": [
+            "t",
+            "ɯ",
+            "l",
+            "k",
+            "i"
+          ],
+          "action_group": "lift"
+        },
+        {
+          "text": "쳐",
+          "phonemes": [
+            "tɕʰ",
+            "ʌ"
+          ],
+          "action_group": "strike"
+        },
+        {
+          "text": "치기",
+          "phonemes": [
+            "tɕʰ",
+            "i",
+            "k",
+            "i"
+          ],
+          "action_group": "strike"
+        },
+        {
+          "text": "놓아",
+          "phonemes": [
+            "n",
+            "o",
+            "a"
+          ],
+          "action_group": "put_down"
+        },
+        {
+          "text": "놓기",
+          "phonemes": [
+            "n",
+            "o",
+            "kʰ",
+            "i"
+          ],
+          "action_group": "put_down"
+        },
+        {
+          "text": "흔들어",
+          "phonemes": [
+            "h",
+            "ɯ",
+            "n",
+            "t",
+            "ɯ",
+            "ɾ",
+            "ʌ"
+          ],
+          "action_group": "shake"
+        },
+        {
+          "text": "흔들기",
+          "phonemes": [
+            "h",
+            "ɯ",
+            "n",
+            "t",
+            "ɯ",
+            "l",
+            "k",
+            "i"
+          ],
+          "action_group": "shake"
+        },
+        {
+          "text": "두드려",
+          "phonemes": [
+            "t",
+            "u",
+            "t",
+            "ɯ",
+            "ɾ",
+            "j",
+            "ʌ"
+          ],
+          "action_group": "drum"
+        },
+        {
+          "text": "두드리기",
+          "phonemes": [
+            "t",
+            "u",
+            "t",
+            "ɯ",
+            "ɾ",
+            "i",
+            "k",
+            "i"
+          ],
+          "action_group": "drum"
+        }
+      ]
+    },
+    {
+      "id": "knock_gerund",
+      "text": "두드리기",
+      "language": "ko",
+      "phonemes": [
+        "t",
+        "u",
+        "t",
+        "ɯ",
+        "ɾ",
+        "i",
+        "k",
+        "i"
+      ],
+      "syllables": [
+        {
+          "text": "두",
+          "spoken": "두",
+          "span": [
+            0,
+            2
+          ]
+        },
+        {
+          "text": "드",
+          "spoken": "드",
+          "span": [
+            2,
+            4
+          ]
+        },
+        {
+          "text": "리",
+          "spoken": "리",
+          "span": [
+            4,
+            6
+          ]
+        },
+        {
+          "text": "기",
+          "spoken": "기",
+          "span": [
+            6,
+            8
+          ]
+        }
+      ],
+      "min_phonemes": 8,
+      "threshold": 0.775,
+      "action_group": "drum",
+      "contrastive_alternatives": [
+        {
+          "text": "들어",
+          "phonemes": [
+            "t",
+            "ɯ",
+            "ɾ",
+            "ʌ"
+          ],
+          "action_group": "lift"
+        },
+        {
+          "text": "들기",
+          "phonemes": [
+            "t",
+            "ɯ",
+            "l",
+            "k",
+            "i"
+          ],
+          "action_group": "lift"
+        },
+        {
+          "text": "쳐",
+          "phonemes": [
+            "tɕʰ",
+            "ʌ"
+          ],
+          "action_group": "strike"
+        },
+        {
+          "text": "치기",
+          "phonemes": [
+            "tɕʰ",
+            "i",
+            "k",
+            "i"
+          ],
+          "action_group": "strike"
+        },
+        {
+          "text": "놓아",
+          "phonemes": [
+            "n",
+            "o",
+            "a"
+          ],
+          "action_group": "put_down"
+        },
+        {
+          "text": "놓기",
+          "phonemes": [
+            "n",
+            "o",
+            "kʰ",
+            "i"
+          ],
+          "action_group": "put_down"
+        },
+        {
+          "text": "흔들어",
+          "phonemes": [
+            "h",
+            "ɯ",
+            "n",
+            "t",
+            "ɯ",
+            "ɾ",
+            "ʌ"
+          ],
+          "action_group": "shake"
+        },
+        {
+          "text": "흔들기",
+          "phonemes": [
+            "h",
+            "ɯ",
+            "n",
+            "t",
+            "ɯ",
+            "l",
+            "k",
+            "i"
+          ],
+          "action_group": "shake"
+        },
+        {
+          "text": "두드려",
+          "phonemes": [
+            "t",
+            "u",
+            "t",
+            "ɯ",
+            "ɾ",
+            "j",
+            "ʌ"
+          ],
+          "action_group": "drum"
+        },
+        {
+          "text": "두드리기",
+          "phonemes": [
+            "t",
+            "u",
+            "t",
+            "ɯ",
+            "ɾ",
+            "i",
+            "k",
+            "i"
+          ],
+          "action_group": "drum"
+        }
+      ]
+    },
+    {
+      "id": "silophone",
+      "text": "실로폰",
+      "language": "ko",
+      "phonemes": [
+        "s",
+        "i",
+        "l",
+        "ɾ",
+        "o",
+        "pʰ",
+        "o",
+        "n"
+      ],
+      "syllables": [
+        {
+          "text": "실",
+          "spoken": "실",
+          "span": [
+            0,
+            3
+          ]
+        },
+        {
+          "text": "로",
+          "spoken": "로",
+          "span": [
+            3,
+            5
+          ]
+        },
+        {
+          "text": "폰",
+          "spoken": "폰",
+          "span": [
+            5,
+            8
+          ]
+        }
+      ],
+      "min_phonemes": 8,
+      "threshold": 0.775,
+      "allow_exact_single_frame": true,
+      "exact_single_frame_calibration": {
+        "matrix_id": "ko_child_v2",
+        "streaming_profile": {
+          "skip_cost": 0.005,
+          "coverage": 0.8,
+          "context_mult": 8.0
+        },
+        "consecutive": 2,
+        "text": "실로폰",
+        "phonemes": [
+          "s",
+          "i",
+          "l",
+          "ɾ",
+          "o",
+          "pʰ",
+          "o",
+          "n"
+        ],
+        "threshold": 0.775
+      }
+    }
+  ]
+}

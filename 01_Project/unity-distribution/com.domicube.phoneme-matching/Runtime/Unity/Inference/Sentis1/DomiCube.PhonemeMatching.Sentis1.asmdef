@@ -1,0 +1,32 @@
+{
+    "name": "DomiCube.PhonemeMatching.Sentis1",
+    "rootNamespace": "DomiCube.PhonemeMatching.Unity",
+    "references": [
+        "DomiCube.PhonemeMatching",
+        "DomiCube.PhonemeMatching.Unity",
+        "Unity.Sentis"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [
+        "DOMICUBE_SENTIS_1",
+        "!DOMICUBE_INFERENCE_ENGINE"
+    ],
+    "versionDefines": [
+        {
+            "name": "com.unity.sentis",
+            "expression": "[1.0.0,2.0.0)",
+            "define": "DOMICUBE_SENTIS_1"
+        },
+        {
+            "name": "com.unity.ai.inference",
+            "expression": "2.0.0",
+            "define": "DOMICUBE_INFERENCE_ENGINE"
+        }
+    ],
+    "noEngineReferences": false
+}

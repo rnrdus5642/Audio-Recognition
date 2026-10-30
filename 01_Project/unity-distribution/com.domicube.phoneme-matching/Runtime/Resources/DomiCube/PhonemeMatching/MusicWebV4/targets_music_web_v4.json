@@ -1,0 +1,1027 @@
+{
+  "version": "1.0",
+  "profile_id": "music_web_v4_2026_10_30",
+  "word_policy": "orthographic-word-preview-v4",
+  "confusion_matrix_id": "ko_child_v2",
+  "presentation_stages": [
+    {
+      "id": 1,
+      "title": "실로폰채 들기",
+      "answers": [
+        "실로폰채",
+        "들어",
+        "들어요",
+        "들어야지",
+        "들거야",
+        "들자",
+        "들거에요",
+        "들어야죠",
+        "들까",
+        "들까요"
+      ],
+      "display_answers": [
+        "실로폰채",
+        "들어",
+        "들어요",
+        "들어야지",
+        "들거야",
+        "들자",
+        "들거에요",
+        "들어야죠",
+        "들까?",
+        "들까요?"
+      ]
+    },
+    {
+      "id": 2,
+      "title": "실로폰 치기",
+      "answers": [
+        "쳐",
+        "쳐요",
+        "쳐야지",
+        "칠거야",
+        "치자",
+        "칠거에요",
+        "쳐야죠",
+        "칠까",
+        "칠까요"
+      ],
+      "display_answers": [
+        "쳐",
+        "쳐요",
+        "쳐야지",
+        "칠거야",
+        "치자",
+        "칠거에요",
+        "쳐야죠",
+        "칠까?",
+        "칠까요?"
+      ]
+    },
+    {
+      "id": 3,
+      "title": "실로폰채 놓기",
+      "answers": [
+        "놓아",
+        "놓아요",
+        "놓아야지",
+        "놓을거야",
+        "놓자",
+        "놓을거에요",
+        "놓아야죠",
+        "놓을까",
+        "놓을까요"
+      ],
+      "display_answers": [
+        "놓아",
+        "놓아요",
+        "놓아야지",
+        "놓을거야",
+        "놓자",
+        "놓을거에요",
+        "놓아야죠",
+        "놓을까?",
+        "놓을까요?"
+      ]
+    },
+    {
+      "id": 4,
+      "title": "탬버린 들기",
+      "answers": [
+        "들어",
+        "들어요",
+        "들어야지",
+        "들거야",
+        "들자",
+        "들거에요",
+        "들어야죠",
+        "들까",
+        "들까요"
+      ],
+      "display_answers": [
+        "들어",
+        "들어요",
+        "들어야지",
+        "들거야",
+        "들자",
+        "들거에요",
+        "들어야죠",
+        "들까?",
+        "들까요?"
+      ]
+    },
+    {
+      "id": 5,
+      "title": "탬버린 치기",
+      "answers": [
+        "쳐",
+        "쳐요",
+        "쳐야지",
+        "칠거야",
+        "치자",
+        "칠거에요",
+        "쳐야죠",
+        "칠까",
+        "칠까요"
+      ],
+      "display_answers": [
+        "쳐",
+        "쳐요",
+        "쳐야지",
+        "칠거야",
+        "치자",
+        "칠거에요",
+        "쳐야죠",
+        "칠까?",
+        "칠까요?"
+      ]
+    },
+    {
+      "id": 6,
+      "title": "탬버린 흔들기",
+      "answers": [
+        "흔들어",
+        "흔들어요",
+        "흔들어야지",
+        "흔들거야",
+        "흔들자",
+        "흔들거에요",
+        "흔들어야죠",
+        "흔들까",
+        "흔들까요"
+      ],
+      "display_answers": [
+        "흔들어",
+        "흔들어요",
+        "흔들어야지",
+        "흔들거야",
+        "흔들자",
+        "흔들거에요",
+        "흔들어야죠",
+        "흔들까?",
+        "흔들까요?"
+      ]
+    },
+    {
+      "id": 7,
+      "title": "탬버린 놓기",
+      "answers": [
+        "놓아",
+        "놓아요",
+        "놓아야지",
+        "놓을거야",
+        "놓자",
+        "놓을거에요",
+        "놓을까",
+        "놓을까요"
+      ],
+      "display_answers": [
+        "놓아",
+        "놓아요",
+        "놓아야지",
+        "놓을거야",
+        "놓자",
+        "놓을거에요",
+        "놓을까?",
+        "놓을까요?"
+      ]
+    },
+    {
+      "id": 8,
+      "title": "북채 들기",
+      "answers": [
+        "북채",
+        "들어",
+        "들어요",
+        "들어야지",
+        "들거야",
+        "들자",
+        "들거에요",
+        "들어야죠",
+        "들까",
+        "들까요"
+      ],
+      "display_answers": [
+        "북채",
+        "들어",
+        "들어요",
+        "들어야지",
+        "들거야",
+        "들자",
+        "들거에요",
+        "들어야죠",
+        "들까?",
+        "들까요?"
+      ]
+    },
+    {
+      "id": 9,
+      "title": "북 두드리기",
+      "answers": [
+        "두드려",
+        "두드려요",
+        "두드려야지",
+        "두드릴거야",
+        "두드리자",
+        "두드릴거에요",
+        "두드려야죠",
+        "두드릴까",
+        "두드릴까요"
+      ],
+      "display_answers": [
+        "두드려",
+        "두드려요",
+        "두드려야지",
+        "두드릴거야",
+        "두드리자",
+        "두드릴거에요",
+        "두드려야죠",
+        "두드릴까?",
+        "두드릴까요?"
+      ]
+    }
+  ],
+  "answers": [
+    {
+      "id": "실로폰채",
+      "text": "실로폰채",
+      "language": "ko",
+      "phonemes": [
+        "s",
+        "i",
+        "l",
+        "ɾ",
+        "o",
+        "pʰ",
+        "o",
+        "n",
+        "tɕʰ",
+        "ɛ"
+      ],
+      "threshold": 0.85,
+      "confirmation_frames": 2
+    },
+    {
+      "id": "들어",
+      "text": "들어",
+      "language": "ko",
+      "phonemes": [
+        "t",
+        "ɯ",
+        "ɾ",
+        "ʌ"
+      ],
+      "threshold": 0.85,
+      "confirmation_frames": 2
+    },
+    {
+      "id": "들어요",
+      "text": "들어요",
+      "language": "ko",
+      "phonemes": [
+        "t",
+        "ɯ",
+        "ɾ",
+        "ʌ",
+        "j",
+        "o"
+      ],
+      "threshold": 0.85,
+      "confirmation_frames": 2
+    },
+    {
+      "id": "들어야지",
+      "text": "들어야지",
+      "language": "ko",
+      "phonemes": [
+        "t",
+        "ɯ",
+        "ɾ",
+        "ʌ",
+        "j",
+        "a",
+        "tɕ",
+        "i"
+      ],
+      "threshold": 0.85,
+      "confirmation_frames": 2
+    },
+    {
+      "id": "들거야",
+      "text": "들거야",
+      "language": "ko",
+      "phonemes": [
+        "t",
+        "ɯ",
+        "l",
+        "k",
+        "ʌ",
+        "j",
+        "a"
+      ],
+      "threshold": 0.85,
+      "confirmation_frames": 2
+    },
+    {
+      "id": "들자",
+      "text": "들자",
+      "language": "ko",
+      "phonemes": [
+        "t",
+        "ɯ",
+        "l",
+        "tɕ",
+        "a"
+      ],
+      "threshold": 0.85,
+      "confirmation_frames": 2
+    },
+    {
+      "id": "들거에요",
+      "text": "들거에요",
+      "language": "ko",
+      "phonemes": [
+        "t",
+        "ɯ",
+        "l",
+        "k",
+        "ʌ",
+        "e",
+        "j",
+        "o"
+      ],
+      "threshold": 0.85,
+      "confirmation_frames": 2
+    },
+    {
+      "id": "들어야죠",
+      "text": "들어야죠",
+      "language": "ko",
+      "phonemes": [
+        "t",
+        "ɯ",
+        "ɾ",
+        "ʌ",
+        "j",
+        "a",
+        "tɕ",
+        "j",
+        "o"
+      ],
+      "threshold": 0.85,
+      "confirmation_frames": 2
+    },
+    {
+      "id": "들까",
+      "text": "들까",
+      "language": "ko",
+      "phonemes": [
+        "t",
+        "ɯ",
+        "l",
+        "k͈",
+        "a"
+      ],
+      "threshold": 0.85,
+      "confirmation_frames": 2
+    },
+    {
+      "id": "들까요",
+      "text": "들까요",
+      "language": "ko",
+      "phonemes": [
+        "t",
+        "ɯ",
+        "l",
+        "k͈",
+        "a",
+        "j",
+        "o"
+      ],
+      "threshold": 0.85,
+      "confirmation_frames": 2
+    },
+    {
+      "id": "쳐",
+      "text": "쳐",
+      "language": "ko",
+      "phonemes": [
+        "tɕʰ",
+        "ʌ"
+      ],
+      "threshold": 0.85,
+      "confirmation_frames": 2
+    },
+    {
+      "id": "쳐요",
+      "text": "쳐요",
+      "language": "ko",
+      "phonemes": [
+        "tɕʰ",
+        "ʌ",
+        "j",
+        "o"
+      ],
+      "threshold": 0.85,
+      "confirmation_frames": 2
+    },
+    {
+      "id": "쳐야지",
+      "text": "쳐야지",
+      "language": "ko",
+      "phonemes": [
+        "tɕʰ",
+        "ʌ",
+        "j",
+        "a",
+        "tɕ",
+        "i"
+      ],
+      "threshold": 0.85,
+      "confirmation_frames": 2
+    },
+    {
+      "id": "칠거야",
+      "text": "칠거야",
+      "language": "ko",
+      "phonemes": [
+        "tɕʰ",
+        "i",
+        "l",
+        "k",
+        "ʌ",
+        "j",
+        "a"
+      ],
+      "threshold": 0.85,
+      "confirmation_frames": 2
+    },
+    {
+      "id": "치자",
+      "text": "치자",
+      "language": "ko",
+      "phonemes": [
+        "tɕʰ",
+        "i",
+        "tɕ",
+        "a"
+      ],
+      "threshold": 0.85,
+      "confirmation_frames": 2
+    },
+    {
+      "id": "칠거에요",
+      "text": "칠거에요",
+      "language": "ko",
+      "phonemes": [
+        "tɕʰ",
+        "i",
+        "l",
+        "k",
+        "ʌ",
+        "e",
+        "j",
+        "o"
+      ],
+      "threshold": 0.85,
+      "confirmation_frames": 2
+    },
+    {
+      "id": "쳐야죠",
+      "text": "쳐야죠",
+      "language": "ko",
+      "phonemes": [
+        "tɕʰ",
+        "ʌ",
+        "j",
+        "a",
+        "tɕ",
+        "j",
+        "o"
+      ],
+      "threshold": 0.85,
+      "confirmation_frames": 2
+    },
+    {
+      "id": "칠까",
+      "text": "칠까",
+      "language": "ko",
+      "phonemes": [
+        "tɕʰ",
+        "i",
+        "l",
+        "k͈",
+        "a"
+      ],
+      "threshold": 0.85,
+      "confirmation_frames": 2
+    },
+    {
+      "id": "칠까요",
+      "text": "칠까요",
+      "language": "ko",
+      "phonemes": [
+        "tɕʰ",
+        "i",
+        "l",
+        "k͈",
+        "a",
+        "j",
+        "o"
+      ],
+      "threshold": 0.85,
+      "confirmation_frames": 2
+    },
+    {
+      "id": "놓아",
+      "text": "놓아",
+      "language": "ko",
+      "phonemes": [
+        "n",
+        "o",
+        "a"
+      ],
+      "threshold": 0.85,
+      "confirmation_frames": 2
+    },
+    {
+      "id": "놓아요",
+      "text": "놓아요",
+      "language": "ko",
+      "phonemes": [
+        "n",
+        "o",
+        "a",
+        "j",
+        "o"
+      ],
+      "threshold": 0.85,
+      "confirmation_frames": 2
+    },
+    {
+      "id": "놓아야지",
+      "text": "놓아야지",
+      "language": "ko",
+      "phonemes": [
+        "n",
+        "o",
+        "a",
+        "j",
+        "a",
+        "tɕ",
+        "i"
+      ],
+      "threshold": 0.85,
+      "confirmation_frames": 2
+    },
+    {
+      "id": "놓을거야",
+      "text": "놓을거야",
+      "language": "ko",
+      "phonemes": [
+        "n",
+        "o",
+        "ɯ",
+        "l",
+        "k",
+        "ʌ",
+        "j",
+        "a"
+      ],
+      "threshold": 0.85,
+      "confirmation_frames": 2
+    },
+    {
+      "id": "놓자",
+      "text": "놓자",
+      "language": "ko",
+      "phonemes": [
+        "n",
+        "o",
+        "tɕʰ",
+        "a"
+      ],
+      "threshold": 0.85,
+      "confirmation_frames": 2
+    },
+    {
+      "id": "놓을거에요",
+      "text": "놓을거에요",
+      "language": "ko",
+      "phonemes": [
+        "n",
+        "o",
+        "ɯ",
+        "l",
+        "k",
+        "ʌ",
+        "e",
+        "j",
+        "o"
+      ],
+      "threshold": 0.85,
+      "confirmation_frames": 2
+    },
+    {
+      "id": "놓아야죠",
+      "text": "놓아야죠",
+      "language": "ko",
+      "phonemes": [
+        "n",
+        "o",
+        "a",
+        "j",
+        "a",
+        "tɕ",
+        "j",
+        "o"
+      ],
+      "threshold": 0.85,
+      "confirmation_frames": 2
+    },
+    {
+      "id": "놓을까",
+      "text": "놓을까",
+      "language": "ko",
+      "phonemes": [
+        "n",
+        "o",
+        "ɯ",
+        "l",
+        "k͈",
+        "a"
+      ],
+      "threshold": 0.85,
+      "confirmation_frames": 2
+    },
+    {
+      "id": "놓을까요",
+      "text": "놓을까요",
+      "language": "ko",
+      "phonemes": [
+        "n",
+        "o",
+        "ɯ",
+        "l",
+        "k͈",
+        "a",
+        "j",
+        "o"
+      ],
+      "threshold": 0.85,
+      "confirmation_frames": 2
+    },
+    {
+      "id": "흔들어",
+      "text": "흔들어",
+      "language": "ko",
+      "phonemes": [
+        "h",
+        "ɯ",
+        "n",
+        "t",
+        "ɯ",
+        "ɾ",
+        "ʌ"
+      ],
+      "threshold": 0.85,
+      "confirmation_frames": 2
+    },
+    {
+      "id": "흔들어요",
+      "text": "흔들어요",
+      "language": "ko",
+      "phonemes": [
+        "h",
+        "ɯ",
+        "n",
+        "t",
+        "ɯ",
+        "ɾ",
+        "ʌ",
+        "j",
+        "o"
+      ],
+      "threshold": 0.85,
+      "confirmation_frames": 2
+    },
+    {
+      "id": "흔들어야지",
+      "text": "흔들어야지",
+      "language": "ko",
+      "phonemes": [
+        "h",
+        "ɯ",
+        "n",
+        "t",
+        "ɯ",
+        "ɾ",
+        "ʌ",
+        "j",
+        "a",
+        "tɕ",
+        "i"
+      ],
+      "threshold": 0.85,
+      "confirmation_frames": 2
+    },
+    {
+      "id": "흔들거야",
+      "text": "흔들거야",
+      "language": "ko",
+      "phonemes": [
+        "h",
+        "ɯ",
+        "n",
+        "t",
+        "ɯ",
+        "l",
+        "k",
+        "ʌ",
+        "j",
+        "a"
+      ],
+      "threshold": 0.85,
+      "confirmation_frames": 2
+    },
+    {
+      "id": "흔들자",
+      "text": "흔들자",
+      "language": "ko",
+      "phonemes": [
+        "h",
+        "ɯ",
+        "n",
+        "t",
+        "ɯ",
+        "l",
+        "tɕ",
+        "a"
+      ],
+      "threshold": 0.85,
+      "confirmation_frames": 2
+    },
+    {
+      "id": "흔들거에요",
+      "text": "흔들거에요",
+      "language": "ko",
+      "phonemes": [
+        "h",
+        "ɯ",
+        "n",
+        "t",
+        "ɯ",
+        "l",
+        "k",
+        "ʌ",
+        "e",
+        "j",
+        "o"
+      ],
+      "threshold": 0.85,
+      "confirmation_frames": 2
+    },
+    {
+      "id": "흔들어야죠",
+      "text": "흔들어야죠",
+      "language": "ko",
+      "phonemes": [
+        "h",
+        "ɯ",
+        "n",
+        "t",
+        "ɯ",
+        "ɾ",
+        "ʌ",
+        "j",
+        "a",
+        "tɕ",
+        "j",
+        "o"
+      ],
+      "threshold": 0.85,
+      "confirmation_frames": 2
+    },
+    {
+      "id": "흔들까",
+      "text": "흔들까",
+      "language": "ko",
+      "phonemes": [
+        "h",
+        "ɯ",
+        "n",
+        "t",
+        "ɯ",
+        "l",
+        "k͈",
+        "a"
+      ],
+      "threshold": 0.85,
+      "confirmation_frames": 2
+    },
+    {
+      "id": "흔들까요",
+      "text": "흔들까요",
+      "language": "ko",
+      "phonemes": [
+        "h",
+        "ɯ",
+        "n",
+        "t",
+        "ɯ",
+        "l",
+        "k͈",
+        "a",
+        "j",
+        "o"
+      ],
+      "threshold": 0.85,
+      "confirmation_frames": 2
+    },
+    {
+      "id": "북채",
+      "text": "북채",
+      "language": "ko",
+      "phonemes": [
+        "p",
+        "u",
+        "k̚",
+        "tɕʰ",
+        "ɛ"
+      ],
+      "threshold": 0.85,
+      "confirmation_frames": 2
+    },
+    {
+      "id": "두드려",
+      "text": "두드려",
+      "language": "ko",
+      "phonemes": [
+        "t",
+        "u",
+        "t",
+        "ɯ",
+        "ɾ",
+        "j",
+        "ʌ"
+      ],
+      "threshold": 0.85,
+      "confirmation_frames": 2
+    },
+    {
+      "id": "두드려요",
+      "text": "두드려요",
+      "language": "ko",
+      "phonemes": [
+        "t",
+        "u",
+        "t",
+        "ɯ",
+        "ɾ",
+        "j",
+        "ʌ",
+        "j",
+        "o"
+      ],
+      "threshold": 0.85,
+      "confirmation_frames": 2
+    },
+    {
+      "id": "두드려야지",
+      "text": "두드려야지",
+      "language": "ko",
+      "phonemes": [
+        "t",
+        "u",
+        "t",
+        "ɯ",
+        "ɾ",
+        "j",
+        "ʌ",
+        "j",
+        "a",
+        "tɕ",
+        "i"
+      ],
+      "threshold": 0.85,
+      "confirmation_frames": 2
+    },
+    {
+      "id": "두드릴거야",
+      "text": "두드릴거야",
+      "language": "ko",
+      "phonemes": [
+        "t",
+        "u",
+        "t",
+        "ɯ",
+        "ɾ",
+        "i",
+        "l",
+        "k",
+        "ʌ",
+        "j",
+        "a"
+      ],
+      "threshold": 0.85,
+      "confirmation_frames": 2
+    },
+    {
+      "id": "두드리자",
+      "text": "두드리자",
+      "language": "ko",
+      "phonemes": [
+        "t",
+        "u",
+        "t",
+        "ɯ",
+        "ɾ",
+        "i",
+        "tɕ",
+        "a"
+      ],
+      "threshold": 0.85,
+      "confirmation_frames": 2
+    },
+    {
+      "id": "두드릴거에요",
+      "text": "두드릴거에요",
+      "language": "ko",
+      "phonemes": [
+        "t",
+        "u",
+        "t",
+        "ɯ",
+        "ɾ",
+        "i",
+        "l",
+        "k",
+        "ʌ",
+        "e",
+        "j",
+        "o"
+      ],
+      "threshold": 0.85,
+      "confirmation_frames": 2
+    },
+    {
+      "id": "두드려야죠",
+      "text": "두드려야죠",
+      "language": "ko",
+      "phonemes": [
+        "t",
+        "u",
+        "t",
+        "ɯ",
+        "ɾ",
+        "j",
+        "ʌ",
+        "j",
+        "a",
+        "tɕ",
+        "j",
+        "o"
+      ],
+      "threshold": 0.85,
+      "confirmation_frames": 2
+    },
+    {
+      "id": "두드릴까",
+      "text": "두드릴까",
+      "language": "ko",
+      "phonemes": [
+        "t",
+        "u",
+        "t",
+        "ɯ",
+        "ɾ",
+        "i",
+        "l",
+        "k͈",
+        "a"
+      ],
+      "threshold": 0.85,
+      "confirmation_frames": 2
+    },
+    {
+      "id": "두드릴까요",
+      "text": "두드릴까요",
+      "language": "ko",
+      "phonemes": [
+        "t",
+        "u",
+        "t",
+        "ɯ",
+        "ɾ",
+        "i",
+        "l",
+        "k͈",
+        "a",
+        "j",
+        "o"
+      ],
+      "threshold": 0.85,
+      "confirmation_frames": 2
+    }
+  ]
+}

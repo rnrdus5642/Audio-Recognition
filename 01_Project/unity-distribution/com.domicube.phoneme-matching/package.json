@@ -1,0 +1,35 @@
+{
+  "name": "com.domicube.phoneme-matching",
+  "version": "0.8.9-preview.5",
+  "displayName": "Phoneme Matching",
+  "description": "Windows 문서 폴더의 공용 HuBERT 모델. 초기 세팅·음성 테스트·정답 단어 설정을 한 메뉴에서 제공합니다.",
+  "unity": "2022.3",
+  "dependencies": {
+    "com.unity.nuget.newtonsoft-json": "3.2.1",
+    "com.unity.ugui": "1.0.0",
+    "com.unity.textmeshpro": "3.0.6"
+  },
+  "samples": [
+    {
+      "displayName": "Korean data (base / child / music)",
+      "description": "기존 API 호환용 데이터. 현재 콘텐츠는 프로젝트 정답 설정과 공용 HuBERT 모델을 사용합니다.",
+      "path": "Samples~/KoreanData"
+    },
+    {
+      "displayName": "Lesson example (방법 1)",
+      "description": "패키지가 마이크를 여는 방식의 최소 예제. 단어를 하나씩 묻고, 확정·타임아웃을 처리하고, 마이크를 켜고 끕니다. 앱이 이미 오디오를 캡처한다면 README 의 방법 2~4 를 보세요.",
+      "path": "Samples~/LessonExample"
+    }
+  ],
+  "keywords": [
+    "speech",
+    "phoneme",
+    "ipa",
+    "pronunciation",
+    "korean",
+    "vr"
+  ],
+  "author": {
+    "name": "DomiCube"
+  }
+}
