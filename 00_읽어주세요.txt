@@ -1,80 +1,43 @@
-Audio-Recognition 작업 모음
-정리일: 2026-10-02 / 독립 실행 전환·이전 모델·완료 실험 정리: 2026-10-03
+Audio-Recognition — 현재 모델과 문서 안내
+갱신: 2026-11-02
 
-앞으로 작업할 프로젝트 위치
-  C:\Users\user\Desktop\Audio-Recognition\01_Project
+현재 공개 배포
+  최종 3에포크 HuBERT 69자모 모델 + 문장 후처리 v5
+  Unity 패키지 0.9.0-preview.1 / Unity 2022.3 / Sentis 1.2 / Windows PC·PC 연결 VR
+  학습과 최종 테스트는 완료됐습니다.
 
-Git 관리 기준 폴더
-  C:\Users\user\Desktop\Audio-Recognition
-  .git 이력은 이 최상위 폴더에 있습니다. 01_Project에서도 같은 저장소로 인식합니다.
-  코드·문서·실행 스크립트·폴더 안내를 관리하고, 모델·데이터·녹음·가상환경·백업은 제외합니다.
-  자세한 범위: 01_Project\docs\GIT_WORKSPACE_2026-10-03.md
+먼저 볼 문서 (이 폴더 기준)
+  README.md
+  01_Project/docs/CHILD_ORTHOGRAPHIC_MODEL_2026-11-02.md
+  01_Project/docs/reports/model-20261102/model-report-ko.hwp  (한글 9쪽)
+  01_Project/docs/reports/model-20261102/pipeline.png
 
-01_Project
-  원래 GitHub의 Audio-Recognition 프로젝트입니다.
-  코드, 가상환경, 현재 자모 모델, 실험 결과, 청취 답변이 있습니다.
-  이전 글자 단위 모델은 아동 최종본 한 개만 비교용으로 보존했습니다.
-  중간 가중치, 다른 음절 모델 가중치, ONNX 사본과 이전 Unity 검증 캐시는 제거했습니다.
-  정리 기록: 01_Project\docs\LEGACY_MODEL_CLEANUP_2026-10-03.md
-  추가로 완료 실험·과거 후보의 가중치, 변환본, 캐시 약 326.88GiB를 제거했습니다.
-  결과 문서, 설정, 평가 기록과 선정 목록은 남겨 두었습니다.
-  현재 HuBERT의 best.pt·last.pt와 기반 인코더도 보존했습니다.
-  후속 정리와 결과 문서 안내: 01_Project\docs\EXPERIMENT_ARTIFACT_CLEANUP_2026-10-03.md
+모델과 데이터
+  AIHub 108 + 540, 3~6세, 학습 678.06시간·640,268발화·화자 ID 1,136개
+  개발 CER 6.05%, 최종 테스트 CER 9.19% (연령별 동일 비중 평균)
+  CER은 게임 정답 통과율이 아닙니다. 실제 발음 전사나 발음 장애 진단 기능은 아닙니다.
 
-02_Datasets
-  AIHUB       : 원본 음성과 라벨 TAR 약 536GiB
-  AIHUB정리   : 원본 인덱스, 화자 분할, 분석 목록
-  audio       : 이전에 추출한 연령별 음성 약 110GiB
+게임에서 사용
+  Tools > 오디오 정답 처리 기능 > 초기 세팅
+  음성 테스트와 정답 단어 설정도 같은 메뉴에 있습니다.
+  모델은 문서/오디오정답처리/Models에 설치해 같은 버전의 콘텐츠들이 공유합니다.
+  빌드 앱은 정상 파일을 재사용하고 파일이 없으면 시작 화면에서 자동 설치합니다.
+  Music 82개 / Dinosaurs 76개 / Flower 41개 정답 표현을 사용합니다.
+  https://github.com/rnrdus5642/Audio-Recognition/releases/tag/model-v4-child-jamo-epoch3-sentis1
 
-03_Recordings
-  아동오디오
-  악기놀이녹음본
-  악기놀이_오디오_20260909
-  악기놀이 발표용 오디오 정리 페이지
+로컬 웹 비교
+  최종 3에포크 테스트: 05_Run/start_orthographic_test.ps1, http://127.0.0.1:8782/
+  이전 글자 모델 비교: 05_Run/start_microphone.ps1, http://127.0.0.1:7860/
+  웹 실험에는 별도의 로컬 Python 환경과 모델 번들이 필요합니다.
 
-04_Models_and_Experiments
-  현재 모델, 완료 실험 기록, 비교용 이전 아동 모델, 청취 결과로 가는 바로가기입니다.
-  '정리본과 보존 모델 안내'에서 과거 실험의 결과 문서와 보존 범위를 확인하세요.
-  실제 파일은 01_Project 안에 한 벌만 저장되어 있습니다. 복사본이 아닙니다.
-  비교용 이전 아동 모델의 실제 위치:
-    01_Project\python\tools\child_finetune\runs\child\best
+폴더
+  01_Project: 코드·배포 패키지 작업 공간·문서
+  02_Datasets: 원본 라벨·보관 음성·실제 학습 목록
+  03_Recordings: 직접 녹음·청취 자료
+  04_Models_and_Experiments: 최종 학습·모델·평가와 과거 실험
+  05_Run: 로컬 실행 안내와 스크립트
+  99_Organization: 정리·집계·보고서 검증 자료
 
-05_Run
-  페이지를 열려면 '열기' 바로가기를 사용하세요.
-  페이지가 열리지 않으면 해당 '실행' 바로가기를 먼저 사용하세요.
-  실행 창을 닫으면 해당 서버도 종료됩니다.
-  마이크 테스트       http://127.0.0.1:8776/
-  현재 청취 15문항    http://127.0.0.1:8778/
-  이전 청취 20문항    http://127.0.0.1:8777/
-  이전 글자 단위 7860 서버와 그 실행 바로가기는 정리했습니다.
-
-99_Organization
-  이동 전후 검증 결과, 이동 경로 기록, 청취 답변 백업, 모델 삭제 목록과 검증 기록입니다.
-  이동 스크립트를 다시 실행할 필요는 없습니다.
-
-이제 이 폴더만 사용합니다
-  Documents\GitHub\Audio-Recognition과 바탕화면의 옛 데이터·녹음 연결은 제거했습니다.
-  코드와 Python 가상환경은 현재 위치를 사용합니다.
-  과거 학습 기록 속 경로는 읽을 때 새 위치로 해석하므로 옛 폴더가 필요하지 않습니다.
-  현재 자모 모델·학습 목록·청취 답변과 기존 대화 원본은 보존했습니다.
-  코드 작업: 01_Project / 실행과 페이지 열기: 05_Run.
-  Git 작업: 최상위 Audio-Recognition. 기존 GitHub 저장소와 main 연결은 유지합니다.
-  독립 실행 전환의 백업과 검증: 99_Organization\standalone-20261003.
-  이전 모델 정리의 목록과 검증: 99_Organization\legacy-model-cleanup-20261003.
-  완료 실험 정리의 목록과 검증: 99_Organization\experiment-cleanup-20261003.
-
-보존과 확인
-  완료 실험 정리 후 이 Audio-Recognition 전체는 약 678.77GiB, 01_Project는 약 30.94GiB입니다.
-  나머지 대부분은 보존한 원본 TAR와 기존 추출 음성입니다.
-  폴더 이동 때는 모든 파일을 보존했고, 이후 요청에 따라 이전 글자 단위 모델 관련 약 74.2GiB를 삭제했습니다.
-  원본 음성·라벨·답변, 현재 자모 모델과 비교용 아동 최종본은 보존했습니다.
-  보존 파일의 식별자·크기·수정 시간과 주요 파일의 해시를 확인했습니다.
-  두 모델의 새 프로세스 로딩·실제 추론, 기존 학습 데이터 계약, 청취 음성 70개를 확인했습니다.
-  삭제한 중간 학습 상태는 재개할 수 없고, 이전 Unity 실행에는 ONNX 재생성이 필요합니다.
-  후속 정리에서 삭제한 공개 후보는 필요하면 다시 내려받고, 과거 추가 학습 모델은 재학습해야 합니다.
-  기존 실험의 판단·수치·개별 예측은 보존 기록에서 확인할 수 있습니다.
-
-이번 범위에 포함하지 않은 별도 프로젝트
-  audio_sst, stt_server, pyProject
-  테스트녹음파일은 음성 합성 실험 자료여서 함께 옮기지 않았습니다.
-  Capstone, SignBridge, CRC 등 다른 프로젝트도 각 위치에 그대로 있습니다.
+Git 기준은 이 Audio-Recognition 폴더입니다.
+가중치·데이터셋·녹음·가상환경·PC별 상태는 clone에 포함되지 않습니다.
+이전 README와 실험 수치는 01_Project/README_LEGACY.md 및 날짜별 문서에 보존했습니다.
