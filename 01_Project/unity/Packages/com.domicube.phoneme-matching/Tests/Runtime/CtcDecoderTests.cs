@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
+using System.Text;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 
@@ -121,6 +122,52 @@ namespace DomiCube.PhonemeMatching.Tests
                 "vocabulary looks truncated");
             Assert.That(_vocab.WordDelimiterId, Is.Not.EqualTo(_vocab.BlankId));
             Assert.That(string.IsNullOrEmpty(_vocab.Tokens[0]), Is.False);
+        }
+
+        [TestCase("책")]
+        [TestCase("짹")]
+        [TestCase("잡아")]
+        [TestCase("작아")]
+        [TestCase("앉다")]
+        [TestCase("읽어요")]
+        [TestCase("같이 가요")]
+        [TestCase("까까")]
+        public void PositionalJamoComposesAfterCtcCollapse(string expected)
+        {
+            var vocabulary = LoadOrthographicVocabulary();
+            var ids = new List<int> { vocabulary.BlankId };
+            foreach (char character in expected.Normalize(NormalizationForm.FormD))
+            {
+                int id = character == ' ' ? vocabulary.WordDelimiterId
+                    : System.Array.IndexOf(vocabulary.Tokens, character.ToString());
+                Assert.That(id, Is.GreaterThanOrEqualTo(0), "Missing jamo in exported vocabulary");
+                ids.Add(id);
+                ids.Add(id); // Repeated frames must not duplicate letters.
+                ids.Add(vocabulary.BlankId);
+            }
+            Assert.That(CtcDecoder.Decode(ids, vocabulary), Is.EqualTo(expected));
+        }
+
+        [Test]
+        public void OrthographicContractPreservesOrphanJamoAndDoesNotNormalizeAudio()
+        {
+            var vocabulary = LoadOrthographicVocabulary();
+            Assert.That(vocabulary.Size, Is.EqualTo(69));
+            Assert.That(vocabulary.BlankId, Is.Zero);
+            Assert.That(vocabulary.SamplingRate, Is.EqualTo(16000));
+            Assert.That(vocabulary.ComposeHangulJamo, Is.True);
+            Assert.That(vocabulary.Normalize, Is.False);
+            int onset = System.Array.IndexOf(vocabulary.Tokens, "\u1100");
+            Assert.That(CtcDecoder.Decode(new[] { onset, onset, 0, onset }, vocabulary),
+                Is.EqualTo("\u1100\u1100"));
+            Assert.That(CtcDecoder.Decode(new[] { 0, 0 }, vocabulary), Is.Empty);
+            Assert.That(_vocab.ComposeHangulJamo, Is.False, "Legacy model must retain its decoder");
+        }
+
+        private static CtcVocabulary LoadOrthographicVocabulary()
+        {
+            return PhonemeData.LoadCtcVocabulary(RepoFiles.Read(
+                "unity/Packages/com.domicube.phoneme-matching/Samples~/KoreanData/hubert_ko_child_jamo_vocab.json"));
         }
     }
 

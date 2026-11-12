@@ -1,0 +1,411 @@
+{
+  "version": "orthographic-jamo-finetune-20261027-v3",
+  "status": "training_running",
+  "created_date_kst": "2026-10-27",
+  "executable_trainer_configuration": true,
+  "purpose": "Recognize intended Korean words spoken by children aged 3-6; calibrate expected-word acceptance separately.",
+  "consultation": {
+    "provider": "User-installed Claude Code CLI; explicitly requested by user",
+    "actual_model": "claude-sonnet-5-5",
+    "completed_rounds": 2,
+    "tools_enabled": false,
+    "raw_audio_or_identifying_speaker_information_sent": false,
+    "evidence_directory": "99_Organization/claude-finetune-plan-20261027",
+    "codex_final_judgment": "Accept natural-first training and a later bounded sampling comparison. Preserve verified existing CTC normalization. Add an age4 non-regression gate despite Claude's suggestion to omit it."
+  },
+  "data": {
+    "preparation_root": "02_Datasets/학습준비/자모_원문라벨_3-6세",
+    "catalogs": {
+      "540": "catalogs/AIHUB_540",
+      "108": "catalogs_audio_verified/AIHUB_108"
+    },
+    "target_ages": [
+      3,
+      4,
+      5,
+      6
+    ],
+    "current_candidates": {
+      "train": {
+        "records": 640268,
+        "hours": 678.0596376736454
+      },
+      "dev": {
+        "records": 120653,
+        "hours": 139.21286036457053
+      },
+      "test": {
+        "records": 118603,
+        "hours": 132.8470114409676
+      },
+      "review_excluded": {
+        "records": 44388,
+        "hours": 48.01417948
+      }
+    },
+    "train_long_audio_policy": {
+      "maximum_seconds": 20,
+      "action": "Temporary manifest exclusion, retain original WAV and labels; do not truncate audio with unchanged text.",
+      "implemented": true,
+      "known_excluded_records": 25,
+      "known_excluded_hours": 0.20906666666666665,
+      "dataset": 540,
+      "age_counts": {
+        "3": 0,
+        "4": 2,
+        "5": 3,
+        "6": 20
+      },
+      "projected_admitted_records": 640268,
+      "projected_admitted_hours": 678.0596376736111,
+      "projection_requires_full_exact_header_validation": false,
+      "dev_test_policy": "Preserve full utterances, including >20s; validate singleton inference memory before starting the run."
+    },
+    "train_original_age_counts": {
+      "3": 16772,
+      "4": 75226,
+      "5": 198700,
+      "6": 349595
+    },
+    "train_original_age_hours": {
+      "3": 16.3441924479,
+      "4": 77.5238493403,
+      "5": 210.5889995313,
+      "6": 373.8116630209
+    },
+    "train_original_age_speaker_ids": {
+      "3": 59,
+      "4": 173,
+      "5": 358,
+      "6": 546
+    },
+    "all_age3_from_dataset": 108,
+    "full_data_200_hour_cap": false,
+    "speaker_split": "Preserve speaker-splits.json exactly; no reshuffle.",
+    "cross_dataset_identity_verified": false,
+    "cross_dataset_identity_assumption": "User explicitly assumes no child appears in both datasets; this is not verified.",
+    "audio_storage": "Reference retained WAV paths directly, without copying or using deleted TAR offsets.",
+    "review_policy": "Do not strip unresolved tags, relabel from model predictions, or automatically treat listening notes as training labels.",
+    "annotation_tag_exclusion": {
+      "decision": "User confirmed exclusion on 2026-10-27, after the Claude consultation.",
+      "policy_file": "exclusion-policy.json",
+      "exclusion_manifest": "exclusions/annotation-tag-excluded.jsonl.gz",
+      "known_tag_codes": [
+        "FP",
+        "NO",
+        "SN",
+        "SP"
+      ],
+      "scope": [
+        "train",
+        "dev",
+        "test"
+      ],
+      "action": "Exclude the entire utterance; do not admit it by stripping tags or accepting listening notes.",
+      "excluded_records": 38479,
+      "already_in_review": true,
+      "additional_removals_from_current_candidates": 0,
+      "other_review_records_still_excluded": 5909,
+      "original_audio_and_labels_retained": true,
+      "future_manifest_builder_must_enforce_policy": true,
+      "evidence_report": "99_Organization/annotation-tag-exclusion-20261027/report.json"
+    },
+    "final_manifest_ready": true,
+    "candidates_before_resource_exclusions": {
+      "train": {
+        "records": 640293,
+        "hours": 678.2687043402777
+      },
+      "dev": {
+        "records": 120653,
+        "hours": 139.21286036458335
+      },
+      "test": {
+        "records": 118603,
+        "hours": 132.84701144
+      },
+      "review_excluded": {
+        "records": 44388,
+        "hours": 48.01417948
+      }
+    },
+    "final_manifest_directory": "02_Datasets\\학습준비\\자모_원문라벨_3-6세\\manifests-20261027",
+    "manifest_report": "02_Datasets\\학습준비\\자모_원문라벨_3-6세\\manifests-20261027\\report.json",
+    "silence_policy": {
+      "decision": "User explicitly chose to train as-is on 2026-10-27 and revisit if problems appear.",
+      "input": "Full retained WAV, including leading/trailing/internal silence; no VAD, crop, denoising or concatenation.",
+      "annotation_metadata": "540 has utterance start/end metadata; 108 active catalogs do not. Boundary metadata does not prove the excluded interval is silent.",
+      "audit_report": "04_Models_and_Experiments\\orthographic-jamo-20261027\\silence-audit.json",
+      "product_check": "Evaluate silence/noise-only inputs separately; blank is an output omission symbol, not a dedicated silence classifier."
+    }
+  },
+  "labels": {
+    "policy_file": "label-policy.json",
+    "vocabulary_file": "vocab.json",
+    "retain_original_spelling": true,
+    "g2p": false,
+    "tokenization": "Existing normalized spelling -> Unicode NFD positional jamo; spaces -> boundary token.",
+    "leading_vowel_trailing_counts": [
+      19,
+      21,
+      27
+    ],
+    "output_size": 69,
+    "blank_id": 0,
+    "word_boundary_id": 1,
+    "decoding": "Restrict to true frame lengths, CTC collapse repeats then remove blanks, boundary to space, NFC composition. Retain malformed jamo and score as errors.",
+    "forced_expected_word_correction": false,
+    "representable_not_guaranteed_recognized": true,
+    "unseen_training_jamo": [
+      "U+11B3",
+      "U+11B5"
+    ]
+  },
+  "model": {
+    "repo": "team-lucid/hubert-xlarge-korean",
+    "revision": "9aeb683b37383026a0ff74d3be90a215be9fc5b6",
+    "local_path": "01_Project/.venv/encoder-screen-0914/models/hubertko1b",
+    "model_sha256": "14977266907588c28da9403bc4c04478a29b49968dfe206fb9cb8e71e4d2e31d",
+    "initialization": "Original pretrained encoder with a fresh Linear(1280,69) head; head dropout0.1; seed917. No old42-head/optimizer/cursor reuse.",
+    "transformer_layers": 48,
+    "hidden_size": 1280,
+    "preserve_legacy_models": true,
+    "input": {
+      "sample_rate": 16000,
+      "channels": 1,
+      "pcm16_to_float_divisor": 32768,
+      "do_normalize": false,
+      "right_padding": 0,
+      "true_length_attention_mask": true
+    },
+    "cnn_frozen_in_all_phases": true
+  },
+  "training": {
+    "seed": 917,
+    "loss": {
+      "kind": "CTC",
+      "reduction": "none",
+      "zero_infinity": false,
+      "optimizer_step_formula": "sum_i(CTC_i / target_length_i) / total_utterances_in_accumulation_group",
+      "extra_age_weights": false,
+      "microbatch_partition_invariant": true,
+      "empty_target_policy": "Not part of this spelling baseline; handle silence/noise as evaluation negatives."
+    },
+    "optimizer": {
+      "kind": "PartialCPUAdamW",
+      "betas": [
+        0.9,
+        0.999
+      ],
+      "eps": 1e-08,
+      "weight_decay": 0.01,
+      "weight_decay_scope": "All trainable tensors, matching existing trainer",
+      "global_grad_norm_clip": 1.0,
+      "clip_before_offload_transfer": true
+    },
+    "head_phase": {
+      "updates": 1000,
+      "warmup_updates": 100,
+      "peak_learning_rate": 0.001,
+      "after_warmup": "Hold peak through update1000",
+      "encoder": "Frozen, eval mode, no_grad, SpecAugment disabled",
+      "head_train_mode": true,
+      "acceptance_on_fixed_dev_monitor": {
+        "finite_loss_and_gradients": true,
+        "nonblank_utterance_fraction_minimum": 0.5,
+        "equal_age_macro_cer_exclusive_maximum": 1.0
+      },
+      "if_acceptance_fails": "Diagnose preprocessing/labels/CTC/optimization before joint training; no automatic warmup extension."
+    },
+    "joint_phase": {
+      "trainable": "All transformer, feature projection and CTC head parameters; CNN remains frozen",
+      "encoder_peak_learning_rate": 2e-05,
+      "head_peak_learning_rate": 0.0001,
+      "warmup_updates": 500,
+      "schedule": "Linear warmup, stable peak, then linear decay controlled by actual cumulative nonpadding training audio seconds",
+      "epoch_equivalent_definition": "Cumulative joint training audio seconds on winning lineage divided by total admitted training seconds; excludes head phase and losing branch.",
+      "maximum_epoch_equivalents": 3.0,
+      "earliest_plateau_decay_epoch_equivalent": 1.5,
+      "latest_decay_start_epoch_equivalent": 2.4,
+      "plateau_patience_monitor_evaluations": 3,
+      "plateau_minimum_relative_macro_cer_improvement": 0.02,
+      "plateau_reference": "Significant-best monitor CER; reset patience when current CER <= reference*(1-0.02). Record absolute best separately.",
+      "reset_plateau_history_after_branch_selection": true,
+      "decay_duration_epoch_equivalents": 0.6,
+      "decay_final_lr_fraction": 0.05,
+      "end_rule": "Stop at decay end or 3.0equivalents, whichever first; select validation checkpoint.",
+      "persistent_regression": "If macroCER exceeds absolute best by >=3% relative for3 consecutive evaluations, inspect the run and begin the same decay if overfitting is confirmed. No automatic checkpoint rewind.",
+      "invalid_loss_policy": "Stop and diagnose NaN/Inf/infeasible CTC. Do not silently skip or blindly halve LR."
+    },
+    "regularization": {
+      "hidden_dropout": 0.1,
+      "attention_dropout": 0.1,
+      "activation_dropout": 0.1,
+      "feature_projection_dropout": 0.1,
+      "head_dropout": 0.1,
+      "layerdrop": 0.0,
+      "joint_mask_time_prob": 0.05,
+      "joint_mask_time_length_frames": 5,
+      "joint_mask_time_min_masks": 0,
+      "mask_feature_prob": 0.0,
+      "mask_feature_min_masks": 0,
+      "waveform_augmentation": "None in first baseline; no gain, speed, pitch, added noise or arbitrary time crops. This is an experimental-control choice, not proof those methods harm accuracy."
+    }
+  },
+  "resources": {
+    "observed_gpu": "NVIDIA GeForce RTX5060Ti",
+    "observed_total_vram_mib": 16311,
+    "observed_other_vram_used_mib": 4585,
+    "microbatch_padded_sample_budget": 320000,
+    "max_microbatch_records": 32,
+    "gradient_accumulation_microbatches": 16,
+    "padded_seconds_per_full_update_upper_bound": 320,
+    "actual_audio_seconds_per_update_measured": true,
+    "bounded_resource_profile": {
+      "report": "99_Organization/training-resource-profile-20261027/resource-estimate.json",
+      "scope": "Eight timed joint updates from a 2048-record random training sample; not the final production trainer or a full memory preflight.",
+      "offload_layers_measured": 40,
+      "cpu_threads": 8,
+      "joint_audio_seconds_per_wall_second": 40.822605185370385,
+      "estimated_maximum_schedule_hours_excluding_checkpoint_io": 65.05408758770717,
+      "concurrency_limit": "Other GPU occupancy changed between trials; do not attribute all timing differences to the offload setting.",
+      "full_preflight_passed": false
+    },
+    "length_bucket_policy": "Mix shuffled length buckets across updates; never average microbatch means. Log realized records/seconds/target tokens and repeat counts by age and dataset.",
+    "precision": "FP32 master weights/head/log-softmax; deterministic FP32 CPU CTC, BF16 encoder autocast, FP32 evaluation",
+    "attention": "sdpa",
+    "gradient_checkpointing": "Enabled, use_reentrant=false",
+    "optimizer_cpu_offload_layers_initial": 40,
+    "optimizer_cpu_offload_fallbacks": [],
+    "further_batch_fallback": {
+      "padded_sample_budget": 160000,
+      "accumulation": 32,
+      "full_10_to_20_second_utterances": "Only as preflight-validated singleton exceptions; record actual budget overages, do not truncate."
+    },
+    "evaluation_padded_sample_budget_initial": 320000,
+    "evaluation_long_utterances": "Full singleton inference, independently memory-tested including maximum test duration before model training; reduce eval batching if needed.",
+    "preflight": "Measure real training/optimizer/eval peaks with moment buffers allocated, all length buckets and concurrent processes present. Measure audio-seconds per wall second and update latency. No unsupported duration estimate or silent CPU fallback.",
+    "if_all_configs_fail": "Leave memory gate unresolved and report measured limitation; do not silently switch model/precision or stop unrelated processes.",
+    "checkpoint_every_updates": 100,
+    "checkpoint_contents": "Model, head, both optimizer states, phase/schedule/counters, sampler cursor/cycle, Python/NumPy/Torch/CUDA RNG, input contract hashes and software versions",
+    "retention": "Keep latest2 resumable states, branch fork until selection, selected full-dev candidates; establish new run directory, never delete old experiment artifacts.",
+    "long_training_started": true,
+    "checkpoint_every_seconds": 600,
+    "deterministic_algorithms": true,
+    "cublas_workspace_config": ":4096:8",
+    "ctc_loss_device": "cpu",
+    "ctc_reason": "Pinned native CUDA CTC backward is nondeterministic. FP32 CPU CTC with differentiable device copies passed bitwise next-update replay, including full optimizer state.",
+    "full_preflight_passed": true,
+    "full_preflight_report": "04_Models_and_Experiments\\orthographic-jamo-20261027\\preflight.json",
+    "full_preflight_checkpoint_bytes": 11518352865,
+    "full_preflight_checkpoint_save_seconds": 20.676984699908644,
+    "full_preflight_next_update_bitwise_equal": true
+  },
+  "age_sampling": {
+    "default": "Natural distribution, shuffled without replacement per data pass; no downsampling of age6.",
+    "comparison": {
+      "required_by_default_after_successful_first_pass": true,
+      "fork_at_epoch_equivalent": 1.0,
+      "checkpoint_boundary_tolerance": "At most one completed optimizer update; save immediately at first crossing.",
+      "arms": [
+        "Continue natural",
+        "Sample age with p proportional to sqrt(admitted_record_count), then shuffled cycling within age"
+      ],
+      "approximate_sqrt_record_percentages_age3_to6": [
+        8.99,
+        19.04,
+        30.94,
+        41.03
+      ],
+      "recompute_probabilities_from_final_manifest": true,
+      "additional_actual_audio_hours_per_arm": 200,
+      "audio_budget_tolerance": "At most one optimizer update; log exact excess",
+      "fork_state": "Identical model/head/optimizer/RNG/schedule; only sampler policy differs. Preserve natural cursor; initialize balanced sampler deterministically from seed917 and fork identifier.",
+      "do_not_reset_optimizer": true,
+      "branch_lr": "Hold peak rates after already completed joint warmup; no branch-specific decay",
+      "validation": "Entire fixed dev set for each arm at equal additional actual audio exposure",
+      "sqrt_adoption_all_required": {
+        "age3_relative_cer_reduction_minimum": 0.05,
+        "age3_speakers_improved_minimum": 5,
+        "age3_dev_speaker_ids": 7,
+        "each_age4_5_6_relative_cer_regression_maximum": 0.02,
+        "equal_age_macro_cer_regression_maximum": 0,
+        "zero_reference_cer_rule": "Age3 zero reference CER cannot satisfy improvement; other age with zero reference requires zero candidate CER.",
+        "product_dev_rule_if_available": "At the same frozen candidate-independent matching rule, require no false-accept regression. No product claims if labeled child positives/negatives are unavailable."
+      },
+      "thresholds_are_engineering_heuristics_not_significance_tests": true,
+      "bootstrap": "Report paired speaker-cluster90% interval with10000resamples,seed917; exploratory with7age3IDs, not an adoption veto or proof of population improvement.",
+      "if_no_clear_pass": "Continue natural arm; retain both branch results.",
+      "skip_conditions": "Preflight/resource/storage instability or persistent-regression diagnosis unresolved at fork; record exact reason and continue natural only once training is healthy.",
+      "extra_losing_arm_hours_cap": 200,
+      "late_risk": "A short branch cannot establish freedom from late speaker overfitting. Continue per-age validation/repeat-count logging, keep natural checkpoint as final fallback."
+    }
+  },
+  "evaluation": {
+    "primary_cer": "NFC output/reference, whitespace removed; edit distance divided by reference character count. Preserve malformed output symbols as errors.",
+    "secondary": [
+      "CER including whitespace",
+      "Positional-jamo error rate",
+      "Utterance exact match",
+      "Nonblank output rate",
+      "Malformed-jamo rate"
+    ],
+    "groups": [
+      "Age3/4/5/6",
+      "Dataset108/540",
+      "Age x dataset where present",
+      "Full utterances<=2.5seconds"
+    ],
+    "selection_score": "Arithmetic mean of the four age-level corpus CER values; do not weight ages by their hours.",
+    "monitor": {
+      "hours_per_age_approximate": 0.5,
+      "sampling": "Fixed seeded speaker-diverse selection from dev only, round-robin speakers with mixed lengths and dataset coverage; freeze manifest before training.",
+      "every_joint_updates": 1000,
+      "endpoints": "Also evaluate at head end, branch endpoints, decay end and final checkpoint; no duplicate evaluation of identical checkpoint."
+    },
+    "full_dev_budget": "Two branch endpoints plus at most3 additional shortlisted checkpoints; reuse cached scores by model+manifest+metric hashes.",
+    "shortlist": "Monitor-best macroCER, monitor-best age3CER, and best late/decayed checkpoint, deduplicated. Include cached natural branch fallback in final eligible ranking.",
+    "final_selection": "Minimum full-dev equal-age macroCER; exact ties break by age3CER, then earlier checkpoint.",
+    "asr_test": "Once for the final selected model after decoding and model-selection policy are frozen; no further tuning on test scores.",
+    "product_task": "Separate child-word dev/test speakers with acceptable target pronunciations, confusable non-target words, silence/noise; calibrate matcher threshold on dev then freeze before product test.",
+    "personal_recordings": "Regression examples only; mostly adult/unknown age, not evidence of child acceptance accuracy.",
+    "no_child_word_test_available": "May develop ASR, but cannot report validated product acceptance/false-accept accuracy.",
+    "legacy_model_comparison": "Same spelling-CER metric on frozen dev if needed, with baseline exposure/old objective limitations stated; legacy42jamo JER is not comparable."
+  },
+  "next_engineering_steps": [
+    "Monitor head1000 gate and joint training per-age CER; diagnose explicit failure gates rather than auto-restarting.",
+    "Evaluate natural/sqrt sampling at the planned fork, select on full dev, then run final test once.",
+    "Collect child target-word positives/confusable negatives and silence/noise examples for product acceptance calibration."
+  ],
+  "observed_software": {
+    "python": "3.13",
+    "torch": "2.13.0+cu130",
+    "transformers": "5.15.0",
+    "numpy": "2.4.6",
+    "safetensors": "0.8.0"
+  },
+  "evidence": {
+    "local_encoder_results": "01_Project/docs/PRETRAINED_ENCODER_WINDOWS_UNITY_RESULTS_2026-09-14.md",
+    "existing_loss_implementation": "01_Project/python/tools/child_jamo_finetune/train.py:141",
+    "existing_optimizer": "01_Project/python/tools/child_jamo_finetune/optim.py",
+    "vocabulary_audit": "99_Organization/vocabulary-coverage-20261027/report.json",
+    "length_audit": "99_Organization/claude-finetune-plan-20261027/length-audit.json",
+    "protected_input_hashes": "99_Organization/claude-finetune-plan-20261027/protected-inputs.json",
+    "publisher": "https://huggingface.co/team-lucid/hubert-xlarge-korean",
+    "hubert_documentation": "https://huggingface.co/docs/transformers/model_doc/hubert",
+    "ctc_documentation": "https://docs.pytorch.org/docs/2.14/generated/torch.nn.CTCLoss.html",
+    "public_source_limit": "Public docs establish architecture/API behavior, not the optimality of this project's proposed hyperparameters. Local pinned config/code take precedence over generic examples. Retrieved public CTC documentation is2.14; the installed environment remains2.13.0+cu130 and was not upgraded.",
+    "full_wav_verification": "02_Datasets\\학습준비\\자모_원문라벨_3-6세\\manifests-20261027\\report.json",
+    "full_model_preflight": "04_Models_and_Experiments\\orthographic-jamo-20261027\\preflight.json",
+    "phase_control_tests": "04_Models_and_Experiments\\orthographic-jamo-20261027\\control-tests.json"
+  },
+  "trainer_source": "01_Project/python/tools/child_orthographic_finetune/train.py",
+  "active_run": {
+    "directory": "04_Models_and_Experiments\\orthographic-jamo-20261027\\main",
+    "pid_at_launch_verification": 45212,
+    "started_kst": "2026-10-27 14:53",
+    "input_silence_policy": "preserve_full_original_wav",
+    "progress_file": "04_Models_and_Experiments\\orthographic-jamo-20261027\\main\\progress.json",
+    "preflight_contract_id": "dc51d34f6ab4d7ca465eceadc2bd6010413706c2f32208fe4334277828273447"
+  }
+}

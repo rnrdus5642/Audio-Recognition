@@ -15,7 +15,7 @@ namespace DomiCube.PhonemeMatching
         /// highest-scoring pass, or highest-scoring failure if none pass.</summary>
         public MatchResult Best;
 
-        /// <summary>Consecutive windows the leader has held.</summary>
+        /// <summary>Positive checks for the leader. Web v4 may bridge one uncertain check.</summary>
         public int Streak;
 
         /// <summary>The answer is confirmed and the session has ended.</summary>
@@ -23,6 +23,9 @@ namespace DomiCube.PhonemeMatching
 
         /// <summary>Confirmation snapshot, or null before confirmation.</summary>
         public PronunciationFeedback Feedback;
+
+        /// <summary>Web v4 diagnostics when the orthographic policy is selected.</summary>
+        public OrthographicWordResult WordDecision;
     }
 
     /// <summary>
@@ -58,6 +61,8 @@ namespace DomiCube.PhonemeMatching
         private readonly IPhonemeRecognizer _recognizer;
         private readonly int _consecutive;
         private readonly AudioWindowBuffer _buffer;
+        private readonly OrthographicWordPolicy _wordPolicy;
+        private double _audioSeconds;
 
         private Matcher _matcher;
         private StreamingMatcher _streaming;
@@ -89,6 +94,25 @@ namespace DomiCube.PhonemeMatching
             _consecutive = consecutive;
         }
 
+        private PronunciationSession(ConfusionMatrix matrix, IPhonemeRecognizer recognizer,
+            double threshold, int confirmations, AudioWindowBuffer buffer)
+        {
+            _matrix = matrix ?? throw new ArgumentNullException(nameof(matrix));
+            _recognizer = recognizer ?? throw new ArgumentNullException(nameof(recognizer));
+            _buffer = buffer;
+            _consecutive = confirmations;
+            _wordPolicy = new OrthographicWordPolicy(matrix, threshold, confirmations);
+        }
+
+        /// <summary>Current web v4 policy. Targets are converted at runtime;
+        /// a prebuilt targets.json is not required. Existing constructor stays legacy.</summary>
+        public static PronunciationSession ForOrthographicWord(ConfusionMatrix matrix,
+            IPhonemeRecognizer recognizer, double threshold = .85, int confirmations = 2,
+            AudioWindowBuffer buffer = null)
+            => new PronunciationSession(matrix, recognizer, threshold, confirmations, buffer);
+
+        public bool UsesOrthographicWordPolicy => _wordPolicy != null;
+
         /// <summary>True between <see cref="Begin"/> and the confirmation
         /// (or <see cref="End"/>).</summary>
         public bool IsActive { get; private set; }
@@ -105,6 +129,8 @@ namespace DomiCube.PhonemeMatching
 
         /// <summary>Last confirmation; cleared when a new question starts.</summary>
         public PronunciationFeedback LastConfirmation { get; private set; }
+
+        public FrameScore LastFrame { get; private set; }
 
         /// <summary>The answers that count as correct this question.</summary>
         public IReadOnlyList<Answer> Candidates => _candidates;
@@ -130,6 +156,22 @@ namespace DomiCube.PhonemeMatching
         public void Begin(IReadOnlyList<string> targetWords)
         {
             LastConfirmation = null;
+            LastFrame = null;
+            _audioSeconds = 0;
+            if (_wordPolicy != null)
+            {
+                IsActive = false;
+                _wordPolicy.Begin(targetWords);
+                _candidates = new List<Answer>();
+                foreach (var word in _wordPolicy.Targets)
+                    _candidates.Add(new Answer { Id = word, Text = word,
+                        Threshold = _wordPolicy.Threshold,
+                        Phonemes = Korean.JamoIpa.ToPhonemes(Korean.Rules.Apply(word)) });
+                TargetText = _candidates.Count == 1 ? _candidates[0].Text : null;
+                _buffer?.Reset();
+                IsActive = true;
+                return;
+            }
             if (targetWords == null || targetWords.Count == 0)
             {
                 throw new ArgumentException(
@@ -174,6 +216,7 @@ namespace DomiCube.PhonemeMatching
         {
             IsActive = false;
             _streaming = null;
+            _wordPolicy?.End();
         }
 
         /// <summary>
@@ -183,6 +226,11 @@ namespace DomiCube.PhonemeMatching
         /// statically exported graph accepts exactly one size.
         /// </summary>
         public FrameScore Push(float[] audioWindow16kMono)
+            => Push(audioWindow16kMono, _audioSeconds + OrthographicWordPolicy.HopSeconds);
+
+        /// <summary>Pass the capture timestamp of the end of this window, relative
+        /// to Begin. Use this overload when inference or capture can be delayed.</summary>
+        public FrameScore Push(float[] audioWindow16kMono, double elapsedAudioSeconds)
         {
             if (!IsActive)
             {
@@ -195,8 +243,33 @@ namespace DomiCube.PhonemeMatching
                 throw new ArgumentNullException(nameof(audioWindow16kMono));
             }
 
+            double fraction = 0;
+            if (_wordPolicy != null)
+            {
+                if (audioWindow16kMono.Length != OrthographicWordPolicy.WindowSamples)
+                    throw new ArgumentException("Web v4 requires 2.5 seconds of 16 kHz mono audio (40000 samples).");
+                fraction = OrthographicWordPolicy.VoiceFraction(audioWindow16kMono);
+            }
             _recognizer.RecognizeWithText(
                 audioWindow16kMono, out string text, out var phonemes);
+
+            if (_wordPolicy != null)
+            {
+                var decision = _wordPolicy.Push(text, elapsedAudioSeconds, fraction);
+                var scored = new FrameScore { Text = text ?? string.Empty,
+                    Phonemes = phonemes ?? new List<string>(),
+                    Best = _wordPolicy.ToMatchResult(decision), Streak = decision.Streak,
+                    Confirmed = decision.Confirmed, WordDecision = decision };
+                _audioSeconds = elapsedAudioSeconds;
+                if (scored.Confirmed)
+                {
+                    scored.Feedback = PronunciationFeedback.FromMatch(scored.Best, decision.Frames, decision.Streak);
+                    LastConfirmation = scored.Feedback;
+                    End();
+                }
+                LastFrame = scored;
+                return scored;
+            }
 
             var hit = _streaming.Push(phonemes);
 
@@ -221,6 +294,8 @@ namespace DomiCube.PhonemeMatching
                 End();
             }
 
+            _audioSeconds = elapsedAudioSeconds;
+            LastFrame = frame;
             return frame;
         }
 

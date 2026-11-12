@@ -1,0 +1,35 @@
+{
+  "version": "case3-contrast-followup-20261003-v1",
+  "questions": 2,
+  "parent_answer_revision": 15,
+  "selection_sha256": "31debb41b5c6f3007d90b8cf9d757c7d300cacc0a8c3e2b04502908f51732d52",
+  "review_sha256": "3ad349d540037f2d6b47226c6a4a9451c630301675ed0817a2d259caceaacaa7",
+  "evidence_sha256": "4abac293e0755dfb3630d42ea79fc4f1b3a6c76876fc69bc3dbbc460f58d1aa5",
+  "page_sha256": "746ae5763e08b92c2fe22ad1b00e57a0d0ed7531bce18dbbf974705984cc6659",
+  "source_archives": {
+    "TS_kor_formatted_02.tar": {
+      "archive": {
+        "path": "C:\\Users\\user\\Desktop\\AIHUB\\01.데이터\\1.Training\\원천데이터\\TS_kor_formatted_02.tar",
+        "bytes": 95347465216,
+        "mtime_ns": 1786608309290857700
+      },
+      "wav_members": 426132,
+      "catalog_sha256": "ea95cbb2b2e22ad5a0b53a9c0bf58ac66c1263bc4e3ffc9b32deb42bfa286a4c"
+    },
+    "TS_kor_formatted_03.tar": {
+      "archive": {
+        "path": "C:\\Users\\user\\Desktop\\AIHUB\\01.데이터\\1.Training\\원천데이터\\TS_kor_formatted_03.tar",
+        "bytes": 104152345088,
+        "mtime_ns": 1786610240156342900
+      },
+      "wav_members": 478140,
+      "catalog_sha256": "aeee4c3c8c0952a074e3a9b364f6def1cbc43ac4b50731d967e468fdac0516aa"
+    }
+  },
+  "seconds": 5.632,
+  "source_checks_passed": true,
+  "pcm_roundtrips_verified": 2,
+  "training_started": false,
+  "model_replaced": false,
+  "status": "awaiting_two_additional_whole_form_reviews"
+}

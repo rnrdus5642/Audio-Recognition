@@ -30,7 +30,7 @@ namespace DomiCube.PhonemeMatching.Editor
         private const string DataChoiceKey = "DomiCube.PhonemeMatching.TestData.";
         private const double Hop = 0.5;
         private static readonly string[] DataChoices =
-            { "선택하세요", "기본 모델용", "아동 파인튜닝 모델용" };
+            { "선택하세요", "기본 모델용", "아동 파인튜닝 모델용", "원문 자모 아동 모델용" };
 
         private string _word = "사과";
         private string _status = "시작을 누르세요";
@@ -90,7 +90,7 @@ namespace DomiCube.PhonemeMatching.Editor
             if (_model == null)
             {
                 ClearPrepared();
-                _status = "모델(.onnx)을 지정하세요";
+                _status = "모델(.onnx 또는 .sentis)을 지정하세요";
                 return false;
             }
 
@@ -113,11 +113,14 @@ namespace DomiCube.PhonemeMatching.Editor
                     out var matrix, out var catalog, out var vocab);
                 _recognizer = new SentisPhonemeRecognizer(_model, vocab);
 
-                _status = "모델 준비 중... (첫 실행 ~2초)";
+                _status = "모델 준비 중... (첫 실행은 모델과 기기에 따라 시간이 걸립니다)";
                 Repaint();
                 _recognizer.Warmup(2.5f);
 
-                _session = new PronunciationSession(matrix, catalog, _recognizer);
+                _session = settings == PronunciationTestSettings.OrthographicChild
+                    ? PronunciationSession.ForOrthographicWord(matrix, _recognizer)
+                    : new PronunciationSession(matrix, catalog, _recognizer);
+                if (_session.UsesOrthographicWordPolicy) _timeout = 0f;
                 _preparedModel = _model;
                 _preparedSettings = settings;
                 return true;
@@ -147,7 +150,9 @@ namespace DomiCube.PhonemeMatching.Editor
 
             try
             {
-                _session.Begin(_word);
+                if (_session.UsesOrthographicWordPolicy)
+                    _session.Begin(_word.Split(new[] { ',', '\n', '\r' }, System.StringSplitOptions.RemoveEmptyEntries));
+                else _session.Begin(_word);
             }
             catch (System.Exception e)
             {
@@ -185,7 +190,8 @@ namespace DomiCube.PhonemeMatching.Editor
             _mic.Pump();
 
             double now = EditorApplication.timeSinceStartup;
-            if (now < _nextScore)
+            if (now < _nextScore || (_session.UsesOrthographicWordPolicy &&
+                _mic.Elapsed - (_session.LastFrame?.WordDecision?.ElapsedSeconds ?? 0) < Hop))
             {
                 return;
             }
@@ -195,7 +201,7 @@ namespace DomiCube.PhonemeMatching.Editor
             FrameScore frame;
             try
             {
-                frame = _session.Push(_mic.Snapshot());
+                frame = _session.Push(_mic.Snapshot(), _mic.Elapsed);
             }
             catch (System.Exception e)
             {
@@ -211,6 +217,7 @@ namespace DomiCube.PhonemeMatching.Editor
                 string.IsNullOrEmpty(frame.Best.TargetText)
                     ? "—" : frame.Best.TargetText,
                 frame.Best.Score, frame.Text, _session.Consecutive));
+            if (_frames.Count > 240) _frames.RemoveAt(_frames.Count - 1);
 
             if (frame.Confirmed)
             {
@@ -290,7 +297,7 @@ namespace DomiCube.PhonemeMatching.Editor
                     EditorGUILayout.HelpBox(
                         $"채점 설정: {settings.Label}\n"
                         + $"{settings.MatrixFile} + {settings.TargetsFile}\n"
-                        + $"공통 어휘: {PronunciationTestSettings.VocabularyFile}", MessageType.Info);
+                        + $"어휘: {settings.SelectedVocabularyFile}", MessageType.Info);
                 }
                 else if (_model != null)
                 {

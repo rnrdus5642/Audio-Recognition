@@ -1,0 +1,21 @@
+{
+  "name": "DomiCube.PhonemeMatching.WebWordExample",
+  "rootNamespace": "",
+  "references": [
+    "DomiCube.PhonemeMatching",
+    "DomiCube.PhonemeMatching.Unity",
+    "DomiCube.PhonemeMatching.Sentis2",
+    "Unity.InferenceEngine"
+  ],
+  "includePlatforms": [],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": false,
+  "precompiledReferences": [],
+  "autoReferenced": true,
+  "defineConstraints": ["DOMICUBE_INFERENCE_ENGINE"],
+  "versionDefines": [
+    {"name": "com.unity.ai.inference", "expression": "2.0.0", "define": "DOMICUBE_INFERENCE_ENGINE"}
+  ],
+  "noEngineReferences": false
+}

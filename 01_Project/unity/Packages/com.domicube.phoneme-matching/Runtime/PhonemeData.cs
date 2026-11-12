@@ -204,6 +204,7 @@ namespace DomiCube.PhonemeMatching
                 UnkId = (int?)root["unk_id"] ?? -1,
                 WordDelimiterId = (int?)root["word_delimiter_id"] ?? -1,
                 Normalize = (bool?)root["normalize"] ?? true,
+                ComposeHangulJamo = (bool?)root["compose_hangul_jamo"] ?? false,
                 NormalizeEpsilon = (float?)root["normalize_epsilon"] ?? 1e-7f,
                 SamplingRate = (int?)root["sampling_rate"] ?? 16000
             };

@@ -7,20 +7,15 @@ using UnityEngine;
 namespace DomiCube.PhonemeMatching.Unity
 {
     /// <summary>
-    /// wav2vec2 CTC through Sentis: audio -> logits -> greedy decode ->
+    /// Korean CTC through Inference Engine: audio -> logits -> greedy decode ->
     /// Hangul -> IPA. The Unity counterpart of
     /// python/runtime/recognizer/ko/asr.py.
     ///
-    /// Backend is GPUCompute and there is deliberately no CPU fallback.
-    /// Measured on this graph with a 2.5 s window: GPU 22-32 ms, CPU
-    /// 460 ms against a 500 ms hop budget - and the CPU path saturates
-    /// six cores doing it, which is what actually breaks VR. A machine
-    /// too weak for compute shaders cannot run PCVR either.
-    ///
-    /// The first inference pays ~1.9 s for shader compilation and for
-    /// moving 1.2 GB of weights to the GPU. Call <see cref="Warmup"/>
-    /// while the scene is loading; otherwise the child's first word is
-    /// the thing that waits.
+    /// ModelAsset construction defaults to GPUCompute. FromFile also allows
+    /// explicit CPU validation. Latency and memory depend on the model; the
+    /// old wav2vec2 timings do not apply to the larger HuBERT model.
+    /// Call <see cref="Warmup"/> while loading the scene, then measure frame
+    /// pacing on the actual PC/VR device before choosing the capture hop.
     /// </summary>
     public sealed class SentisPhonemeRecognizer : IPhonemeRecognizer, IDisposable
     {
@@ -35,15 +30,35 @@ namespace DomiCube.PhonemeMatching.Unity
         public int SampleRate => _vocab.SamplingRate;
 
         public SentisPhonemeRecognizer(ModelAsset modelAsset, CtcVocabulary vocab)
+            : this(LoadAsset(modelAsset), vocab, BackendType.GPUCompute)
+        {
+        }
+
+        private static Model LoadAsset(ModelAsset modelAsset)
         {
             if (modelAsset == null)
             {
                 throw new ArgumentNullException(nameof(modelAsset));
             }
+            return ModelLoader.Load(modelAsset);
+        }
 
+        private SentisPhonemeRecognizer(Model model, CtcVocabulary vocab, BackendType backend)
+        {
             _vocab = vocab ?? throw new ArgumentNullException(nameof(vocab));
-            _worker = new Worker(
-                ModelLoader.Load(modelAsset), BackendType.GPUCompute);
+            _worker = new Worker(model, backend);
+        }
+
+        /// <summary>
+        /// Load a .sentis file directly on Windows. The existing ModelAsset API
+        /// keeps its GPU default; CPU is an explicit validation option here.
+        /// </summary>
+        public static SentisPhonemeRecognizer FromFile(string path, CtcVocabulary vocab,
+            BackendType backend = BackendType.GPUCompute)
+        {
+            if (string.IsNullOrWhiteSpace(path)) throw new ArgumentException("Model path is empty", nameof(path));
+            if (vocab == null) throw new ArgumentNullException(nameof(vocab));
+            return new SentisPhonemeRecognizer(ModelLoader.Load(path), vocab, backend);
         }
 
         /// <summary>
@@ -92,9 +107,8 @@ namespace DomiCube.PhonemeMatching.Unity
             var input = Prepare(audio);
 
             // Sentis schedules the whole graph and the readback blocks
-            // until it finishes, so this costs a frame's worth of main
-            // thread. At ~25 ms that is tolerable at a 0.5 s hop; if VR
-            // frame pacing suffers, split it with ScheduleIterable.
+            // until it finishes. This API is synchronous: model latency is
+            // also a main-thread stall. Measure it on the target PC/VR device.
             using (var tensor = new Tensor<float>(
                        new TensorShape(1, input.Length), input))
             {
@@ -138,10 +152,9 @@ namespace DomiCube.PhonemeMatching.Unity
         }
 
         /// <summary>
-        /// Zero mean, unit variance - what
-        /// <c>Wav2Vec2FeatureExtractor</c> does before inference. Skipping
-        /// it does not fail loudly; the model simply returns worse
-        /// phonemes, which would read as a matching problem.
+        /// Apply zero-mean unit-variance input only when the vocabulary's
+        /// model contract requests it. The orthographic HuBERT model expects
+        /// raw audio and must bypass normalization.
         ///
         /// The caller's array is left alone: it belongs to the rolling
         /// microphone buffer, which reuses it.

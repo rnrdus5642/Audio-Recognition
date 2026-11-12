@@ -1,0 +1,3834 @@
+{
+  "analyzed_at_utc": "2026-10-03T13:08:57.728543+00:00",
+  "answer_revision": 15,
+  "review_sha256": "c5a0fe2d71dff6e17188dcb303da8bbed374ed192acda512e322cd42bddefe50",
+  "evidence_sha256": "da3da8f563d5178a79b6aba169c8cae06163f1cf671a60214f19b07eb930501d",
+  "script_sha256": "908403e6811e5e525d054cdc9b23e5a7b0cdeed8774cdf273d294b9ac9cc6b35",
+  "identity": {
+    "checkpoint": "C:\\Users\\user\\Desktop\\Audio-Recognition\\01_Project\\.venv\\hubert-child-20260914\\main\\best.pt",
+    "checkpoint_bytes": 3850525679,
+    "checkpoint_sha256": "5a330f1bea3a17d1d063fdfd71a0cc25394695b0b797de01b293f6f688257aa7",
+    "selected_by_validation": {
+      "phase": "encoder",
+      "epoch": 7,
+      "update": 17654,
+      "at": "epoch_end",
+      "jer": 0.029473811102404917,
+      "errors": 978,
+      "reference_jamo": 33182,
+      "exact": 1164,
+      "recordings": 1500,
+      "precision": "float32"
+    },
+    "labels_version": "child-jamo-2026-09-15",
+    "labels_contract_sha256": "ae3bef2311c735d4560ef11e3a42f3138821592e2e0e1ab10d112f82b9faf013",
+    "encoder": "C:\\Users\\user\\Documents\\GitHub\\Audio-Recognition\\.venv\\encoder-screen-0914\\models\\hubertko1b",
+    "encoder_files_sha256": {
+      "model.safetensors": "14977266907588c28da9403bc4c04478a29b49968dfe206fb9cb8e71e4d2e31d",
+      "config.json": "65b80fbdfa687baea3d33c5050b64a162d55c27c62b720b872f8a210245ad382",
+      "preprocessor_config.json": "7a8f0fc8ee1272ed28a8b468e183c56a19329a92babd3ca8d4d21ae02ba511cd"
+    },
+    "decode_version": "compose-1",
+    "precision": "float32, no autocast",
+    "matmul_allow_tf32": false,
+    "attention": "sdpa",
+    "device": "NVIDIA GeForce RTX 5060 Ti",
+    "parameters": 962497408,
+    "load_seconds": 7.4,
+    "historical_test": {
+      "jer": 0.028905407202707296,
+      "errors": 1956,
+      "reference_jamo": 67669,
+      "exact": 2297,
+      "recordings": 2999,
+      "precision": "float32"
+    },
+    "historical_provenance": "result.json 의 selected_checkpoint 및 data_contract 가 이 체크포인트와 일치",
+    "historical_note": "Aggregate over the whole 2,999-recording test split for this fixed checkpoint. It is not the score of whatever sample is on screen."
+  },
+  "software": {
+    "torch": "2.13.0+cu130",
+    "numpy": "2.4.6"
+  },
+  "logits_file": "baseline-logits-revision-015.npz",
+  "logits_sha256": "d0d93a651c9b05f4efd7b32c0d38a88f788f624f208a79368f90c568999fbe3d",
+  "summary": {
+    "all": {
+      "recordings": 15,
+      "confirmed_recordings": 12,
+      "unlabelled_questions": [
+        9,
+        12,
+        15
+      ],
+      "exact_confirmed": 9,
+      "confirmed_errors": 7,
+      "confirmed_reference_jamo": 150
+    },
+    "relabel_train": {
+      "recordings": 5,
+      "confirmed_recordings": 4,
+      "unlabelled_questions": [
+        15
+      ],
+      "exact_confirmed": 2,
+      "confirmed_errors": 4,
+      "confirmed_reference_jamo": 51
+    },
+    "matched_development": {
+      "recordings": 10,
+      "confirmed_recordings": 8,
+      "unlabelled_questions": [
+        9,
+        12
+      ],
+      "exact_confirmed": 7,
+      "confirmed_errors": 3,
+      "confirmed_reference_jamo": 99
+    }
+  },
+  "items": [
+    {
+      "number": 1,
+      "case": 3,
+      "role": "matched_development",
+      "binding": "6d61a40b76c7d71f6562c27bd497939b9687c36773da7b2c51ff1eaf02841a7a",
+      "pcm_sha256": "54d82e9de4eaffe276e6cedb8d554261ce5f6ba738eba682da34c118e75c4c4e",
+      "answer_revision": 1,
+      "answer_status": "whole_form_confirmed",
+      "original_surface": "반가워요",
+      "confirmed_surface": "방가워우요",
+      "prediction": {
+        "token_ids": [
+          9,
+          21,
+          4,
+          2,
+          21,
+          13,
+          35,
+          13,
+          33
+        ],
+        "jamo": "ㅂㅏㄴㄱㅏㅇㅝㅇㅛ",
+        "jamo_tokens": [
+          "ㅂ",
+          "ㅏ",
+          "ㄴ",
+          "ㄱ",
+          "ㅏ",
+          "ㅇ",
+          "ㅝ",
+          "ㅇ",
+          "ㅛ"
+        ],
+        "text": "반가워요",
+        "segments": [
+          {
+            "kind": "syllable",
+            "text": "반",
+            "jamo": [
+              "ㅂ",
+              "ㅏ",
+              "ㄴ"
+            ]
+          },
+          {
+            "kind": "syllable",
+            "text": "가",
+            "jamo": [
+              "ㄱ",
+              "ㅏ"
+            ]
+          },
+          {
+            "kind": "syllable",
+            "text": "워",
+            "jamo": [
+              "ㅇ",
+              "ㅝ"
+            ]
+          },
+          {
+            "kind": "syllable",
+            "text": "요",
+            "jamo": [
+              "ㅇ",
+              "ㅛ"
+            ]
+          }
+        ],
+        "syllables": 4,
+        "orphan_jamo": 0,
+        "fully_composed": true,
+        "frames": 209,
+        "samples": 67040,
+        "seconds": 4.19,
+        "mean_frame_probability": 0.9959946870803833,
+        "inference_seconds": 0.4107126999879256,
+        "realtime_factor": 10.201778518470894,
+        "cached": false,
+        "decode_version": "compose-1"
+      },
+      "original_score": {
+        "errors": 0,
+        "reference_jamo": 9,
+        "hypothesis_jamo": 9,
+        "jer": 0.0,
+        "exact": true,
+        "convention": "training: boundaries ignored, edit ops / reference jamo, not clamped"
+      },
+      "confirmed_score": {
+        "errors": 3,
+        "reference_jamo": 11,
+        "hypothesis_jamo": 9,
+        "jer": 0.2727272727272727,
+        "exact": false,
+        "convention": "training: boundaries ignored, edit ops / reference jamo, not clamped"
+      },
+      "differences_from_confirmed": [
+        {
+          "op": "replace",
+          "reference": [
+            "ㅇ"
+          ],
+          "hypothesis": [
+            "ㄴ"
+          ]
+        },
+        {
+          "op": "delete",
+          "reference": [
+            "ㅇ",
+            "ㅜ"
+          ],
+          "hypothesis": []
+        }
+      ],
+      "original_sequence_logp": -0.029191332477733173,
+      "confirmed_sequence_logp": -31.50651121335517,
+      "affected_token_evidence": [
+        {
+          "token": "ㄴ",
+          "argmax_frames": 1,
+          "peak_frame": 64,
+          "peak_frame_softmax": 0.9996817950639788,
+          "winner_at_peak": "ㄴ"
+        },
+        {
+          "token": "ㅇ",
+          "argmax_frames": 2,
+          "peak_frame": 78,
+          "peak_frame_softmax": 0.9999688288353393,
+          "winner_at_peak": "ㅇ"
+        },
+        {
+          "token": "ㅜ",
+          "argmax_frames": 0,
+          "peak_frame": 79,
+          "peak_frame_softmax": 1.3886930417011048e-05,
+          "winner_at_peak": "ㅝ"
+        }
+      ],
+      "frame_runs": [
+        {
+          "token_id": 0,
+          "token": "<blank>",
+          "start_frame": 0,
+          "end_frame_exclusive": 58
+        },
+        {
+          "token_id": 9,
+          "token": "ㅂ",
+          "start_frame": 58,
+          "end_frame_exclusive": 60
+        },
+        {
+          "token_id": 21,
+          "token": "ㅏ",
+          "start_frame": 60,
+          "end_frame_exclusive": 61
+        },
+        {
+          "token_id": 0,
+          "token": "<blank>",
+          "start_frame": 61,
+          "end_frame_exclusive": 64
+        },
+        {
+          "token_id": 4,
+          "token": "ㄴ",
+          "start_frame": 64,
+          "end_frame_exclusive": 65
+        },
+        {
+          "token_id": 0,
+          "token": "<blank>",
+          "start_frame": 65,
+          "end_frame_exclusive": 69
+        },
+        {
+          "token_id": 2,
+          "token": "ㄱ",
+          "start_frame": 69,
+          "end_frame_exclusive": 71
+        },
+        {
+          "token_id": 21,
+          "token": "ㅏ",
+          "start_frame": 71,
+          "end_frame_exclusive": 72
+        },
+        {
+          "token_id": 0,
+          "token": "<blank>",
+          "start_frame": 72,
+          "end_frame_exclusive": 78
+        },
+        {
+          "token_id": 13,
+          "token": "ㅇ",
+          "start_frame": 78,
+          "end_frame_exclusive": 79
+        },
+        {
+          "token_id": 35,
+          "token": "ㅝ",
+          "start_frame": 79,
+          "end_frame_exclusive": 81
+        },
+        {
+          "token_id": 0,
+          "token": "<blank>",
+          "start_frame": 81,
+          "end_frame_exclusive": 89
+        },
+        {
+          "token_id": 13,
+          "token": "ㅇ",
+          "start_frame": 89,
+          "end_frame_exclusive": 90
+        },
+        {
+          "token_id": 33,
+          "token": "ㅛ",
+          "start_frame": 90,
+          "end_frame_exclusive": 92
+        },
+        {
+          "token_id": 0,
+          "token": "<blank>",
+          "start_frame": 92,
+          "end_frame_exclusive": 209
+        }
+      ]
+    },
+    {
+      "number": 2,
+      "case": 3,
+      "role": "relabel_train",
+      "binding": "4e1779bff96f4780d762cea234f2c61a0d519670c094fee1c4359d6e59b50985",
+      "pcm_sha256": "70b14c8c40262c2da2f0385fd5cd60a50c241b623b997c7773fb1a5edf60d853",
+      "answer_revision": 2,
+      "answer_status": "whole_form_confirmed",
+      "original_surface": "반가워요",
+      "confirmed_surface": "방가워우요",
+      "prediction": {
+        "token_ids": [
+          9,
+          21,
+          4,
+          2,
+          21,
+          13,
+          35,
+          13,
+          33
+        ],
+        "jamo": "ㅂㅏㄴㄱㅏㅇㅝㅇㅛ",
+        "jamo_tokens": [
+          "ㅂ",
+          "ㅏ",
+          "ㄴ",
+          "ㄱ",
+          "ㅏ",
+          "ㅇ",
+          "ㅝ",
+          "ㅇ",
+          "ㅛ"
+        ],
+        "text": "반가워요",
+        "segments": [
+          {
+            "kind": "syllable",
+            "text": "반",
+            "jamo": [
+              "ㅂ",
+              "ㅏ",
+              "ㄴ"
+            ]
+          },
+          {
+            "kind": "syllable",
+            "text": "가",
+            "jamo": [
+              "ㄱ",
+              "ㅏ"
+            ]
+          },
+          {
+            "kind": "syllable",
+            "text": "워",
+            "jamo": [
+              "ㅇ",
+              "ㅝ"
+            ]
+          },
+          {
+            "kind": "syllable",
+            "text": "요",
+            "jamo": [
+              "ㅇ",
+              "ㅛ"
+            ]
+          }
+        ],
+        "syllables": 4,
+        "orphan_jamo": 0,
+        "fully_composed": true,
+        "frames": 166,
+        "samples": 53440,
+        "seconds": 3.34,
+        "mean_frame_probability": 0.9967544078826904,
+        "inference_seconds": 0.05998020002152771,
+        "realtime_factor": 55.6850427107817,
+        "cached": false,
+        "decode_version": "compose-1"
+      },
+      "original_score": {
+        "errors": 0,
+        "reference_jamo": 9,
+        "hypothesis_jamo": 9,
+        "jer": 0.0,
+        "exact": true,
+        "convention": "training: boundaries ignored, edit ops / reference jamo, not clamped"
+      },
+      "confirmed_score": {
+        "errors": 3,
+        "reference_jamo": 11,
+        "hypothesis_jamo": 9,
+        "jer": 0.2727272727272727,
+        "exact": false,
+        "convention": "training: boundaries ignored, edit ops / reference jamo, not clamped"
+      },
+      "differences_from_confirmed": [
+        {
+          "op": "replace",
+          "reference": [
+            "ㅇ"
+          ],
+          "hypothesis": [
+            "ㄴ"
+          ]
+        },
+        {
+          "op": "delete",
+          "reference": [
+            "ㅇ",
+            "ㅜ"
+          ],
+          "hypothesis": []
+        }
+      ],
+      "original_sequence_logp": -0.002946514137254682,
+      "confirmed_sequence_logp": -29.702890357721397,
+      "affected_token_evidence": [
+        {
+          "token": "ㄴ",
+          "argmax_frames": 1,
+          "peak_frame": 63,
+          "peak_frame_softmax": 0.9994478816884367,
+          "winner_at_peak": "ㄴ"
+        },
+        {
+          "token": "ㅇ",
+          "argmax_frames": 3,
+          "peak_frame": 78,
+          "peak_frame_softmax": 0.9999686554450457,
+          "winner_at_peak": "ㅇ"
+        },
+        {
+          "token": "ㅜ",
+          "argmax_frames": 0,
+          "peak_frame": 90,
+          "peak_frame_softmax": 1.3709607889941322e-06,
+          "winner_at_peak": "<blank>"
+        }
+      ],
+      "frame_runs": [
+        {
+          "token_id": 0,
+          "token": "<blank>",
+          "start_frame": 0,
+          "end_frame_exclusive": 58
+        },
+        {
+          "token_id": 9,
+          "token": "ㅂ",
+          "start_frame": 58,
+          "end_frame_exclusive": 60
+        },
+        {
+          "token_id": 21,
+          "token": "ㅏ",
+          "start_frame": 60,
+          "end_frame_exclusive": 61
+        },
+        {
+          "token_id": 0,
+          "token": "<blank>",
+          "start_frame": 61,
+          "end_frame_exclusive": 63
+        },
+        {
+          "token_id": 4,
+          "token": "ㄴ",
+          "start_frame": 63,
+          "end_frame_exclusive": 64
+        },
+        {
+          "token_id": 0,
+          "token": "<blank>",
+          "start_frame": 64,
+          "end_frame_exclusive": 69
+        },
+        {
+          "token_id": 2,
+          "token": "ㄱ",
+          "start_frame": 69,
+          "end_frame_exclusive": 70
+        },
+        {
+          "token_id": 21,
+          "token": "ㅏ",
+          "start_frame": 70,
+          "end_frame_exclusive": 71
+        },
+        {
+          "token_id": 0,
+          "token": "<blank>",
+          "start_frame": 71,
+          "end_frame_exclusive": 78
+        },
+        {
+          "token_id": 13,
+          "token": "ㅇ",
+          "start_frame": 78,
+          "end_frame_exclusive": 79
+        },
+        {
+          "token_id": 35,
+          "token": "ㅝ",
+          "start_frame": 79,
+          "end_frame_exclusive": 81
+        },
+        {
+          "token_id": 0,
+          "token": "<blank>",
+          "start_frame": 81,
+          "end_frame_exclusive": 96
+        },
+        {
+          "token_id": 13,
+          "token": "ㅇ",
+          "start_frame": 96,
+          "end_frame_exclusive": 98
+        },
+        {
+          "token_id": 33,
+          "token": "ㅛ",
+          "start_frame": 98,
+          "end_frame_exclusive": 99
+        },
+        {
+          "token_id": 0,
+          "token": "<blank>",
+          "start_frame": 99,
+          "end_frame_exclusive": 166
+        }
+      ]
+    },
+    {
+      "number": 3,
+      "case": 10,
+      "role": "matched_development",
+      "binding": "cdc94e12de0eaab8828de2ce8a3253c63f6c35b7a39bf011853bc79f57521e6e",
+      "pcm_sha256": "743f486d93bf3d6c5b744280c3beb7e8b12ea0d29427be4bfe24bb5b5e042430",
+      "answer_revision": 3,
+      "answer_status": "whole_form_confirmed",
+      "original_surface": "장미가 예뻐요",
+      "confirmed_surface": "장미가 예뻐요",
+      "prediction": {
+        "token_ids": [
+          14,
+          21,
+          13,
+          8,
+          41,
+          2,
+          21,
+          1,
+          13,
+          28,
+          10,
+          25,
+          13,
+          33
+        ],
+        "jamo": "ㅈㅏㅇㅁㅣㄱㅏ ㅇㅖㅃㅓㅇㅛ",
+        "jamo_tokens": [
+          "ㅈ",
+          "ㅏ",
+          "ㅇ",
+          "ㅁ",
+          "ㅣ",
+          "ㄱ",
+          "ㅏ",
+          "|",
+          "ㅇ",
+          "ㅖ",
+          "ㅃ",
+          "ㅓ",
+          "ㅇ",
+          "ㅛ"
+        ],
+        "text": "장미가 예뻐요",
+        "segments": [
+          {
+            "kind": "syllable",
+            "text": "장",
+            "jamo": [
+              "ㅈ",
+              "ㅏ",
+              "ㅇ"
+            ]
+          },
+          {
+            "kind": "syllable",
+            "text": "미",
+            "jamo": [
+              "ㅁ",
+              "ㅣ"
+            ]
+          },
+          {
+            "kind": "syllable",
+            "text": "가",
+            "jamo": [
+              "ㄱ",
+              "ㅏ"
+            ]
+          },
+          {
+            "kind": "space",
+            "text": " ",
+            "jamo": [
+              "|"
+            ]
+          },
+          {
+            "kind": "syllable",
+            "text": "예",
+            "jamo": [
+              "ㅇ",
+              "ㅖ"
+            ]
+          },
+          {
+            "kind": "syllable",
+            "text": "뻐",
+            "jamo": [
+              "ㅃ",
+              "ㅓ"
+            ]
+          },
+          {
+            "kind": "syllable",
+            "text": "요",
+            "jamo": [
+              "ㅇ",
+              "ㅛ"
+            ]
+          }
+        ],
+        "syllables": 6,
+        "orphan_jamo": 0,
+        "fully_composed": true,
+        "frames": 204,
+        "samples": 65536,
+        "seconds": 4.096,
+        "mean_frame_probability": 0.9958847165107727,
+        "inference_seconds": 0.0636790000135079,
+        "realtime_factor": 64.3226181179217,
+        "cached": false,
+        "decode_version": "compose-1"
+      },
+      "original_score": {
+        "errors": 0,
+        "reference_jamo": 13,
+        "hypothesis_jamo": 13,
+        "jer": 0.0,
+        "exact": true,
+        "convention": "training: boundaries ignored, edit ops / reference jamo, not clamped"
+      },
+      "confirmed_score": {
+        "errors": 0,
+        "reference_jamo": 13,
+        "hypothesis_jamo": 13,
+        "jer": 0.0,
+        "exact": true,
+        "convention": "training: boundaries ignored, edit ops / reference jamo, not clamped"
+      },
+      "differences_from_confirmed": [],
+      "original_sequence_logp": -0.0013068506407301855,
+      "confirmed_sequence_logp": -0.0013068506407301855,
+      "affected_token_evidence": [],
+      "frame_runs": [
+        {
+          "token_id": 0,
+          "token": "<blank>",
+          "start_frame": 0,
+          "end_frame_exclusive": 71
+        },
+        {
+          "token_id": 14,
+          "token": "ㅈ",
+          "start_frame": 71,
+          "end_frame_exclusive": 73
+        },
+        {
+          "token_id": 21,
+          "token": "ㅏ",
+          "start_frame": 73,
+          "end_frame_exclusive": 74
+        },
+        {
+          "token_id": 0,
+          "token": "<blank>",
+          "start_frame": 74,
+          "end_frame_exclusive": 76
+        },
+        {
+          "token_id": 13,
+          "token": "ㅇ",
+          "start_frame": 76,
+          "end_frame_exclusive": 79
+        },
+        {
+          "token_id": 0,
+          "token": "<blank>",
+          "start_frame": 79,
+          "end_frame_exclusive": 89
+        },
+        {
+          "token_id": 8,
+          "token": "ㅁ",
+          "start_frame": 89,
+          "end_frame_exclusive": 91
+        },
+        {
+          "token_id": 41,
+          "token": "ㅣ",
+          "start_frame": 91,
+          "end_frame_exclusive": 92
+        },
+        {
+          "token_id": 0,
+          "token": "<blank>",
+          "start_frame": 92,
+          "end_frame_exclusive": 100
+        },
+        {
+          "token_id": 2,
+          "token": "ㄱ",
+          "start_frame": 100,
+          "end_frame_exclusive": 101
+        },
+        {
+          "token_id": 21,
+          "token": "ㅏ",
+          "start_frame": 101,
+          "end_frame_exclusive": 103
+        },
+        {
+          "token_id": 0,
+          "token": "<blank>",
+          "start_frame": 103,
+          "end_frame_exclusive": 107
+        },
+        {
+          "token_id": 1,
+          "token": "|",
+          "start_frame": 107,
+          "end_frame_exclusive": 110
+        },
+        {
+          "token_id": 0,
+          "token": "<blank>",
+          "start_frame": 110,
+          "end_frame_exclusive": 111
+        },
+        {
+          "token_id": 13,
+          "token": "ㅇ",
+          "start_frame": 111,
+          "end_frame_exclusive": 112
+        },
+        {
+          "token_id": 28,
+          "token": "ㅖ",
+          "start_frame": 112,
+          "end_frame_exclusive": 114
+        },
+        {
+          "token_id": 0,
+          "token": "<blank>",
+          "start_frame": 114,
+          "end_frame_exclusive": 126
+        },
+        {
+          "token_id": 10,
+          "token": "ㅃ",
+          "start_frame": 126,
+          "end_frame_exclusive": 127
+        },
+        {
+          "token_id": 25,
+          "token": "ㅓ",
+          "start_frame": 127,
+          "end_frame_exclusive": 129
+        },
+        {
+          "token_id": 0,
+          "token": "<blank>",
+          "start_frame": 129,
+          "end_frame_exclusive": 141
+        },
+        {
+          "token_id": 13,
+          "token": "ㅇ",
+          "start_frame": 141,
+          "end_frame_exclusive": 142
+        },
+        {
+          "token_id": 33,
+          "token": "ㅛ",
+          "start_frame": 142,
+          "end_frame_exclusive": 144
+        },
+        {
+          "token_id": 0,
+          "token": "<blank>",
+          "start_frame": 144,
+          "end_frame_exclusive": 204
+        }
+      ]
+    },
+    {
+      "number": 4,
+      "case": 6,
+      "role": "matched_development",
+      "binding": "1cfde309458749587aede3e038888b497c976a9a630d5e58480835a18c0cc20d",
+      "pcm_sha256": "aa3874a175c5b18bb59562eda06c0639f561dcae608c4414f01b7b2269ecc4f0",
+      "answer_revision": 4,
+      "answer_status": "whole_form_confirmed",
+      "original_surface": "고양이가 조라요",
+      "confirmed_surface": "고양이가 조라요",
+      "prediction": {
+        "token_ids": [
+          2,
+          29,
+          13,
+          23,
+          13,
+          13,
+          41,
+          2,
+          21,
+          1,
+          14,
+          29,
+          7,
+          21,
+          13,
+          33
+        ],
+        "jamo": "ㄱㅗㅇㅑㅇㅇㅣㄱㅏ ㅈㅗㄹㅏㅇㅛ",
+        "jamo_tokens": [
+          "ㄱ",
+          "ㅗ",
+          "ㅇ",
+          "ㅑ",
+          "ㅇ",
+          "ㅇ",
+          "ㅣ",
+          "ㄱ",
+          "ㅏ",
+          "|",
+          "ㅈ",
+          "ㅗ",
+          "ㄹ",
+          "ㅏ",
+          "ㅇ",
+          "ㅛ"
+        ],
+        "text": "고양이가 조라요",
+        "segments": [
+          {
+            "kind": "syllable",
+            "text": "고",
+            "jamo": [
+              "ㄱ",
+              "ㅗ"
+            ]
+          },
+          {
+            "kind": "syllable",
+            "text": "양",
+            "jamo": [
+              "ㅇ",
+              "ㅑ",
+              "ㅇ"
+            ]
+          },
+          {
+            "kind": "syllable",
+            "text": "이",
+            "jamo": [
+              "ㅇ",
+              "ㅣ"
+            ]
+          },
+          {
+            "kind": "syllable",
+            "text": "가",
+            "jamo": [
+              "ㄱ",
+              "ㅏ"
+            ]
+          },
+          {
+            "kind": "space",
+            "text": " ",
+            "jamo": [
+              "|"
+            ]
+          },
+          {
+            "kind": "syllable",
+            "text": "조",
+            "jamo": [
+              "ㅈ",
+              "ㅗ"
+            ]
+          },
+          {
+            "kind": "syllable",
+            "text": "라",
+            "jamo": [
+              "ㄹ",
+              "ㅏ"
+            ]
+          },
+          {
+            "kind": "syllable",
+            "text": "요",
+            "jamo": [
+              "ㅇ",
+              "ㅛ"
+            ]
+          }
+        ],
+        "syllables": 7,
+        "orphan_jamo": 0,
+        "fully_composed": true,
+        "frames": 233,
+        "samples": 74912,
+        "seconds": 4.682,
+        "mean_frame_probability": 0.9930399060249329,
+        "inference_seconds": 0.06450739997671917,
+        "realtime_factor": 72.58082021116557,
+        "cached": false,
+        "decode_version": "compose-1"
+      },
+      "original_score": {
+        "errors": 0,
+        "reference_jamo": 15,
+        "hypothesis_jamo": 15,
+        "jer": 0.0,
+        "exact": true,
+        "convention": "training: boundaries ignored, edit ops / reference jamo, not clamped"
+      },
+      "confirmed_score": {
+        "errors": 0,
+        "reference_jamo": 15,
+        "hypothesis_jamo": 15,
+        "jer": 0.0,
+        "exact": true,
+        "convention": "training: boundaries ignored, edit ops / reference jamo, not clamped"
+      },
+      "differences_from_confirmed": [],
+      "original_sequence_logp": -0.0008649293894887959,
+      "confirmed_sequence_logp": -0.0008649293894887959,
+      "affected_token_evidence": [],
+      "frame_runs": [
+        {
+          "token_id": 0,
+          "token": "<blank>",
+          "start_frame": 0,
+          "end_frame_exclusive": 59
+        },
+        {
+          "token_id": 2,
+          "token": "ㄱ",
+          "start_frame": 59,
+          "end_frame_exclusive": 62
+        },
+        {
+          "token_id": 29,
+          "token": "ㅗ",
+          "start_frame": 62,
+          "end_frame_exclusive": 64
+        },
+        {
+          "token_id": 0,
+          "token": "<blank>",
+          "start_frame": 64,
+          "end_frame_exclusive": 71
+        },
+        {
+          "token_id": 13,
+          "token": "ㅇ",
+          "start_frame": 71,
+          "end_frame_exclusive": 72
+        },
+        {
+          "token_id": 23,
+          "token": "ㅑ",
+          "start_frame": 72,
+          "end_frame_exclusive": 74
+        },
+        {
+          "token_id": 0,
+          "token": "<blank>",
+          "start_frame": 74,
+          "end_frame_exclusive": 78
+        },
+        {
+          "token_id": 13,
+          "token": "ㅇ",
+          "start_frame": 78,
+          "end_frame_exclusive": 81
+        },
+        {
+          "token_id": 0,
+          "token": "<blank>",
+          "start_frame": 81,
+          "end_frame_exclusive": 84
+        },
+        {
+          "token_id": 13,
+          "token": "ㅇ",
+          "start_frame": 84,
+          "end_frame_exclusive": 85
+        },
+        {
+          "token_id": 41,
+          "token": "ㅣ",
+          "start_frame": 85,
+          "end_frame_exclusive": 87
+        },
+        {
+          "token_id": 0,
+          "token": "<blank>",
+          "start_frame": 87,
+          "end_frame_exclusive": 91
+        },
+        {
+          "token_id": 2,
+          "token": "ㄱ",
+          "start_frame": 91,
+          "end_frame_exclusive": 93
+        },
+        {
+          "token_id": 21,
+          "token": "ㅏ",
+          "start_frame": 93,
+          "end_frame_exclusive": 94
+        },
+        {
+          "token_id": 0,
+          "token": "<blank>",
+          "start_frame": 94,
+          "end_frame_exclusive": 98
+        },
+        {
+          "token_id": 1,
+          "token": "|",
+          "start_frame": 98,
+          "end_frame_exclusive": 100
+        },
+        {
+          "token_id": 0,
+          "token": "<blank>",
+          "start_frame": 100,
+          "end_frame_exclusive": 104
+        },
+        {
+          "token_id": 14,
+          "token": "ㅈ",
+          "start_frame": 104,
+          "end_frame_exclusive": 105
+        },
+        {
+          "token_id": 29,
+          "token": "ㅗ",
+          "start_frame": 105,
+          "end_frame_exclusive": 106
+        },
+        {
+          "token_id": 0,
+          "token": "<blank>",
+          "start_frame": 106,
+          "end_frame_exclusive": 117
+        },
+        {
+          "token_id": 7,
+          "token": "ㄹ",
+          "start_frame": 117,
+          "end_frame_exclusive": 119
+        },
+        {
+          "token_id": 21,
+          "token": "ㅏ",
+          "start_frame": 119,
+          "end_frame_exclusive": 120
+        },
+        {
+          "token_id": 0,
+          "token": "<blank>",
+          "start_frame": 120,
+          "end_frame_exclusive": 135
+        },
+        {
+          "token_id": 13,
+          "token": "ㅇ",
+          "start_frame": 135,
+          "end_frame_exclusive": 137
+        },
+        {
+          "token_id": 33,
+          "token": "ㅛ",
+          "start_frame": 137,
+          "end_frame_exclusive": 138
+        },
+        {
+          "token_id": 0,
+          "token": "<blank>",
+          "start_frame": 138,
+          "end_frame_exclusive": 233
+        }
+      ]
+    },
+    {
+      "number": 5,
+      "case": 4,
+      "role": "matched_development",
+      "binding": "4f4aedfc6e4eb96b25541d8fff66556ba349303518db0b0360cb892192b94ebf",
+      "pcm_sha256": "ce8794404fbd9340458d8056887059007a140a4189254f732b992804b34cd760",
+      "answer_revision": 5,
+      "answer_status": "whole_form_confirmed",
+      "original_surface": "배콰저메 가요",
+      "confirmed_surface": "배콰저메 가요",
+      "prediction": {
+        "token_ids": [
+          9,
+          22,
+          17,
+          30,
+          14,
+          25,
+          8,
+          26,
+          1,
+          2,
+          21,
+          13,
+          33
+        ],
+        "jamo": "ㅂㅐㅋㅘㅈㅓㅁㅔ ㄱㅏㅇㅛ",
+        "jamo_tokens": [
+          "ㅂ",
+          "ㅐ",
+          "ㅋ",
+          "ㅘ",
+          "ㅈ",
+          "ㅓ",
+          "ㅁ",
+          "ㅔ",
+          "|",
+          "ㄱ",
+          "ㅏ",
+          "ㅇ",
+          "ㅛ"
+        ],
+        "text": "배콰저메 가요",
+        "segments": [
+          {
+            "kind": "syllable",
+            "text": "배",
+            "jamo": [
+              "ㅂ",
+              "ㅐ"
+            ]
+          },
+          {
+            "kind": "syllable",
+            "text": "콰",
+            "jamo": [
+              "ㅋ",
+              "ㅘ"
+            ]
+          },
+          {
+            "kind": "syllable",
+            "text": "저",
+            "jamo": [
+              "ㅈ",
+              "ㅓ"
+            ]
+          },
+          {
+            "kind": "syllable",
+            "text": "메",
+            "jamo": [
+              "ㅁ",
+              "ㅔ"
+            ]
+          },
+          {
+            "kind": "space",
+            "text": " ",
+            "jamo": [
+              "|"
+            ]
+          },
+          {
+            "kind": "syllable",
+            "text": "가",
+            "jamo": [
+              "ㄱ",
+              "ㅏ"
+            ]
+          },
+          {
+            "kind": "syllable",
+            "text": "요",
+            "jamo": [
+              "ㅇ",
+              "ㅛ"
+            ]
+          }
+        ],
+        "syllables": 6,
+        "orphan_jamo": 0,
+        "fully_composed": true,
+        "frames": 221,
+        "samples": 70880,
+        "seconds": 4.43,
+        "mean_frame_probability": 0.9974382519721985,
+        "inference_seconds": 0.06313839997164905,
+        "realtime_factor": 70.16332377743491,
+        "cached": false,
+        "decode_version": "compose-1"
+      },
+      "original_score": {
+        "errors": 0,
+        "reference_jamo": 12,
+        "hypothesis_jamo": 12,
+        "jer": 0.0,
+        "exact": true,
+        "convention": "training: boundaries ignored, edit ops / reference jamo, not clamped"
+      },
+      "confirmed_score": {
+        "errors": 0,
+        "reference_jamo": 12,
+        "hypothesis_jamo": 12,
+        "jer": 0.0,
+        "exact": true,
+        "convention": "training: boundaries ignored, edit ops / reference jamo, not clamped"
+      },
+      "differences_from_confirmed": [],
+      "original_sequence_logp": -0.0015982239764908961,
+      "confirmed_sequence_logp": -0.0015982239764908961,
+      "affected_token_evidence": [],
+      "frame_runs": [
+        {
+          "token_id": 0,
+          "token": "<blank>",
+          "start_frame": 0,
+          "end_frame_exclusive": 83
+        },
+        {
+          "token_id": 9,
+          "token": "ㅂ",
+          "start_frame": 83,
+          "end_frame_exclusive": 84
+        },
+        {
+          "token_id": 22,
+          "token": "ㅐ",
+          "start_frame": 84,
+          "end_frame_exclusive": 85
+        },
+        {
+          "token_id": 0,
+          "token": "<blank>",
+          "start_frame": 85,
+          "end_frame_exclusive": 99
+        },
+        {
+          "token_id": 17,
+          "token": "ㅋ",
+          "start_frame": 99,
+          "end_frame_exclusive": 100
+        },
+        {
+          "token_id": 30,
+          "token": "ㅘ",
+          "start_frame": 100,
+          "end_frame_exclusive": 102
+        },
+        {
+          "token_id": 0,
+          "token": "<blank>",
+          "start_frame": 102,
+          "end_frame_exclusive": 110
+        },
+        {
+          "token_id": 14,
+          "token": "ㅈ",
+          "start_frame": 110,
+          "end_frame_exclusive": 112
+        },
+        {
+          "token_id": 25,
+          "token": "ㅓ",
+          "start_frame": 112,
+          "end_frame_exclusive": 113
+        },
+        {
+          "token_id": 0,
+          "token": "<blank>",
+          "start_frame": 113,
+          "end_frame_exclusive": 121
+        },
+        {
+          "token_id": 8,
+          "token": "ㅁ",
+          "start_frame": 121,
+          "end_frame_exclusive": 122
+        },
+        {
+          "token_id": 26,
+          "token": "ㅔ",
+          "start_frame": 122,
+          "end_frame_exclusive": 123
+        },
+        {
+          "token_id": 0,
+          "token": "<blank>",
+          "start_frame": 123,
+          "end_frame_exclusive": 128
+        },
+        {
+          "token_id": 1,
+          "token": "|",
+          "start_frame": 128,
+          "end_frame_exclusive": 130
+        },
+        {
+          "token_id": 0,
+          "token": "<blank>",
+          "start_frame": 130,
+          "end_frame_exclusive": 131
+        },
+        {
+          "token_id": 2,
+          "token": "ㄱ",
+          "start_frame": 131,
+          "end_frame_exclusive": 133
+        },
+        {
+          "token_id": 21,
+          "token": "ㅏ",
+          "start_frame": 133,
+          "end_frame_exclusive": 134
+        },
+        {
+          "token_id": 0,
+          "token": "<blank>",
+          "start_frame": 134,
+          "end_frame_exclusive": 143
+        },
+        {
+          "token_id": 13,
+          "token": "ㅇ",
+          "start_frame": 143,
+          "end_frame_exclusive": 144
+        },
+        {
+          "token_id": 33,
+          "token": "ㅛ",
+          "start_frame": 144,
+          "end_frame_exclusive": 146
+        },
+        {
+          "token_id": 0,
+          "token": "<blank>",
+          "start_frame": 146,
+          "end_frame_exclusive": 221
+        }
+      ]
+    },
+    {
+      "number": 6,
+      "case": 15,
+      "role": "matched_development",
+      "binding": "8611472529d06985b5fb7359809ea255cb7ef5c314d0caf605c7550b762c788a",
+      "pcm_sha256": "fe9b75fc97de1e095853486ffc1906a94cfc3ed62ba40a45880bccac6d0ce31f",
+      "answer_revision": 6,
+      "answer_status": "whole_form_confirmed",
+      "original_surface": "기뻐써요",
+      "confirmed_surface": "기뻐써요",
+      "prediction": {
+        "token_ids": [
+          2,
+          41,
+          10,
+          25,
+          12,
+          25,
+          13,
+          33
+        ],
+        "jamo": "ㄱㅣㅃㅓㅆㅓㅇㅛ",
+        "jamo_tokens": [
+          "ㄱ",
+          "ㅣ",
+          "ㅃ",
+          "ㅓ",
+          "ㅆ",
+          "ㅓ",
+          "ㅇ",
+          "ㅛ"
+        ],
+        "text": "기뻐써요",
+        "segments": [
+          {
+            "kind": "syllable",
+            "text": "기",
+            "jamo": [
+              "ㄱ",
+              "ㅣ"
+            ]
+          },
+          {
+            "kind": "syllable",
+            "text": "뻐",
+            "jamo": [
+              "ㅃ",
+              "ㅓ"
+            ]
+          },
+          {
+            "kind": "syllable",
+            "text": "써",
+            "jamo": [
+              "ㅆ",
+              "ㅓ"
+            ]
+          },
+          {
+            "kind": "syllable",
+            "text": "요",
+            "jamo": [
+              "ㅇ",
+              "ㅛ"
+            ]
+          }
+        ],
+        "syllables": 4,
+        "orphan_jamo": 0,
+        "fully_composed": true,
+        "frames": 127,
+        "samples": 40960,
+        "seconds": 2.56,
+        "mean_frame_probability": 0.9978746771812439,
+        "inference_seconds": 0.047395800007507205,
+        "realtime_factor": 54.013224791954386,
+        "cached": false,
+        "decode_version": "compose-1"
+      },
+      "original_score": {
+        "errors": 0,
+        "reference_jamo": 8,
+        "hypothesis_jamo": 8,
+        "jer": 0.0,
+        "exact": true,
+        "convention": "training: boundaries ignored, edit ops / reference jamo, not clamped"
+      },
+      "confirmed_score": {
+        "errors": 0,
+        "reference_jamo": 8,
+        "hypothesis_jamo": 8,
+        "jer": 0.0,
+        "exact": true,
+        "convention": "training: boundaries ignored, edit ops / reference jamo, not clamped"
+      },
+      "differences_from_confirmed": [],
+      "original_sequence_logp": -0.004979702283681692,
+      "confirmed_sequence_logp": -0.004979702283681692,
+      "affected_token_evidence": [],
+      "frame_runs": [
+        {
+          "token_id": 0,
+          "token": "<blank>",
+          "start_frame": 0,
+          "end_frame_exclusive": 25
+        },
+        {
+          "token_id": 2,
+          "token": "ㄱ",
+          "start_frame": 25,
+          "end_frame_exclusive": 27
+        },
+        {
+          "token_id": 41,
+          "token": "ㅣ",
+          "start_frame": 27,
+          "end_frame_exclusive": 28
+        },
+        {
+          "token_id": 0,
+          "token": "<blank>",
+          "start_frame": 28,
+          "end_frame_exclusive": 34
+        },
+        {
+          "token_id": 10,
+          "token": "ㅃ",
+          "start_frame": 34,
+          "end_frame_exclusive": 35
+        },
+        {
+          "token_id": 25,
+          "token": "ㅓ",
+          "start_frame": 35,
+          "end_frame_exclusive": 36
+        },
+        {
+          "token_id": 0,
+          "token": "<blank>",
+          "start_frame": 36,
+          "end_frame_exclusive": 44
+        },
+        {
+          "token_id": 12,
+          "token": "ㅆ",
+          "start_frame": 44,
+          "end_frame_exclusive": 45
+        },
+        {
+          "token_id": 25,
+          "token": "ㅓ",
+          "start_frame": 45,
+          "end_frame_exclusive": 46
+        },
+        {
+          "token_id": 0,
+          "token": "<blank>",
+          "start_frame": 46,
+          "end_frame_exclusive": 60
+        },
+        {
+          "token_id": 13,
+          "token": "ㅇ",
+          "start_frame": 60,
+          "end_frame_exclusive": 62
+        },
+        {
+          "token_id": 33,
+          "token": "ㅛ",
+          "start_frame": 62,
+          "end_frame_exclusive": 63
+        },
+        {
+          "token_id": 0,
+          "token": "<blank>",
+          "start_frame": 63,
+          "end_frame_exclusive": 127
+        }
+      ]
+    },
+    {
+      "number": 7,
+      "case": 6,
+      "role": "relabel_train",
+      "binding": "c34fbeb5b341502a104e7cc17fdfb0ef20ceb4492e54d4f73cbc381ed47e0eb3",
+      "pcm_sha256": "6fc70c929d9d92db83fc4fa7de639f650ca848a3b06098230def48c34556f764",
+      "answer_revision": 7,
+      "answer_status": "whole_form_confirmed",
+      "original_surface": "고양이가 조라요",
+      "confirmed_surface": "고양이가 조아요",
+      "prediction": {
+        "token_ids": [
+          2,
+          29,
+          13,
+          23,
+          13,
+          13,
+          41,
+          2,
+          21,
+          1,
+          14,
+          29,
+          13,
+          21,
+          13,
+          33
+        ],
+        "jamo": "ㄱㅗㅇㅑㅇㅇㅣㄱㅏ ㅈㅗㅇㅏㅇㅛ",
+        "jamo_tokens": [
+          "ㄱ",
+          "ㅗ",
+          "ㅇ",
+          "ㅑ",
+          "ㅇ",
+          "ㅇ",
+          "ㅣ",
+          "ㄱ",
+          "ㅏ",
+          "|",
+          "ㅈ",
+          "ㅗ",
+          "ㅇ",
+          "ㅏ",
+          "ㅇ",
+          "ㅛ"
+        ],
+        "text": "고양이가 조아요",
+        "segments": [
+          {
+            "kind": "syllable",
+            "text": "고",
+            "jamo": [
+              "ㄱ",
+              "ㅗ"
+            ]
+          },
+          {
+            "kind": "syllable",
+            "text": "양",
+            "jamo": [
+              "ㅇ",
+              "ㅑ",
+              "ㅇ"
+            ]
+          },
+          {
+            "kind": "syllable",
+            "text": "이",
+            "jamo": [
+              "ㅇ",
+              "ㅣ"
+            ]
+          },
+          {
+            "kind": "syllable",
+            "text": "가",
+            "jamo": [
+              "ㄱ",
+              "ㅏ"
+            ]
+          },
+          {
+            "kind": "space",
+            "text": " ",
+            "jamo": [
+              "|"
+            ]
+          },
+          {
+            "kind": "syllable",
+            "text": "조",
+            "jamo": [
+              "ㅈ",
+              "ㅗ"
+            ]
+          },
+          {
+            "kind": "syllable",
+            "text": "아",
+            "jamo": [
+              "ㅇ",
+              "ㅏ"
+            ]
+          },
+          {
+            "kind": "syllable",
+            "text": "요",
+            "jamo": [
+              "ㅇ",
+              "ㅛ"
+            ]
+          }
+        ],
+        "syllables": 7,
+        "orphan_jamo": 0,
+        "fully_composed": true,
+        "frames": 172,
+        "samples": 55296,
+        "seconds": 3.456,
+        "mean_frame_probability": 0.9870314598083496,
+        "inference_seconds": 0.0584843999822624,
+        "realtime_factor": 59.092681143145214,
+        "cached": false,
+        "decode_version": "compose-1"
+      },
+      "original_score": {
+        "errors": 1,
+        "reference_jamo": 15,
+        "hypothesis_jamo": 15,
+        "jer": 0.06666666666666667,
+        "exact": false,
+        "convention": "training: boundaries ignored, edit ops / reference jamo, not clamped"
+      },
+      "confirmed_score": {
+        "errors": 0,
+        "reference_jamo": 15,
+        "hypothesis_jamo": 15,
+        "jer": 0.0,
+        "exact": true,
+        "convention": "training: boundaries ignored, edit ops / reference jamo, not clamped"
+      },
+      "differences_from_confirmed": [],
+      "original_sequence_logp": -8.3956964460475,
+      "confirmed_sequence_logp": -0.00269433607890244,
+      "affected_token_evidence": [],
+      "frame_runs": [
+        {
+          "token_id": 0,
+          "token": "<blank>",
+          "start_frame": 0,
+          "end_frame_exclusive": 29
+        },
+        {
+          "token_id": 2,
+          "token": "ㄱ",
+          "start_frame": 29,
+          "end_frame_exclusive": 32
+        },
+        {
+          "token_id": 29,
+          "token": "ㅗ",
+          "start_frame": 32,
+          "end_frame_exclusive": 34
+        },
+        {
+          "token_id": 0,
+          "token": "<blank>",
+          "start_frame": 34,
+          "end_frame_exclusive": 44
+        },
+        {
+          "token_id": 13,
+          "token": "ㅇ",
+          "start_frame": 44,
+          "end_frame_exclusive": 46
+        },
+        {
+          "token_id": 23,
+          "token": "ㅑ",
+          "start_frame": 46,
+          "end_frame_exclusive": 48
+        },
+        {
+          "token_id": 0,
+          "token": "<blank>",
+          "start_frame": 48,
+          "end_frame_exclusive": 52
+        },
+        {
+          "token_id": 13,
+          "token": "ㅇ",
+          "start_frame": 52,
+          "end_frame_exclusive": 54
+        },
+        {
+          "token_id": 0,
+          "token": "<blank>",
+          "start_frame": 54,
+          "end_frame_exclusive": 56
+        },
+        {
+          "token_id": 13,
+          "token": "ㅇ",
+          "start_frame": 56,
+          "end_frame_exclusive": 58
+        },
+        {
+          "token_id": 41,
+          "token": "ㅣ",
+          "start_frame": 58,
+          "end_frame_exclusive": 60
+        },
+        {
+          "token_id": 0,
+          "token": "<blank>",
+          "start_frame": 60,
+          "end_frame_exclusive": 67
+        },
+        {
+          "token_id": 2,
+          "token": "ㄱ",
+          "start_frame": 67,
+          "end_frame_exclusive": 68
+        },
+        {
+          "token_id": 21,
+          "token": "ㅏ",
+          "start_frame": 68,
+          "end_frame_exclusive": 70
+        },
+        {
+          "token_id": 0,
+          "token": "<blank>",
+          "start_frame": 70,
+          "end_frame_exclusive": 74
+        },
+        {
+          "token_id": 1,
+          "token": "|",
+          "start_frame": 74,
+          "end_frame_exclusive": 76
+        },
+        {
+          "token_id": 0,
+          "token": "<blank>",
+          "start_frame": 76,
+          "end_frame_exclusive": 80
+        },
+        {
+          "token_id": 14,
+          "token": "ㅈ",
+          "start_frame": 80,
+          "end_frame_exclusive": 81
+        },
+        {
+          "token_id": 29,
+          "token": "ㅗ",
+          "start_frame": 81,
+          "end_frame_exclusive": 82
+        },
+        {
+          "token_id": 0,
+          "token": "<blank>",
+          "start_frame": 82,
+          "end_frame_exclusive": 92
+        },
+        {
+          "token_id": 13,
+          "token": "ㅇ",
+          "start_frame": 92,
+          "end_frame_exclusive": 93
+        },
+        {
+          "token_id": 21,
+          "token": "ㅏ",
+          "start_frame": 93,
+          "end_frame_exclusive": 95
+        },
+        {
+          "token_id": 0,
+          "token": "<blank>",
+          "start_frame": 95,
+          "end_frame_exclusive": 108
+        },
+        {
+          "token_id": 13,
+          "token": "ㅇ",
+          "start_frame": 108,
+          "end_frame_exclusive": 110
+        },
+        {
+          "token_id": 33,
+          "token": "ㅛ",
+          "start_frame": 110,
+          "end_frame_exclusive": 111
+        },
+        {
+          "token_id": 0,
+          "token": "<blank>",
+          "start_frame": 111,
+          "end_frame_exclusive": 172
+        }
+      ]
+    },
+    {
+      "number": 8,
+      "case": 4,
+      "role": "matched_development",
+      "binding": "d89b49186ebb3de61817cfb874c434168c5478ebb23c08256c517b71441ec448",
+      "pcm_sha256": "18d507716940b2b40266247fde8504f4bc4e97e01d04e30b1ab6b21c47531e9c",
+      "answer_revision": 8,
+      "answer_status": "whole_form_confirmed",
+      "original_surface": "배콰저메 가요",
+      "confirmed_surface": "배콰저메 가요",
+      "prediction": {
+        "token_ids": [
+          9,
+          22,
+          17,
+          30,
+          14,
+          25,
+          8,
+          26,
+          1,
+          2,
+          21,
+          13,
+          33
+        ],
+        "jamo": "ㅂㅐㅋㅘㅈㅓㅁㅔ ㄱㅏㅇㅛ",
+        "jamo_tokens": [
+          "ㅂ",
+          "ㅐ",
+          "ㅋ",
+          "ㅘ",
+          "ㅈ",
+          "ㅓ",
+          "ㅁ",
+          "ㅔ",
+          "|",
+          "ㄱ",
+          "ㅏ",
+          "ㅇ",
+          "ㅛ"
+        ],
+        "text": "배콰저메 가요",
+        "segments": [
+          {
+            "kind": "syllable",
+            "text": "배",
+            "jamo": [
+              "ㅂ",
+              "ㅐ"
+            ]
+          },
+          {
+            "kind": "syllable",
+            "text": "콰",
+            "jamo": [
+              "ㅋ",
+              "ㅘ"
+            ]
+          },
+          {
+            "kind": "syllable",
+            "text": "저",
+            "jamo": [
+              "ㅈ",
+              "ㅓ"
+            ]
+          },
+          {
+            "kind": "syllable",
+            "text": "메",
+            "jamo": [
+              "ㅁ",
+              "ㅔ"
+            ]
+          },
+          {
+            "kind": "space",
+            "text": " ",
+            "jamo": [
+              "|"
+            ]
+          },
+          {
+            "kind": "syllable",
+            "text": "가",
+            "jamo": [
+              "ㄱ",
+              "ㅏ"
+            ]
+          },
+          {
+            "kind": "syllable",
+            "text": "요",
+            "jamo": [
+              "ㅇ",
+              "ㅛ"
+            ]
+          }
+        ],
+        "syllables": 6,
+        "orphan_jamo": 0,
+        "fully_composed": true,
+        "frames": 192,
+        "samples": 61824,
+        "seconds": 3.864,
+        "mean_frame_probability": 0.9977917671203613,
+        "inference_seconds": 0.06047480000415817,
+        "realtime_factor": 63.894382449124535,
+        "cached": false,
+        "decode_version": "compose-1"
+      },
+      "original_score": {
+        "errors": 0,
+        "reference_jamo": 12,
+        "hypothesis_jamo": 12,
+        "jer": 0.0,
+        "exact": true,
+        "convention": "training: boundaries ignored, edit ops / reference jamo, not clamped"
+      },
+      "confirmed_score": {
+        "errors": 0,
+        "reference_jamo": 12,
+        "hypothesis_jamo": 12,
+        "jer": 0.0,
+        "exact": true,
+        "convention": "training: boundaries ignored, edit ops / reference jamo, not clamped"
+      },
+      "differences_from_confirmed": [],
+      "original_sequence_logp": -0.0016597274515582196,
+      "confirmed_sequence_logp": -0.0016597274515582196,
+      "affected_token_evidence": [],
+      "frame_runs": [
+        {
+          "token_id": 0,
+          "token": "<blank>",
+          "start_frame": 0,
+          "end_frame_exclusive": 58
+        },
+        {
+          "token_id": 9,
+          "token": "ㅂ",
+          "start_frame": 58,
+          "end_frame_exclusive": 60
+        },
+        {
+          "token_id": 22,
+          "token": "ㅐ",
+          "start_frame": 60,
+          "end_frame_exclusive": 61
+        },
+        {
+          "token_id": 0,
+          "token": "<blank>",
+          "start_frame": 61,
+          "end_frame_exclusive": 71
+        },
+        {
+          "token_id": 17,
+          "token": "ㅋ",
+          "start_frame": 71,
+          "end_frame_exclusive": 72
+        },
+        {
+          "token_id": 30,
+          "token": "ㅘ",
+          "start_frame": 72,
+          "end_frame_exclusive": 74
+        },
+        {
+          "token_id": 0,
+          "token": "<blank>",
+          "start_frame": 74,
+          "end_frame_exclusive": 83
+        },
+        {
+          "token_id": 14,
+          "token": "ㅈ",
+          "start_frame": 83,
+          "end_frame_exclusive": 84
+        },
+        {
+          "token_id": 25,
+          "token": "ㅓ",
+          "start_frame": 84,
+          "end_frame_exclusive": 85
+        },
+        {
+          "token_id": 0,
+          "token": "<blank>",
+          "start_frame": 85,
+          "end_frame_exclusive": 93
+        },
+        {
+          "token_id": 8,
+          "token": "ㅁ",
+          "start_frame": 93,
+          "end_frame_exclusive": 94
+        },
+        {
+          "token_id": 26,
+          "token": "ㅔ",
+          "start_frame": 94,
+          "end_frame_exclusive": 96
+        },
+        {
+          "token_id": 0,
+          "token": "<blank>",
+          "start_frame": 96,
+          "end_frame_exclusive": 100
+        },
+        {
+          "token_id": 1,
+          "token": "|",
+          "start_frame": 100,
+          "end_frame_exclusive": 102
+        },
+        {
+          "token_id": 0,
+          "token": "<blank>",
+          "start_frame": 102,
+          "end_frame_exclusive": 103
+        },
+        {
+          "token_id": 2,
+          "token": "ㄱ",
+          "start_frame": 103,
+          "end_frame_exclusive": 105
+        },
+        {
+          "token_id": 21,
+          "token": "ㅏ",
+          "start_frame": 105,
+          "end_frame_exclusive": 106
+        },
+        {
+          "token_id": 0,
+          "token": "<blank>",
+          "start_frame": 106,
+          "end_frame_exclusive": 119
+        },
+        {
+          "token_id": 13,
+          "token": "ㅇ",
+          "start_frame": 119,
+          "end_frame_exclusive": 120
+        },
+        {
+          "token_id": 33,
+          "token": "ㅛ",
+          "start_frame": 120,
+          "end_frame_exclusive": 121
+        },
+        {
+          "token_id": 0,
+          "token": "<blank>",
+          "start_frame": 121,
+          "end_frame_exclusive": 192
+        }
+      ]
+    },
+    {
+      "number": 9,
+      "case": 3,
+      "role": "matched_development",
+      "binding": "2f1e4387fc156429f733a827a6e3dd5ab3354c4d756ec54c6aa0bf552cec5374",
+      "pcm_sha256": "19ebadfe5820fa8455542213737e4a198480a7c21600fafe90b56071a4b0b493",
+      "answer_revision": 9,
+      "answer_status": "no_whole_form_label",
+      "original_surface": "반가워요",
+      "confirmed_surface": null,
+      "prediction": {
+        "token_ids": [
+          14,
+          21,
+          13,
+          2,
+          25,
+          13,
+          35,
+          13,
+          33
+        ],
+        "jamo": "ㅈㅏㅇㄱㅓㅇㅝㅇㅛ",
+        "jamo_tokens": [
+          "ㅈ",
+          "ㅏ",
+          "ㅇ",
+          "ㄱ",
+          "ㅓ",
+          "ㅇ",
+          "ㅝ",
+          "ㅇ",
+          "ㅛ"
+        ],
+        "text": "장거워요",
+        "segments": [
+          {
+            "kind": "syllable",
+            "text": "장",
+            "jamo": [
+              "ㅈ",
+              "ㅏ",
+              "ㅇ"
+            ]
+          },
+          {
+            "kind": "syllable",
+            "text": "거",
+            "jamo": [
+              "ㄱ",
+              "ㅓ"
+            ]
+          },
+          {
+            "kind": "syllable",
+            "text": "워",
+            "jamo": [
+              "ㅇ",
+              "ㅝ"
+            ]
+          },
+          {
+            "kind": "syllable",
+            "text": "요",
+            "jamo": [
+              "ㅇ",
+              "ㅛ"
+            ]
+          }
+        ],
+        "syllables": 4,
+        "orphan_jamo": 0,
+        "fully_composed": true,
+        "frames": 180,
+        "samples": 57760,
+        "seconds": 3.61,
+        "mean_frame_probability": 0.9842125773429871,
+        "inference_seconds": 0.060816099983640015,
+        "realtime_factor": 59.35928152201665,
+        "cached": false,
+        "decode_version": "compose-1"
+      },
+      "original_score": {
+        "errors": 3,
+        "reference_jamo": 9,
+        "hypothesis_jamo": 9,
+        "jer": 0.3333333333333333,
+        "exact": false,
+        "convention": "training: boundaries ignored, edit ops / reference jamo, not clamped"
+      },
+      "confirmed_score": null,
+      "differences_from_confirmed": [],
+      "original_sequence_logp": -6.45001073071913,
+      "confirmed_sequence_logp": null,
+      "affected_token_evidence": [],
+      "frame_runs": [
+        {
+          "token_id": 0,
+          "token": "<blank>",
+          "start_frame": 0,
+          "end_frame_exclusive": 58
+        },
+        {
+          "token_id": 14,
+          "token": "ㅈ",
+          "start_frame": 58,
+          "end_frame_exclusive": 59
+        },
+        {
+          "token_id": 21,
+          "token": "ㅏ",
+          "start_frame": 59,
+          "end_frame_exclusive": 60
+        },
+        {
+          "token_id": 0,
+          "token": "<blank>",
+          "start_frame": 60,
+          "end_frame_exclusive": 63
+        },
+        {
+          "token_id": 13,
+          "token": "ㅇ",
+          "start_frame": 63,
+          "end_frame_exclusive": 64
+        },
+        {
+          "token_id": 0,
+          "token": "<blank>",
+          "start_frame": 64,
+          "end_frame_exclusive": 70
+        },
+        {
+          "token_id": 2,
+          "token": "ㄱ",
+          "start_frame": 70,
+          "end_frame_exclusive": 71
+        },
+        {
+          "token_id": 25,
+          "token": "ㅓ",
+          "start_frame": 71,
+          "end_frame_exclusive": 72
+        },
+        {
+          "token_id": 0,
+          "token": "<blank>",
+          "start_frame": 72,
+          "end_frame_exclusive": 80
+        },
+        {
+          "token_id": 13,
+          "token": "ㅇ",
+          "start_frame": 80,
+          "end_frame_exclusive": 81
+        },
+        {
+          "token_id": 35,
+          "token": "ㅝ",
+          "start_frame": 81,
+          "end_frame_exclusive": 82
+        },
+        {
+          "token_id": 0,
+          "token": "<blank>",
+          "start_frame": 82,
+          "end_frame_exclusive": 92
+        },
+        {
+          "token_id": 13,
+          "token": "ㅇ",
+          "start_frame": 92,
+          "end_frame_exclusive": 94
+        },
+        {
+          "token_id": 33,
+          "token": "ㅛ",
+          "start_frame": 94,
+          "end_frame_exclusive": 95
+        },
+        {
+          "token_id": 0,
+          "token": "<blank>",
+          "start_frame": 95,
+          "end_frame_exclusive": 180
+        }
+      ]
+    },
+    {
+      "number": 10,
+      "case": 4,
+      "role": "relabel_train",
+      "binding": "b472580bea87ac23dac3a17292fde49dd03eb0ab17a85bb15944acc31ac4f127",
+      "pcm_sha256": "f8532fe7d5ae9a405382fb7bd42c63438f6e7c180478b11eac3adf4906b4731e",
+      "answer_revision": 10,
+      "answer_status": "whole_form_confirmed",
+      "original_surface": "배콰저메 가요",
+      "confirmed_surface": "배콰저메 가요",
+      "prediction": {
+        "token_ids": [
+          9,
+          22,
+          17,
+          30,
+          14,
+          25,
+          8,
+          26,
+          1,
+          2,
+          21,
+          13,
+          33
+        ],
+        "jamo": "ㅂㅐㅋㅘㅈㅓㅁㅔ ㄱㅏㅇㅛ",
+        "jamo_tokens": [
+          "ㅂ",
+          "ㅐ",
+          "ㅋ",
+          "ㅘ",
+          "ㅈ",
+          "ㅓ",
+          "ㅁ",
+          "ㅔ",
+          "|",
+          "ㄱ",
+          "ㅏ",
+          "ㅇ",
+          "ㅛ"
+        ],
+        "text": "배콰저메 가요",
+        "segments": [
+          {
+            "kind": "syllable",
+            "text": "배",
+            "jamo": [
+              "ㅂ",
+              "ㅐ"
+            ]
+          },
+          {
+            "kind": "syllable",
+            "text": "콰",
+            "jamo": [
+              "ㅋ",
+              "ㅘ"
+            ]
+          },
+          {
+            "kind": "syllable",
+            "text": "저",
+            "jamo": [
+              "ㅈ",
+              "ㅓ"
+            ]
+          },
+          {
+            "kind": "syllable",
+            "text": "메",
+            "jamo": [
+              "ㅁ",
+              "ㅔ"
+            ]
+          },
+          {
+            "kind": "space",
+            "text": " ",
+            "jamo": [
+              "|"
+            ]
+          },
+          {
+            "kind": "syllable",
+            "text": "가",
+            "jamo": [
+              "ㄱ",
+              "ㅏ"
+            ]
+          },
+          {
+            "kind": "syllable",
+            "text": "요",
+            "jamo": [
+              "ㅇ",
+              "ㅛ"
+            ]
+          }
+        ],
+        "syllables": 6,
+        "orphan_jamo": 0,
+        "fully_composed": true,
+        "frames": 226,
+        "samples": 72704,
+        "seconds": 4.544,
+        "mean_frame_probability": 0.9953546524047852,
+        "inference_seconds": 0.06421290000434965,
+        "realtime_factor": 70.76459714001702,
+        "cached": false,
+        "decode_version": "compose-1"
+      },
+      "original_score": {
+        "errors": 0,
+        "reference_jamo": 12,
+        "hypothesis_jamo": 12,
+        "jer": 0.0,
+        "exact": true,
+        "convention": "training: boundaries ignored, edit ops / reference jamo, not clamped"
+      },
+      "confirmed_score": {
+        "errors": 0,
+        "reference_jamo": 12,
+        "hypothesis_jamo": 12,
+        "jer": 0.0,
+        "exact": true,
+        "convention": "training: boundaries ignored, edit ops / reference jamo, not clamped"
+      },
+      "differences_from_confirmed": [],
+      "original_sequence_logp": -0.012067862631915855,
+      "confirmed_sequence_logp": -0.012067862631915855,
+      "affected_token_evidence": [],
+      "frame_runs": [
+        {
+          "token_id": 0,
+          "token": "<blank>",
+          "start_frame": 0,
+          "end_frame_exclusive": 52
+        },
+        {
+          "token_id": 9,
+          "token": "ㅂ",
+          "start_frame": 52,
+          "end_frame_exclusive": 53
+        },
+        {
+          "token_id": 22,
+          "token": "ㅐ",
+          "start_frame": 53,
+          "end_frame_exclusive": 54
+        },
+        {
+          "token_id": 0,
+          "token": "<blank>",
+          "start_frame": 54,
+          "end_frame_exclusive": 73
+        },
+        {
+          "token_id": 17,
+          "token": "ㅋ",
+          "start_frame": 73,
+          "end_frame_exclusive": 76
+        },
+        {
+          "token_id": 30,
+          "token": "ㅘ",
+          "start_frame": 76,
+          "end_frame_exclusive": 79
+        },
+        {
+          "token_id": 0,
+          "token": "<blank>",
+          "start_frame": 79,
+          "end_frame_exclusive": 95
+        },
+        {
+          "token_id": 14,
+          "token": "ㅈ",
+          "start_frame": 95,
+          "end_frame_exclusive": 96
+        },
+        {
+          "token_id": 25,
+          "token": "ㅓ",
+          "start_frame": 96,
+          "end_frame_exclusive": 97
+        },
+        {
+          "token_id": 0,
+          "token": "<blank>",
+          "start_frame": 97,
+          "end_frame_exclusive": 115
+        },
+        {
+          "token_id": 8,
+          "token": "ㅁ",
+          "start_frame": 115,
+          "end_frame_exclusive": 116
+        },
+        {
+          "token_id": 26,
+          "token": "ㅔ",
+          "start_frame": 116,
+          "end_frame_exclusive": 117
+        },
+        {
+          "token_id": 0,
+          "token": "<blank>",
+          "start_frame": 117,
+          "end_frame_exclusive": 131
+        },
+        {
+          "token_id": 1,
+          "token": "|",
+          "start_frame": 131,
+          "end_frame_exclusive": 133
+        },
+        {
+          "token_id": 0,
+          "token": "<blank>",
+          "start_frame": 133,
+          "end_frame_exclusive": 136
+        },
+        {
+          "token_id": 2,
+          "token": "ㄱ",
+          "start_frame": 136,
+          "end_frame_exclusive": 137
+        },
+        {
+          "token_id": 21,
+          "token": "ㅏ",
+          "start_frame": 137,
+          "end_frame_exclusive": 139
+        },
+        {
+          "token_id": 0,
+          "token": "<blank>",
+          "start_frame": 139,
+          "end_frame_exclusive": 155
+        },
+        {
+          "token_id": 13,
+          "token": "ㅇ",
+          "start_frame": 155,
+          "end_frame_exclusive": 156
+        },
+        {
+          "token_id": 33,
+          "token": "ㅛ",
+          "start_frame": 156,
+          "end_frame_exclusive": 158
+        },
+        {
+          "token_id": 0,
+          "token": "<blank>",
+          "start_frame": 158,
+          "end_frame_exclusive": 226
+        }
+      ]
+    },
+    {
+      "number": 11,
+      "case": 6,
+      "role": "matched_development",
+      "binding": "1afac9bae015b21d611e1767478bf84cfe08152544e97142e27b34cc81b46118",
+      "pcm_sha256": "f939ecf18e94f8122a8ac0f785e8ae584434cf51dfb7adad0cc15c0a9de4c55d",
+      "answer_revision": 11,
+      "answer_status": "whole_form_confirmed",
+      "original_surface": "고양이가 조라요",
+      "confirmed_surface": "고양이가 조라요",
+      "prediction": {
+        "token_ids": [
+          2,
+          29,
+          13,
+          23,
+          13,
+          13,
+          41,
+          2,
+          21,
+          1,
+          14,
+          29,
+          7,
+          21,
+          13,
+          33
+        ],
+        "jamo": "ㄱㅗㅇㅑㅇㅇㅣㄱㅏ ㅈㅗㄹㅏㅇㅛ",
+        "jamo_tokens": [
+          "ㄱ",
+          "ㅗ",
+          "ㅇ",
+          "ㅑ",
+          "ㅇ",
+          "ㅇ",
+          "ㅣ",
+          "ㄱ",
+          "ㅏ",
+          "|",
+          "ㅈ",
+          "ㅗ",
+          "ㄹ",
+          "ㅏ",
+          "ㅇ",
+          "ㅛ"
+        ],
+        "text": "고양이가 조라요",
+        "segments": [
+          {
+            "kind": "syllable",
+            "text": "고",
+            "jamo": [
+              "ㄱ",
+              "ㅗ"
+            ]
+          },
+          {
+            "kind": "syllable",
+            "text": "양",
+            "jamo": [
+              "ㅇ",
+              "ㅑ",
+              "ㅇ"
+            ]
+          },
+          {
+            "kind": "syllable",
+            "text": "이",
+            "jamo": [
+              "ㅇ",
+              "ㅣ"
+            ]
+          },
+          {
+            "kind": "syllable",
+            "text": "가",
+            "jamo": [
+              "ㄱ",
+              "ㅏ"
+            ]
+          },
+          {
+            "kind": "space",
+            "text": " ",
+            "jamo": [
+              "|"
+            ]
+          },
+          {
+            "kind": "syllable",
+            "text": "조",
+            "jamo": [
+              "ㅈ",
+              "ㅗ"
+            ]
+          },
+          {
+            "kind": "syllable",
+            "text": "라",
+            "jamo": [
+              "ㄹ",
+              "ㅏ"
+            ]
+          },
+          {
+            "kind": "syllable",
+            "text": "요",
+            "jamo": [
+              "ㅇ",
+              "ㅛ"
+            ]
+          }
+        ],
+        "syllables": 7,
+        "orphan_jamo": 0,
+        "fully_composed": true,
+        "frames": 255,
+        "samples": 81920,
+        "seconds": 5.12,
+        "mean_frame_probability": 0.9938952922821045,
+        "inference_seconds": 0.06605120003223419,
+        "realtime_factor": 77.51562420518245,
+        "cached": false,
+        "decode_version": "compose-1"
+      },
+      "original_score": {
+        "errors": 0,
+        "reference_jamo": 15,
+        "hypothesis_jamo": 15,
+        "jer": 0.0,
+        "exact": true,
+        "convention": "training: boundaries ignored, edit ops / reference jamo, not clamped"
+      },
+      "confirmed_score": {
+        "errors": 0,
+        "reference_jamo": 15,
+        "hypothesis_jamo": 15,
+        "jer": 0.0,
+        "exact": true,
+        "convention": "training: boundaries ignored, edit ops / reference jamo, not clamped"
+      },
+      "differences_from_confirmed": [],
+      "original_sequence_logp": -0.0027612571190288766,
+      "confirmed_sequence_logp": -0.0027612571190288766,
+      "affected_token_evidence": [],
+      "frame_runs": [
+        {
+          "token_id": 0,
+          "token": "<blank>",
+          "start_frame": 0,
+          "end_frame_exclusive": 83
+        },
+        {
+          "token_id": 2,
+          "token": "ㄱ",
+          "start_frame": 83,
+          "end_frame_exclusive": 84
+        },
+        {
+          "token_id": 29,
+          "token": "ㅗ",
+          "start_frame": 84,
+          "end_frame_exclusive": 86
+        },
+        {
+          "token_id": 0,
+          "token": "<blank>",
+          "start_frame": 86,
+          "end_frame_exclusive": 91
+        },
+        {
+          "token_id": 13,
+          "token": "ㅇ",
+          "start_frame": 91,
+          "end_frame_exclusive": 93
+        },
+        {
+          "token_id": 23,
+          "token": "ㅑ",
+          "start_frame": 93,
+          "end_frame_exclusive": 95
+        },
+        {
+          "token_id": 0,
+          "token": "<blank>",
+          "start_frame": 95,
+          "end_frame_exclusive": 99
+        },
+        {
+          "token_id": 13,
+          "token": "ㅇ",
+          "start_frame": 99,
+          "end_frame_exclusive": 101
+        },
+        {
+          "token_id": 0,
+          "token": "<blank>",
+          "start_frame": 101,
+          "end_frame_exclusive": 104
+        },
+        {
+          "token_id": 13,
+          "token": "ㅇ",
+          "start_frame": 104,
+          "end_frame_exclusive": 105
+        },
+        {
+          "token_id": 41,
+          "token": "ㅣ",
+          "start_frame": 105,
+          "end_frame_exclusive": 106
+        },
+        {
+          "token_id": 0,
+          "token": "<blank>",
+          "start_frame": 106,
+          "end_frame_exclusive": 112
+        },
+        {
+          "token_id": 2,
+          "token": "ㄱ",
+          "start_frame": 112,
+          "end_frame_exclusive": 113
+        },
+        {
+          "token_id": 21,
+          "token": "ㅏ",
+          "start_frame": 113,
+          "end_frame_exclusive": 114
+        },
+        {
+          "token_id": 0,
+          "token": "<blank>",
+          "start_frame": 114,
+          "end_frame_exclusive": 119
+        },
+        {
+          "token_id": 1,
+          "token": "|",
+          "start_frame": 119,
+          "end_frame_exclusive": 122
+        },
+        {
+          "token_id": 0,
+          "token": "<blank>",
+          "start_frame": 122,
+          "end_frame_exclusive": 124
+        },
+        {
+          "token_id": 14,
+          "token": "ㅈ",
+          "start_frame": 124,
+          "end_frame_exclusive": 125
+        },
+        {
+          "token_id": 29,
+          "token": "ㅗ",
+          "start_frame": 125,
+          "end_frame_exclusive": 126
+        },
+        {
+          "token_id": 0,
+          "token": "<blank>",
+          "start_frame": 126,
+          "end_frame_exclusive": 134
+        },
+        {
+          "token_id": 7,
+          "token": "ㄹ",
+          "start_frame": 134,
+          "end_frame_exclusive": 135
+        },
+        {
+          "token_id": 21,
+          "token": "ㅏ",
+          "start_frame": 135,
+          "end_frame_exclusive": 136
+        },
+        {
+          "token_id": 0,
+          "token": "<blank>",
+          "start_frame": 136,
+          "end_frame_exclusive": 149
+        },
+        {
+          "token_id": 13,
+          "token": "ㅇ",
+          "start_frame": 149,
+          "end_frame_exclusive": 150
+        },
+        {
+          "token_id": 33,
+          "token": "ㅛ",
+          "start_frame": 150,
+          "end_frame_exclusive": 151
+        },
+        {
+          "token_id": 0,
+          "token": "<blank>",
+          "start_frame": 151,
+          "end_frame_exclusive": 255
+        }
+      ]
+    },
+    {
+      "number": 12,
+      "case": 15,
+      "role": "matched_development",
+      "binding": "08cf385ba9a99dea22d1172a9b9efceccd8ec3d8c0633e6b60bcc6f33b071e01",
+      "pcm_sha256": "d730e9ed58f9679f01c9d5bca29cc1a27a2a060ea5548d25095011be905fdc22",
+      "answer_revision": 12,
+      "answer_status": "no_whole_form_label",
+      "original_surface": "기뻐써요",
+      "confirmed_surface": null,
+      "prediction": {
+        "token_ids": [
+          2,
+          41,
+          10,
+          25,
+          12,
+          25,
+          13,
+          33
+        ],
+        "jamo": "ㄱㅣㅃㅓㅆㅓㅇㅛ",
+        "jamo_tokens": [
+          "ㄱ",
+          "ㅣ",
+          "ㅃ",
+          "ㅓ",
+          "ㅆ",
+          "ㅓ",
+          "ㅇ",
+          "ㅛ"
+        ],
+        "text": "기뻐써요",
+        "segments": [
+          {
+            "kind": "syllable",
+            "text": "기",
+            "jamo": [
+              "ㄱ",
+              "ㅣ"
+            ]
+          },
+          {
+            "kind": "syllable",
+            "text": "뻐",
+            "jamo": [
+              "ㅃ",
+              "ㅓ"
+            ]
+          },
+          {
+            "kind": "syllable",
+            "text": "써",
+            "jamo": [
+              "ㅆ",
+              "ㅓ"
+            ]
+          },
+          {
+            "kind": "syllable",
+            "text": "요",
+            "jamo": [
+              "ㅇ",
+              "ㅛ"
+            ]
+          }
+        ],
+        "syllables": 4,
+        "orphan_jamo": 0,
+        "fully_composed": true,
+        "frames": 138,
+        "samples": 44512,
+        "seconds": 2.782,
+        "mean_frame_probability": 0.9996280670166016,
+        "inference_seconds": 0.05930540000554174,
+        "realtime_factor": 46.909724911054276,
+        "cached": false,
+        "decode_version": "compose-1"
+      },
+      "original_score": {
+        "errors": 0,
+        "reference_jamo": 8,
+        "hypothesis_jamo": 8,
+        "jer": 0.0,
+        "exact": true,
+        "convention": "training: boundaries ignored, edit ops / reference jamo, not clamped"
+      },
+      "confirmed_score": null,
+      "differences_from_confirmed": [],
+      "original_sequence_logp": -0.0007364513053007411,
+      "confirmed_sequence_logp": null,
+      "affected_token_evidence": [],
+      "frame_runs": [
+        {
+          "token_id": 0,
+          "token": "<blank>",
+          "start_frame": 0,
+          "end_frame_exclusive": 59
+        },
+        {
+          "token_id": 2,
+          "token": "ㄱ",
+          "start_frame": 59,
+          "end_frame_exclusive": 60
+        },
+        {
+          "token_id": 41,
+          "token": "ㅣ",
+          "start_frame": 60,
+          "end_frame_exclusive": 61
+        },
+        {
+          "token_id": 0,
+          "token": "<blank>",
+          "start_frame": 61,
+          "end_frame_exclusive": 71
+        },
+        {
+          "token_id": 10,
+          "token": "ㅃ",
+          "start_frame": 71,
+          "end_frame_exclusive": 72
+        },
+        {
+          "token_id": 25,
+          "token": "ㅓ",
+          "start_frame": 72,
+          "end_frame_exclusive": 74
+        },
+        {
+          "token_id": 0,
+          "token": "<blank>",
+          "start_frame": 74,
+          "end_frame_exclusive": 85
+        },
+        {
+          "token_id": 12,
+          "token": "ㅆ",
+          "start_frame": 85,
+          "end_frame_exclusive": 86
+        },
+        {
+          "token_id": 25,
+          "token": "ㅓ",
+          "start_frame": 86,
+          "end_frame_exclusive": 88
+        },
+        {
+          "token_id": 0,
+          "token": "<blank>",
+          "start_frame": 88,
+          "end_frame_exclusive": 99
+        },
+        {
+          "token_id": 13,
+          "token": "ㅇ",
+          "start_frame": 99,
+          "end_frame_exclusive": 100
+        },
+        {
+          "token_id": 33,
+          "token": "ㅛ",
+          "start_frame": 100,
+          "end_frame_exclusive": 102
+        },
+        {
+          "token_id": 0,
+          "token": "<blank>",
+          "start_frame": 102,
+          "end_frame_exclusive": 138
+        }
+      ]
+    },
+    {
+      "number": 13,
+      "case": 10,
+      "role": "relabel_train",
+      "binding": "c8f46288187d2f0d5ed7b7765c92a43844fd2e183e6a0d3c80b0832a31991cd5",
+      "pcm_sha256": "cc7a7e8e49bd33b0824514865ea531d92942881d668ec91ac31330db163cb497",
+      "answer_revision": 13,
+      "answer_status": "whole_form_confirmed",
+      "original_surface": "장미가 예뻐요",
+      "confirmed_surface": "강미가 예뻐요",
+      "prediction": {
+        "token_ids": [
+          14,
+          21,
+          13,
+          8,
+          41,
+          2,
+          21,
+          1,
+          13,
+          28,
+          10,
+          25,
+          13,
+          33
+        ],
+        "jamo": "ㅈㅏㅇㅁㅣㄱㅏ ㅇㅖㅃㅓㅇㅛ",
+        "jamo_tokens": [
+          "ㅈ",
+          "ㅏ",
+          "ㅇ",
+          "ㅁ",
+          "ㅣ",
+          "ㄱ",
+          "ㅏ",
+          "|",
+          "ㅇ",
+          "ㅖ",
+          "ㅃ",
+          "ㅓ",
+          "ㅇ",
+          "ㅛ"
+        ],
+        "text": "장미가 예뻐요",
+        "segments": [
+          {
+            "kind": "syllable",
+            "text": "장",
+            "jamo": [
+              "ㅈ",
+              "ㅏ",
+              "ㅇ"
+            ]
+          },
+          {
+            "kind": "syllable",
+            "text": "미",
+            "jamo": [
+              "ㅁ",
+              "ㅣ"
+            ]
+          },
+          {
+            "kind": "syllable",
+            "text": "가",
+            "jamo": [
+              "ㄱ",
+              "ㅏ"
+            ]
+          },
+          {
+            "kind": "space",
+            "text": " ",
+            "jamo": [
+              "|"
+            ]
+          },
+          {
+            "kind": "syllable",
+            "text": "예",
+            "jamo": [
+              "ㅇ",
+              "ㅖ"
+            ]
+          },
+          {
+            "kind": "syllable",
+            "text": "뻐",
+            "jamo": [
+              "ㅃ",
+              "ㅓ"
+            ]
+          },
+          {
+            "kind": "syllable",
+            "text": "요",
+            "jamo": [
+              "ㅇ",
+              "ㅛ"
+            ]
+          }
+        ],
+        "syllables": 6,
+        "orphan_jamo": 0,
+        "fully_composed": true,
+        "frames": 169,
+        "samples": 54432,
+        "seconds": 3.402,
+        "mean_frame_probability": 0.9921897053718567,
+        "inference_seconds": 0.06150290003279224,
+        "realtime_factor": 55.314464816880424,
+        "cached": false,
+        "decode_version": "compose-1"
+      },
+      "original_score": {
+        "errors": 0,
+        "reference_jamo": 13,
+        "hypothesis_jamo": 13,
+        "jer": 0.0,
+        "exact": true,
+        "convention": "training: boundaries ignored, edit ops / reference jamo, not clamped"
+      },
+      "confirmed_score": {
+        "errors": 1,
+        "reference_jamo": 13,
+        "hypothesis_jamo": 13,
+        "jer": 0.07692307692307693,
+        "exact": false,
+        "convention": "training: boundaries ignored, edit ops / reference jamo, not clamped"
+      },
+      "differences_from_confirmed": [
+        {
+          "op": "replace",
+          "reference": [
+            "ㄱ"
+          ],
+          "hypothesis": [
+            "ㅈ"
+          ]
+        }
+      ],
+      "original_sequence_logp": -0.09127366509342798,
+      "confirmed_sequence_logp": -8.858377750753093,
+      "affected_token_evidence": [
+        {
+          "token": "ㄱ",
+          "argmax_frames": 1,
+          "peak_frame": 34,
+          "peak_frame_softmax": 0.9999473794240088,
+          "winner_at_peak": "ㄱ"
+        },
+        {
+          "token": "ㅈ",
+          "argmax_frames": 1,
+          "peak_frame": 14,
+          "peak_frame_softmax": 0.9988164330509085,
+          "winner_at_peak": "ㅈ"
+        }
+      ],
+      "frame_runs": [
+        {
+          "token_id": 0,
+          "token": "<blank>",
+          "start_frame": 0,
+          "end_frame_exclusive": 14
+        },
+        {
+          "token_id": 14,
+          "token": "ㅈ",
+          "start_frame": 14,
+          "end_frame_exclusive": 15
+        },
+        {
+          "token_id": 21,
+          "token": "ㅏ",
+          "start_frame": 15,
+          "end_frame_exclusive": 17
+        },
+        {
+          "token_id": 0,
+          "token": "<blank>",
+          "start_frame": 17,
+          "end_frame_exclusive": 19
+        },
+        {
+          "token_id": 13,
+          "token": "ㅇ",
+          "start_frame": 19,
+          "end_frame_exclusive": 21
+        },
+        {
+          "token_id": 0,
+          "token": "<blank>",
+          "start_frame": 21,
+          "end_frame_exclusive": 26
+        },
+        {
+          "token_id": 8,
+          "token": "ㅁ",
+          "start_frame": 26,
+          "end_frame_exclusive": 28
+        },
+        {
+          "token_id": 41,
+          "token": "ㅣ",
+          "start_frame": 28,
+          "end_frame_exclusive": 29
+        },
+        {
+          "token_id": 0,
+          "token": "<blank>",
+          "start_frame": 29,
+          "end_frame_exclusive": 34
+        },
+        {
+          "token_id": 2,
+          "token": "ㄱ",
+          "start_frame": 34,
+          "end_frame_exclusive": 35
+        },
+        {
+          "token_id": 21,
+          "token": "ㅏ",
+          "start_frame": 35,
+          "end_frame_exclusive": 37
+        },
+        {
+          "token_id": 0,
+          "token": "<blank>",
+          "start_frame": 37,
+          "end_frame_exclusive": 40
+        },
+        {
+          "token_id": 1,
+          "token": "|",
+          "start_frame": 40,
+          "end_frame_exclusive": 43
+        },
+        {
+          "token_id": 13,
+          "token": "ㅇ",
+          "start_frame": 43,
+          "end_frame_exclusive": 45
+        },
+        {
+          "token_id": 28,
+          "token": "ㅖ",
+          "start_frame": 45,
+          "end_frame_exclusive": 46
+        },
+        {
+          "token_id": 0,
+          "token": "<blank>",
+          "start_frame": 46,
+          "end_frame_exclusive": 56
+        },
+        {
+          "token_id": 10,
+          "token": "ㅃ",
+          "start_frame": 56,
+          "end_frame_exclusive": 57
+        },
+        {
+          "token_id": 25,
+          "token": "ㅓ",
+          "start_frame": 57,
+          "end_frame_exclusive": 58
+        },
+        {
+          "token_id": 0,
+          "token": "<blank>",
+          "start_frame": 58,
+          "end_frame_exclusive": 68
+        },
+        {
+          "token_id": 13,
+          "token": "ㅇ",
+          "start_frame": 68,
+          "end_frame_exclusive": 70
+        },
+        {
+          "token_id": 33,
+          "token": "ㅛ",
+          "start_frame": 70,
+          "end_frame_exclusive": 71
+        },
+        {
+          "token_id": 0,
+          "token": "<blank>",
+          "start_frame": 71,
+          "end_frame_exclusive": 169
+        }
+      ]
+    },
+    {
+      "number": 14,
+      "case": 10,
+      "role": "matched_development",
+      "binding": "b65961c3cd16dfc3e58534809470a84c63bfeb5b27cc7aac3c1c4f78aff21062",
+      "pcm_sha256": "35c9f70b1b3284c8bc0d66121e4a552284d1a0cb5b438620e05b1aa0668d85b1",
+      "answer_revision": 14,
+      "answer_status": "whole_form_confirmed",
+      "original_surface": "장미가 예뻐요",
+      "confirmed_surface": "장미가 예뻐요",
+      "prediction": {
+        "token_ids": [
+          14,
+          21,
+          13,
+          8,
+          41,
+          2,
+          21,
+          1,
+          13,
+          28,
+          10,
+          25,
+          13,
+          33
+        ],
+        "jamo": "ㅈㅏㅇㅁㅣㄱㅏ ㅇㅖㅃㅓㅇㅛ",
+        "jamo_tokens": [
+          "ㅈ",
+          "ㅏ",
+          "ㅇ",
+          "ㅁ",
+          "ㅣ",
+          "ㄱ",
+          "ㅏ",
+          "|",
+          "ㅇ",
+          "ㅖ",
+          "ㅃ",
+          "ㅓ",
+          "ㅇ",
+          "ㅛ"
+        ],
+        "text": "장미가 예뻐요",
+        "segments": [
+          {
+            "kind": "syllable",
+            "text": "장",
+            "jamo": [
+              "ㅈ",
+              "ㅏ",
+              "ㅇ"
+            ]
+          },
+          {
+            "kind": "syllable",
+            "text": "미",
+            "jamo": [
+              "ㅁ",
+              "ㅣ"
+            ]
+          },
+          {
+            "kind": "syllable",
+            "text": "가",
+            "jamo": [
+              "ㄱ",
+              "ㅏ"
+            ]
+          },
+          {
+            "kind": "space",
+            "text": " ",
+            "jamo": [
+              "|"
+            ]
+          },
+          {
+            "kind": "syllable",
+            "text": "예",
+            "jamo": [
+              "ㅇ",
+              "ㅖ"
+            ]
+          },
+          {
+            "kind": "syllable",
+            "text": "뻐",
+            "jamo": [
+              "ㅃ",
+              "ㅓ"
+            ]
+          },
+          {
+            "kind": "syllable",
+            "text": "요",
+            "jamo": [
+              "ㅇ",
+              "ㅛ"
+            ]
+          }
+        ],
+        "syllables": 6,
+        "orphan_jamo": 0,
+        "fully_composed": true,
+        "frames": 204,
+        "samples": 65536,
+        "seconds": 4.096,
+        "mean_frame_probability": 0.9946795701980591,
+        "inference_seconds": 0.0628238000208512,
+        "realtime_factor": 65.19822103471199,
+        "cached": false,
+        "decode_version": "compose-1"
+      },
+      "original_score": {
+        "errors": 0,
+        "reference_jamo": 13,
+        "hypothesis_jamo": 13,
+        "jer": 0.0,
+        "exact": true,
+        "convention": "training: boundaries ignored, edit ops / reference jamo, not clamped"
+      },
+      "confirmed_score": {
+        "errors": 0,
+        "reference_jamo": 13,
+        "hypothesis_jamo": 13,
+        "jer": 0.0,
+        "exact": true,
+        "convention": "training: boundaries ignored, edit ops / reference jamo, not clamped"
+      },
+      "differences_from_confirmed": [],
+      "original_sequence_logp": -0.0028542006887404352,
+      "confirmed_sequence_logp": -0.0028542006887404352,
+      "affected_token_evidence": [],
+      "frame_runs": [
+        {
+          "token_id": 0,
+          "token": "<blank>",
+          "start_frame": 0,
+          "end_frame_exclusive": 52
+        },
+        {
+          "token_id": 14,
+          "token": "ㅈ",
+          "start_frame": 52,
+          "end_frame_exclusive": 54
+        },
+        {
+          "token_id": 21,
+          "token": "ㅏ",
+          "start_frame": 54,
+          "end_frame_exclusive": 55
+        },
+        {
+          "token_id": 0,
+          "token": "<blank>",
+          "start_frame": 55,
+          "end_frame_exclusive": 57
+        },
+        {
+          "token_id": 13,
+          "token": "ㅇ",
+          "start_frame": 57,
+          "end_frame_exclusive": 59
+        },
+        {
+          "token_id": 0,
+          "token": "<blank>",
+          "start_frame": 59,
+          "end_frame_exclusive": 66
+        },
+        {
+          "token_id": 8,
+          "token": "ㅁ",
+          "start_frame": 66,
+          "end_frame_exclusive": 68
+        },
+        {
+          "token_id": 41,
+          "token": "ㅣ",
+          "start_frame": 68,
+          "end_frame_exclusive": 69
+        },
+        {
+          "token_id": 0,
+          "token": "<blank>",
+          "start_frame": 69,
+          "end_frame_exclusive": 75
+        },
+        {
+          "token_id": 2,
+          "token": "ㄱ",
+          "start_frame": 75,
+          "end_frame_exclusive": 76
+        },
+        {
+          "token_id": 21,
+          "token": "ㅏ",
+          "start_frame": 76,
+          "end_frame_exclusive": 77
+        },
+        {
+          "token_id": 0,
+          "token": "<blank>",
+          "start_frame": 77,
+          "end_frame_exclusive": 83
+        },
+        {
+          "token_id": 1,
+          "token": "|",
+          "start_frame": 83,
+          "end_frame_exclusive": 85
+        },
+        {
+          "token_id": 0,
+          "token": "<blank>",
+          "start_frame": 85,
+          "end_frame_exclusive": 87
+        },
+        {
+          "token_id": 13,
+          "token": "ㅇ",
+          "start_frame": 87,
+          "end_frame_exclusive": 88
+        },
+        {
+          "token_id": 28,
+          "token": "ㅖ",
+          "start_frame": 88,
+          "end_frame_exclusive": 90
+        },
+        {
+          "token_id": 0,
+          "token": "<blank>",
+          "start_frame": 90,
+          "end_frame_exclusive": 102
+        },
+        {
+          "token_id": 10,
+          "token": "ㅃ",
+          "start_frame": 102,
+          "end_frame_exclusive": 104
+        },
+        {
+          "token_id": 25,
+          "token": "ㅓ",
+          "start_frame": 104,
+          "end_frame_exclusive": 105
+        },
+        {
+          "token_id": 0,
+          "token": "<blank>",
+          "start_frame": 105,
+          "end_frame_exclusive": 115
+        },
+        {
+          "token_id": 13,
+          "token": "ㅇ",
+          "start_frame": 115,
+          "end_frame_exclusive": 117
+        },
+        {
+          "token_id": 33,
+          "token": "ㅛ",
+          "start_frame": 117,
+          "end_frame_exclusive": 118
+        },
+        {
+          "token_id": 0,
+          "token": "<blank>",
+          "start_frame": 118,
+          "end_frame_exclusive": 204
+        }
+      ]
+    },
+    {
+      "number": 15,
+      "case": 15,
+      "role": "relabel_train",
+      "binding": "7ea2ab70512bba91a839cebf2d9e7c4ab40fc3b5cc7ac9d20dbe2107256f846a",
+      "pcm_sha256": "36b5a0f7bcf99aa4de161680d15426e4847e7b0ebfebc6da0c40a81f51e843f9",
+      "answer_revision": 15,
+      "answer_status": "no_whole_form_label",
+      "original_surface": "기뻐써요",
+      "confirmed_surface": null,
+      "prediction": {
+        "token_ids": [
+          2,
+          41,
+          10,
+          25,
+          12,
+          25,
+          13,
+          33
+        ],
+        "jamo": "ㄱㅣㅃㅓㅆㅓㅇㅛ",
+        "jamo_tokens": [
+          "ㄱ",
+          "ㅣ",
+          "ㅃ",
+          "ㅓ",
+          "ㅆ",
+          "ㅓ",
+          "ㅇ",
+          "ㅛ"
+        ],
+        "text": "기뻐써요",
+        "segments": [
+          {
+            "kind": "syllable",
+            "text": "기",
+            "jamo": [
+              "ㄱ",
+              "ㅣ"
+            ]
+          },
+          {
+            "kind": "syllable",
+            "text": "뻐",
+            "jamo": [
+              "ㅃ",
+              "ㅓ"
+            ]
+          },
+          {
+            "kind": "syllable",
+            "text": "써",
+            "jamo": [
+              "ㅆ",
+              "ㅓ"
+            ]
+          },
+          {
+            "kind": "syllable",
+            "text": "요",
+            "jamo": [
+              "ㅇ",
+              "ㅛ"
+            ]
+          }
+        ],
+        "syllables": 4,
+        "orphan_jamo": 0,
+        "fully_composed": true,
+        "frames": 201,
+        "samples": 64672,
+        "seconds": 4.042,
+        "mean_frame_probability": 0.9994131326675415,
+        "inference_seconds": 0.06424099998548627,
+        "realtime_factor": 62.91931945195738,
+        "cached": false,
+        "decode_version": "compose-1"
+      },
+      "original_score": {
+        "errors": 0,
+        "reference_jamo": 8,
+        "hypothesis_jamo": 8,
+        "jer": 0.0,
+        "exact": true,
+        "convention": "training: boundaries ignored, edit ops / reference jamo, not clamped"
+      },
+      "confirmed_score": null,
+      "differences_from_confirmed": [],
+      "original_sequence_logp": -0.01298185874782141,
+      "confirmed_sequence_logp": null,
+      "affected_token_evidence": [],
+      "frame_runs": [
+        {
+          "token_id": 0,
+          "token": "<blank>",
+          "start_frame": 0,
+          "end_frame_exclusive": 58
+        },
+        {
+          "token_id": 2,
+          "token": "ㄱ",
+          "start_frame": 58,
+          "end_frame_exclusive": 59
+        },
+        {
+          "token_id": 41,
+          "token": "ㅣ",
+          "start_frame": 59,
+          "end_frame_exclusive": 61
+        },
+        {
+          "token_id": 0,
+          "token": "<blank>",
+          "start_frame": 61,
+          "end_frame_exclusive": 70
+        },
+        {
+          "token_id": 10,
+          "token": "ㅃ",
+          "start_frame": 70,
+          "end_frame_exclusive": 71
+        },
+        {
+          "token_id": 25,
+          "token": "ㅓ",
+          "start_frame": 71,
+          "end_frame_exclusive": 72
+        },
+        {
+          "token_id": 0,
+          "token": "<blank>",
+          "start_frame": 72,
+          "end_frame_exclusive": 83
+        },
+        {
+          "token_id": 12,
+          "token": "ㅆ",
+          "start_frame": 83,
+          "end_frame_exclusive": 84
+        },
+        {
+          "token_id": 25,
+          "token": "ㅓ",
+          "start_frame": 84,
+          "end_frame_exclusive": 86
+        },
+        {
+          "token_id": 0,
+          "token": "<blank>",
+          "start_frame": 86,
+          "end_frame_exclusive": 97
+        },
+        {
+          "token_id": 13,
+          "token": "ㅇ",
+          "start_frame": 97,
+          "end_frame_exclusive": 99
+        },
+        {
+          "token_id": 33,
+          "token": "ㅛ",
+          "start_frame": 99,
+          "end_frame_exclusive": 100
+        },
+        {
+          "token_id": 0,
+          "token": "<blank>",
+          "start_frame": 100,
+          "end_frame_exclusive": 201
+        }
+      ]
+    }
+  ],
+  "limits": [
+    "Selected development recordings and previously trained examples, not a population accuracy estimate.",
+    "Confirmed forms are single-listener broad transcription; first impressions remain in the answer snapshot.",
+    "Other-form answers have no scoring target; their notes are not converted into labels.",
+    "CTC sequence likelihoods are post-hoc diagnostics, never input to recognition.",
+    "Frame indices are encoder positions, not verified phonetic boundaries; softmax is not human pronunciation probability.",
+    "A weak token score does not establish why training produced that score."
+  ],
+  "training_started": false,
+  "model_replaced": false
+}

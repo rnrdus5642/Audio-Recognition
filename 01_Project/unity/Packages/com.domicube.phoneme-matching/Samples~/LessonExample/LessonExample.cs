@@ -37,14 +37,14 @@ using Unity.Sentis;
 public sealed class LessonExample : MonoBehaviour
 {
 #if DOMICUBE_INFERENCE_ENGINE || DOMICUBE_SENTIS_1
-    [Tooltip("Assets 아래 둔 wav2vec2_ko.onnx")]
+    [Tooltip("사용할 .onnx/.sentis ModelAsset. 원문 자모 모델은 어휘와 Listener 데이터도 함께 맞추세요.")]
     public ModelAsset Model;
 #endif
 
     [Tooltip("StreamingAssets 안의 CTC 어휘 파일")]
     public string VocabFileName = "wav2vec2_ko_vocab.json";
 
-    [Tooltip("출제할 단어. targets.json 에 있는 것만 됩니다.")]
+    [Tooltip("출제할 단어. 원문 자모 웹 v4 모드는 targets.json 없이 새 단어를 지정할 수 있습니다.")]
     public string[] Words = { "사과", "엄마", "토끼" };
 
     private PronunciationListener _listener;
@@ -58,6 +58,10 @@ public sealed class LessonExample : MonoBehaviour
         _listener = GetComponent<PronunciationListener>();
 
 #if DOMICUBE_INFERENCE_ENGINE || DOMICUBE_SENTIS_1
+        if (Model != null && Model.name == "hubert_ko_child_jamo" && VocabFileName == "wav2vec2_ko_vocab.json")
+            VocabFileName = "hubert_ko_child_jamo_vocab.json";
+        if (VocabFileName == "hubert_ko_child_jamo_vocab.json")
+            _listener.ConfigureOrthographicWordPolicy();
         var vocabPath = System.IO.Path.Combine(
             Application.streamingAssetsPath, VocabFileName);
         var vocab = PhonemeData.LoadCtcVocabulary(
@@ -106,8 +110,8 @@ public sealed class LessonExample : MonoBehaviour
     {
         if (_recognizer != null)
         {
-            // ~2 s of shader compilation and weight upload. Do it here,
-            // not on the child's first word.
+            // Shader compilation and weight upload depend on the model.
+            // Warm up before the child's first word.
             _status = "준비 중...";
             yield return null;
             _recognizer.Warmup(_listener.WindowSeconds);

@@ -1,0 +1,1022 @@
+{
+  "analyzed_at_utc": "2026-10-03T14:40:01.727424+00:00",
+  "answer_revision": 20,
+  "answer_snapshot_sha256": "0a4a4ffa776df50dbfafd524ce67592b2fe71407a1dd898f08a722ee413ee84e",
+  "selection_sha256": "9e1695ff4cea702f8645f6d96ccb0f4a4ea550a872d66bcd1ca430668fd3c2f1",
+  "review_sha256": "fdd6e2033ec3738ada35ceb3b422dd2d7e398e472e994424fdbee3a0e8ec6c12",
+  "evidence_sha256": "480f89866308c6a04db7ff3f01c965e960ba03685a48fae1c708f4ce5cfe9909",
+  "script_sha256": "b6991b8e1c375d5054ca78e960e86433346bb7893364d4d446095ee3ad19930d",
+  "identity": {
+    "checkpoint": "C:\\Users\\user\\Desktop\\Audio-Recognition\\01_Project\\.venv\\hubert-child-20260914\\main\\best.pt",
+    "checkpoint_bytes": 3850525679,
+    "checkpoint_sha256": "5a330f1bea3a17d1d063fdfd71a0cc25394695b0b797de01b293f6f688257aa7",
+    "selected_by_validation": {
+      "phase": "encoder",
+      "epoch": 7,
+      "update": 17654,
+      "at": "epoch_end",
+      "jer": 0.029473811102404917,
+      "errors": 978,
+      "reference_jamo": 33182,
+      "exact": 1164,
+      "recordings": 1500,
+      "precision": "float32"
+    },
+    "labels_version": "child-jamo-2026-09-15",
+    "labels_contract_sha256": "ae3bef2311c735d4560ef11e3a42f3138821592e2e0e1ab10d112f82b9faf013",
+    "encoder": "C:\\Users\\user\\Documents\\GitHub\\Audio-Recognition\\.venv\\encoder-screen-0914\\models\\hubertko1b",
+    "encoder_files_sha256": {
+      "model.safetensors": "14977266907588c28da9403bc4c04478a29b49968dfe206fb9cb8e71e4d2e31d",
+      "config.json": "65b80fbdfa687baea3d33c5050b64a162d55c27c62b720b872f8a210245ad382",
+      "preprocessor_config.json": "7a8f0fc8ee1272ed28a8b468e183c56a19329a92babd3ca8d4d21ae02ba511cd"
+    },
+    "decode_version": "compose-1",
+    "precision": "float32, no autocast",
+    "matmul_allow_tf32": false,
+    "attention": "sdpa",
+    "device": "NVIDIA GeForce RTX 5060 Ti",
+    "parameters": 962497408,
+    "load_seconds": 8.4,
+    "historical_test": {
+      "jer": 0.028905407202707296,
+      "errors": 1956,
+      "reference_jamo": 67669,
+      "exact": 2297,
+      "recordings": 2999,
+      "precision": "float32"
+    },
+    "historical_provenance": "result.json 의 selected_checkpoint 및 data_contract 가 이 체크포인트와 일치",
+    "historical_note": "Aggregate over the whole 2,999-recording test split for this fixed checkpoint. It is not the score of whatever sample is on screen."
+  },
+  "recordings": 20,
+  "training_label_agreements": 19,
+  "selected_form_count": 19,
+  "selected_form_agreements": 17,
+  "items": [
+    {
+      "number": 1,
+      "wav": "K09291902-AMG12-L1N2D1-E-K0KK-00726972.wav",
+      "binding": "d94f9c9ca971fc463f900cbd6f6f2d114151e0caf4d7fa9b8df349d4b1cf4d50",
+      "pcm_sha256": "f47f926732361778f2483ce8ed2c903ec745a1e694c77f887a5c7f31600d1c80",
+      "first_impression": "책",
+      "choice": "whole_form_3",
+      "selected_surface": "책",
+      "training_surface": "책",
+      "prediction": {
+        "token_ids": [
+          16,
+          22,
+          2
+        ],
+        "jamo": "ㅊㅐㄱ",
+        "jamo_tokens": [
+          "ㅊ",
+          "ㅐ",
+          "ㄱ"
+        ],
+        "text": "책",
+        "segments": [
+          {
+            "kind": "syllable",
+            "text": "책",
+            "jamo": [
+              "ㅊ",
+              "ㅐ",
+              "ㄱ"
+            ]
+          }
+        ],
+        "syllables": 1,
+        "orphan_jamo": 0,
+        "fully_composed": true,
+        "frames": 102,
+        "samples": 32768,
+        "seconds": 2.048,
+        "mean_frame_probability": 0.9866437911987305,
+        "inference_seconds": 0.5035013000015169,
+        "realtime_factor": 4.067516806796387,
+        "cached": false,
+        "decode_version": "compose-1"
+      },
+      "matches_training_label": true,
+      "matches_selected_form": true
+    },
+    {
+      "number": 2,
+      "wav": "K09290980-AMG10-L1N2D1-E-K0KK-00496050.wav",
+      "binding": "030e7c66ff326ca026833de7a73fa5b187cee471813e201541515abb7adf7426",
+      "pcm_sha256": "c2cab7de20a4649fb58fbca9fcc8bed630cd733e37c7d851df4df3ac57985e91",
+      "first_impression": "췍",
+      "choice": "whole_form_1",
+      "selected_surface": "책",
+      "training_surface": "책",
+      "prediction": {
+        "token_ids": [
+          16,
+          22,
+          2
+        ],
+        "jamo": "ㅊㅐㄱ",
+        "jamo_tokens": [
+          "ㅊ",
+          "ㅐ",
+          "ㄱ"
+        ],
+        "text": "책",
+        "segments": [
+          {
+            "kind": "syllable",
+            "text": "책",
+            "jamo": [
+              "ㅊ",
+              "ㅐ",
+              "ㄱ"
+            ]
+          }
+        ],
+        "syllables": 1,
+        "orphan_jamo": 0,
+        "fully_composed": true,
+        "frames": 153,
+        "samples": 49152,
+        "seconds": 3.072,
+        "mean_frame_probability": 0.9986371994018555,
+        "inference_seconds": 0.06574400002136827,
+        "realtime_factor": 46.72669747812016,
+        "cached": false,
+        "decode_version": "compose-1"
+      },
+      "matches_training_label": true,
+      "matches_selected_form": true
+    },
+    {
+      "number": 3,
+      "wav": "K09291068-AMG10-L1N2D1-E-K0KK-00914787.wav",
+      "binding": "9661575efdc1a08cfb75c6c1d8af7d4e7ce3c3ee3af8d5f95880ed05d48db027",
+      "pcm_sha256": "a9305937001eea285ee8a1447f167be03b89f5edbc32b6523e0e5afc34178332",
+      "first_impression": "책",
+      "choice": "whole_form_2",
+      "selected_surface": "책",
+      "training_surface": "책",
+      "prediction": {
+        "token_ids": [
+          16,
+          22,
+          2
+        ],
+        "jamo": "ㅊㅐㄱ",
+        "jamo_tokens": [
+          "ㅊ",
+          "ㅐ",
+          "ㄱ"
+        ],
+        "text": "책",
+        "segments": [
+          {
+            "kind": "syllable",
+            "text": "책",
+            "jamo": [
+              "ㅊ",
+              "ㅐ",
+              "ㄱ"
+            ]
+          }
+        ],
+        "syllables": 1,
+        "orphan_jamo": 0,
+        "fully_composed": true,
+        "frames": 169,
+        "samples": 54272,
+        "seconds": 3.392,
+        "mean_frame_probability": 0.9967418313026428,
+        "inference_seconds": 0.06242750003002584,
+        "realtime_factor": 54.335028607080936,
+        "cached": false,
+        "decode_version": "compose-1"
+      },
+      "matches_training_label": true,
+      "matches_selected_form": true
+    },
+    {
+      "number": 4,
+      "wav": "K09292325-AFG10-L5N1D1-E-K0KK-01230841.wav",
+      "binding": "38e926a6cd7bbbdeff7b1a855d7519a2203f66c6652b455afff04235af8b8561",
+      "pcm_sha256": "7e25a9b931ba840d629d11cd8513fc5d8e691f62d70873f9fc78472d63a3e9a6",
+      "first_impression": "책",
+      "choice": "whole_form_3",
+      "selected_surface": "책",
+      "training_surface": "책",
+      "prediction": {
+        "token_ids": [
+          16,
+          22,
+          2
+        ],
+        "jamo": "ㅊㅐㄱ",
+        "jamo_tokens": [
+          "ㅊ",
+          "ㅐ",
+          "ㄱ"
+        ],
+        "text": "책",
+        "segments": [
+          {
+            "kind": "syllable",
+            "text": "책",
+            "jamo": [
+              "ㅊ",
+              "ㅐ",
+              "ㄱ"
+            ]
+          }
+        ],
+        "syllables": 1,
+        "orphan_jamo": 0,
+        "fully_composed": true,
+        "frames": 178,
+        "samples": 57344,
+        "seconds": 3.584,
+        "mean_frame_probability": 0.999783992767334,
+        "inference_seconds": 0.06189849996007979,
+        "realtime_factor": 57.901241586006606,
+        "cached": false,
+        "decode_version": "compose-1"
+      },
+      "matches_training_label": true,
+      "matches_selected_form": true
+    },
+    {
+      "number": 5,
+      "wav": "K09290200-AMG10-L1N2D1-E-K0KK-00486694.wav",
+      "binding": "9818717b221871d8fea3c37485f33878c55a2dd095a0b22e4a2dfe0aa12bfe6e",
+      "pcm_sha256": "2253b698b884b42c7e3dd2f299fd60f87758364b9c985dfd61e8d4150991b056",
+      "first_impression": "책",
+      "choice": "whole_form_1",
+      "selected_surface": "책",
+      "training_surface": "책",
+      "prediction": {
+        "token_ids": [
+          16,
+          22,
+          2
+        ],
+        "jamo": "ㅊㅐㄱ",
+        "jamo_tokens": [
+          "ㅊ",
+          "ㅐ",
+          "ㄱ"
+        ],
+        "text": "책",
+        "segments": [
+          {
+            "kind": "syllable",
+            "text": "책",
+            "jamo": [
+              "ㅊ",
+              "ㅐ",
+              "ㄱ"
+            ]
+          }
+        ],
+        "syllables": 1,
+        "orphan_jamo": 0,
+        "fully_composed": true,
+        "frames": 162,
+        "samples": 52128,
+        "seconds": 3.258,
+        "mean_frame_probability": 0.998674750328064,
+        "inference_seconds": 0.06355950003489852,
+        "realtime_factor": 51.25905644649714,
+        "cached": false,
+        "decode_version": "compose-1"
+      },
+      "matches_training_label": true,
+      "matches_selected_form": true
+    },
+    {
+      "number": 6,
+      "wav": "K09297250-AMG11-L1N2D1-E-K0KK-04312937.wav",
+      "binding": "3d1ff4c9a6751c32463fbf714db1172684571f1bc4dbf825271739d61ffbc792",
+      "pcm_sha256": "01f444e7f92752e4e2ca2e1899fd1d370d21427068993c04692eb9a1d3fe9be4",
+      "first_impression": "책",
+      "choice": "whole_form_3",
+      "selected_surface": "책",
+      "training_surface": "책",
+      "prediction": {
+        "token_ids": [
+          16,
+          22,
+          2
+        ],
+        "jamo": "ㅊㅐㄱ",
+        "jamo_tokens": [
+          "ㅊ",
+          "ㅐ",
+          "ㄱ"
+        ],
+        "text": "책",
+        "segments": [
+          {
+            "kind": "syllable",
+            "text": "책",
+            "jamo": [
+              "ㅊ",
+              "ㅐ",
+              "ㄱ"
+            ]
+          }
+        ],
+        "syllables": 1,
+        "orphan_jamo": 0,
+        "fully_composed": true,
+        "frames": 153,
+        "samples": 49152,
+        "seconds": 3.072,
+        "mean_frame_probability": 0.9966219067573547,
+        "inference_seconds": 0.058128500008024275,
+        "realtime_factor": 52.848430624838585,
+        "cached": false,
+        "decode_version": "compose-1"
+      },
+      "matches_training_label": true,
+      "matches_selected_form": true
+    },
+    {
+      "number": 7,
+      "wav": "K09293802-AMG10-L1N2D4-E-K0KK-01953494.wav",
+      "binding": "80bb55109369e0e0d024e5afc0f6dcb2997cc63d6d329ca534a8b24c68e8ecef",
+      "pcm_sha256": "057e6e154ecce6e74907544dd63543963b7a8568a0a89544f52fda397a021dc7",
+      "first_impression": "책",
+      "choice": "whole_form_3",
+      "selected_surface": "책",
+      "training_surface": "책",
+      "prediction": {
+        "token_ids": [
+          16,
+          22,
+          2
+        ],
+        "jamo": "ㅊㅐㄱ",
+        "jamo_tokens": [
+          "ㅊ",
+          "ㅐ",
+          "ㄱ"
+        ],
+        "text": "책",
+        "segments": [
+          {
+            "kind": "syllable",
+            "text": "책",
+            "jamo": [
+              "ㅊ",
+              "ㅐ",
+              "ㄱ"
+            ]
+          }
+        ],
+        "syllables": 1,
+        "orphan_jamo": 0,
+        "fully_composed": true,
+        "frames": 146,
+        "samples": 47104,
+        "seconds": 2.944,
+        "mean_frame_probability": 0.9969530701637268,
+        "inference_seconds": 0.06160169997019693,
+        "realtime_factor": 47.790888910928025,
+        "cached": false,
+        "decode_version": "compose-1"
+      },
+      "matches_training_label": true,
+      "matches_selected_form": true
+    },
+    {
+      "number": 8,
+      "wav": "K092908204-AFG12-L1N2D1-E-K0KK-04203570.wav",
+      "binding": "f098dc3b29665eca5a97a2131b9b31186ab28449eb1a1fa014bb361685bdad86",
+      "pcm_sha256": "696780d39311c6551b94a531239cad4611be743639b96bd733c23a0c0a9bc0b1",
+      "first_impression": "책",
+      "choice": "whole_form_1",
+      "selected_surface": "책",
+      "training_surface": "책",
+      "prediction": {
+        "token_ids": [
+          16,
+          22
+        ],
+        "jamo": "ㅊㅐ",
+        "jamo_tokens": [
+          "ㅊ",
+          "ㅐ"
+        ],
+        "text": "채",
+        "segments": [
+          {
+            "kind": "syllable",
+            "text": "채",
+            "jamo": [
+              "ㅊ",
+              "ㅐ"
+            ]
+          }
+        ],
+        "syllables": 1,
+        "orphan_jamo": 0,
+        "fully_composed": true,
+        "frames": 121,
+        "samples": 38912,
+        "seconds": 2.432,
+        "mean_frame_probability": 0.9753977656364441,
+        "inference_seconds": 0.048095199977979064,
+        "realtime_factor": 50.56637670939135,
+        "cached": false,
+        "decode_version": "compose-1"
+      },
+      "matches_training_label": false,
+      "matches_selected_form": false
+    },
+    {
+      "number": 9,
+      "wav": "K09294427-AFG13-L1N2D4-E-K0KK-02001383.wav",
+      "binding": "cad4aa01f3296349dc0fdbbd508983a5a5c857217ab996eb28b2dc2b18690068",
+      "pcm_sha256": "7624f5491311ddb305f294645e1ee20239e36ced4ed9f3127a9e67ac829ae936",
+      "first_impression": "책",
+      "choice": "whole_form_4",
+      "selected_surface": "책",
+      "training_surface": "책",
+      "prediction": {
+        "token_ids": [
+          16,
+          22,
+          2
+        ],
+        "jamo": "ㅊㅐㄱ",
+        "jamo_tokens": [
+          "ㅊ",
+          "ㅐ",
+          "ㄱ"
+        ],
+        "text": "책",
+        "segments": [
+          {
+            "kind": "syllable",
+            "text": "책",
+            "jamo": [
+              "ㅊ",
+              "ㅐ",
+              "ㄱ"
+            ]
+          }
+        ],
+        "syllables": 1,
+        "orphan_jamo": 0,
+        "fully_composed": true,
+        "frames": 89,
+        "samples": 28672,
+        "seconds": 1.792,
+        "mean_frame_probability": 0.9963160157203674,
+        "inference_seconds": 0.0463731000199914,
+        "realtime_factor": 38.64309263835005,
+        "cached": false,
+        "decode_version": "compose-1"
+      },
+      "matches_training_label": true,
+      "matches_selected_form": true
+    },
+    {
+      "number": 10,
+      "wav": "K09290980-AMG10-L1N2D1-E-K0KK-00985813.wav",
+      "binding": "f7b4fdd0a38e338d85c83963f8051a2ee80ff711a206473a666bb7d3cb02627e",
+      "pcm_sha256": "1649626cd8d2ee21fe8f862db646f504b59d47d38f56ce7f0c12ceb6800e6471",
+      "first_impression": "책",
+      "choice": "whole_form_4",
+      "selected_surface": "책",
+      "training_surface": "책",
+      "prediction": {
+        "token_ids": [
+          16,
+          22,
+          2
+        ],
+        "jamo": "ㅊㅐㄱ",
+        "jamo_tokens": [
+          "ㅊ",
+          "ㅐ",
+          "ㄱ"
+        ],
+        "text": "책",
+        "segments": [
+          {
+            "kind": "syllable",
+            "text": "책",
+            "jamo": [
+              "ㅊ",
+              "ㅐ",
+              "ㄱ"
+            ]
+          }
+        ],
+        "syllables": 1,
+        "orphan_jamo": 0,
+        "fully_composed": true,
+        "frames": 152,
+        "samples": 48768,
+        "seconds": 3.048,
+        "mean_frame_probability": 0.9952502846717834,
+        "inference_seconds": 0.060777499980758876,
+        "realtime_factor": 50.15013781358142,
+        "cached": false,
+        "decode_version": "compose-1"
+      },
+      "matches_training_label": true,
+      "matches_selected_form": true
+    },
+    {
+      "number": 11,
+      "wav": "K09292303-AFG10-L1N2D4-E-K0KK-04075757.wav",
+      "binding": "e88f3faad17038de442898e4aacf01a366c80c48cf6abb934aba2a1ff8a38920",
+      "pcm_sha256": "52fa11c2cfc4a56f6318179edb1147e2f562bad6ceac035a83234ac5b2772b1a",
+      "first_impression": "책",
+      "choice": "whole_form_1",
+      "selected_surface": "책",
+      "training_surface": "책",
+      "prediction": {
+        "token_ids": [
+          16,
+          22,
+          2
+        ],
+        "jamo": "ㅊㅐㄱ",
+        "jamo_tokens": [
+          "ㅊ",
+          "ㅐ",
+          "ㄱ"
+        ],
+        "text": "책",
+        "segments": [
+          {
+            "kind": "syllable",
+            "text": "책",
+            "jamo": [
+              "ㅊ",
+              "ㅐ",
+              "ㄱ"
+            ]
+          }
+        ],
+        "syllables": 1,
+        "orphan_jamo": 0,
+        "fully_composed": true,
+        "frames": 127,
+        "samples": 40960,
+        "seconds": 2.56,
+        "mean_frame_probability": 0.9989083409309387,
+        "inference_seconds": 0.04976239998359233,
+        "realtime_factor": 51.44446411033398,
+        "cached": false,
+        "decode_version": "compose-1"
+      },
+      "matches_training_label": true,
+      "matches_selected_form": true
+    },
+    {
+      "number": 12,
+      "wav": "K09294894-AFG10-L1N2D1-E-K0KK-02570055.wav",
+      "binding": "fb113b0f788a425ebd51635ada5b2f6cf40a7d48fa7958995460bfe26c4503d9",
+      "pcm_sha256": "d551a20f34b5707a19dcc13d467d6f87f34a78d1ebc021f8d81d0ee06b8cf5a4",
+      "first_impression": "책",
+      "choice": "whole_form_2",
+      "selected_surface": "책",
+      "training_surface": "책",
+      "prediction": {
+        "token_ids": [
+          16,
+          22,
+          2
+        ],
+        "jamo": "ㅊㅐㄱ",
+        "jamo_tokens": [
+          "ㅊ",
+          "ㅐ",
+          "ㄱ"
+        ],
+        "text": "책",
+        "segments": [
+          {
+            "kind": "syllable",
+            "text": "책",
+            "jamo": [
+              "ㅊ",
+              "ㅐ",
+              "ㄱ"
+            ]
+          }
+        ],
+        "syllables": 1,
+        "orphan_jamo": 0,
+        "fully_composed": true,
+        "frames": 127,
+        "samples": 40736,
+        "seconds": 2.546,
+        "mean_frame_probability": 0.9983178973197937,
+        "inference_seconds": 0.05075409996788949,
+        "realtime_factor": 50.163435103977285,
+        "cached": false,
+        "decode_version": "compose-1"
+      },
+      "matches_training_label": true,
+      "matches_selected_form": true
+    },
+    {
+      "number": 13,
+      "wav": "K09293664-AFG13-L5N1D1-E-K0KK-02035043.wav",
+      "binding": "c4aa7650b10936cbbd98b74ffe24982c0b3170e793e6addc6dcc6ed8162fe5a9",
+      "pcm_sha256": "6e179227b827110826702f6a06bb6736ec6350ce6bfe6cf4c70947719d3f3c02",
+      "first_impression": "책",
+      "choice": "whole_form_2",
+      "selected_surface": "책",
+      "training_surface": "책",
+      "prediction": {
+        "token_ids": [
+          16,
+          22,
+          2
+        ],
+        "jamo": "ㅊㅐㄱ",
+        "jamo_tokens": [
+          "ㅊ",
+          "ㅐ",
+          "ㄱ"
+        ],
+        "text": "책",
+        "segments": [
+          {
+            "kind": "syllable",
+            "text": "책",
+            "jamo": [
+              "ㅊ",
+              "ㅐ",
+              "ㄱ"
+            ]
+          }
+        ],
+        "syllables": 1,
+        "orphan_jamo": 0,
+        "fully_composed": true,
+        "frames": 130,
+        "samples": 41984,
+        "seconds": 2.624,
+        "mean_frame_probability": 0.9989323616027832,
+        "inference_seconds": 0.05952539999270812,
+        "realtime_factor": 44.082022133768795,
+        "cached": false,
+        "decode_version": "compose-1"
+      },
+      "matches_training_label": true,
+      "matches_selected_form": true
+    },
+    {
+      "number": 14,
+      "wav": "K09290044-AFG10-L4N1D4-E-K0KK-00860974.wav",
+      "binding": "7bcb71485ba80e565503f67b5421b068656b86574a7fd090da114a91bfcf0a2c",
+      "pcm_sha256": "05b6b5a4912d90c54001fc47b9f91bfd5c6c1dc4c22871f42ddb48cb55ca8f89",
+      "first_impression": "책",
+      "choice": "whole_form_2",
+      "selected_surface": "책",
+      "training_surface": "책",
+      "prediction": {
+        "token_ids": [
+          16,
+          22,
+          2
+        ],
+        "jamo": "ㅊㅐㄱ",
+        "jamo_tokens": [
+          "ㅊ",
+          "ㅐ",
+          "ㄱ"
+        ],
+        "text": "책",
+        "segments": [
+          {
+            "kind": "syllable",
+            "text": "책",
+            "jamo": [
+              "ㅊ",
+              "ㅐ",
+              "ㄱ"
+            ]
+          }
+        ],
+        "syllables": 1,
+        "orphan_jamo": 0,
+        "fully_composed": true,
+        "frames": 198,
+        "samples": 63488,
+        "seconds": 3.968,
+        "mean_frame_probability": 0.9982450008392334,
+        "inference_seconds": 0.06481790001271293,
+        "realtime_factor": 61.21765745606915,
+        "cached": false,
+        "decode_version": "compose-1"
+      },
+      "matches_training_label": true,
+      "matches_selected_form": true
+    },
+    {
+      "number": 15,
+      "wav": "K09292080-AMG11-L1N2D1-E-K0KK-01205278.wav",
+      "binding": "f46ecf7fb3461d439659dd1475bc5396dcd8eb1d448f794286becee9bb672eb1",
+      "pcm_sha256": "0e6e759c1ea3884c04e9ec828327c80991d5ef52e07cb8223331898c0cd875eb",
+      "first_impression": "책",
+      "choice": "whole_form_3",
+      "selected_surface": "책",
+      "training_surface": "책",
+      "prediction": {
+        "token_ids": [
+          16,
+          22,
+          2
+        ],
+        "jamo": "ㅊㅐㄱ",
+        "jamo_tokens": [
+          "ㅊ",
+          "ㅐ",
+          "ㄱ"
+        ],
+        "text": "책",
+        "segments": [
+          {
+            "kind": "syllable",
+            "text": "책",
+            "jamo": [
+              "ㅊ",
+              "ㅐ",
+              "ㄱ"
+            ]
+          }
+        ],
+        "syllables": 1,
+        "orphan_jamo": 0,
+        "fully_composed": true,
+        "frames": 133,
+        "samples": 42784,
+        "seconds": 2.674,
+        "mean_frame_probability": 0.99649977684021,
+        "inference_seconds": 0.06024100002832711,
+        "realtime_factor": 44.38837334610325,
+        "cached": false,
+        "decode_version": "compose-1"
+      },
+      "matches_training_label": true,
+      "matches_selected_form": true
+    },
+    {
+      "number": 16,
+      "wav": "K09294180-AMG10-L1N2D1-E-K0KK-03608508.wav",
+      "binding": "49739005635d3c68a0a72ca8b569c85b346dc5fb688b2c3b87d71d7ad556692f",
+      "pcm_sha256": "03dc4e8a903093172212e2a831521df4af73efcc96e99ed1eeabb6541d7c5ff3",
+      "first_impression": "짹",
+      "choice": "whole_form_4",
+      "selected_surface": "짹",
+      "training_surface": "책",
+      "prediction": {
+        "token_ids": [
+          16,
+          22,
+          2
+        ],
+        "jamo": "ㅊㅐㄱ",
+        "jamo_tokens": [
+          "ㅊ",
+          "ㅐ",
+          "ㄱ"
+        ],
+        "text": "책",
+        "segments": [
+          {
+            "kind": "syllable",
+            "text": "책",
+            "jamo": [
+              "ㅊ",
+              "ㅐ",
+              "ㄱ"
+            ]
+          }
+        ],
+        "syllables": 1,
+        "orphan_jamo": 0,
+        "fully_composed": true,
+        "frames": 111,
+        "samples": 35840,
+        "seconds": 2.24,
+        "mean_frame_probability": 0.9921881556510925,
+        "inference_seconds": 0.04911609995178878,
+        "realtime_factor": 45.60622692352878,
+        "cached": false,
+        "decode_version": "compose-1"
+      },
+      "matches_training_label": true,
+      "matches_selected_form": false
+    },
+    {
+      "number": 17,
+      "wav": "K09290311-AMG10-L1N2D1-E-K0KK-00823438.wav",
+      "binding": "2ac6f639caf0ab4b70dec54a950e76957b1ca3553e424b490593a94b46da2c52",
+      "pcm_sha256": "2bbee95653cf3cf46b339440131f5facd796e5c708688a062b56c853c8d0acfe",
+      "first_impression": "책",
+      "choice": "whole_form_1",
+      "selected_surface": "책",
+      "training_surface": "책",
+      "prediction": {
+        "token_ids": [
+          16,
+          22,
+          2
+        ],
+        "jamo": "ㅊㅐㄱ",
+        "jamo_tokens": [
+          "ㅊ",
+          "ㅐ",
+          "ㄱ"
+        ],
+        "text": "책",
+        "segments": [
+          {
+            "kind": "syllable",
+            "text": "책",
+            "jamo": [
+              "ㅊ",
+              "ㅐ",
+              "ㄱ"
+            ]
+          }
+        ],
+        "syllables": 1,
+        "orphan_jamo": 0,
+        "fully_composed": true,
+        "frames": 127,
+        "samples": 40960,
+        "seconds": 2.56,
+        "mean_frame_probability": 0.999788761138916,
+        "inference_seconds": 0.04646320000756532,
+        "realtime_factor": 55.09736736994376,
+        "cached": false,
+        "decode_version": "compose-1"
+      },
+      "matches_training_label": true,
+      "matches_selected_form": true
+    },
+    {
+      "number": 18,
+      "wav": "K09295527-AFG10-L1N2D2-E-K0KK-03182536.wav",
+      "binding": "8d74298dc44fb401801716192e4641b19c668ea0ffd630e75180df5d895838f1",
+      "pcm_sha256": "5a6c6149e256231dcd5e5fd1aa85c06c289473b24e0a3a1283cb89b6b6860af2",
+      "first_impression": "찌액",
+      "choice": "other",
+      "selected_surface": null,
+      "training_surface": "책",
+      "prediction": {
+        "token_ids": [
+          16,
+          22,
+          2
+        ],
+        "jamo": "ㅊㅐㄱ",
+        "jamo_tokens": [
+          "ㅊ",
+          "ㅐ",
+          "ㄱ"
+        ],
+        "text": "책",
+        "segments": [
+          {
+            "kind": "syllable",
+            "text": "책",
+            "jamo": [
+              "ㅊ",
+              "ㅐ",
+              "ㄱ"
+            ]
+          }
+        ],
+        "syllables": 1,
+        "orphan_jamo": 0,
+        "fully_composed": true,
+        "frames": 165,
+        "samples": 52960,
+        "seconds": 3.31,
+        "mean_frame_probability": 0.9996111989021301,
+        "inference_seconds": 0.061396699980832636,
+        "realtime_factor": 53.911692339056415,
+        "cached": false,
+        "decode_version": "compose-1"
+      },
+      "matches_training_label": true,
+      "matches_selected_form": null
+    },
+    {
+      "number": 19,
+      "wav": "K09294141-AMG10-L1N2D1-E-K0KK-03550051.wav",
+      "binding": "e7a0142bff6a98479940da4cd106468488b8f43bbc04911dc3a8f50dd67d8852",
+      "pcm_sha256": "19fe8cfa9fe7d03cd2198087aa1745e2951163517e0e93113b318e89557650ca",
+      "first_impression": "책",
+      "choice": "whole_form_1",
+      "selected_surface": "책",
+      "training_surface": "책",
+      "prediction": {
+        "token_ids": [
+          16,
+          22,
+          2
+        ],
+        "jamo": "ㅊㅐㄱ",
+        "jamo_tokens": [
+          "ㅊ",
+          "ㅐ",
+          "ㄱ"
+        ],
+        "text": "책",
+        "segments": [
+          {
+            "kind": "syllable",
+            "text": "책",
+            "jamo": [
+              "ㅊ",
+              "ㅐ",
+              "ㄱ"
+            ]
+          }
+        ],
+        "syllables": 1,
+        "orphan_jamo": 0,
+        "fully_composed": true,
+        "frames": 82,
+        "samples": 26528,
+        "seconds": 1.658,
+        "mean_frame_probability": 0.9974517226219177,
+        "inference_seconds": 0.04595669999253005,
+        "realtime_factor": 36.07743811608528,
+        "cached": false,
+        "decode_version": "compose-1"
+      },
+      "matches_training_label": true,
+      "matches_selected_form": true
+    },
+    {
+      "number": 20,
+      "wav": "K09290326-AMG11-L4N1D1-E-K0KK-00077559.wav",
+      "binding": "4de584a3c74ebb987deecac8638c7e966bb7f1e8be94808bd228bb49d48f75f8",
+      "pcm_sha256": "c15084283404555fa0afd2239cb0bde4ea5b81345af5d8ca44c66142f4919224",
+      "first_impression": "책",
+      "choice": "whole_form_3",
+      "selected_surface": "책",
+      "training_surface": "책",
+      "prediction": {
+        "token_ids": [
+          16,
+          22,
+          2
+        ],
+        "jamo": "ㅊㅐㄱ",
+        "jamo_tokens": [
+          "ㅊ",
+          "ㅐ",
+          "ㄱ"
+        ],
+        "text": "책",
+        "segments": [
+          {
+            "kind": "syllable",
+            "text": "책",
+            "jamo": [
+              "ㅊ",
+              "ㅐ",
+              "ㄱ"
+            ]
+          }
+        ],
+        "syllables": 1,
+        "orphan_jamo": 0,
+        "fully_composed": true,
+        "frames": 162,
+        "samples": 52160,
+        "seconds": 3.26,
+        "mean_frame_probability": 0.9987640380859375,
+        "inference_seconds": 0.06255849997978657,
+        "realtime_factor": 52.11122391127259,
+        "cached": false,
+        "decode_version": "compose-1"
+      },
+      "matches_training_label": true,
+      "matches_selected_form": true
+    }
+  ],
+  "training_started": false,
+  "model_replaced": false,
+  "references_used_in_inference": false,
+  "limits": [
+    "These are previously trained recordings and single-listener observations, not an independent accuracy benchmark.",
+    "Model agreement with its training label does not verify the pronunciation or prove why a different recording was misrecognized.",
+    "Free-text first impressions are retained, never converted into scoring targets."
+  ]
+}

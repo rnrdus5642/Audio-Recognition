@@ -1,20 +1,133 @@
 ﻿# Phoneme Matching (Unity 패키지)
 
-발화가 정답 단어와 **음소(IPA) 수준에서** 충분히 가까운지 판정합니다. STT로 "무슨
-단어인지" 맞추는 게 아니라 음소 부분 매칭이라, 발음이 부정확한 사용자(아동·발달지연
-포함)에게도 동작하고 STT 환각·마이크 잡음 문제를 함께 회피합니다.
+음성을 텍스트로 인식한 뒤 한국어 음운 규칙과 IPA 변환을 적용하여, 정답 단어와
+얼마나 가까운지 판정합니다. 인식 오류와 무관한 발화의 오통과 여부는 실제 사용
+음성으로 확인해야 합니다. 모델 출력은 아동의 실제 발음을 그대로 기록한 전사가 아닙니다.
 
 **온디바이스 전용입니다.** 서버도 파이썬 런타임도 필요 없습니다.
 
 2026-09-06 개발 소스에는 기존 JSON을 보존하는 초기 세팅, 합격 후보 우선 선택,
 모델별 테스트 창 설정이 반영되어 있습니다. 웹도 기본 2.5초 창·앞쪽 무음 패딩으로 맞췄습니다.
 검증된 환경과 남은 제약은 [검증 기록](Documentation~/validation-2026-09-06.md)을 참고하세요.
-패키지 버전 표기는 `0.7.0`이지만 기존 `v0.7.0` 태그와 같은 소스라는 뜻은 아닙니다.
-이번 변경을 포함한 커밋/브랜치가 원격에 게시된 뒤 해당 Git 참조로 갱신해야 합니다.
+이전 개발 소스의 `0.7.0` 표기는 기존 `v0.7.0` 태그와 같은 소스라는 뜻이 아닙니다.
+이번 `0.7.1-preview.2`는 로컬 `.tgz` 배포이며, 원격 태그가 게시됐다는 뜻은 아닙니다.
 
 2026-10-03부터 저장소 소스는 `01_Project/` 아래에 있습니다. 아래 새 Git 패키지 URL은
 이 구조의 커밋을 원격에 반영한 뒤 사용합니다. 이전 태그·커밋에는 당시의 `/unity/Packages/...` 경로를 사용하세요.
 Python 명령은 `Audio-Recognition/01_Project`에서 실행합니다.
+
+## 2026-10-30 웹과 같은 정답 판정 (v4)
+
+원문 자모 모델에 `orthographic-word-preview-v4` 후처리를 연결했습니다. 모델 가중치와
+69개 자모 어휘는 이전 미리보기와 같습니다. 새 C# 코드와 아래 활성화 설정을 적용합니다.
+이 절의 설명은 웹 v4 모드에 해당하며, 아래의 기존 wav2vec2 사용법은 유지됩니다.
+
+가장 빠른 연결은 Package Manager에서 **Web word matching (Unity 6)** 샘플을 Import하고,
+빈 GameObject에 `WebWordExample`을 붙이는 것입니다. `Model`에 아래 HuBERT ModelAsset을
+지정하고, 함께 추가되는 `PronunciationListener`의 `OnTextRecognized(string)`를 텍스트 표시,
+`OnConfirmed(string, float)`를 게임 진행에 연결하세요. `OnReady` 이후 `StartListening()`을
+호출합니다. 다음 단계는 `Begin(new[] { "놓아", "놓아요", "놓을까?" })`, 중지는 `StopListening()`입니다.
+`Candidates` 배열 안의 정답 중 하나가 확정되면 마이크가 멈추고 정답 이벤트가 한 번 발생합니다.
+
+기존 게임에서 이미 인식기를 만들었다면, 별도 샘플 없이 다음 설정만 추가할 수 있습니다.
+
+```csharp
+listener.ConfigureOrthographicWordPolicy(); // .85, 확인 2회, 2.5초 창 / 0.5초 간격, 시간 제한 없음
+listener.SetRecognizer(recognizer);         // 기존 HuBERT + 69자모 인식기
+listener.TargetWords = new[] { "들어", "들어요", "들까?" };
+listener.OnTextRecognized.AddListener(text => Debug.Log("현재 인식: " + text));
+listener.OnConfirmed.AddListener((word, score) => Debug.Log("정답: " + word));
+listener.Listen();
+// 종료: listener.StopListening(); 후보를 바꾼 뒤 Listen()하면 이전 음성/확인 기록은 초기화됩니다.
+```
+
+`ConfigureOrthographicWordPolicy`는 데이터를 읽기 전에 호출합니다. 기존 Scene/Prefab은
+임의로 바꾸지 않으므로 직접 연결하는 게임은 이 호출이 필요합니다. 원문 자모 모델을 고른
+에디터 마이크 테스트 창과 새 LessonExample 샘플은 웹 v4 모드를 선택합니다.
+
+- 정답 후보는 실행 중 한글 1~20음절씩 최대 20개 지정합니다. `targets_child.json` 등록은
+  필요 없습니다. 끝의 `?`·`？`는 비교할 때 제거하고 중복 후보는 합칩니다.
+- 모델의 원문 텍스트는 그대로 보존합니다. 띄어쓰기 경계를 기준으로 끝부분의 완성된
+  단어/구절을 후보마다 비교합니다. `안녕 책`의 `책`은 비교하지만 `책상`에서 `책`을 자르지 않습니다.
+- 2음절 이상인 등록 정답의 완전한 2~4회 반복만 합칩니다. 알려진 15개 동작군의 다른 동작,
+  최고 점수가 같은 복수 후보는 확정하지 않습니다.
+- 한국어 음운 규칙 → IPA → `ko_child_v2.json` 가중 편집거리의 exact 점수로 비교합니다.
+  기본 임계값은 **0.85**이며 정확도 확률이 아닙니다. 동일 후보의 통과 2회 사이에 불확실한
+  검사 1회는 허용합니다. 긴 처리 지연으로 오래된 확인 기록은 만료됩니다.
+- 20ms 구간 RMS 0.006 이상인 구간이 창의 4% 이상일 때 비교합니다. 잡음 분류기는 아닙니다.
+- 입력은 **16 kHz 모노 40,000샘플**이며 짧은 첫 창은 앞을 무음으로 채웁니다. 10초 전체 제한은 없습니다.
+  실제 검사 간격은 추론 시간의 영향을 받습니다.
+
+`listener.LastFrame.Text`는 현재 모델 출력, `listener.LastFrame.WordDecision`은 후보별
+점수·비교 구간·차단 이유·확인 횟수입니다. `OnConfirmedDetailed`도 유지되지만 exact 모드는
+개별 음소 정렬을 만들지 않아 `AlignmentAvailable=false`입니다. 이를 발음 오류 없음으로 표시하지 마세요.
+
+앱에 오디오 캡처가 이미 있으면 마이크를 추가로 열지 않고 다음 API를 씁니다.
+
+```csharp
+var session = PronunciationSession.ForOrthographicWord(matrix, recognizer);
+session.Begin(new[] { "실로폰채", "들어", "들어요" });
+// 0.5초마다 최근 2.5초 오디오와 Begin 이후 캡처 시각을 전달합니다.
+var result = session.Push(window16kMono, elapsedCaptureSeconds);
+if (result.Confirmed) Debug.Log(result.WordDecision.MatchedTarget);
+```
+
+지연/누락이 가능한 캡처는 시각을 명시하는 오버로드를 사용합니다. 시각 없는 `Push(window)`는
+호출마다 0.5초가 지났다고 가정합니다. 이전 `new PronunciationSession(matrix, catalog, recognizer)`는
+기존 판정 방식이므로 새 모델 연결에는 위 factory를 사용하세요.
+
+현재 웹의 규칙을 옮긴 것으로, **길이 1.2~1.5배 실험은 포함하지 않았습니다.** 정답 뒤에 다른 말이
+붙거나 띄어쓰기 없이 합쳐진 결과, 모델 자체의 오인식, 목록 밖의 비슷한 동작은 한계가 남습니다.
+보존한 입력 11,556건/98,385개 검사에서 C#과 웹의 후보 점수·이유·확정 결과를 비교해 일치를
+확인했습니다. 이는 후처리 이식 검증이며 실제 아동 정답률이나 PCVR 성능 측정은 아닙니다.
+
+## 원문 자모 아동 모델 설치
+
+기존 패키지 ID, `PronunciationSession`, `PronunciationListener`와 마이크 테스트 메뉴를
+유지합니다. HuBERT 아동 모델은 데이터셋의 원문 라벨을 위치별 자모 69개로 분해해
+학습한 **약 2.01 에포크 체크포인트**입니다. 발음상 전사로 바꾼 실험 모델이 아닙니다.
+
+이 모델의 실행 환경은 **Windows / Unity 6 / Inference Engine 2.6.1**입니다.
+기존 모델의 Unity 2022.3 경로는 유지하지만, 이번 `.sentis` 파일은 그 경로에서 검증하지 않았습니다.
+
+1. Package Manager의 `+ > Add package from tarball…`에서
+   `com.domicube.phoneme-matching-0.7.1-preview.2.tgz`를 선택합니다.
+2. 추론 엔진이 없다면 `Tools > Phoneme Matching > 추론 엔진 설치` 후 컴파일을 기다립니다.
+3. `Tools > Phoneme Matching > 원문 자모 아동 모델 파일에서 가져오기…`에서
+   별도 제공한 `hubert_ko_child_jamo.sentis`를 선택합니다. 필요한 JSON은 누락분만 설치합니다.
+4. 기존 `발음 테스트 (마이크)` 창에서 이 모델을 선택하고 준비한 뒤 확인합니다.
+   `초기 세팅`은 기존 성인 모델을 내려받는 경로이므로, 이번 모델에는 위 개별 메뉴를 사용합니다.
+
+모델은 약 **3.85 GB**이며 코드 패키지에는 포함되지 않습니다. 고정 입력은
+**16 kHz 모노 40,000 샘플(2.5초)**이고, 짧은 음성은 앞쪽에 0을 채웁니다.
+`hubert_ko_child_jamo_vocab.json`의 `normalize: false`, `compose_hangul_jamo: true`를
+유지해야 합니다. 기존 1,205개 어휘 파일로 대체하면 안 됩니다.
+
+게임에서 기존 Lesson example을 쓰는 경우에는 다음 Inspector 값만 맞춥니다.
+
+| 설정 | 값 |
+|---|---|
+| LessonExample.Model | `hubert_ko_child_jamo.sentis`의 ModelAsset |
+| LessonExample.VocabFileName | `hubert_ko_child_jamo_vocab.json` |
+| PronunciationListener.MatrixFileName | `ko_child_v2.json` |
+| PronunciationListener.UseOrthographicWordPolicy | `true` (위 Configure 메서드 권장) |
+| PronunciationListener.WindowSeconds | `2.5` |
+
+직접 연결할 때도 기존 `new SentisPhonemeRecognizer(modelAsset, vocabulary)` API를 씁니다.
+Windows 파일에서 직접 읽을 때는 `SentisPhonemeRecognizer.FromFile(path, vocabulary)`도 가능합니다.
+텍스트가 필요하면 `RecognizeWithText(audio, out text, out phonemes)`를 사용합니다.
+웹 v4 모드의 정답은 `TargetWords`에 직접 지정합니다. 기존 판정 모드를 계속 쓸 때만
+출제 단어를 `targets_child.json`에 등록합니다.
+
+최종 모델을 받으면 같은 가져오기 메뉴로 같은 경로의 파일을 교체합니다.
+`Assets/Resources/Models/hubert_ko_child_jamo.sentis`와 `.meta` GUID를 유지하므로
+장면의 모델 참조와 게임 코드를 그대로 쓸 수 있습니다. 실행 중인 게임은 종료한 뒤
+교체하고, 배포한 Windows 실행 파일에는 새 모델을 포함하여 다시 빌드합니다.
+이는 실행 중 자동 교체 기능을 의미하지 않습니다.
+
+웹 v4 모드의 기본 임계값은 0.85입니다. 새 모델의 오통과/미통과율에 맞춘
+재보정은 아직 하지 않았습니다. 기본 인식 API는 동기식 GPU 추론이므로, 이전
+wav2vec2의 속도 수치를 이 모델에 적용하지 말고 실제 PC/VR의 프레임 지연을 확인하세요.
 
 ## 실행 구조
 
@@ -31,7 +144,7 @@ Python 명령은 `Audio-Recognition/01_Project`에서 실행합니다.
 같은 규칙 구현이 있습니다. 런타임에 mecab이나 Python은 필요 없습니다.
 g2pkk는 Python의 별도 비교 실험 경로에서만 사용합니다.
 
-## 설치
+## 기존 wav2vec2 모델 설치
 
 **Unity 2022.3 과 Unity 6 을 모두 지원합니다.**
 
@@ -44,7 +157,7 @@ https://github.com/rnrdus5642/Audio-Recognition.git?path=/01_Project/unity/Packa
 Tools > Phoneme Matching > 초기 세팅
 ```
 
-`초기 세팅` 은 없는 것만 차례대로 설치합니다 - 추론 엔진, 데이터 JSON 5개,
+`초기 세팅` 은 없는 것만 차례대로 설치합니다 - 추론 엔진, 데이터 JSON 6개,
 음향 모델. 이미 있는 것은 건너뛰므로 두 경우에 같은 버튼을 씁니다.
 
 | 상황 | 실제로 하는 일 |
@@ -67,9 +180,11 @@ Tools > Phoneme Matching > 초기 세팅
 |---|---|---|
 | `wav2vec2_ko.onnx` | `ko_child_v1.json` | `targets.json` |
 | `wav2vec2_ko_child.onnx` | `ko_child_v2.json` | `targets_child.json` |
+| `hubert_ko_child_jamo.sentis` | `ko_child_v2.json` | 입력한 후보를 실행 중 변환 (웹 v4) |
 
-공통 어휘는 `wav2vec2_ko_vocab.json`입니다. 이름을 바꾼 모델이나 별도 모델은
-`채점 설정 (직접 지정)`에서 기본/아동 모델용을 선택해야 시작할 수 있으며,
+기존 두 모델의 어휘는 `wav2vec2_ko_vocab.json`, 새 원문 자모 모델의 어휘는
+`hubert_ko_child_jamo_vocab.json`입니다. 이름을 바꾼 모델이나 별도 모델은
+`채점 설정 (직접 지정)`에서 기본/아동/원문 자모 아동 모델용을 선택해야 시작할 수 있으며,
 선택은 모델 에셋별로 기억합니다. 자동 구분은 파일명 기준이지 모델 내부를 분석한
 결과는 아니므로, 표준 이름으로 다른 모델을 덮어쓴 경우까지 식별하지는 않습니다.
 모델·채점 설정을 바꾸면 이전 준비 세션과 결과를 비우고 다시 준비합니다.
@@ -152,7 +267,7 @@ https://github.com/rnrdus5642/Audio-Recognition.git?path=/01_Project/unity/Packa
 `Tools > Phoneme Matching > 데이터 파일 설치`
 
 `ko_child_v1.json` · `targets.json` · `ko_child_v2.json` ·
-`targets_child.json` · `wav2vec2_ko_vocab.json` 을
+`targets_child.json` · `wav2vec2_ko_vocab.json` · `hubert_ko_child_jamo_vocab.json`을
 `Assets/StreamingAssets/` 에 넣고, 런타임이 읽는 방식 그대로 다시 읽어
 확인까지 합니다. 이미 있으면 덮어쓸지 물어봅니다.
 
@@ -160,9 +275,8 @@ https://github.com/rnrdus5642/Audio-Recognition.git?path=/01_Project/unity/Packa
 않습니다. 반면 별도 `데이터 파일 설치` 메뉴는 확인 후 기존 파일을 패키지 기본
 데이터로 교체합니다. 직접 추가한 단어와 수정한 임계값이 있다면 교체 전에 보관하세요.
 
-뒤의 두 개가 아동 전용입니다. 성인용을 대체하지 않고 나란히 놓입니다 —
-두 음향 모델이 서로 다르게 잘못 들어서, 한쪽에 맞춘 임계값과 채점 설정이
-다른 쪽에는 맞지 않습니다.
+`ko_child_v2.json`과 `targets_child.json`은 기존 아동 모델의 판정 설정입니다.
+성인용 파일과 별도로 유지하며, 원문 자모 모델에서는 재보정 전 초기값으로 사용합니다.
 
 > Package Manager 의 샘플 임포트 버튼을 써도 되지만, 그건 파일을
 > `Assets/Samples/...` 에 놓기 때문에 `StreamingAssets/` 로 한 번 더

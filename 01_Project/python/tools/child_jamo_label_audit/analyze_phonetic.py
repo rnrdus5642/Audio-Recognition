@@ -14,6 +14,16 @@ from inventory_phonetic import DEST, ROOT, WORK
 from common import digest, dump, load
 import labels
 
+QUALIFICATIONS = ROOT / 'docs/data/child-jamo-phonetic-qualifications-20261003.json'
+
+
+def read_qualifications():
+    """Keep later listener uncertainty separate from immutable answer history."""
+    record = load(QUALIFICATIONS)
+    assert record['schema_version'] == 1
+    assert record['primary_review_sha256'] == digest(DEST / 'review.json')
+    return record
+
 
 def read_snapshot(directory=DEST):
     directory = Path(directory)
@@ -42,7 +52,9 @@ def read_snapshot(directory=DEST):
                        'reveal': reveals.get(i['id'])} for i in review['items']]}
 
 
-def assess(evidence, snapshot):
+def assess(evidence, snapshot, qualifications=()):
+    assert len({q['id'] for q in qualifications}) == len(qualifications)
+    assert all(q['status'] == 'uncertain' and isinstance(q['case'], int) for q in qualifications)
     answers = {r['id']: r for r in snapshot['items']}
     assert set(answers) == {str(e['number']) for e in evidence}
     rows = []
@@ -52,18 +64,23 @@ def assess(evidence, snapshot):
         answer = reply['answer']
         candidate = entry['candidates'].get(answer['choice']) if answer else None
         crop_issue = answer and answer['crop_relation'] in ('cut', 'uncertain')
-        accepted = candidate if candidate and not crop_issue else None
-        if accepted:
+        uncertainty = [q for q in qualifications if q['case'] == entry['case']]
+        accepted = candidate if candidate and not crop_issue and not uncertainty else None
+        if candidate:
             # Literal decomposition only. Never call targets() / G2P on a listener's form.
-            tokens = labels.jamo(accepted['surface'])
-            assert tokens and [labels.VOCAB[t] for t in tokens] == accepted['label_ids']
+            tokens = labels.jamo(candidate['surface'])
+            assert tokens and [labels.VOCAB[t] for t in tokens] == candidate['label_ids']
         rows.append({'number': entry['number'], 'case': entry['case'], 'role': entry['role'],
                      'wav': entry['row']['wav'], 'speaker': entry['row']['speaker'],
                      'pcm_sha256': entry['row']['pcm_sha256'], 'binding': entry['binding'],
                      'answer_revision': answer['revision'] if answer else None,
                      'choice': answer['choice'] if answer else None,
-                     'status': ('pending' if not answer else 'crop_uncertainty_excluded' if crop_issue
+                     'status': ('pending' if not answer else 'post_review_uncertainty_excluded' if uncertainty
+                                else 'crop_uncertainty_excluded' if crop_issue
                                 else 'whole_form_confirmed' if accepted else 'no_whole_form_label'),
+                     'qualification_ids': [q['id'] for q in uncertainty],
+                     'selected_surface': candidate['surface'] if candidate else None,
+                     'selected_ids': candidate['label_ids'] if candidate else None,
                      'original_surface': entry['row']['surface'], 'original_ids': entry['row']['label_ids'],
                      'confirmed_surface': accepted['surface'] if accepted else None,
                      'confirmed_ids': accepted['label_ids'] if accepted else None,
@@ -96,9 +113,11 @@ def assess(evidence, snapshot):
     pending = [r['number'] for r in rows if r['status'] == 'pending']
     qualified = [c['case'] for c in coverage if c['matched_contrast_ready']]
     corrections = [r['number'] for r in train if r['changed_target']]
+    uncertain = [r['number'] for r in rows if r['status'] == 'post_review_uncertainty_excluded']
     ready = not pending and bool(qualified)
     next_action = ('await_whole_form_answers' if pending else
                    'freeze_equal_training_schedule_for_qualified_contrasts' if ready else
+                   'define_reliable_annotation_criteria_before_training' if uncertain else
                    'obtain_missing_contrast_coverage_before_training' if corrections else
                    'no_confirmed_relabel_intervention_do_not_train')
     return {'total': len(rows), 'answered': len(rows) - len(pending), 'pending_questions': pending,
@@ -106,10 +125,11 @@ def assess(evidence, snapshot):
             'answer_counts': dict(Counter(r['choice'] for r in rows if r['choice'])),
             'confirmed_training_relabel_questions': corrections, 'coverage': coverage,
             'qualified_comparison_cases': qualified, 'ready_for_controlled_comparison': ready,
+            'post_review_uncertainty_questions': uncertain, 'qualifications': list(qualifications),
             'next_action': next_action, 'items': rows,
             'notes_used_as_targets': False, 'g2p_applied_to_confirmed_forms': False,
             'original_manifest_modified': False, 'training_started': False,
-            'label_scope': 'single-listener broad Hangul/jamo, explicitly selected whole forms only',
+            'label_scope': 'Single-listener broad Hangul/jamo choices, excluding later uncertainty. Legacy confirmed_* fields denote eligible selections, not independently established phonetic ground truth.',
             'evaluation_scope': 'development speakers excluded from baseline training; not an untouched final test',
             'limits': 'Same-prompt selection alone does not verify a pronunciation contrast. Missing variant coverage must stay missing; do not replace it with corpus labels or model predictions.'}
 
@@ -125,20 +145,25 @@ def main():
     for split, expected in plan['manifest_sha256'].items():
         assert digest(WORK / f'manifest-{split}.jsonl') == expected
     snapshot = read_snapshot()
+    qualifications = read_qualifications()['qualifications']
+    qualification_sha = digest(QUALIFICATIONS)
     evidence = load(DEST / 'evidence.json')
     for entry in evidence:
         for key in ('served_train', 'served_full'):
             assert digest(DEST / 'audio' / entry[key]['file']) == entry[key]['sha256']
     report = {'analyzed_at_utc': datetime.now(timezone.utc).isoformat(),
               'selection_sha256': preparation['selection_sha256'],
-              'review_sha256': preparation['review_sha256'], **assess(evidence, snapshot)}
+              'review_sha256': preparation['review_sha256'],
+              'qualifications_sha256': qualification_sha, **assess(evidence, snapshot, qualifications)}
     revision = snapshot['latest_revision']
     snapshot_path = DEST / f'answer-snapshot-revision-{revision:03d}.json'
     if snapshot_path.exists():
         assert load(snapshot_path) == snapshot
     else:
         dump(snapshot_path, snapshot)
-    dump(DEST / f'analysis-revision-{revision:03d}.json', report)
+    assert read_snapshot() == snapshot
+    assert digest(QUALIFICATIONS) == qualification_sha
+    dump(DEST / f'analysis-revision-{revision:03d}-qualified-{qualification_sha[:12]}.json', report)
     dump(DEST / 'analysis-latest.json', report)
     dump(ROOT / 'docs/data/child-jamo-phonetic-readiness-20260929.json', report)
     print(json.dumps({k: v for k, v in report.items() if k != 'items'}, ensure_ascii=False), flush=True)

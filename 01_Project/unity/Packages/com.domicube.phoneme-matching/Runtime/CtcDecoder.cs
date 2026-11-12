@@ -28,6 +28,9 @@ namespace DomiCube.PhonemeMatching
         /// <summary>Whether the model expects zero-mean unit-variance input.</summary>
         public bool Normalize = true;
 
+        /// <summary>Compose positional Unicode jamo after CTC collapse.</summary>
+        public bool ComposeHangulJamo = false;
+
         public float NormalizeEpsilon = 1e-7f;
 
         public int SamplingRate = 16000;
@@ -142,7 +145,11 @@ namespace DomiCube.PhonemeMatching
                 previous = id;
             }
 
-            return Sanitize(sb.ToString());
+            // Positional jamo must be composed before any syllable filtering.
+            // Preserve orphan jamo for the new model, matching Python's raw text.
+            return vocab.ComposeHangulJamo
+                ? sb.ToString().Normalize(NormalizationForm.FormC)
+                : Sanitize(sb.ToString());
         }
 
         /// <summary>Logits straight to text.</summary>

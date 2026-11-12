@@ -1,5 +1,6 @@
 """Play real clips and save synthetic answers ONLY to a disposable QA database."""
 from datetime import datetime, timezone
+import argparse
 import hashlib
 import json
 from pathlib import Path
@@ -14,10 +15,11 @@ DIRECTORY = ROOT / '.venv/child-jamo-web-20260916/phonetic-labels-20260929'
 PAGE = Path(__file__).with_name('phonetic.html')
 
 
-def main():
-    qa = DIRECTORY / 'qa' / datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%SZ')
+def main(directory=DIRECTORY, page_path=PAGE):
+    directory, page_path = Path(directory), Path(page_path)
+    qa = directory / 'qa' / datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%SZ')
     qa.mkdir(parents=True)
-    server = make_server(DIRECTORY, port=0, db_path=qa / 'qa-answers.sqlite3', page_path=PAGE)
+    server = make_server(directory, port=0, db_path=qa / 'qa-answers.sqlite3', page_path=page_path)
     thread = threading.Thread(target=server.serve_forever, daemon=True)
     thread.start()
     base = f'http://127.0.0.1:{server.server_port}'
@@ -34,7 +36,8 @@ def main():
             return response.status, json.load(response)
 
     try:
-        review = json.loads((DIRECTORY / 'review.json').read_text(encoding='utf-8'))
+        review = json.loads((directory / 'review.json').read_text(encoding='utf-8'))
+        count = len(review['items'])
         with sync_playwright() as p:
             browser = p.chromium.launch(channel='msedge', headless=True, args=['--autoplay-policy=no-user-gesture-required'])
             page = browser.new_page(viewport={'width':1100, 'height':1000})
@@ -50,7 +53,7 @@ def main():
             assert request('/evidence.json')[0] == 404
             report['checks']['blind_before_listening_no_model_or_split_display'] = True
             originals_played = 0
-            for index in range(15):
+            for index in range(count):
                 page.wait_for_function('(n)=>document.querySelector("#position").textContent.startsWith(`${n}번째`)', arg=index+1)
                 if index == 0:
                     page.locator('#first-heard').fill('QA only, not a listener answer')
@@ -109,25 +112,29 @@ def main():
             page.locator('#save').click()
             page.wait_for_selector('#done:not([hidden])')
             export = request('/api/export')[1]
-            assert export['answered'] == 15 and len(export['answer_history']) == 16
+            assert export['answered'] == count and len(export['answer_history']) == count + 1
             assert export['items'][0]['answer']['choice'] == 'partial'
             assert not report['errors'], report['errors']
-            report['checks']['all_15_saved_and_completed_state_persisted'] = True
+            report['checks']['all_questions_saved_and_completed_state_persisted'] = True
             report['checks']['revision_preserved_and_whole_confirmation_resets_on_choice_change'] = True
-            report['checks']['real_clip_playbacks'] = 15
+            report['checks']['real_clip_playbacks'] = count
             report['checks']['real_full_source_playbacks'] = originals_played
-            assert originals_played == 9
+            assert originals_played == sum(item['cropped'] for item in review['items'])
             browser.close()
         report['complete'] = True
     finally:
         server.shutdown()
         server.server_close()
         thread.join()
-        report['page_sha256'] = hashlib.sha256(PAGE.read_bytes()).hexdigest()
+        report['page_sha256'] = hashlib.sha256(page_path.read_bytes()).hexdigest()
         report['server_sha256'] = hashlib.sha256(Path(__file__).with_name('server.py').read_bytes()).hexdigest()
         (qa / 'report.json').write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding='utf-8')
     print(json.dumps(report, ensure_ascii=False), flush=True)
 
 
 if __name__ == '__main__':
-    main()
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--directory', type=Path, default=DIRECTORY)
+    parser.add_argument('--page', type=Path, default=PAGE)
+    args = parser.parse_args()
+    main(args.directory, args.page)

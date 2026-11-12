@@ -1,3 +1,2 @@
 $ErrorActionPreference = 'Stop'
-$projectDirectory = Join-Path (Split-Path -Parent $PSScriptRoot) '01_Project'
-& (Join-Path $projectDirectory 'start_child_jamo_mic.ps1') @args
+& (Join-Path $PSScriptRoot 'start_legacy_stream.ps1') @args

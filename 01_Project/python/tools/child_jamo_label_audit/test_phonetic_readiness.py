@@ -61,6 +61,41 @@ class ReadinessTests(unittest.TestCase):
         anchor = next(r for r in report['items'] if r['number'] == self.anchor['number'])
         self.assertIsNone(anchor['confirmed_ids'])
 
+    def test_later_uncertainty_excludes_targets_without_rewriting_choices(self):
+        self.choose(self.anchor, False)
+        self.choose(self.dev[0], True)
+        self.choose(self.dev[1], False)
+        unaffected = next(e for e in self.evidence if e['case'] != 6)
+        self.choose(unaffected, True)
+        original_snapshot = copy.deepcopy(self.snapshot)
+        original_evidence = copy.deepcopy(self.evidence)
+        before = assess(self.evidence, self.snapshot)
+        self.assertTrue(before['ready_for_controlled_comparison'])
+        qualification = {'id': 'listener-uncertainty', 'case': 6, 'status': 'uncertain'}
+        after = assess(self.evidence, self.snapshot, [qualification])
+        self.assertFalse(after['ready_for_controlled_comparison'])
+        self.assertEqual(after['confirmed_training_relabel_questions'], [])
+        self.assertEqual(after['next_action'], 'define_reliable_annotation_criteria_before_training')
+        for old, new in zip(before['items'], after['items'], strict=True):
+            if new['case'] == 6:
+                self.assertEqual(new['status'], 'post_review_uncertainty_excluded')
+                self.assertIsNone(new['confirmed_ids'])
+                self.assertEqual(new['selected_ids'], old['confirmed_ids'])
+                self.assertEqual(new['selected_surface'], old['confirmed_surface'])
+            else:
+                self.assertEqual(old, new)
+        self.assertEqual(self.snapshot, original_snapshot)
+        self.assertEqual(self.evidence, original_evidence)
+
+    def test_uncertainty_in_another_case_does_not_block_a_covered_case(self):
+        self.choose(self.anchor, False)
+        self.choose(self.dev[0], True)
+        self.choose(self.dev[1], False)
+        qualification = {'id': 'other-case-uncertainty', 'case': 3, 'status': 'uncertain'}
+        report = assess(self.evidence, self.snapshot, [qualification])
+        self.assertTrue(report['ready_for_controlled_comparison'])
+        self.assertEqual(report['qualified_comparison_cases'], [6])
+
     def test_pending_questions_block_comparison_even_with_one_covered_case(self):
         self.choose(self.anchor, False)
         self.choose(self.dev[0], True)

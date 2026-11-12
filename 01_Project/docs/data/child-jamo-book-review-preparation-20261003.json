@@ -1,0 +1,30 @@
+{
+  "version": "standalone-book-training-census-20261003-v1",
+  "prepared_at_utc": "2026-10-03T14:12:27.564741+00:00",
+  "questions": 20,
+  "distinct_speakers": 19,
+  "total_training_audio_seconds": 56.042,
+  "age_counts": {
+    "5": 12,
+    "6": 8
+  },
+  "previously_presented_recordings_included": 7,
+  "cropped_items_with_original_available": 8,
+  "selection_sha256": "9e1695ff4cea702f8645f6d96ccb0f4a4ea550a872d66bcd1ca430668fd3c2f1",
+  "review_sha256": "fdd6e2033ec3738ada35ceb3b422dd2d7e398e472e994424fdbee3a0e8ec6c12",
+  "evidence_sha256": "480f89866308c6a04db7ff3f01c965e960ba03685a48fae1c708f4ce5cfe9909",
+  "page_sha256": "6fe20f7f886ea5e3cc5e1b74fcd255f87581b6d5fdf8d5427d3e2b23b49b9c1a",
+  "original_manifest_sha256": "6b15a65983f64d8b01603161fbb901e1dbcee164fce605d39560ac2a71681a04",
+  "source_and_training_pcm_verified": 20,
+  "source_and_g2p_verified": 20,
+  "model_predictions_used": false,
+  "human_answers_created": false,
+  "labels_changed": false,
+  "training_started": false,
+  "limits": [
+    "All standalone 책 recordings in this baseline training manifest, not all corpus uses of the word.",
+    "The listener knows this is a 책-label set; hiding choices until playback is not full blinding.",
+    "Previously presented recordings are retained for complete coverage, not counted as independent new evidence.",
+    "Choices are listening observations, not automatically verified phonetic targets or proof of the cause of model errors."
+  ]
+}

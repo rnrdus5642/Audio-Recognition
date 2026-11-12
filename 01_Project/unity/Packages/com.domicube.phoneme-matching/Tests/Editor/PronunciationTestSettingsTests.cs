@@ -123,5 +123,46 @@ namespace DomiCube.PhonemeMatching.Editor.Tests
             foreach (string file in files)
                 File.Copy(Path.Combine(_source, file), Path.Combine(_scratch, file));
         }
+
+        [TestCase("Assets/Resources/Models/hubert_ko_child_jamo.sentis")]
+        [TestCase("Assets/Moved/HUBERT_KO_CHILD_JAMO.SENTIS")]
+        [TestCase(@"Assets\Moved\hubert_ko_child_jamo.onnx")]
+        public void OrthographicModelUsesItsOwnVocabulary(string path)
+        {
+            var settings = PronunciationTestSettings.Resolve(path, TestDataChoice.Base);
+            Assert.That(settings, Is.SameAs(PronunciationTestSettings.OrthographicChild));
+            Copy(settings.MatrixFile, settings.TargetsFile, settings.SelectedVocabularyFile);
+            settings.Load(_scratch, out var matrix, out var catalog, out var vocabulary);
+            Assert.That(matrix, Is.Not.Null);
+            Assert.That(catalog.Answers, Is.Empty);
+            Assert.That(vocabulary.Size, Is.EqualTo(69));
+            Assert.That(vocabulary.ComposeHangulJamo, Is.True);
+            Assert.That(vocabulary.Normalize, Is.False);
+            Assert.That(File.Exists(Path.Combine(_scratch, "wav2vec2_ko_vocab.json")), Is.False);
+        }
+
+        [Test]
+        public void OrthographicProfileDoesNotRequirePrecompiledTargetCatalog()
+        {
+            var settings = PronunciationTestSettings.OrthographicChild;
+            Copy(settings.MatrixFile, settings.SelectedVocabularyFile);
+            settings.Load(_scratch, out var matrix, out var catalog, out var vocabulary);
+            Assert.That(catalog.Answers, Is.Empty);
+            Assert.That(vocabulary.Size, Is.EqualTo(69));
+            var policy = new OrthographicWordPolicy(matrix);
+            policy.Begin(new[] { "실로폰채", "들까?" });
+            Assert.That(policy.Push("실로폰채", .5, 1).Passed, Is.True);
+            // Stale or broken legacy target data must not affect this mode.
+            File.WriteAllText(Path.Combine(_scratch, settings.TargetsFile), "old malformed target file");
+            Assert.DoesNotThrow(() => settings.Load(_scratch, out _, out _, out _));
+        }
+
+        [Test]
+        public void RenamedOrthographicModelRequiresExplicitProfile()
+        {
+            Assert.That(PronunciationTestSettings.Resolve("Assets/new.sentis", TestDataChoice.Unspecified), Is.Null);
+            Assert.That(PronunciationTestSettings.Resolve("Assets/new.sentis", TestDataChoice.OrthographicChild),
+                Is.SameAs(PronunciationTestSettings.OrthographicChild));
+        }
     }
 }

@@ -36,6 +36,7 @@ namespace DomiCube.PhonemeMatching.Editor
             "ko_child_v2.json",
             "targets_child.json",
             "wav2vec2_ko_vocab.json",
+            "hubert_ko_child_jamo_vocab.json",
         };
 
         /// <summary>True when every file is already in place.</summary>
@@ -197,12 +198,14 @@ namespace DomiCube.PhonemeMatching.Editor
         {
             string[] models = Directory.GetFiles(
                 Application.dataPath, "*.onnx", SearchOption.AllDirectories);
-            if (models.Length > 0)
+            int count = models.Length + Directory.GetFiles(
+                Application.dataPath, "*.sentis", SearchOption.AllDirectories).Length;
+            if (count > 0)
             {
-                return $"음향 모델: {models.Length}개 발견.";
+                return $"음향 모델: {count}개 발견.";
             }
 
-            return "음향 모델(.onnx)이 없습니다. "
+            return "음향 모델(.onnx 또는 .sentis)이 없습니다. "
                 + "Tools > Phoneme Matching > 음향 모델 내려받기 로 "
                 + "받으세요. 없어도 매칭 계층은 동작하지만, 소리를 "
                 + "판정하려면 필요합니다.";

@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "recorded_on": "2026-10-03",
+  "primary_review_sha256": "c5a0fe2d71dff6e17188dcb303da8bbed374ed192acda512e322cd42bddefe50",
+  "followup_review_sha256": "3ad349d540037f2d6b47226c6a4a9451c630301675ed0817a2d259caceaacaa7",
+  "qualifications": [
+    {
+      "id": "case-3-listener-uncertainty-20261003",
+      "case": 3,
+      "status": "uncertain",
+      "source": "user_followup_in_conversation",
+      "user_message": "근데 이게 솔직히 방가워우요랑 방가워요랑 거의 발음이 비슷해서, 이걸 내 판단에 온전히 믿고 작업을 진행하는게 맞나 모르겠네",
+      "reason": "사용자가 방가워우요와 방가워요의 청취 구별 및 자신의 선택을 학습 근거로 쓰는 데 불확실성을 밝혔다.",
+      "scope": "기존 15문항과 후속 2문항의 반가워요 사례 전체를 보수적으로 보류한다. 원래 선택을 철회하거나 반대 표기가 맞다고 판정한 것은 아니다.",
+      "action": "Preserve all choices and first impressions. Exclude this case from training targets, pronunciation-error scoring and qualified pronunciation contrasts until independent evidence supports a distinction."
+    }
+  ],
+  "answer_history_modified": false,
+  "model_predictions_used_as_ground_truth": false,
+  "training_started": false
+}

@@ -16,6 +16,9 @@ namespace DomiCube.PhonemeMatching.Unity
     [Serializable]
     public sealed class FrameScoredEvent : UnityEvent<string, float, int> { }
 
+    [Serializable]
+    public sealed class RecognizedTextEvent : UnityEvent<string> { }
+
     /// <summary>
     /// Drives the whole listening loop: microphone -> recogniser ->
     /// <see cref="StreamingMatcher"/> -> stop on confirmation.
@@ -33,6 +36,11 @@ namespace DomiCube.PhonemeMatching.Unity
 
         [Tooltip("빌드 파이프라인이 만든 targets.json")]
         public string TargetsFileName = "targets.json";
+
+        [Tooltip("원문 자모 모델에 웹사이트 v4 후처리를 사용합니다. 이 모드에서는 targets.json이 필요 없습니다.")]
+        public bool UseOrthographicWordPolicy;
+
+        [Range(.7f, 1f)] public float WordThreshold = .85f;
 
         [Header("Listening")]
         [Tooltip("정답 단어. 여러 개를 넣으면 그중 하나만 맞아도 확정됩니다 "
@@ -77,6 +85,11 @@ namespace DomiCube.PhonemeMatching.Unity
         /// <summary>(단어, 점수, 연속 횟수) - 디버그 UI용.</summary>
         public FrameScoredEvent OnFrameScored = new FrameScoredEvent();
 
+        /// <summary>Raw ASR text; never replaced by the selected answer.</summary>
+        public RecognizedTextEvent OnTextRecognized = new RecognizedTextEvent();
+
+        public FrameScore LastFrame { get; private set; }
+
         private IPhonemeRecognizer _recognizer;
         private ConfusionMatrix _matrix;
         private TargetCatalog _catalog;
@@ -105,6 +118,24 @@ namespace DomiCube.PhonemeMatching.Unity
             _recognizer = recognizer;
         }
 
+        /// <summary>Opt in to the current web policy and its capture defaults.
+        /// Call before Listen. Existing scenes retain their legacy configuration.</summary>
+        public void ConfigureOrthographicWordPolicy(float threshold = .85f, int confirmations = 2)
+        {
+            if (float.IsNaN(threshold) || threshold < .7f || threshold > 1f || confirmations < 2 || confirmations > 4)
+                throw new ArgumentOutOfRangeException("Invalid web word policy settings.");
+            StopListening();
+            UseOrthographicWordPolicy = true;
+            WordThreshold = threshold;
+            Consecutive = confirmations;
+            WindowSeconds = 2.5f;
+            HopSeconds = .5f;
+            TimeoutSeconds = 0f;
+            MatrixFileName = "ko_child_v2.json";
+            _matrix = null;
+            _catalog = null;
+        }
+
         /// <summary>
         /// Load matrix and targets from StreamingAssets. Separate from
         /// Awake so a caller can inject data another way instead.
@@ -113,14 +144,14 @@ namespace DomiCube.PhonemeMatching.Unity
         {
             _matrix = PhonemeData.LoadMatrix(
                 ReadStreamingAsset(MatrixFileName));
-            _catalog = PhonemeData.LoadTargets(
+            _catalog = UseOrthographicWordPolicy ? null : PhonemeData.LoadTargets(
                 ReadStreamingAsset(TargetsFileName));
         }
 
         public void LoadData(string matrixJson, string targetsJson)
         {
             _matrix = PhonemeData.LoadMatrix(matrixJson);
-            _catalog = PhonemeData.LoadTargets(targetsJson);
+            _catalog = UseOrthographicWordPolicy ? null : PhonemeData.LoadTargets(targetsJson);
         }
 
         private static string ReadStreamingAsset(string fileName)
@@ -141,6 +172,7 @@ namespace DomiCube.PhonemeMatching.Unity
         public void Listen()
         {
             LastConfirmation = null;
+            LastFrame = null;
             if (_loop != null)
             {
                 StopListening();
@@ -154,13 +186,10 @@ namespace DomiCube.PhonemeMatching.Unity
                 return;
             }
 
-            if (_matrix == null || _catalog == null)
+            if (_matrix == null || (!UseOrthographicWordPolicy && _catalog == null))
             {
                 LoadData();
             }
-
-            _session = new PronunciationSession(
-                _matrix, _catalog, _recognizer, Consecutive);
 
             var words = new List<string>();
             if (TargetWords != null)
@@ -184,6 +213,13 @@ namespace DomiCube.PhonemeMatching.Unity
 
             try
             {
+                if (UseOrthographicWordPolicy && (Math.Abs(WindowSeconds - 2.5f) > .001f || Math.Abs(HopSeconds - .5f) > .001f))
+                    throw new ArgumentException("웹 v4 판정은 WindowSeconds=2.5, HopSeconds=0.5가 필요합니다.");
+                // Round serialized float settings so 0.85f does not become
+                // 0.8500000238 and reject the web's exact 0.85 boundary.
+                _session = UseOrthographicWordPolicy
+                    ? PronunciationSession.ForOrthographicWord(_matrix, _recognizer, Math.Round(WordThreshold, 6), Consecutive)
+                    : new PronunciationSession(_matrix, _catalog, _recognizer, Consecutive);
                 _session.Begin(words);
             }
             catch (ArgumentException e)
@@ -220,7 +256,8 @@ namespace DomiCube.PhonemeMatching.Unity
 
         private IEnumerator ListenLoop()
         {
-            var wait = new WaitForSeconds(HopSeconds);
+            object wait = UseOrthographicWordPolicy
+                ? (object)new WaitForSecondsRealtime(HopSeconds) : new WaitForSeconds(HopSeconds);
             float started = Time.realtimeSinceStartup;
 
             // Distinguishes "gave up" from "the recogniser threw", which
@@ -242,10 +279,17 @@ namespace DomiCube.PhonemeMatching.Unity
                     continue;
                 }
 
+                // Wait until the microphone has captured a complete new hop.
+                // Some devices begin producing samples after the first tick.
+                if (_session.UsesOrthographicWordPolicy &&
+                    _mic.Elapsed - (_session.LastFrame?.WordDecision?.ElapsedSeconds ?? 0) < OrthographicWordPolicy.HopSeconds)
+                    continue;
+
                 FrameScore frame;
+                var scoringSession = _session;
                 try
                 {
-                    frame = _session.Push(_mic.Snapshot());
+                    frame = scoringSession.Push(_mic.Snapshot(), _mic.Elapsed);
                 }
                 catch (Exception e)
                 {
@@ -253,10 +297,14 @@ namespace DomiCube.PhonemeMatching.Unity
                     break;
                 }
 
+                LastFrame = frame;
+                OnTextRecognized?.Invoke(frame.Text);
+                if (_mic == null || !ReferenceEquals(scoringSession, _session)) yield break;
                 OnFrameScored.Invoke(
                     frame.Best.TargetText ?? string.Empty,
                     (float)frame.Best.Score,
                     frame.Streak);
+                if (_mic == null || !ReferenceEquals(scoringSession, _session)) yield break;
 
                 if (frame.Confirmed)
                 {

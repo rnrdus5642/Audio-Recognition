@@ -1,0 +1,1236 @@
+{
+  "analyzed_at_utc": "2026-10-03T13:40:50.054035+00:00",
+  "primary_snapshot_sha256": "f7140695d0ae144c4585aefbcef6a2a6040d1558ed17e348606af4dd6131e681",
+  "followup_review_sha256": "3ad349d540037f2d6b47226c6a4a9451c630301675ed0817a2d259caceaacaa7",
+  "followup_evidence_sha256": "4abac293e0755dfb3630d42ea79fc4f1b3a6c76876fc69bc3dbbc460f58d1aa5",
+  "qualifications_sha256": "7c88e183632c954a2cfa2157b804411a91d5a33ed6d1da09afd0fc3ce91492ab",
+  "question_identity_map": {
+    "1": {
+      "bundle": "primary",
+      "question": 1
+    },
+    "2": {
+      "bundle": "primary",
+      "question": 2
+    },
+    "3": {
+      "bundle": "primary",
+      "question": 3
+    },
+    "4": {
+      "bundle": "primary",
+      "question": 4
+    },
+    "5": {
+      "bundle": "primary",
+      "question": 5
+    },
+    "6": {
+      "bundle": "primary",
+      "question": 6
+    },
+    "7": {
+      "bundle": "primary",
+      "question": 7
+    },
+    "8": {
+      "bundle": "primary",
+      "question": 8
+    },
+    "9": {
+      "bundle": "primary",
+      "question": 9
+    },
+    "10": {
+      "bundle": "primary",
+      "question": 10
+    },
+    "11": {
+      "bundle": "primary",
+      "question": 11
+    },
+    "12": {
+      "bundle": "primary",
+      "question": 12
+    },
+    "13": {
+      "bundle": "primary",
+      "question": 13
+    },
+    "14": {
+      "bundle": "primary",
+      "question": 14
+    },
+    "15": {
+      "bundle": "primary",
+      "question": 15
+    },
+    "16": {
+      "bundle": "followup",
+      "question": 1
+    },
+    "17": {
+      "bundle": "followup",
+      "question": 2
+    }
+  },
+  "total": 17,
+  "answered": 17,
+  "pending_questions": [],
+  "latest_revision": {
+    "primary": 15,
+    "followup": 2
+  },
+  "answer_counts": {
+    "whole_form_4": 4,
+    "whole_form_1": 5,
+    "whole_form_3": 1,
+    "whole_form_2": 4,
+    "other": 3
+  },
+  "confirmed_training_relabel_questions": [
+    7,
+    13
+  ],
+  "coverage": [
+    {
+      "case": 3,
+      "train_question": 2,
+      "original_form_development_questions": [],
+      "same_changed_form_development_questions": [],
+      "matched_contrast_ready": false,
+      "missing": [
+        "no_confirmed_changed_training_target",
+        "no_confirmed_original_form_on_development_speaker",
+        "no_confirmed_same_changed_form_on_development_speaker"
+      ]
+    },
+    {
+      "case": 6,
+      "train_question": 7,
+      "original_form_development_questions": [
+        4,
+        11
+      ],
+      "same_changed_form_development_questions": [],
+      "matched_contrast_ready": false,
+      "missing": [
+        "no_confirmed_same_changed_form_on_development_speaker"
+      ]
+    },
+    {
+      "case": 4,
+      "train_question": 10,
+      "original_form_development_questions": [
+        5,
+        8
+      ],
+      "same_changed_form_development_questions": [],
+      "matched_contrast_ready": false,
+      "missing": [
+        "no_confirmed_changed_training_target",
+        "no_confirmed_same_changed_form_on_development_speaker"
+      ]
+    },
+    {
+      "case": 10,
+      "train_question": 13,
+      "original_form_development_questions": [
+        3,
+        14
+      ],
+      "same_changed_form_development_questions": [],
+      "matched_contrast_ready": false,
+      "missing": [
+        "no_confirmed_same_changed_form_on_development_speaker"
+      ]
+    },
+    {
+      "case": 15,
+      "train_question": 15,
+      "original_form_development_questions": [
+        6
+      ],
+      "same_changed_form_development_questions": [],
+      "matched_contrast_ready": false,
+      "missing": [
+        "no_confirmed_changed_training_target",
+        "no_confirmed_same_changed_form_on_development_speaker"
+      ]
+    }
+  ],
+  "qualified_comparison_cases": [],
+  "ready_for_controlled_comparison": false,
+  "post_review_uncertainty_questions": [
+    1,
+    2,
+    9,
+    16,
+    17
+  ],
+  "qualifications": [
+    {
+      "id": "case-3-listener-uncertainty-20261003",
+      "case": 3,
+      "status": "uncertain",
+      "source": "user_followup_in_conversation",
+      "user_message": "근데 이게 솔직히 방가워우요랑 방가워요랑 거의 발음이 비슷해서, 이걸 내 판단에 온전히 믿고 작업을 진행하는게 맞나 모르겠네",
+      "reason": "사용자가 방가워우요와 방가워요의 청취 구별 및 자신의 선택을 학습 근거로 쓰는 데 불확실성을 밝혔다.",
+      "scope": "기존 15문항과 후속 2문항의 반가워요 사례 전체를 보수적으로 보류한다. 원래 선택을 철회하거나 반대 표기가 맞다고 판정한 것은 아니다.",
+      "action": "Preserve all choices and first impressions. Exclude this case from training targets, pronunciation-error scoring and qualified pronunciation contrasts until independent evidence supports a distinction."
+    }
+  ],
+  "next_action": "define_reliable_annotation_criteria_before_training",
+  "items": [
+    {
+      "number": 1,
+      "case": 3,
+      "role": "matched_development",
+      "wav": "K03153839-AMG13-L1N2D4-E-K0KK-01917485.wav",
+      "speaker": "0460e16ca6b4",
+      "pcm_sha256": "54d82e9de4eaffe276e6cedb8d554261ce5f6ba738eba682da34c118e75c4c4e",
+      "binding": "6d61a40b76c7d71f6562c27bd497939b9687c36773da7b2c51ff1eaf02841a7a",
+      "answer_revision": 1,
+      "choice": "whole_form_4",
+      "status": "post_review_uncertainty_excluded",
+      "qualification_ids": [
+        "case-3-listener-uncertainty-20261003"
+      ],
+      "selected_surface": "방가워우요",
+      "selected_ids": [
+        9,
+        21,
+        13,
+        2,
+        21,
+        13,
+        35,
+        13,
+        34,
+        13,
+        33
+      ],
+      "original_surface": "반가워요",
+      "original_ids": [
+        9,
+        21,
+        4,
+        2,
+        21,
+        13,
+        35,
+        13,
+        33
+      ],
+      "confirmed_surface": null,
+      "confirmed_ids": null,
+      "changed_target": false,
+      "first_impression": "반가워요",
+      "note": "",
+      "note_used_as_target": false,
+      "source_question": {
+        "bundle": "primary",
+        "question": 1
+      }
+    },
+    {
+      "number": 2,
+      "case": 3,
+      "role": "relabel_train",
+      "wav": "K03157268-AMG13-L1N2D1-E-K0KK-04103233.wav",
+      "speaker": "c09dc7da52e6",
+      "pcm_sha256": "70b14c8c40262c2da2f0385fd5cd60a50c241b623b997c7773fb1a5edf60d853",
+      "binding": "4e1779bff96f4780d762cea234f2c61a0d519670c094fee1c4359d6e59b50985",
+      "answer_revision": 2,
+      "choice": "whole_form_1",
+      "status": "post_review_uncertainty_excluded",
+      "qualification_ids": [
+        "case-3-listener-uncertainty-20261003"
+      ],
+      "selected_surface": "방가워우요",
+      "selected_ids": [
+        9,
+        21,
+        13,
+        2,
+        21,
+        13,
+        35,
+        13,
+        34,
+        13,
+        33
+      ],
+      "original_surface": "반가워요",
+      "original_ids": [
+        9,
+        21,
+        4,
+        2,
+        21,
+        13,
+        35,
+        13,
+        33
+      ],
+      "confirmed_surface": null,
+      "confirmed_ids": null,
+      "changed_target": false,
+      "first_impression": "반가워우요",
+      "note": "",
+      "note_used_as_target": false,
+      "source_question": {
+        "bundle": "primary",
+        "question": 2
+      }
+    },
+    {
+      "number": 3,
+      "case": 10,
+      "role": "matched_development",
+      "wav": "K04113535-AFG11-L5N1D1-E-K0KK-01790109.wav",
+      "speaker": "deb2676eeef1",
+      "pcm_sha256": "743f486d93bf3d6c5b744280c3beb7e8b12ea0d29427be4bfe24bb5b5e042430",
+      "binding": "cdc94e12de0eaab8828de2ce8a3253c63f6c35b7a39bf011853bc79f57521e6e",
+      "answer_revision": 3,
+      "choice": "whole_form_3",
+      "status": "whole_form_confirmed",
+      "qualification_ids": [],
+      "selected_surface": "장미가 예뻐요",
+      "selected_ids": [
+        14,
+        21,
+        13,
+        8,
+        41,
+        2,
+        21,
+        1,
+        13,
+        28,
+        10,
+        25,
+        13,
+        33
+      ],
+      "original_surface": "장미가 예뻐요",
+      "original_ids": [
+        14,
+        21,
+        13,
+        8,
+        41,
+        2,
+        21,
+        1,
+        13,
+        28,
+        10,
+        25,
+        13,
+        33
+      ],
+      "confirmed_surface": "장미가 예뻐요",
+      "confirmed_ids": [
+        14,
+        21,
+        13,
+        8,
+        41,
+        2,
+        21,
+        1,
+        13,
+        28,
+        10,
+        25,
+        13,
+        33
+      ],
+      "changed_target": false,
+      "first_impression": "장미가 예뻐요",
+      "note": "",
+      "note_used_as_target": false,
+      "source_question": {
+        "bundle": "primary",
+        "question": 3
+      }
+    },
+    {
+      "number": 4,
+      "case": 6,
+      "role": "matched_development",
+      "wav": "K02810099-AMG13-L1N2D1-E-K0KK-00244359.wav",
+      "speaker": "5492dcdcf245",
+      "pcm_sha256": "aa3874a175c5b18bb59562eda06c0639f561dcae608c4414f01b7b2269ecc4f0",
+      "binding": "1cfde309458749587aede3e038888b497c976a9a630d5e58480835a18c0cc20d",
+      "answer_revision": 4,
+      "choice": "whole_form_2",
+      "status": "whole_form_confirmed",
+      "qualification_ids": [],
+      "selected_surface": "고양이가 조라요",
+      "selected_ids": [
+        2,
+        29,
+        13,
+        23,
+        13,
+        13,
+        41,
+        2,
+        21,
+        1,
+        14,
+        29,
+        7,
+        21,
+        13,
+        33
+      ],
+      "original_surface": "고양이가 조라요",
+      "original_ids": [
+        2,
+        29,
+        13,
+        23,
+        13,
+        13,
+        41,
+        2,
+        21,
+        1,
+        14,
+        29,
+        7,
+        21,
+        13,
+        33
+      ],
+      "confirmed_surface": "고양이가 조라요",
+      "confirmed_ids": [
+        2,
+        29,
+        13,
+        23,
+        13,
+        13,
+        41,
+        2,
+        21,
+        1,
+        14,
+        29,
+        7,
+        21,
+        13,
+        33
+      ],
+      "changed_target": false,
+      "first_impression": "고양이가 조라요",
+      "note": "",
+      "note_used_as_target": false,
+      "source_question": {
+        "bundle": "primary",
+        "question": 4
+      }
+    },
+    {
+      "number": 5,
+      "case": 4,
+      "role": "matched_development",
+      "wav": "K02452733-AMG10-L1N2D4-E-K0KK-02236001.wav",
+      "speaker": "2e67088920b9",
+      "pcm_sha256": "ce8794404fbd9340458d8056887059007a140a4189254f732b992804b34cd760",
+      "binding": "4f4aedfc6e4eb96b25541d8fff66556ba349303518db0b0360cb892192b94ebf",
+      "answer_revision": 5,
+      "choice": "whole_form_1",
+      "status": "whole_form_confirmed",
+      "qualification_ids": [],
+      "selected_surface": "배콰저메 가요",
+      "selected_ids": [
+        9,
+        22,
+        17,
+        30,
+        14,
+        25,
+        8,
+        26,
+        1,
+        2,
+        21,
+        13,
+        33
+      ],
+      "original_surface": "배콰저메 가요",
+      "original_ids": [
+        9,
+        22,
+        17,
+        30,
+        14,
+        25,
+        8,
+        26,
+        1,
+        2,
+        21,
+        13,
+        33
+      ],
+      "confirmed_surface": "배콰저메 가요",
+      "confirmed_ids": [
+        9,
+        22,
+        17,
+        30,
+        14,
+        25,
+        8,
+        26,
+        1,
+        2,
+        21,
+        13,
+        33
+      ],
+      "changed_target": false,
+      "first_impression": "백화점에 가요",
+      "note": "",
+      "note_used_as_target": false,
+      "source_question": {
+        "bundle": "primary",
+        "question": 5
+      }
+    },
+    {
+      "number": 6,
+      "case": 15,
+      "role": "matched_development",
+      "wav": "K04464613-AMG13-L1N2D1-E-K0KK-02183250.wav",
+      "speaker": "d1ff46f6ba31",
+      "pcm_sha256": "fe9b75fc97de1e095853486ffc1906a94cfc3ed62ba40a45880bccac6d0ce31f",
+      "binding": "8611472529d06985b5fb7359809ea255cb7ef5c314d0caf605c7550b762c788a",
+      "answer_revision": 6,
+      "choice": "whole_form_2",
+      "status": "whole_form_confirmed",
+      "qualification_ids": [],
+      "selected_surface": "기뻐써요",
+      "selected_ids": [
+        2,
+        41,
+        10,
+        25,
+        12,
+        25,
+        13,
+        33
+      ],
+      "original_surface": "기뻐써요",
+      "original_ids": [
+        2,
+        41,
+        10,
+        25,
+        12,
+        25,
+        13,
+        33
+      ],
+      "confirmed_surface": "기뻐써요",
+      "confirmed_ids": [
+        2,
+        41,
+        10,
+        25,
+        12,
+        25,
+        13,
+        33
+      ],
+      "changed_target": false,
+      "first_impression": "기뻗써어요",
+      "note": "",
+      "note_used_as_target": false,
+      "source_question": {
+        "bundle": "primary",
+        "question": 6
+      }
+    },
+    {
+      "number": 7,
+      "case": 6,
+      "role": "relabel_train",
+      "wav": "K02814180-AMG10-L1N2D1-E-K0KK-02169043.wav",
+      "speaker": "3b96b9d2dc7c",
+      "pcm_sha256": "6fc70c929d9d92db83fc4fa7de639f650ca848a3b06098230def48c34556f764",
+      "binding": "c34fbeb5b341502a104e7cc17fdfb0ef20ceb4492e54d4f73cbc381ed47e0eb3",
+      "answer_revision": 7,
+      "choice": "whole_form_1",
+      "status": "whole_form_confirmed",
+      "qualification_ids": [],
+      "selected_surface": "고양이가 조아요",
+      "selected_ids": [
+        2,
+        29,
+        13,
+        23,
+        13,
+        13,
+        41,
+        2,
+        21,
+        1,
+        14,
+        29,
+        13,
+        21,
+        13,
+        33
+      ],
+      "original_surface": "고양이가 조라요",
+      "original_ids": [
+        2,
+        29,
+        13,
+        23,
+        13,
+        13,
+        41,
+        2,
+        21,
+        1,
+        14,
+        29,
+        7,
+        21,
+        13,
+        33
+      ],
+      "confirmed_surface": "고양이가 조아요",
+      "confirmed_ids": [
+        2,
+        29,
+        13,
+        23,
+        13,
+        13,
+        41,
+        2,
+        21,
+        1,
+        14,
+        29,
+        13,
+        21,
+        13,
+        33
+      ],
+      "changed_target": true,
+      "first_impression": "고양이가 조아요",
+      "note": "",
+      "note_used_as_target": false,
+      "source_question": {
+        "bundle": "primary",
+        "question": 7
+      }
+    },
+    {
+      "number": 8,
+      "case": 4,
+      "role": "matched_development",
+      "wav": "K02454441-AFG10-L1N2D1-E-K0KK-02144219.wav",
+      "speaker": "6346fc1b001a",
+      "pcm_sha256": "18d507716940b2b40266247fde8504f4bc4e97e01d04e30b1ab6b21c47531e9c",
+      "binding": "d89b49186ebb3de61817cfb874c434168c5478ebb23c08256c517b71441ec448",
+      "answer_revision": 8,
+      "choice": "whole_form_2",
+      "status": "whole_form_confirmed",
+      "qualification_ids": [],
+      "selected_surface": "배콰저메 가요",
+      "selected_ids": [
+        9,
+        22,
+        17,
+        30,
+        14,
+        25,
+        8,
+        26,
+        1,
+        2,
+        21,
+        13,
+        33
+      ],
+      "original_surface": "배콰저메 가요",
+      "original_ids": [
+        9,
+        22,
+        17,
+        30,
+        14,
+        25,
+        8,
+        26,
+        1,
+        2,
+        21,
+        13,
+        33
+      ],
+      "confirmed_surface": "배콰저메 가요",
+      "confirmed_ids": [
+        9,
+        22,
+        17,
+        30,
+        14,
+        25,
+        8,
+        26,
+        1,
+        2,
+        21,
+        13,
+        33
+      ],
+      "changed_target": false,
+      "first_impression": "백화점에 가요",
+      "note": "",
+      "note_used_as_target": false,
+      "source_question": {
+        "bundle": "primary",
+        "question": 8
+      }
+    },
+    {
+      "number": 9,
+      "case": 3,
+      "role": "matched_development",
+      "wav": "K03153352-AFG10-L1N2D3-E-K0KK-01558963.wav",
+      "speaker": "ce0def455fe6",
+      "pcm_sha256": "19ebadfe5820fa8455542213737e4a198480a7c21600fafe90b56071a4b0b493",
+      "binding": "2f1e4387fc156429f733a827a6e3dd5ab3354c4d756ec54c6aa0bf552cec5374",
+      "answer_revision": 9,
+      "choice": "other",
+      "status": "post_review_uncertainty_excluded",
+      "qualification_ids": [
+        "case-3-listener-uncertainty-20261003"
+      ],
+      "selected_surface": null,
+      "selected_ids": null,
+      "original_surface": "반가워요",
+      "original_ids": [
+        9,
+        21,
+        4,
+        2,
+        21,
+        13,
+        35,
+        13,
+        33
+      ],
+      "confirmed_surface": null,
+      "confirmed_ids": null,
+      "changed_target": false,
+      "first_impression": "장마버요",
+      "note": "",
+      "note_used_as_target": false,
+      "source_question": {
+        "bundle": "primary",
+        "question": 9
+      }
+    },
+    {
+      "number": 10,
+      "case": 4,
+      "role": "relabel_train",
+      "wav": "K02450631-AMG10-L5N1D1-E-K0KK-01027544.wav",
+      "speaker": "5760f930210f",
+      "pcm_sha256": "f8532fe7d5ae9a405382fb7bd42c63438f6e7c180478b11eac3adf4906b4731e",
+      "binding": "b472580bea87ac23dac3a17292fde49dd03eb0ab17a85bb15944acc31ac4f127",
+      "answer_revision": 10,
+      "choice": "whole_form_2",
+      "status": "whole_form_confirmed",
+      "qualification_ids": [],
+      "selected_surface": "배콰저메 가요",
+      "selected_ids": [
+        9,
+        22,
+        17,
+        30,
+        14,
+        25,
+        8,
+        26,
+        1,
+        2,
+        21,
+        13,
+        33
+      ],
+      "original_surface": "배콰저메 가요",
+      "original_ids": [
+        9,
+        22,
+        17,
+        30,
+        14,
+        25,
+        8,
+        26,
+        1,
+        2,
+        21,
+        13,
+        33
+      ],
+      "confirmed_surface": "배콰저메 가요",
+      "confirmed_ids": [
+        9,
+        22,
+        17,
+        30,
+        14,
+        25,
+        8,
+        26,
+        1,
+        2,
+        21,
+        13,
+        33
+      ],
+      "changed_target": false,
+      "first_impression": "배콰저메가요",
+      "note": "",
+      "note_used_as_target": false,
+      "source_question": {
+        "bundle": "primary",
+        "question": 10
+      }
+    },
+    {
+      "number": 11,
+      "case": 6,
+      "role": "matched_development",
+      "wav": "K02810714-AMG10-L5N1D2-E-K0KK-00544341.wav",
+      "speaker": "35a1df2b4b04",
+      "pcm_sha256": "f939ecf18e94f8122a8ac0f785e8ae584434cf51dfb7adad0cc15c0a9de4c55d",
+      "binding": "1afac9bae015b21d611e1767478bf84cfe08152544e97142e27b34cc81b46118",
+      "answer_revision": 11,
+      "choice": "whole_form_1",
+      "status": "whole_form_confirmed",
+      "qualification_ids": [],
+      "selected_surface": "고양이가 조라요",
+      "selected_ids": [
+        2,
+        29,
+        13,
+        23,
+        13,
+        13,
+        41,
+        2,
+        21,
+        1,
+        14,
+        29,
+        7,
+        21,
+        13,
+        33
+      ],
+      "original_surface": "고양이가 조라요",
+      "original_ids": [
+        2,
+        29,
+        13,
+        23,
+        13,
+        13,
+        41,
+        2,
+        21,
+        1,
+        14,
+        29,
+        7,
+        21,
+        13,
+        33
+      ],
+      "confirmed_surface": "고양이가 조라요",
+      "confirmed_ids": [
+        2,
+        29,
+        13,
+        23,
+        13,
+        13,
+        41,
+        2,
+        21,
+        1,
+        14,
+        29,
+        7,
+        21,
+        13,
+        33
+      ],
+      "changed_target": false,
+      "first_impression": "고양이가 조라요",
+      "note": "",
+      "note_used_as_target": false,
+      "source_question": {
+        "bundle": "primary",
+        "question": 11
+      }
+    },
+    {
+      "number": 12,
+      "case": 15,
+      "role": "matched_development",
+      "wav": "K04463486-AMG10-L1N2D2-E-K0KK-01582150.wav",
+      "speaker": "ca35d6668c8e",
+      "pcm_sha256": "d730e9ed58f9679f01c9d5bca29cc1a27a2a060ea5548d25095011be905fdc22",
+      "binding": "08cf385ba9a99dea22d1172a9b9efceccd8ec3d8c0633e6b60bcc6f33b071e01",
+      "answer_revision": 12,
+      "choice": "other",
+      "status": "no_whole_form_label",
+      "qualification_ids": [],
+      "selected_surface": null,
+      "selected_ids": null,
+      "original_surface": "기뻐써요",
+      "original_ids": [
+        2,
+        41,
+        10,
+        25,
+        12,
+        25,
+        13,
+        33
+      ],
+      "confirmed_surface": null,
+      "confirmed_ids": null,
+      "changed_target": false,
+      "first_impression": "빛봤어요",
+      "note": "",
+      "note_used_as_target": false,
+      "source_question": {
+        "bundle": "primary",
+        "question": 12
+      }
+    },
+    {
+      "number": 13,
+      "case": 10,
+      "role": "relabel_train",
+      "wav": "K04112272-AMG10-L4N1D1-E-K0KK-01619039.wav",
+      "speaker": "1134c0a7d44f",
+      "pcm_sha256": "cc7a7e8e49bd33b0824514865ea531d92942881d668ec91ac31330db163cb497",
+      "binding": "c8f46288187d2f0d5ed7b7765c92a43844fd2e183e6a0d3c80b0832a31991cd5",
+      "answer_revision": 13,
+      "choice": "whole_form_1",
+      "status": "whole_form_confirmed",
+      "qualification_ids": [],
+      "selected_surface": "강미가 예뻐요",
+      "selected_ids": [
+        2,
+        21,
+        13,
+        8,
+        41,
+        2,
+        21,
+        1,
+        13,
+        28,
+        10,
+        25,
+        13,
+        33
+      ],
+      "original_surface": "장미가 예뻐요",
+      "original_ids": [
+        14,
+        21,
+        13,
+        8,
+        41,
+        2,
+        21,
+        1,
+        13,
+        28,
+        10,
+        25,
+        13,
+        33
+      ],
+      "confirmed_surface": "강미가 예뻐요",
+      "confirmed_ids": [
+        2,
+        21,
+        13,
+        8,
+        41,
+        2,
+        21,
+        1,
+        13,
+        28,
+        10,
+        25,
+        13,
+        33
+      ],
+      "changed_target": true,
+      "first_impression": "장미가 예뻐요",
+      "note": "",
+      "note_used_as_target": false,
+      "source_question": {
+        "bundle": "primary",
+        "question": 13
+      }
+    },
+    {
+      "number": 14,
+      "case": 10,
+      "role": "matched_development",
+      "wav": "K04112425-AFG11-L1N2D1-E-K0KK-01921037.wav",
+      "speaker": "884787790b63",
+      "pcm_sha256": "35c9f70b1b3284c8bc0d66121e4a552284d1a0cb5b438620e05b1aa0668d85b1",
+      "binding": "b65961c3cd16dfc3e58534809470a84c63bfeb5b27cc7aac3c1c4f78aff21062",
+      "answer_revision": 14,
+      "choice": "whole_form_4",
+      "status": "whole_form_confirmed",
+      "qualification_ids": [],
+      "selected_surface": "장미가 예뻐요",
+      "selected_ids": [
+        14,
+        21,
+        13,
+        8,
+        41,
+        2,
+        21,
+        1,
+        13,
+        28,
+        10,
+        25,
+        13,
+        33
+      ],
+      "original_surface": "장미가 예뻐요",
+      "original_ids": [
+        14,
+        21,
+        13,
+        8,
+        41,
+        2,
+        21,
+        1,
+        13,
+        28,
+        10,
+        25,
+        13,
+        33
+      ],
+      "confirmed_surface": "장미가 예뻐요",
+      "confirmed_ids": [
+        14,
+        21,
+        13,
+        8,
+        41,
+        2,
+        21,
+        1,
+        13,
+        28,
+        10,
+        25,
+        13,
+        33
+      ],
+      "changed_target": false,
+      "first_impression": "장미가 예뻐요",
+      "note": "",
+      "note_used_as_target": false,
+      "source_question": {
+        "bundle": "primary",
+        "question": 14
+      }
+    },
+    {
+      "number": 15,
+      "case": 15,
+      "role": "relabel_train",
+      "wav": "K04460288-AFG10-L1N2D1-E-K0KK-00429233.wav",
+      "speaker": "62e8c11f5235",
+      "pcm_sha256": "36b5a0f7bcf99aa4de161680d15426e4847e7b0ebfebc6da0c40a81f51e843f9",
+      "binding": "7ea2ab70512bba91a839cebf2d9e7c4ab40fc3b5cc7ac9d20dbe2107256f846a",
+      "answer_revision": 15,
+      "choice": "other",
+      "status": "no_whole_form_label",
+      "qualification_ids": [],
+      "selected_surface": null,
+      "selected_ids": null,
+      "original_surface": "기뻐써요",
+      "original_ids": [
+        2,
+        41,
+        10,
+        25,
+        12,
+        25,
+        13,
+        33
+      ],
+      "confirmed_surface": null,
+      "confirmed_ids": null,
+      "changed_target": false,
+      "first_impression": "굳떴어요",
+      "note": "",
+      "note_used_as_target": false,
+      "source_question": {
+        "bundle": "primary",
+        "question": 15
+      }
+    },
+    {
+      "number": 16,
+      "case": 3,
+      "role": "matched_development",
+      "wav": "K03151799-AFG10-L4N1D1-E-K0KK-02481757.wav",
+      "speaker": "63a4b69673ba",
+      "pcm_sha256": "500a8c7d5250b78253e28c751df46f64d457cb0b49e39372844aec9dbfb67f33",
+      "binding": "bde77d571256a586175c29ea8fcfdd5bec9193b556ca9b870636bb8c5927efb3",
+      "answer_revision": 1,
+      "choice": "whole_form_4",
+      "status": "post_review_uncertainty_excluded",
+      "qualification_ids": [
+        "case-3-listener-uncertainty-20261003"
+      ],
+      "selected_surface": "방가워요",
+      "selected_ids": [
+        9,
+        21,
+        13,
+        2,
+        21,
+        13,
+        35,
+        13,
+        33
+      ],
+      "original_surface": "반가워요",
+      "original_ids": [
+        9,
+        21,
+        4,
+        2,
+        21,
+        13,
+        35,
+        13,
+        33
+      ],
+      "confirmed_surface": null,
+      "confirmed_ids": null,
+      "changed_target": false,
+      "first_impression": "방가워요",
+      "note": "",
+      "note_used_as_target": false,
+      "source_question": {
+        "bundle": "followup",
+        "question": 1
+      }
+    },
+    {
+      "number": 17,
+      "case": 3,
+      "role": "matched_development",
+      "wav": "K03151831-AMG10-L1N2D1-E-K0KK-00688059.wav",
+      "speaker": "1ba71fb68025",
+      "pcm_sha256": "199ca76e63949f0e6370c2d368a4298e2811c6179abae4c5d1663c206bb594c9",
+      "binding": "8f74f18b092021ac589bc08744290ed62f85492e9d2c52ce5d79effff5eaa68e",
+      "answer_revision": 2,
+      "choice": "whole_form_4",
+      "status": "post_review_uncertainty_excluded",
+      "qualification_ids": [
+        "case-3-listener-uncertainty-20261003"
+      ],
+      "selected_surface": "방가워요",
+      "selected_ids": [
+        9,
+        21,
+        13,
+        2,
+        21,
+        13,
+        35,
+        13,
+        33
+      ],
+      "original_surface": "반가워요",
+      "original_ids": [
+        9,
+        21,
+        4,
+        2,
+        21,
+        13,
+        35,
+        13,
+        33
+      ],
+      "confirmed_surface": null,
+      "confirmed_ids": null,
+      "changed_target": false,
+      "first_impression": "방가워요",
+      "note": "",
+      "note_used_as_target": false,
+      "source_question": {
+        "bundle": "followup",
+        "question": 2
+      }
+    }
+  ],
+  "notes_used_as_targets": false,
+  "g2p_applied_to_confirmed_forms": false,
+  "original_manifest_modified": false,
+  "training_started": false,
+  "label_scope": "Single-listener broad Hangul/jamo choices, excluding later uncertainty. Legacy confirmed_* fields denote eligible selections, not independently established phonetic ground truth.",
+  "evaluation_scope": "development speakers excluded from baseline training; not an untouched final test",
+  "limits": "Same-prompt selection alone does not verify a pronunciation contrast. Missing variant coverage must stay missing; do not replace it with corpus labels or model predictions.",
+  "focused_realized_form_contrast": {
+    "longer_form": "방가워우요",
+    "shorter_form": "방가워요",
+    "training_question": 2,
+    "selected_longer_development_questions": [
+      1
+    ],
+    "selected_shorter_development_questions": [
+      16,
+      17
+    ],
+    "longer_development_questions": [],
+    "shorter_development_questions": [],
+    "selected_forms_present": true,
+    "observed_contrast_available": false,
+    "excluded_for_listener_uncertainty": true,
+    "original_form_control_missing": true,
+    "scope": "Different written forms were selected, but the listener subsequently questioned the sound distinction. Preserve the choices without using them as verified pronunciation labels or a training contrast.",
+    "limits": "No independent sound distinction established. Neither model scores nor spellings resolve this uncertainty. The original comparison gate is unchanged."
+  },
+  "model_replaced": false
+}
