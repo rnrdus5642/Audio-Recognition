@@ -10,10 +10,11 @@ namespace DomiCube.PhonemeMatching
     /// <summary>One verified model per Windows user, independent of Unity projects.</summary>
     public static class SharedSpeechModel
     {
-        public const string FileName = "hubert_ko_child_jamo_sentis1.sentis";
+        // Model-versioned names let old and updated apps coexist in the same shared folder.
+        public const string FileName = "hubert_ko_child_jamo_epoch3_sentis1.sentis";
         public const long Bytes = 3851161113L;
-        public const string Sha256 = "f676db58234bd48f5e4530211e623248afbb22a972c54b89a39288eb07ef29ff";
-        public const string ReleaseUrl = "https://github.com/rnrdus5642/Audio-Recognition/releases/download/model-v3-child-jamo-sentis1/";
+        public const string Sha256 = "1ce1f13e3497844a6632cae3d6925f3aae64159f6d5ab2b60c84613493dcbea3";
+        public const string ReleaseUrl = "https://github.com/rnrdus5642/Audio-Recognition/releases/download/model-v4-child-jamo-epoch3-sentis1/";
         public static string DirectoryPath
         {
             get

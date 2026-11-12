@@ -1,6 +1,8 @@
 #if UNITY_5_3_OR_NEWER
 using System;
 using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 using Unity.Sentis;
 using UnityEngine;
 
@@ -26,12 +28,22 @@ namespace DomiCube.PhonemeMatching.Unity
     /// GPUCompute, 390 ms on CPU, phoneme ids identical to Python across
     /// all 124 frames of the golden clips.
     /// </summary>
-    public sealed class SentisPhonemeRecognizer : IPhonemeRecognizer, IAcousticEvidenceRecognizer, IDisposable
+    public sealed class SentisPhonemeRecognizer : IAsyncPhonemeRecognizer, IAcousticEvidenceRecognizer, IDisposable
     {
         private readonly CtcVocabulary _vocab;
         private readonly IWorker _worker;
         private float[] _normalized = new float[0];
+        private float[] _inflightInput = new float[0];
         private bool _disposed;
+        private bool _workerDisposed;
+        private Exception _asyncFailure;
+        private readonly int _ownerThread = Thread.CurrentThread.ManagedThreadId;
+        public bool IsRecognizing { get; private set; }
+        public bool IsFaulted => _asyncFailure != null;
+
+        // A layer count also bounds GPU bursts; CPU scheduling time alone does not.
+        private const int LayersPerFrame = 64;
+        private const double ScheduleBudgetMilliseconds = 1.0;
         private float[] _lastLogits;
         private int _lastFrames, _lastClasses;
         private string _lastText = "";
@@ -86,9 +98,8 @@ namespace DomiCube.PhonemeMatching.Unity
         public void RecognizeWithText(
             float[] audio16kMono, out string text, out List<string> phonemes)
         {
-            _lastLogits = null;
-            _lastText = "";
-            _lastScorer = null;
+            RequireAvailable();
+            ClearEvidence();
             if (audio16kMono == null || audio16kMono.Length == 0)
             {
                 text = string.Empty;
@@ -97,14 +108,130 @@ namespace DomiCube.PhonemeMatching.Unity
             }
 
             Infer(audio16kMono, out var logits, out var shape);
-            text = CtcDecoder.Decode(logits, shape.frames, shape.classes, _vocab);
+            var result = DecodeResult(logits, shape.frames, shape.classes);
+            text = result.Text;
+            phonemes = result.Phonemes;
+        }
+
+        private RecognitionResult DecodeResult(float[] logits, int frames, int classes)
+        {
+            if (classes != _vocab.Size)
+                throw new InvalidOperationException($"model emits {classes} classes but the vocabulary has {_vocab.Size}");
+            var text = CtcDecoder.Decode(logits, frames, classes, _vocab);
             _lastLogits = logits;
-            _lastFrames = shape.frames;
-            _lastClasses = shape.classes;
+            _lastFrames = frames;
+            _lastClasses = classes;
             _lastText = text;
-            phonemes = text.Length == 0
+            var phonemes = text.Length == 0
                 ? new List<string>()
                 : Korean.JamoIpa.ToPhonemes(Korean.Rules.Apply(text));
+            return new RecognitionResult(text, phonemes);
+        }
+
+        /// <summary>
+        /// Schedules bounded GPU work on Unity's thread and reads back only after
+        /// completion. Never wrap Unity GPU calls in Task.Run. Cancellation drops
+        /// the result while already submitted work drains with the same budget.
+        /// </summary>
+        public async Task<RecognitionResult> RecognizeAsync(float[] audio16kMono, CancellationToken cancellation)
+        {
+            RequireAvailable();
+            cancellation.ThrowIfCancellationRequested();
+            if (!SystemInfo.supportsAsyncGPUReadback)
+                throw new NotSupportedException("This GPU/API does not support asynchronous readback. Use a supported graphics device/API.");
+            if (SynchronizationContext.Current == null)
+                throw new InvalidOperationException("Asynchronous recognition requires Unity's synchronization context.");
+            ClearEvidence();
+            if (audio16kMono == null || audio16kMono.Length == 0)
+                return new RecognitionResult("", null);
+
+            IsRecognizing = true;
+            try
+            {
+                // The caller may recycle its audio buffer while the GPU is busy.
+                var prepared = Prepare(audio16kMono);
+                if (_inflightInput.Length != prepared.Length) _inflightInput = new float[prepared.Length];
+                Array.Copy(prepared, _inflightInput, prepared.Length);
+                var samples = _inflightInput;
+                using (var tensor = new TensorFloat(new TensorShape(1, samples.Length), samples))
+                {
+                    var schedule = _worker.StartManualSchedule(tensor);
+                    bool finished = false;
+                    var budget = new System.Diagnostics.Stopwatch();
+                    while (!finished)
+                    {
+                        budget.Restart();
+                        for (int layer = 0; layer < LayersPerFrame && budget.Elapsed.TotalMilliseconds < ScheduleBudgetMilliseconds; layer++)
+                        {
+                            if (schedule.MoveNext()) continue;
+                            finished = true;
+                            break;
+                        }
+                        if (!finished) await NextEngineFrame();
+                    }
+
+                    var output = _worker.PeekOutput() as TensorFloat;
+                    if (output == null) throw new InvalidOperationException("model produced no float output");
+                    int frames = output.shape[1], classes = output.shape[2];
+                    var readback = new TaskCompletionSource<float[]>(TaskCreationOptions.RunContinuationsAsynchronously);
+                    output.AsyncReadbackRequest(success =>
+                    {
+                        try
+                        {
+                            if (!success) throw new InvalidOperationException("GPU readback failed.");
+                            // Consume the readback in its callback: Unity's native
+                            // request data has a limited lifetime. No GPU wait here.
+                            output.MakeReadable();
+                            readback.TrySetResult(output.ToReadOnlyArray());
+                        }
+                        catch (Exception error) { readback.TrySetException(error); }
+                    });
+                    var logits = await readback.Task;
+                    cancellation.ThrowIfCancellationRequested();
+                    if (_disposed) throw new OperationCanceledException("Recognizer was disposed during inference.");
+                    return DecodeResult(logits, frames, classes);
+                }
+            }
+            catch (OperationCanceledException) { throw; }
+            catch (Exception error)
+            {
+                // A partially failed graph must not silently score another question.
+                _asyncFailure = error;
+                ClearEvidence();
+                throw;
+            }
+            finally
+            {
+                IsRecognizing = false;
+                if (_disposed) ReleaseWorker();
+            }
+        }
+
+        private static async Task NextEngineFrame()
+        {
+            int frame = Time.frameCount;
+            bool playing = Application.isPlaying;
+            // UnitySynchronizationContext keeps the continuation on Unity's thread.
+            // Guard against a continuation slot later in this same Player frame.
+            do { await Task.Yield(); }
+            while (playing && Application.isPlaying && Time.frameCount == frame);
+        }
+
+        private void RequireAvailable()
+        {
+            if (Thread.CurrentThread.ManagedThreadId != _ownerThread)
+                throw new InvalidOperationException("Call the recognizer on its Unity thread.");
+            if (_disposed) throw new ObjectDisposedException(nameof(SentisPhonemeRecognizer));
+            if (IsRecognizing) throw new InvalidOperationException("An inference already owns this worker.");
+            if (_asyncFailure != null)
+                throw new InvalidOperationException("Recreate the recognizer after a GPU inference failure.", _asyncFailure);
+        }
+
+        private void ClearEvidence()
+        {
+            _lastLogits = null;
+            _lastText = "";
+            _lastScorer = null;
         }
 
         public AcousticEvidence GetAcousticEvidence(string targetText, string contrastText)
@@ -124,10 +251,7 @@ namespace DomiCube.PhonemeMatching.Unity
         private void Infer(
             float[] audio, out float[] logits, out (int frames, int classes) shape)
         {
-            if (_disposed)
-            {
-                throw new ObjectDisposedException(nameof(SentisPhonemeRecognizer));
-            }
+            RequireAvailable();
 
             var input = Prepare(audio);
 
@@ -227,10 +351,17 @@ namespace DomiCube.PhonemeMatching.Unity
             }
 
             _disposed = true;
-            _lastLogits = null;
-            _lastScorer = null;
-            _lastText = "";
+            ClearEvidence();
+            // A stopped question/scene must not release tensors still used by the
+            // GPU. The independent async operation drains and releases in finally.
+            if (!IsRecognizing) ReleaseWorker();
+        }
+
+        private void ReleaseWorker()
+        {
+            if (_workerDisposed) return;
             _worker.Dispose();
+            _workerDisposed = true;
         }
     }
 }

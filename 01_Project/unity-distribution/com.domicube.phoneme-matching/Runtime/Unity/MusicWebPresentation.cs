@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace DomiCube.PhonemeMatching.Unity
 {
-    /// <summary>Music's 82 stage expressions with the shared web v4 decision policy.</summary>
+    /// <summary>Music's 82 stage expressions with the shared web decision policy.</summary>
     public static class MusicWebPresentation
     {
         public const string ResourceFolder = "DomiCube/PhonemeMatching/MusicWebV4/";

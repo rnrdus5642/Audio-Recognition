@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace DomiCube.PhonemeMatching
 {
@@ -101,6 +103,12 @@ namespace DomiCube.PhonemeMatching
         private Matcher _matcher;
         private StreamingMatcher _streaming;
         private List<Answer> _candidates;
+        private Task<RecognitionResult> _pendingRecognition;
+        private CancellationTokenSource _pendingCancellation;
+        private HopFrame _pendingHop;
+        private double _pendingVoiceFraction;
+
+        public bool IsRecognitionPending => _pendingRecognition != null;
 
         /// <param name="buffer">
         /// Optional. When given, <see cref="Begin"/> clears it and
@@ -176,6 +184,7 @@ namespace DomiCube.PhonemeMatching
         /// </summary>
         public void Begin(IReadOnlyList<string> targetWords)
         {
+            CancelPendingRecognition();
             LastConfirmation = null;
             LastFrame = null;
             _audioSeconds = 0;
@@ -246,6 +255,7 @@ namespace DomiCube.PhonemeMatching
         public void End()
         {
             IsActive = false;
+            CancelPendingRecognition();
             _streaming = null;
             _wordPolicy?.End();
             _buffer?.Reset();
@@ -258,6 +268,7 @@ namespace DomiCube.PhonemeMatching
         private void Invalidate()
         {
             IsActive = false;
+            CancelPendingRecognition();
             _streaming = null;
             _wordPolicy?.End();
         }
@@ -273,6 +284,17 @@ namespace DomiCube.PhonemeMatching
 
         public FrameScore Push(float[] audioWindow16kMono, double elapsedAudioSeconds)
         {
+            if (_pendingRecognition != null)
+                throw new InvalidOperationException("An asynchronous frame is still pending; use TryAdvance.");
+            if (_recognizer is IAsyncPhonemeRecognizer asynchronous && asynchronous.IsRecognizing)
+                throw new InvalidOperationException("The recognizer is still draining an earlier question.");
+            double voiceFraction = ValidateWindow(audioWindow16kMono);
+            _recognizer.RecognizeWithText(audioWindow16kMono, out string text, out var phonemes);
+            return ScoreRecognition(audioWindow16kMono, elapsedAudioSeconds, text, phonemes, voiceFraction);
+        }
+
+        private double ValidateWindow(float[] audioWindow16kMono)
+        {
             if (!IsActive)
             {
                 throw new InvalidOperationException(
@@ -283,17 +305,15 @@ namespace DomiCube.PhonemeMatching
             {
                 throw new ArgumentNullException(nameof(audioWindow16kMono));
             }
+            if (_wordPolicy != null && audioWindow16kMono.Length != OrthographicWordPolicy.WindowSamples)
+                throw new ArgumentException("Orthographic word recognition requires 40000 samples of 16kHz mono PCM.");
+            // Validate PCM before inference, including the asynchronous path.
+            return _wordPolicy != null ? OrthographicWordPolicy.VoiceFraction(audioWindow16kMono) : 0;
+        }
 
-            double voiceFraction = 0;
-            if (_wordPolicy != null)
-            {
-                if (audioWindow16kMono.Length != OrthographicWordPolicy.WindowSamples)
-                    throw new ArgumentException("Web v4 requires 40000 samples of 16kHz mono PCM.");
-                voiceFraction = OrthographicWordPolicy.VoiceFraction(audioWindow16kMono);
-            }
-            _recognizer.RecognizeWithText(
-                audioWindow16kMono, out string text, out var phonemes);
-
+        private FrameScore ScoreRecognition(float[] audioWindow16kMono, double elapsedAudioSeconds,
+            string text, List<string> phonemes, double voiceFraction)
+        {
             if (_wordPolicy != null)
             {
                 var decision = _wordPolicy.Push(text, elapsedAudioSeconds, voiceFraction);
@@ -397,6 +417,8 @@ namespace DomiCube.PhonemeMatching
         /// </summary>
         public bool TryPush(out FrameScore frame)
         {
+            if (_pendingRecognition != null)
+                throw new InvalidOperationException("An asynchronous frame is still pending; use TryAdvance.");
             frame = null;
             if (_buffer == null)
             {
@@ -417,6 +439,11 @@ namespace DomiCube.PhonemeMatching
             {
                 return false;
             }
+
+            // A retired asynchronous question may still own this worker. Keep
+            // this question's hop queued; temporary busy is not a scoring failure.
+            if (_recognizer is IAsyncPhonemeRecognizer asynchronous && asynchronous.IsRecognizing)
+                return false;
 
             HopFrame hop;
             try
@@ -457,6 +484,76 @@ namespace DomiCube.PhonemeMatching
 
             frame.EndSampleIndex = endSample;
             return true;
+        }
+
+        /// <summary>
+        /// Poll once per engine update. Starts or completes at most one audio hop;
+        /// false means no completed frame, not silence. Capture and timeout checks
+        /// must continue while this returns false. Existing synchronous backends
+        /// remain supported. Completed windows retain their audio sample time.
+        /// </summary>
+        public bool TryAdvance(out FrameScore frame)
+        {
+            frame = null;
+            if (!(_recognizer is IAsyncPhonemeRecognizer asynchronous))
+                return TryPush(out frame);
+            if (_buffer == null) throw new InvalidOperationException("TryAdvance requires a hop buffer.");
+            if (_candidates == null) throw new InvalidOperationException("call Begin() before TryAdvance()");
+            if (!IsActive) return false;
+
+            try
+            {
+                if (_buffer.Overflowed)
+                    throw new InvalidOperationException("Audio frame queue overflowed while recognition was pending.");
+                if (_pendingRecognition == null)
+                {
+                    // A cancelled question can still own the GPU. Keep the new
+                    // question's captured hops queued until that work is safe to reuse.
+                    if (asynchronous.IsRecognizing || !_buffer.TryReadFrame(out _pendingHop)) return false;
+                    _pendingVoiceFraction = ValidateWindow(_pendingHop.Window);
+                    _pendingCancellation = new CancellationTokenSource();
+                    _pendingRecognition = asynchronous.RecognizeAsync(_pendingHop.Window, _pendingCancellation.Token)
+                        ?? throw new InvalidOperationException("Recognizer returned no task.");
+                }
+                if (!_pendingRecognition.IsCompleted) return false;
+
+                var task = _pendingRecognition;
+                var hop = _pendingHop;
+                _pendingRecognition = null;
+                _pendingHop = null;
+                _pendingCancellation.Dispose();
+                _pendingCancellation = null;
+                var recognized = task.GetAwaiter().GetResult();
+                if (recognized == null) throw new InvalidOperationException("Recognizer returned no result.");
+                frame = ScoreRecognition(hop.Window,
+                    hop.EndSampleIndex / (double)AudioWindowBuffer.TargetSampleRate,
+                    recognized.Text, recognized.Phonemes, _pendingVoiceFraction);
+                frame.EndSampleIndex = hop.EndSampleIndex;
+                return true;
+            }
+            catch
+            {
+                frame = null;
+                Invalidate();
+                throw;
+            }
+        }
+
+        private void CancelPendingRecognition()
+        {
+            var task = _pendingRecognition;
+            var cancellation = _pendingCancellation;
+            _pendingRecognition = null;
+            _pendingCancellation = null;
+            _pendingHop = null;
+            _pendingVoiceFraction = 0;
+            if (cancellation == null) return;
+            cancellation.Cancel();
+            if (task == null) { cancellation.Dispose(); return; }
+            // A retired question must never publish into the new one. Observe any
+            // late fault and release its token after backend cleanup, without a wait.
+            task.ContinueWith(done => { var ignored = done.Exception; cancellation.Dispose(); },
+                CancellationToken.None, TaskContinuationOptions.ExecuteSynchronously, TaskScheduler.Default);
         }
 
         private Answer FindAnswer(string text)

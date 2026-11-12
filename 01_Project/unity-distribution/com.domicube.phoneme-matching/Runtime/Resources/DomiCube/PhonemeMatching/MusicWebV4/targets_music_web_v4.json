@@ -1,7 +1,7 @@
 {
   "version": "1.0",
   "profile_id": "music_web_v4_2026_10_30",
-  "word_policy": "orthographic-word-preview-v4",
+  "word_policy": "orthographic-word-context-v5",
   "confusion_matrix_id": "ko_child_v2",
   "presentation_stages": [
     {

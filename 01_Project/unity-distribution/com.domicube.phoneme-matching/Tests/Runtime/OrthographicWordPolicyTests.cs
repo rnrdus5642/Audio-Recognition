@@ -42,7 +42,8 @@ namespace DomiCube.PhonemeMatching.Tests
                     Is.EqualTo((string)fixture["matrix_sha256"]), "Packaged matrix must match the web matrix.");
             }
             var cases = (JArray)fixture["cases"];
-            Assert.That(cases.Count, Is.EqualTo(11556), "Do not silently drop replay cases.");
+            Assert.That(cases.Count, Is.EqualTo(11804), "Retain baseline inputs and v5 context controls.");
+            Assert.That(cases.Count, Is.EqualTo((int)fixture["case_count"]));
             var policy = new OrthographicWordPolicy(_matrix);
             int frames = 0, accepted = 0;
             foreach (var trial in cases)
@@ -64,6 +65,8 @@ namespace DomiCube.PhonemeMatching.Tests
                     Assert.That(actual.Normalization, Is.EqualTo((string)expected["normalization"]), context + " normalization");
                     Assert.That(actual.BlockedBy, Is.EqualTo((string)expected["blocked_by"]), context + " blocked");
                     Assert.That(actual.DecisionReason, Is.EqualTo((string)expected["decision_reason"]), context + " reason");
+                    Assert.That(actual.SelectionReason, Is.EqualTo((string)expected["selection_reason"]), context + " selection");
+                    Assert.That(actual.TiedTargets, Is.EqualTo(expected["tied_targets"].ToObject<string[]>()), context + " ties");
                     Assert.That(actual.ConfirmationWaiting, Is.EqualTo((bool)expected["confirmation_waiting"]), context + " waiting");
                     Assert.That(actual.Streak, Is.EqualTo((int)expected["streak"]), context + " evidence count");
                     Assert.That(actual.MatchedTarget, Is.EqualTo(actual.Confirmed ? actual.Candidate : null), context + " accepted target");
@@ -79,13 +82,57 @@ namespace DomiCube.PhonemeMatching.Tests
                         Assert.That(item.ComparisonText, Is.EqualTo((string)score["comparison_text"]), context + " target comparison");
                         Assert.That(item.Normalization, Is.EqualTo((string)score["normalization"]), context + " target normalization");
                         Assert.That(item.BlockedBy, Is.EqualTo((string)score["blocked_by"]), context + " target guard");
+                        Assert.That(item.MatchStart, Is.EqualTo((int?)score["match_start"]), context + " target start");
+                        Assert.That(item.MatchEnd, Is.EqualTo((int?)score["match_end"]), context + " target end");
+                        Assert.That(item.ExactSpelling, Is.EqualTo((bool)score["exact_spelling"]), context + " exact spelling");
                     }
                     frames++;
                     if (actual.Confirmed) accepted++;
                 }
             }
             Assert.That(frames, Is.EqualTo((int)fixture["frames"]));
+            Assert.That(accepted, Is.EqualTo((int)fixture["accepted"]));
             TestContext.WriteLine($"WEB_PARITY cases={cases.Count} frames={frames} accepted={accepted} policy={OrthographicWordPolicy.Version}");
+        }
+
+        [TestCase("이건 사과인 거 같아요", true)]
+        [TestCase("동생도 사과를 따요", true)]
+        [TestCase("사과주스", false)]
+        [TestCase("사과 주스", true)]
+        [TestCase("사과가 아니에요", false)]
+        [TestCase("사과 말고 배 주세요", false)]
+        [TestCase("사과인형 같아요", false)]
+        public void ContextAcceptsListedAffixesButDoesNotCutArbitraryCompounds(string text, bool accepted)
+        {
+            var policy = new OrthographicWordPolicy(_matrix);
+            policy.Begin(new[] { "사과?" });
+            Assert.That(policy.Push(text, .5, 1).Confirmed, Is.False);
+            var result = policy.Push(text, 1, 1);
+            Assert.That(result.Confirmed, Is.EqualTo(accepted));
+            Assert.That(result.Text, Is.EqualTo(text));
+        }
+
+        [Test]
+        public void SeparateExactAnswersChooseTheLatestButHomophonesRemainAmbiguous()
+        {
+            var policy = new OrthographicWordPolicy(_matrix);
+            policy.Begin(new[] { "주자", "먹이" });
+            var first = policy.Push("먹이를 주자", .5, 1);
+            Assert.That(first.Candidate, Is.EqualTo("주자"));
+            Assert.That(first.SelectionReason, Is.EqualTo("latest_distinct_exact_word"));
+            Assert.That(policy.Push("먹이를 주자", 1, 1).MatchedTarget, Is.EqualTo("주자"));
+            policy.Begin(new[] { "낫", "낮" });
+            Assert.That(policy.Push("여기 낫 있어요", .5, 1).Ambiguous, Is.True);
+            Assert.That(policy.Push("여기 낫 있어요", 1, 1).Confirmed, Is.False);
+        }
+
+        [Test]
+        public void InteriorSingleSyllableRequiresIdenticalPhonemes()
+        {
+            var policy = new OrthographicWordPolicy(_matrix);
+            policy.Begin(new[] { "따" });
+            Assert.That(policy.Push("간식도 다 먹어요", .5, 1).Passed, Is.False);
+            Assert.That(policy.Push("간식도 다 먹어요", 1, 1).Confirmed, Is.False);
         }
 
         [TestCase(2)]

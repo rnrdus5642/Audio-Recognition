@@ -48,7 +48,7 @@ namespace DomiCube.PhonemeMatching.Unity
         public void ConfigureOrthographicWordPolicy(float threshold = .85f, int confirmations = 2)
         {
             if (float.IsNaN(threshold) || threshold < .7f || threshold > 1f || confirmations < 2 || confirmations > 4)
-                throw new ArgumentOutOfRangeException("Invalid web v4 policy settings.");
+                throw new ArgumentOutOfRangeException("Invalid orthographic word policy settings.");
             StopListening();
             UseOrthographicWordPolicy = true;
             WordThreshold = threshold;
@@ -155,6 +155,8 @@ namespace DomiCube.PhonemeMatching.Unity
         /// </summary>
         public void SetRecognizer(IPhonemeRecognizer recognizer)
         {
+            if (ReferenceEquals(_recognizer, recognizer)) return;
+            StopListening();
             _recognizer = recognizer;
         }
 
@@ -247,7 +249,7 @@ namespace DomiCube.PhonemeMatching.Unity
             try
             {
                 if (UseOrthographicWordPolicy && (Math.Abs(WindowSeconds - 2.5f) > .001f || Math.Abs(HopSeconds - .5f) > .001f))
-                    throw new ArgumentException("Web v4 requires a 2.5s window and 0.5s hop.");
+                    throw new ArgumentException("Orthographic word recognition requires a 2.5s window and 0.5s hop.");
                 _session = UseOrthographicWordPolicy
                     ? PronunciationSession.ForOrthographicWord(_matrix, _recognizer, Math.Round(WordThreshold, 6), Consecutive, _mic.Buffer)
                     : new PronunciationSession(_matrix, _catalog, _recognizer, Consecutive, _mic.Buffer, _feedbackErrors);
@@ -337,7 +339,7 @@ namespace DomiCube.PhonemeMatching.Unity
             FrameScore frame;
             try
             {
-                if (!_session.TryPush(out frame))
+                if (!_session.TryAdvance(out frame))
                 {
                     return Step.Idle;
                 }
@@ -395,8 +397,9 @@ namespace DomiCube.PhonemeMatching.Unity
         {
             float started = Time.realtimeSinceStartup;
 
-            // Distinguishes "gave up" from "the recogniser threw", which
-            // both end the loop but mean different things to the caller.
+            // A device/model failure stops listening and is logged. The game
+            // detects IsListening=false and enters its input-error/retry state.
+            // Do not report a technical failure as the child's answer timeout.
             bool timedOut = false;
             bool failed = false;
 
@@ -411,39 +414,35 @@ namespace DomiCube.PhonemeMatching.Unity
                     yield break;
                 }
 
-                bool pumped;
                 try
                 {
-                    pumped = _mic != null && _mic.Pump();
+                    _mic?.Pump();
                 }
                 catch (Exception e)
                 {
                     // A dead microphone must not take the scene with it.
                     Debug.LogException(e);
-                    pumped = false;
                     failed = true;
                 }
 
-                while (!failed && pumped)
+                // Pending inference cannot extend the question deadline. Capture
+                // continues every frame, even while GPU work spans several frames.
+                if (!failed && TimedOut(started))
                 {
-                    // One frame at a time, all the way through: score it,
-                    // tell the listeners, and only then look for the next
-                    // one. Scoring the whole queue first would run the
-                    // recogniser on audio that arrived after a handler
-                    // had already stopped us - and could confirm on it.
-                    var step = ScoreOneFrame(generation);
-                    if (step == Step.Idle)
-                    {
-                        break;
-                    }
+                    timedOut = true;
+                    break;
+                }
 
+                if (!failed)
+                {
+                    // At most one hop per Unity frame. Poll even when Pump found
+                    // no new samples: an earlier GPU request may have completed.
+                    var step = ScoreOneFrame(generation);
                     if (step == Step.Failed)
                     {
                         failed = true;
-                        break;
                     }
-
-                    if (step != Step.Scored)
+                    else if (step != Step.Scored && step != Step.Idle)
                     {
                         // Confirmed, or a handler stopped or restarted
                         // us. Either way this loop is finished and the

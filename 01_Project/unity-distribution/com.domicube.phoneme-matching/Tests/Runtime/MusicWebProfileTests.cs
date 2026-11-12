@@ -40,6 +40,20 @@ namespace DomiCube.PhonemeMatching.Tests
         }
 
         [Test]
+        public void ExistingV4ProjectAnswerDataUsesCurrentPolicyWithoutRewritingAnswers()
+        {
+            string Read(string name) => UnityEngine.Resources.Load<UnityEngine.TextAsset>(
+                MusicWebPresentation.ResourceFolder + name).text;
+            var targets = Read("targets_music_web_v4").Replace(OrthographicWordPolicy.Version,
+                "orthographic-word-preview-v4");
+            var profile = MusicPresentationProfile.FromJson(Read("ko_child_v2"), targets,
+                Read("hubert_ko_child_jamo_vocab"));
+            Assert.That(profile.UsesOrthographicWordPolicy, Is.True);
+            Assert.That(profile.Catalog.Answers.Count, Is.EqualTo(47));
+            Assert.That(profile.Stages.Sum(stage => stage.Answers.Count), Is.EqualTo(82));
+        }
+
+        [Test]
         public void ListenerUsesWebPolicyAndResetsWhenStageChanges()
         {
             var go = new UnityEngine.GameObject("MusicWebProfileTest");
