@@ -1,16 +1,18 @@
 # 오디오 정답 처리 — 공용 모델 패키지
 
-버전 **0.9.1-preview.3**. Unity 2022.3 / Sentis 1.2.0-exp.2, Windows PC·PC 연결 VR용입니다. 최종 3에포크 HuBERT 정서법 자모 모델과 웹사이트의 `orthographic-word-context-v5` 후처리를 사용합니다. GPUCompute 경로를 유지합니다.
+버전 **0.9.1-preview.4**. Unity 2022.3 / Sentis 1.2.0-exp.2, Windows PC·PC 연결 VR용입니다. 최종 3에포크 HuBERT 정서법 자모 모델과 웹사이트의 `orthographic-word-context-v5` 후처리를 사용합니다. GPUCompute 경로를 유지합니다.
+
+Sentis 1의 외부 모델을 준비할 때는 Unity 스레드에서 `await SentisPhonemeRecognizer.CreatePreparedAsync(path, vocabulary, 2.5f, cancellationToken)`을 사용할 수 있습니다. 파일 읽기는 백그라운드에서 수행하며 GPU 워밍업 완료 후 인식기를 반환합니다. 준비 중에는 답변 타이머를 시작하지 말고, 문항마다 같은 인식기를 재사용한 뒤 소유 객체 종료 시 `Dispose()`하세요. 취소 후에도 진행 중인 GPU 작업이 끝나야 자원이 해제됩니다. 기존 동기 생성자·`Warmup` API는 유지됩니다. 초기 GPU 업로드와 개별 레이어 실행에는 일회성 프레임 지연이 남을 수 있습니다.
 
 앱이 콘텐츠 동안 마이크를 유지할 때는 `ListenFrom(new AudioWindowBuffer(2.5f, .5f))`로 질문을 시작하고, 청취 중에만 그 버퍼에 새 16kHz 모노 PCM을 `Append`합니다. 리스너는 질문 시작 때 버퍼를 초기화하며 외부 마이크를 열거나 닫지 않습니다. 기존 `Listen()`은 질문별로 마이크를 소유합니다. 답변 구간 저장과 콘텐츠 수명주기는 앱이 맡습니다. 화분에 먼저 연결했으며 다른 프로젝트의 설치된 패키지는 자동으로 변경되지 않습니다.
 
 ## 음성 추론과 프레임 지연
 
-게임의 `PronunciationListener`는 `IAsyncPhonemeRecognizer`를 감지해 GPU 추론을 여러 프레임에 나눕니다. 프레임마다 최대 64개 레이어 또는 CPU 스케줄링 1ms까지 예약하고, GPU 읽기 완료 콜백에서 결과를 가져옵니다. 1ms는 예약 예산이며 개별 레이어의 실행 시간이나 전체 게임 프레임 시간을 보장하는 수치는 아닙니다. D3D11 등 비동기 GPU 읽기를 지원하는 환경이 필요합니다.
+게임의 `PronunciationListener`는 `IAsyncPhonemeRecognizer`를 감지해 GPU 추론을 여러 프레임에 나눕니다. 프레임마다 최대 128개 레이어 또는 CPU 스케줄링 2ms까지 예약하고, GPU 읽기 완료 콜백에서 결과를 가져옵니다. 2ms는 예약 예산이며 개별 레이어의 실행 시간이나 전체 게임 프레임 시간을 보장하는 수치는 아닙니다. D3D11 등 비동기 GPU 읽기를 지원하는 환경이 필요합니다.
 
 추론 대기 중에도 마이크 입력과 문항 제한 시간 검사는 계속합니다. 한 모델에서 동시에 하나만 실행하고, 완료된 창은 오디오의 원래 순서·시각으로 판정합니다. 정지·문항 전환 시 이전 결과는 버리되 GPU 작업이 끝난 뒤 자원을 해제합니다. 추론 예외는 기록하고 청취를 중단합니다. 게임은 `IsListening == false`를 감지해 입력 오류·재시도 대기로 전환합니다. `OnTimedOut`은 실제 시간 초과 때만 보냅니다. 연결 코드는 다음 `Prepare()`에서 `IsFaulted` 모델을 해제·재생성해야 합니다. 장치 손실로 GPU 콜백 자체가 돌아오지 않는 경우의 강제 복구는 제공하지 않습니다.
 
-사용자 정의 래퍼도 `IAsyncPhonemeRecognizer`를 구현해 `RecognizeAsync`와 `IsRecognizing`을 전달해야 합니다. 직접 세션을 사용하는 경우 `TryAdvance`를 프레임마다 호출합니다. 기존 동기 `RecognizeWithText`·`Push`·`TryPush`는 호환용이며 프레임 지연을 줄이려면 비동기 경로를 사용해야 합니다. 시작 시 모델 로딩과 `Warmup`은 기존처럼 동기 실행합니다. 모델·2.5초 창·0.5초 간격·정답 판정 v5 및 PNG 캡처 기능은 변경하지 않았습니다.
+사용자 정의 래퍼도 `IAsyncPhonemeRecognizer`를 구현해 `RecognizeAsync`와 `IsRecognizing`을 전달해야 합니다. 직접 세션을 사용하는 경우 `TryAdvance`를 프레임마다 호출합니다. 기존 동기 `RecognizeWithText`·`Push`·`TryPush`는 호환용이며 프레임 지연을 줄이려면 비동기 경로를 사용해야 합니다. 모델 준비는 위 `CreatePreparedAsync`로 전환할 수 있으며 기존 생성자와 `Warmup`을 직접 호출하는 앱은 동기 동작을 유지합니다. 모델·2.5초 창·0.5초 간격·정답 판정 v5 및 PNG 캡처 기능은 변경하지 않았습니다. Unity Profiler에서 `DomiCube.Model.LoadFile`, `DomiCube.Model.CreateWorker`, `DomiCube.Inference.Schedule` 구간을 확인할 수 있습니다.
 
 ## 사용 방법
 `Tools > 오디오 정답 처리 기능`에 세 메뉴만 제공합니다.

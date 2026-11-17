@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Unity.Sentis;
+using Unity.Profiling;
 using UnityEngine;
 
 namespace DomiCube.PhonemeMatching.Unity
@@ -32,6 +33,10 @@ namespace DomiCube.PhonemeMatching.Unity
     {
         private readonly CtcVocabulary _vocab;
         private readonly IWorker _worker;
+        private readonly Model _loadedModel;
+        private static readonly ProfilerMarker LoadFileMarker = new ProfilerMarker("DomiCube.Model.LoadFile");
+        private static readonly ProfilerMarker CreateWorkerMarker = new ProfilerMarker("DomiCube.Model.CreateWorker");
+        private static readonly ProfilerMarker ScheduleMarker = new ProfilerMarker("DomiCube.Inference.Schedule");
         private float[] _normalized = new float[0];
         private float[] _inflightInput = new float[0];
         private bool _disposed;
@@ -42,8 +47,11 @@ namespace DomiCube.PhonemeMatching.Unity
         public bool IsFaulted => _asyncFailure != null;
 
         // A layer count also bounds GPU bursts; CPU scheduling time alone does not.
-        private const int LayersPerFrame = 64;
-        private const double ScheduleBudgetMilliseconds = 1.0;
+        // 64 layers required ~21 frames (~700 ms at 30 fps) for the shipped
+        // graph, exceeding its 500 ms input hop. Keep both bounds, with enough
+        // throughput at 30 fps. A single Sentis layer can exceed the time budget.
+        private const int LayersPerFrame = 128;
+        private const double ScheduleBudgetMilliseconds = 2.0;
         private float[] _lastLogits;
         private int _lastFrames, _lastClasses;
         private string _lastText = "";
@@ -74,6 +82,69 @@ namespace DomiCube.PhonemeMatching.Unity
             using (var input = new System.IO.FileStream(modelPath, System.IO.FileMode.Open,
                        System.IO.FileAccess.Read, System.IO.FileShare.Read))
                 _worker = WorkerFactory.CreateWorker(BackendType.GPUCompute, ModelLoader.Load(input));
+        }
+
+        private SentisPhonemeRecognizer(Model model, CtcVocabulary vocab)
+        {
+            _vocab = vocab;
+            using (CreateWorkerMarker.Auto())
+                _worker = WorkerFactory.CreateWorker(BackendType.GPUCompute, model);
+            _loadedModel = model;
+        }
+
+        /// <summary>
+        /// Sentis 1 external-file preparation. Only stream deserialization and
+        /// managed weight pinning run in the background; worker/GPU operations
+        /// and continuations stay on the calling Unity thread. Call during scene
+        /// preparation and await before starting an answer's clock.
+        /// </summary>
+        public static async Task<SentisPhonemeRecognizer> CreatePreparedAsync(
+            string modelPath, CtcVocabulary vocab, float windowSeconds = 2.5f,
+            CancellationToken cancellation = default)
+        {
+            if (vocab == null) throw new ArgumentNullException(nameof(vocab));
+            if (SynchronizationContext.Current == null)
+                throw new InvalidOperationException("Model preparation requires Unity's synchronization context.");
+            cancellation.ThrowIfCancellationRequested();
+            var model = await Task.Run(() =>
+            {
+                // This overload never accesses ModelAsset/Resources or a GPU.
+                using (LoadFileMarker.Auto())
+                using (var input = new System.IO.FileStream(modelPath, System.IO.FileMode.Open,
+                           System.IO.FileAccess.Read, System.IO.FileShare.Read))
+                    return ModelLoader.Load(input);
+            }, cancellation);
+            SentisPhonemeRecognizer recognizer = null;
+            try
+            {
+                cancellation.ThrowIfCancellationRequested();
+                recognizer = new SentisPhonemeRecognizer(model, vocab);
+                await NextEngineFrame();
+                await recognizer.RecognizeAsync(new float[Mathf.Max(1,
+                    Mathf.CeilToInt(windowSeconds * vocab.SamplingRate))], cancellation);
+                cancellation.ThrowIfCancellationRequested();
+                recognizer.ClearEvidence();
+                return recognizer;
+            }
+            catch
+            {
+                recognizer?.Dispose();
+                throw;
+            }
+            finally
+            {
+                // Constants can retain views into the pinned CPU weights.
+                // Keep them alive until the worker drains and is disposed.
+                if (recognizer == null) ReleaseModelWeights(model);
+            }
+        }
+
+        private static void ReleaseModelWeights(Model model)
+        {
+            if (model == null) return;
+            var released = new HashSet<NativeTensorArray>();
+            foreach (var constant in model.constants)
+                if (constant.weights != null && released.Add(constant.weights)) constant.weights.Dispose();
         }
 
         /// <summary>
@@ -161,11 +232,14 @@ namespace DomiCube.PhonemeMatching.Unity
                     while (!finished)
                     {
                         budget.Restart();
-                        for (int layer = 0; layer < LayersPerFrame && budget.Elapsed.TotalMilliseconds < ScheduleBudgetMilliseconds; layer++)
+                        using (ScheduleMarker.Auto())
                         {
-                            if (schedule.MoveNext()) continue;
-                            finished = true;
-                            break;
+                            for (int layer = 0; layer < LayersPerFrame && budget.Elapsed.TotalMilliseconds < ScheduleBudgetMilliseconds; layer++)
+                            {
+                                if (schedule.MoveNext()) continue;
+                                finished = true;
+                                break;
+                            }
                         }
                         if (!finished) await NextEngineFrame();
                     }
@@ -361,6 +435,7 @@ namespace DomiCube.PhonemeMatching.Unity
         {
             if (_workerDisposed) return;
             _worker.Dispose();
+            ReleaseModelWeights(_loadedModel);
             _workerDisposed = true;
         }
     }
