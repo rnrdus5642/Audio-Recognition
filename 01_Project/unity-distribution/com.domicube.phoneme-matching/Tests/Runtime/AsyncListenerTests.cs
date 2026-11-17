@@ -31,6 +31,43 @@ namespace DomiCube.PhonemeMatching.Tests
                 .Invoke(listener, new object[] { generation }).ToString();
         }
 
+        [UnityTest]
+        public IEnumerator ExternalInputOwnsNoMicrophoneAndClearsOldFramesAndLateResults()
+        {
+            if (!Application.isPlaying) Assert.Ignore("Public ListenFrom coroutine is validated in PlayMode.");
+            var go = new GameObject("External PCM listener");
+            try
+            {
+                var listener = go.AddComponent<PronunciationListener>();
+                var recognizer = new AsyncRecognitionSessionTests.DeferredRecognizer();
+                var buffer = new AudioWindowBuffer(2.5f, .5f);
+                listener.SetRecognizer(recognizer);
+                typeof(PronunciationListener).GetField("_matrix", Private).SetValue(listener,
+                    PhonemeData.LoadMatrix(Resources.Load<TextAsset>("DomiCube/PhonemeMatching/MusicWebV4/ko_child_v2").text));
+                listener.UseOrthographicWordPolicy = true;
+                listener.TargetWords = new[] { "사과" }; listener.WindowSeconds = 2.5f; listener.HopSeconds = .5f;
+                listener.TimeoutSeconds = 10;
+                listener.MicrophoneDevice = "THIS_DEVICE_MUST_NEVER_BE_OPENED";
+                buffer.Append(AsyncRecognitionSessionTests.Speech());
+                listener.ListenFrom(buffer);
+                Assert.That(listener.IsListening, Is.True); Assert.That(buffer.PendingFrames, Is.Zero);
+                Assert.That(typeof(PronunciationListener).GetField("_mic", Private).GetValue(listener), Is.Null);
+                buffer.Append(AsyncRecognitionSessionTests.Speech());
+                float deadline = Time.realtimeSinceStartup + 2;
+                while (recognizer.Calls == 0 && Time.realtimeSinceStartup < deadline) yield return null;
+                Assert.That(recognizer.Calls, Is.EqualTo(1));
+                int confirmed = 0; listener.OnConfirmed.AddListener((_, __) => confirmed++);
+                listener.StopListening(); Assert.That(recognizer.LastToken.IsCancellationRequested, Is.True);
+                recognizer.Complete("사과"); yield return null;
+                Assert.That(confirmed, Is.Zero); Assert.That(listener.LastFrameScored, Is.Null);
+                buffer.Append(AsyncRecognitionSessionTests.Speech()); listener.ListenFrom(buffer);
+                Assert.That(buffer.AppendedSamples, Is.Zero); Assert.That(buffer.PendingFrames, Is.Zero);
+                Assert.Throws<System.ArgumentException>(() => listener.ListenFrom(new AudioWindowBuffer(1, .5f)));
+                Assert.That(listener.IsListening, Is.False);
+            }
+            finally { Object.DestroyImmediate(go); }
+        }
+
         [Test]
         public void PendingProducesNoEventsAndCompletedFramesCanCancelTheQuestion()
         {

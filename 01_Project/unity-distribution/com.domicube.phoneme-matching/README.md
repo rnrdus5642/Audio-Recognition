@@ -1,6 +1,8 @@
 # 오디오 정답 처리 — 공용 모델 패키지
 
-버전 **0.9.1-preview.2**. Unity 2022.3 / Sentis 1.2.0-exp.2, Windows PC·PC 연결 VR용입니다. 최종 3에포크 HuBERT 정서법 자모 모델과 웹사이트의 `orthographic-word-context-v5` 후처리를 사용합니다. GPUCompute 경로를 유지합니다.
+버전 **0.9.1-preview.3**. Unity 2022.3 / Sentis 1.2.0-exp.2, Windows PC·PC 연결 VR용입니다. 최종 3에포크 HuBERT 정서법 자모 모델과 웹사이트의 `orthographic-word-context-v5` 후처리를 사용합니다. GPUCompute 경로를 유지합니다.
+
+앱이 콘텐츠 동안 마이크를 유지할 때는 `ListenFrom(new AudioWindowBuffer(2.5f, .5f))`로 질문을 시작하고, 청취 중에만 그 버퍼에 새 16kHz 모노 PCM을 `Append`합니다. 리스너는 질문 시작 때 버퍼를 초기화하며 외부 마이크를 열거나 닫지 않습니다. 기존 `Listen()`은 질문별로 마이크를 소유합니다. 답변 구간 저장과 콘텐츠 수명주기는 앱이 맡습니다. 화분에 먼저 연결했으며 다른 프로젝트의 설치된 패키지는 자동으로 변경되지 않습니다.
 
 ## 음성 추론과 프레임 지연
 

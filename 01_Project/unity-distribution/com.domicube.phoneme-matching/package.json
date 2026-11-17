@@ -1,6 +1,6 @@
 {
   "name": "com.domicube.phoneme-matching",
-  "version": "0.9.1-preview.2",
+  "version": "0.9.1-preview.3",
   "displayName": "Phoneme Matching",
   "description": "최종 3에포크 HuBERT 모델과 문장 속 정답 판정 v5. 문서 공용 모델·초기 세팅·음성 테스트·정답 단어 설정을 제공합니다.",
   "unity": "2022.3",

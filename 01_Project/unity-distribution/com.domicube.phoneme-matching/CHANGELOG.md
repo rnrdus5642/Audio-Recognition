@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.9.1-preview.3 — 2026-11-17
+
+- `PronunciationListener.ListenFrom(AudioWindowBuffer)`로 앱이 유지하는 마이크의 PCM을 받습니다. 질문마다 버퍼와 판정 상태를 초기화하며, 질문 종료가 외부 마이크를 끄지 않습니다.
+- 기존 `Listen()`의 마이크 소유 방식과 모델·정답 정책·비동기 GPU 추론은 유지합니다. 외부 입력 경로는 화분 프로젝트에 먼저 연결합니다.
+
 ## 0.9.1-preview.2 — 2026-11-12
 
 - Sentis 1.x의 실시간 추론을 프레임별 64개 레이어/예약 시간 1ms로 분산하고 GPU 결과를 비동기로 읽습니다. 기존 동기 API와 시작 시 Warmup은 유지합니다.

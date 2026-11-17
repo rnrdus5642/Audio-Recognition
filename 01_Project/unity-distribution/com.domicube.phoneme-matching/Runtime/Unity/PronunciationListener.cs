@@ -193,6 +193,26 @@ namespace DomiCube.PhonemeMatching.Unity
         /// <summary>Start listening for the configured target.</summary>
         public void Listen()
         {
+            BeginListening(null);
+        }
+
+        /// <summary>
+        /// Listen using an application-owned stream. The caller pumps fresh mono PCM
+        /// into this buffer only while listening, and owns microphone start/stop.
+        /// Beginning a question clears all previous samples and queued frames.
+        /// </summary>
+        public void ListenFrom(AudioWindowBuffer buffer)
+        {
+            StopListening();
+            if (buffer == null) throw new ArgumentNullException(nameof(buffer));
+            if (Math.Abs(buffer.WindowSeconds - WindowSeconds) > .001f ||
+                buffer.HopSamples != (int)Math.Round(HopSeconds * AudioWindowBuffer.TargetSampleRate))
+                throw new ArgumentException("External buffer must match the listener window and hop.", nameof(buffer));
+            BeginListening(buffer);
+        }
+
+        private void BeginListening(AudioWindowBuffer externalBuffer)
+        {
             // Every attempt retires the one before it, whether or not
             // this one gets off the ground. A handler that calls Listen()
             // from inside a confirmation and is turned away at validation
@@ -244,15 +264,17 @@ namespace DomiCube.PhonemeMatching.Unity
             // The buffer is built first because the session drains it. Both
             // freeze the window and hop for this question: changing the
             // Inspector mid-answer must not move the frame boundaries.
-            _mic = new MicrophoneRollingBuffer(
-                WindowSeconds, hopSeconds: HopSeconds);
+            _mic = externalBuffer == null
+                ? new MicrophoneRollingBuffer(WindowSeconds, hopSeconds: HopSeconds) : null;
+            var buffer = externalBuffer ?? _mic.Buffer;
+            buffer.Reset();
             try
             {
                 if (UseOrthographicWordPolicy && (Math.Abs(WindowSeconds - 2.5f) > .001f || Math.Abs(HopSeconds - .5f) > .001f))
                     throw new ArgumentException("Orthographic word recognition requires a 2.5s window and 0.5s hop.");
                 _session = UseOrthographicWordPolicy
-                    ? PronunciationSession.ForOrthographicWord(_matrix, _recognizer, Math.Round(WordThreshold, 6), Consecutive, _mic.Buffer)
-                    : new PronunciationSession(_matrix, _catalog, _recognizer, Consecutive, _mic.Buffer, _feedbackErrors);
+                    ? PronunciationSession.ForOrthographicWord(_matrix, _recognizer, Math.Round(WordThreshold, 6), Consecutive, buffer)
+                    : new PronunciationSession(_matrix, _catalog, _recognizer, Consecutive, buffer, _feedbackErrors);
                 _session.Begin(words);
             }
             catch (ArgumentException e)
@@ -262,14 +284,14 @@ namespace DomiCube.PhonemeMatching.Unity
                 // it. Say it and stay put.
                 Debug.LogError($"[PronunciationListener] {e.Message}");
                 _session = null;
-                _mic.Dispose();
+                _mic?.Dispose();
                 _mic = null;
                 return;
             }
 
             try
             {
-                _mic.Start(string.IsNullOrEmpty(MicrophoneDevice)
+                _mic?.Start(string.IsNullOrEmpty(MicrophoneDevice)
                     ? null
                     : MicrophoneDevice);
             }
@@ -277,7 +299,7 @@ namespace DomiCube.PhonemeMatching.Unity
             {
                 // Do not leave the device or the session half-open when
                 // the microphone refuses to start.
-                _mic.Dispose();
+                _mic?.Dispose();
                 _mic = null;
                 _session.End();
                 _session = null;
@@ -300,7 +322,7 @@ namespace DomiCube.PhonemeMatching.Unity
 
             _session?.End();
 
-            // Releases the device: nothing is captured between questions.
+            // Only release a microphone owned by Listen(). ListenFrom() never owns it.
             _mic?.Dispose();
             _mic = null;
         }
