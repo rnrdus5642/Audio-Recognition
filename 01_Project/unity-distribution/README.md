@@ -1,12 +1,12 @@
 # 오디오 정답 처리 패키지 배포 원본
 
-현재 배포 원본은 `com.domicube.phoneme-matching/`이며 화분에 적용한 최신 로컬 버전은 **0.9.1-preview.4**입니다. 다른 콘텐츠의 설치본은 자동으로 갱신되지 않습니다.
+현재 배포 원본은 `com.domicube.phoneme-matching/`이며 Music·Dinosaurs·Flower에 적용한 최신 로컬 버전은 **0.9.1-preview.4**입니다. 다른 콘텐츠의 설치본은 자동으로 갱신되지 않습니다.
 최종 3에포크 모델과 웹 후처리 v5를 포함하는 패키지의 소스, README, CHANGELOG, 테스트를 함께 보관합니다. 기존 Music·Dinosaurs·Flower 정답 설정을 읽을 수 있습니다.
 `../unity/Packages/com.domicube.phoneme-matching`는 이전 실험 작업 공간이며 현재 배포 원본이 아닙니다.
 
 ## 설치와 실행
 
-2026-11-18: 화분에서 모델 준비 완료 후 답변 시계를 시작하고 Sentis 1의 30fps 처리 지연을 줄였습니다. [변경·측정·한계](../docs/UNITY_AUDIO_PREPARATION_2026-11-18.md). 모델은 기존 파일을 재사용하며 GitHub Release를 새로 게시한 것은 아닙니다.
+2026-11-18: 화분의 비동기 준비·지속 PCM 입력 방식을 Music·Dinosaurs에도 적용했습니다. 콘텐츠는 마이크를 유지하며 답변 구간만 별도 저장합니다. 모델 준비 완료 후 답변 시계를 시작하고 Sentis 1의 30fps 처리 지연을 줄였습니다. [변경·측정·한계](../docs/UNITY_AUDIO_PREPARATION_2026-11-18.md). 모델은 기존 파일을 재사용하며 GitHub Release를 새로 게시한 것은 아닙니다.
 
 - Unity 2022.3 / Sentis 1.2.0-exp.2, Windows PC 및 PC 연결 VR을 대상으로 합니다.
 - `Tools > 오디오 정답 처리 기능`의 초기 세팅·음성 테스트·정답 단어 설정을 사용합니다.
