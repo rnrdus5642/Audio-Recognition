@@ -1,8 +1,11 @@
 # Audio-Recognition
 
 한국어 **3~6세 아동**의 발화를 인식하고, 현재 게임 단계의 정답 단어와 충분히 가까우면 통과시키는 프로젝트입니다.
-현재 공개 배포 기준은 **최종 3에포크 HuBERT 자모 모델 + 문맥 후처리 v5 + Unity 패키지 0.9.0-preview.1**입니다.
-학습과 최종 테스트는 2026-10-31에 완료했습니다. 문서 기준일은 2026-11-02입니다.
+현재 Unity 소스·세 콘텐츠 적용 기준은 **최종 3에포크 HuBERT 자모 모델 + 문맥 후처리 v7 + 패키지 0.9.2-preview.2**입니다.
+학습과 최종 테스트는 2026-10-31에 완료했고 모델은 그대로 사용합니다. 문서 기준일은 2026-11-19입니다.
+GitHub Release의 기존 패키지는 0.9.0-preview.1/v5입니다. 이번 v7은 저장소 소스와 세 콘텐츠의 로컬 tarball로 제공하며 새 Release를 게시하지 않았습니다.
+
+최신 변경은 [웹 v7 통합·검증 기록](01_Project/docs/UNITY_WORD_POLICY_V7_2026-11-19.md)을 참고하세요. Unity 관련 검사 243개와 눈 깜빡임 검사 21개는 각 콘텐츠의 저장된 실행 결과입니다. 새 실녹음 정답률이나 HMD·전체 Player 검증 결과는 아닙니다.
 
 ## 전체 구조와 보고서
 
@@ -12,14 +15,14 @@
 - [편집 가능한 한글 보고서 · 9쪽](01_Project/docs/reports/model-20261102/model-report-ko.hwp).
 - [최종 모델과 Unity 설치 패키지](https://github.com/rnrdus5642/Audio-Recognition/releases/tag/model-v4-child-jamo-epoch3-sentis1).
 
-| 항목 | 현재 배포 기준 |
+| 항목 | 현재 소스·콘텐츠 적용 기준 |
 |---|---|
 | 기반 모델 | `team-lucid/hubert-xlarge-korean`, 약 10억 파라미터 |
 | 입력·출력 | 16kHz 모노 음성 → 69종 자모 CTC → 조합된 한글 |
 | 학습 데이터 | AIHub 108 + 540, 3~6세, 640,268발화·678.06시간·화자 ID 1,136개 |
 | 학습 방식 | 원래 철자 라벨을 NFD 자모로 분해, 출력층 적응 후 본학습 3에포크 |
 | 최종 성능 | 개발 검증 평균 CER 6.05%, 별도 테스트 평균 CER 9.19% |
-| 후처리 | `orthographic-word-context-v5`, 문장 속 단어 구간별 발음 유사도 비교 |
+| 후처리 | `orthographic-word-context-v7`, 문장 속 후보 비교·불완전 자모 반영·명사 조사 분리 |
 | 실시간 검사 | 최근 2.5초를 0.5초마다 검사, 기본 유사도 0.85·같은 정답 2회 확인 |
 | 적용 콘텐츠 | Music 82개 / Dinosaurs 76개 / Flower 41개 표현, 각각 9절차 |
 | 실행 | Unity 2022.3 + Sentis 1.2 GPUCompute, Windows PC·PC 연결 VR |
@@ -30,7 +33,8 @@ CER은 연령별 동일 비중 평균이며 게임 정답 통과율이 아닙니
 
 ## Unity에서 사용
 
-공개 Release의 `com.domicube.phoneme-matching-0.9.0-preview.1.tgz`를 설치한 뒤
+최신 v7은 [배포 원본 안내](01_Project/unity-distribution/README.md)에 따라 패키지를 만들거나
+세 콘텐츠 저장소의 `Packages/com.domicube.phoneme-matching-0.9.2-preview.2.tgz`를 설치한 뒤
 `Tools > 오디오 정답 처리 기능 > 초기 세팅`을 실행합니다.
 같은 메뉴의 **음성 테스트**와 **정답 단어 설정**을 사용합니다. IPA용 추가 모델은 필요 없습니다.
 

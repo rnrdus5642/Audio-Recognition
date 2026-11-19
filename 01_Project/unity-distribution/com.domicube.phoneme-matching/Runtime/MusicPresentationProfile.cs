@@ -29,10 +29,11 @@ namespace DomiCube.PhonemeMatching
         private MusicPresentationProfile(string matrixJson, string targetsJson, string vocabularyJson, ModelErrorProfile modelErrors)
         {
             var document = JObject.Parse(targetsJson);
-            // Existing project-owned answer lists keep their v4 identifier when
-            // the package is upgraded; execute the current policy for both.
+            // Existing project-owned answer lists retain their v4/v5 identifier
+            // on upgrade. Their words stay unchanged; execute the current policy.
             string policy = (string)document["word_policy"];
             UsesOrthographicWordPolicy = policy == OrthographicWordPolicy.Version ||
+                policy == "orthographic-word-context-v5" ||
                 policy == "orthographic-word-preview-v4";
             Matrix = PhonemeData.LoadMatrix(matrixJson, UsesOrthographicWordPolicy ? "ko_child_v2" : null);
             Catalog = PhonemeData.LoadTargets(targetsJson);

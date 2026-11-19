@@ -27,11 +27,20 @@ namespace DomiCube.PhonemeMatching.Tests
         [OneTimeSetUp]
         public void LoadFixtures()
         {
+#if UNITY_EDITOR
+            // Installed UPM consumers do not have the original Python/export
+            // repository layout. Both fixtures are already shipped in the package.
+            string package = UnityEditor.PackageManager.PackageInfo.FindForAssembly(typeof(CtcDecoder).Assembly).resolvedPath;
+            _vectors = JObject.Parse(File.ReadAllText(Path.Combine(package, "Tests/Runtime/ctc_vectors.json")));
+            _vocab = PhonemeData.LoadCtcVocabulary(File.ReadAllText(Path.Combine(package,
+                "Runtime/Resources/DomiCube/PhonemeMatching/MusicDemo/wav2vec2_ko_vocab.json")));
+#else
             _vectors = JObject.Parse(RepoFiles.Read(
                 "unity/Packages/com.domicube.phoneme-matching/Tests/Runtime/"
                 + "ctc_vectors.json"));
             _vocab = PhonemeData.LoadCtcVocabulary(RepoFiles.Read(
                 "unity/Assets/StreamingAssets/wav2vec2_ko_vocab.json"));
+#endif
         }
 
         [Test]

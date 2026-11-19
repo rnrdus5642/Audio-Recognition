@@ -1,6 +1,14 @@
 # 오디오 정답 처리 — 공용 모델 패키지
 
-버전 **0.9.1-preview.4**. Unity 2022.3 / Sentis 1.2.0-exp.2, Windows PC·PC 연결 VR용입니다. 최종 3에포크 HuBERT 정서법 자모 모델과 웹사이트의 `orthographic-word-context-v5` 후처리를 사용합니다. GPUCompute 경로를 유지합니다.
+버전 **0.9.2-preview.2**. Unity 2022.3 / Sentis 1.2.0-exp.2, Windows PC·PC 연결 VR용입니다. 최종 3에포크 HuBERT 정서법 자모 모델과 웹사이트의 단어 후보 판정 `orthographic-word-context-v7`을 사용합니다. GPUCompute 경로를 유지합니다.
+
+## 웹 v7 후처리
+
+불완전한 현대 자모가 섞인 인식 결과도 단어 전체를 점수 계산에 넣습니다. 자모를 삭제하거나 누락된 소리를 정답으로 채우지 않으므로 `책ᄉ`의 추가 소리도 감점됩니다. 3음절 이상 비동작 명사에서는 정답과 같은 음절 수의 어근 뒤에 알려진 조사가 붙었을 때 어근만 비교합니다. 예를 들어 `양쪽 손으로 실로펀 체를 들어`에서 `실로펀체`를 `실로폰채`와 비교하며, 기본 0.85 임계값과 2회 확인을 거칩니다. 정확히 등록된 긴 후보가 있으면 그 후보가 우선합니다.
+
+`WordCandidateScore.MatchSuffix`와 `UncomposedJamo`로 비교한 조사와 불완전 자모 여부를 확인할 수 있습니다. 원본 인식 문장은 보존합니다. 기존 v4/v5 정답 JSON과 정답 목록을 그대로 사용하며 모델 재다운로드는 필요 없습니다. 임의의 합성어 내부 자르기, 동음 후보 동점 허용, 동작어 대체는 하지 않습니다. 부정 표현의 바로 다음 어절 검사도 유지합니다. 일반적인 문장 의미 이해나 발화자 구분 기능은 아닙니다.
+
+이번 이식은 여러 후보 중 하나를 판정하는 모드입니다. 웹의 두 단어 모두 확인·문장/LLM 모드는 포함하지 않습니다. 웹 구현이 만든 11,844개 재생 사례(기존 11,804개 + v7 대조 40개), 98,251회 판정과 74개 자모 변환 기대값을 `Tests/Runtime/orthographic_word_vectors.json.gz`에 보관합니다. 이는 구현 일치 검증 자료이며 실사용 정답률 측정값은 아닙니다.
 
 Sentis 1의 외부 모델을 준비할 때는 Unity 스레드에서 `await SentisPhonemeRecognizer.CreatePreparedAsync(path, vocabulary, 2.5f, cancellationToken)`을 사용할 수 있습니다. 파일 읽기는 백그라운드에서 수행하며 GPU 워밍업 완료 후 인식기를 반환합니다. 준비 중에는 답변 타이머를 시작하지 말고, 문항마다 같은 인식기를 재사용한 뒤 소유 객체 종료 시 `Dispose()`하세요. 취소 후에도 진행 중인 GPU 작업이 끝나야 자원이 해제됩니다. 기존 동기 생성자·`Warmup` API는 유지됩니다. 초기 GPU 업로드와 개별 레이어 실행에는 일회성 프레임 지연이 남을 수 있습니다.
 
@@ -12,7 +20,7 @@ Sentis 1의 외부 모델을 준비할 때는 Unity 스레드에서 `await Senti
 
 추론 대기 중에도 마이크 입력과 문항 제한 시간 검사는 계속합니다. 한 모델에서 동시에 하나만 실행하고, 완료된 창은 오디오의 원래 순서·시각으로 판정합니다. 정지·문항 전환 시 이전 결과는 버리되 GPU 작업이 끝난 뒤 자원을 해제합니다. 추론 예외는 기록하고 청취를 중단합니다. 게임은 `IsListening == false`를 감지해 입력 오류·재시도 대기로 전환합니다. `OnTimedOut`은 실제 시간 초과 때만 보냅니다. 연결 코드는 다음 `Prepare()`에서 `IsFaulted` 모델을 해제·재생성해야 합니다. 장치 손실로 GPU 콜백 자체가 돌아오지 않는 경우의 강제 복구는 제공하지 않습니다.
 
-사용자 정의 래퍼도 `IAsyncPhonemeRecognizer`를 구현해 `RecognizeAsync`와 `IsRecognizing`을 전달해야 합니다. 직접 세션을 사용하는 경우 `TryAdvance`를 프레임마다 호출합니다. 기존 동기 `RecognizeWithText`·`Push`·`TryPush`는 호환용이며 프레임 지연을 줄이려면 비동기 경로를 사용해야 합니다. 모델 준비는 위 `CreatePreparedAsync`로 전환할 수 있으며 기존 생성자와 `Warmup`을 직접 호출하는 앱은 동기 동작을 유지합니다. 모델·2.5초 창·0.5초 간격·정답 판정 v5 및 PNG 캡처 기능은 변경하지 않았습니다. Unity Profiler에서 `DomiCube.Model.LoadFile`, `DomiCube.Model.CreateWorker`, `DomiCube.Inference.Schedule` 구간을 확인할 수 있습니다.
+사용자 정의 래퍼도 `IAsyncPhonemeRecognizer`를 구현해 `RecognizeAsync`와 `IsRecognizing`을 전달해야 합니다. 직접 세션을 사용하는 경우 `TryAdvance`를 프레임마다 호출합니다. 기존 동기 `RecognizeWithText`·`Push`·`TryPush`는 호환용이며 프레임 지연을 줄이려면 비동기 경로를 사용해야 합니다. 모델 준비는 위 `CreatePreparedAsync`로 전환할 수 있으며 기존 생성자와 `Warmup`을 직접 호출하는 앱은 동기 동작을 유지합니다. 모델·2.5초 창·0.5초 간격·정답 판정 v7 및 PNG 캡처와 추론 스케줄링은 별도 기능입니다. Unity Profiler에서 `DomiCube.Model.LoadFile`, `DomiCube.Model.CreateWorker`, `DomiCube.Inference.Schedule` 구간을 확인할 수 있습니다.
 
 ## 사용 방법
 `Tools > 오디오 정답 처리 기능`에 세 메뉴만 제공합니다.
@@ -29,9 +37,9 @@ Sentis 1의 외부 모델을 준비할 때는 Unity 스레드에서 `await Senti
 SHA-256: `1ce1f13e3497844a6632cae3d6925f3aae64159f6d5ab2b60c84613493dcbea3`.
 배포: [최종 3에포크 모델 Release](https://github.com/rnrdus5642/Audio-Recognition/releases/tag/model-v4-child-jamo-epoch3-sentis1).
 
-문서 폴더의 위치는 고정이며 같은 버전을 사용하는 모든 콘텐츠가 한 파일을 공유합니다. 이전 2에포크 모델은 다른 파일명으로 남겨 두므로 구형 앱을 깨뜨리지 않습니다. 패키지를 갱신한 프로젝트에서 초기 세팅을 한 번 실행하면 새 모델이 설치됩니다. 기존 프로젝트의 v4 정답 JSON도 현재 v5 후처리로 읽으며, 단계와 정답 목록을 덮어쓰지 않습니다. 이미 만들어진 실행 파일에는 새 패키지가 자동 반영되지 않으므로 다시 빌드해야 합니다.
+문서 폴더의 위치는 고정이며 같은 버전을 사용하는 모든 콘텐츠가 한 파일을 공유합니다. 이전 2에포크 모델은 다른 파일명으로 남겨 두므로 구형 앱을 깨뜨리지 않습니다. 패키지를 갱신한 프로젝트에서 초기 세팅을 한 번 실행하면 새 모델이 설치됩니다. 기존 프로젝트의 v4/v5 정답 JSON도 현재 v7 후처리로 읽으며, 단계와 정답 목록을 덮어쓰지 않습니다. 이미 만들어진 실행 파일에는 새 패키지가 자동 반영되지 않으므로 다시 빌드해야 합니다.
 
-## 정답 판정 v5
+## 정답 판정 흐름
 
 최근 2.5초의 16kHz 모노 PCM을 0.5초 간격으로 받아씁니다. 정답 후보는 음성 모델에 전달하지 않습니다. 모델이 출력한 문장은 그대로 보존하고, 후처리에서 문장 중간을 포함한 띄어쓰기 단위와 명시한 조사·서술형·인용 표현을 비교합니다. `이건 사과인 거 같아요`, `동생도 사과를 따요`에서 `사과`를 비교하므로 앞뒤의 다른 말이 그 점수를 깎지 않습니다.
 

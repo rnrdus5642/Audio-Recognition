@@ -1,9 +1,12 @@
 # 아동 음성 인식과 정답 판정
 
-2026-11-02 기준. Git 루트는 상위 [Audio-Recognition](../README.md)이며 코드 작업 공간은 이 폴더입니다.
-현재 공개 배포물은 **3~6세 HuBERT 정서법 자모 모델 / 본학습 3에포크 / 후처리 v5 / 패키지 0.9.0-preview.1**입니다.
+2026-11-19 기준. Git 루트는 상위 [Audio-Recognition](../README.md)이며 코드 작업 공간은 이 폴더입니다.
+현재 Unity 소스·세 콘텐츠는 **3~6세 HuBERT 정서법 자모 모델 / 본학습 3에포크 / 후처리 v7 / 패키지 0.9.2-preview.2**를 사용합니다. 공개 Release의 기존 패키지는 0.9.0-preview.1/v5이며, 모델은 두 버전이 같은 최종 파일을 사용합니다.
 
 ## 현재 문서
+
+- [웹 v7 후처리 통합·검증·남은 항목](docs/UNITY_WORD_POLICY_V7_2026-11-19.md)
+- [최신 Unity 패키지 만들기·설치](unity-distribution/README.md)
 
 - [모델 전체 분석과 파이프라인](docs/CHILD_ORTHOGRAPHIC_MODEL_2026-11-02.md)
 - [한글 보고서 · 9쪽](docs/reports/model-20261102/model-report-ko.hwp)
@@ -33,7 +36,7 @@
 
 현재 배포 패키지 작업 위치는 `unity-distribution/com.domicube.phoneme-matching/`입니다.
 `unity/Packages/com.domicube.phoneme-matching/`는 별도의 이전 실험 작업 공간입니다.
-새 PC 설치에는 위 공개 Release의 0.9.0-preview.1 `.tgz`를 사용하세요.
+새 PC에서 최신 후처리를 쓰려면 세 콘텐츠에 포함한 0.9.2-preview.2 `.tgz` 또는 위 배포 원본으로 만든 패키지를 사용하세요. 모델은 기존 공개 Release에서 초기 세팅으로 설치합니다.
 
 `Tools > 오디오 정답 처리 기능`에서 초기 세팅·음성 테스트·정답 단어 설정을 사용합니다.
 모델은 문서/오디오정답처리/Models에 공용 설치합니다. Music·Dinosaurs·Flower는 같은 모델을 쓰며

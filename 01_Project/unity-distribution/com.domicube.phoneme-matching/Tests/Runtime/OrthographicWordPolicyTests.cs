@@ -8,6 +8,7 @@ using System.Security.Cryptography;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
 using UnityEditor.PackageManager;
+using DomiCube.PhonemeMatching.Korean;
 
 namespace DomiCube.PhonemeMatching.Tests
 {
@@ -42,12 +43,22 @@ namespace DomiCube.PhonemeMatching.Tests
                     Is.EqualTo((string)fixture["matrix_sha256"]), "Packaged matrix must match the web matrix.");
             }
             var cases = (JArray)fixture["cases"];
-            Assert.That(cases.Count, Is.EqualTo(11804), "Retain baseline inputs and v5 context controls.");
+            Assert.That(cases.Count, Is.EqualTo(11844), "Retain all 11804 baseline cases plus 40 v7 controls.");
+            Assert.That((int)fixture["retained_baseline_cases"], Is.EqualTo(11804));
             Assert.That(cases.Count, Is.EqualTo((int)fixture["case_count"]));
-            var policy = new OrthographicWordPolicy(_matrix);
+            var jamoCases = (JArray)fixture["jamo_cases"];
+            Assert.That(jamoCases.Count, Is.EqualTo(74));
+            foreach (var item in jamoCases)
+            {
+                string text = (string)item["text"];
+                Assert.That(JamoIpa.ToPhonemes(text), Is.EqualTo(item["direct"].ToObject<string[]>()), text + " direct IPA");
+                Assert.That(JamoIpa.ToPhonemes(Rules.Apply(text)), Is.EqualTo(item["with_rules"].ToObject<string[]>()), text + " rules IPA");
+            }
             int frames = 0, accepted = 0;
             foreach (var trial in cases)
             {
+                var policy = new OrthographicWordPolicy(_matrix,
+                    (double?)trial["threshold"] ?? .85, (int?)trial["consecutive"] ?? 2);
                 policy.Begin(trial["targets"].ToObject<string[]>());
                 foreach (var check in trial["checks"])
                 {
@@ -75,8 +86,15 @@ namespace DomiCube.PhonemeMatching.Tests
                     for (int i = 0; i < scores.Count; i++)
                     {
                         var item = actual.CandidateScores[i];
-                        var score = scores[i];
-                        Assert.That(item.Target, Is.EqualTo((string)score["target"]), context + " target order");
+                        var orderedScore = scores[i];
+                        // The runtimes can sum deletion costs differently at
+                        // machine epsilon (e.g. .09 vs .09000000000000002).
+                        // Only numerical ties within the policy's 1e-9 tolerance
+                        // may change diagnostic row order. All per-target fields
+                        // and the actual selected/confirmed target still agree.
+                        var score = scores.Single(s => (string)s["target"] == item.Target);
+                        Assert.That((double)orderedScore["similarity"],
+                            Is.EqualTo((double)score["similarity"]).Within(1e-9), context + " target order");
                         Assert.That(item.Similarity, Is.EqualTo((double)score["similarity"]).Within(1e-9), context + " target score");
                         Assert.That(item.MatchedText, Is.EqualTo((string)score["matched_text"]), context + " target span");
                         Assert.That(item.ComparisonText, Is.EqualTo((string)score["comparison_text"]), context + " target comparison");
@@ -84,6 +102,8 @@ namespace DomiCube.PhonemeMatching.Tests
                         Assert.That(item.BlockedBy, Is.EqualTo((string)score["blocked_by"]), context + " target guard");
                         Assert.That(item.MatchStart, Is.EqualTo((int?)score["match_start"]), context + " target start");
                         Assert.That(item.MatchEnd, Is.EqualTo((int?)score["match_end"]), context + " target end");
+                        Assert.That(item.MatchSuffix, Is.EqualTo((string)score["match_suffix"]), context + " target suffix");
+                        Assert.That(item.UncomposedJamo, Is.EqualTo((bool)score["uncomposed_jamo"]), context + " partial jamo");
                         Assert.That(item.ExactSpelling, Is.EqualTo((bool)score["exact_spelling"]), context + " exact spelling");
                     }
                     frames++;
@@ -93,6 +113,53 @@ namespace DomiCube.PhonemeMatching.Tests
             Assert.That(frames, Is.EqualTo((int)fixture["frames"]));
             Assert.That(accepted, Is.EqualTo((int)fixture["accepted"]));
             TestContext.WriteLine($"WEB_PARITY cases={cases.Count} frames={frames} accepted={accepted} policy={OrthographicWordPolicy.Version}");
+        }
+
+        [TestCase("양쪽 손으로 실로펀 체를 들어", .95, "실로펀 체를", "실로펀체", false)]
+        [TestCase("ᅵᆯ로폰채를 두 손으로 들어", .94, "ᅵᆯ로폰채를", "ᅵᆯ로폰채", true)]
+        [TestCase("ᄉᆯ로폰채를 두 손으로 들어", .94, "ᄉᆯ로폰채를", "ᄉᆯ로폰채", true)]
+        public void FuzzyLongNounsKeepAllRootSoundsAndRemoveOnlyTheParticle(
+            string text, double score, string rawSpan, string root, bool partial)
+        {
+            var policy = new OrthographicWordPolicy(_matrix);
+            policy.Begin(new[] { "실로폰채" });
+            var first = policy.Push(text, .5, 1);
+            Assert.That(first.Confirmed, Is.False);
+            Assert.That(first.Similarity, Is.EqualTo(score).Within(1e-9));
+            Assert.That(first.Text, Is.EqualTo(text));
+            Assert.That(first.MatchedText, Is.EqualTo(rawSpan));
+            Assert.That(first.ComparisonText, Is.EqualTo(root));
+            Assert.That(first.Normalization, Is.EqualTo("noun_particle"));
+            Assert.That(first.CandidateScores[0].MatchSuffix, Is.EqualTo("를"));
+            Assert.That(first.CandidateScores[0].UncomposedJamo, Is.EqualTo(partial));
+            Assert.That(policy.Push(text, 1, 1).Confirmed, Is.True);
+            var strict = new OrthographicWordPolicy(_matrix, score + .01);
+            strict.Begin(new[] { "실로폰채" });
+            strict.Push(text, .5, 1);
+            Assert.That(strict.Push(text, 1, 1).Confirmed, Is.False);
+        }
+
+        [TestCase("책", "책ᄉ", .8, false)]
+        [TestCase("사과", "사과ᄀ 같아요", .88, true)]
+        public void ExtraJamoCostsDistanceInsteadOfBeingDiscarded(string target, string text, double score, bool accepted)
+        {
+            var policy = new OrthographicWordPolicy(_matrix);
+            policy.Begin(new[] { target });
+            Assert.That(policy.Push(text, .5, 1).Similarity, Is.EqualTo(score).Within(1e-9));
+            Assert.That(policy.Push(text, 1, 1).Confirmed, Is.EqualTo(accepted));
+        }
+
+        [Test]
+        public void ExactLongerCandidateOwnsItsEndingAndPartialInputCannotBeATarget()
+        {
+            var policy = new OrthographicWordPolicy(_matrix);
+            Assert.Throws<ArgumentException>(() => policy.Begin(new[] { "ᅵᆯ로폰채" }));
+            policy.Begin(new[] { "실로폰채", "실로펀채를" });
+            var first = policy.Push("실로펀채를 들어", .5, 1);
+            Assert.That(first.Candidate, Is.EqualTo("실로펀채를"));
+            Assert.That(first.CandidateScores.Single(s => s.Target == "실로폰채").Normalization,
+                Is.Not.EqualTo("noun_particle"));
+            Assert.That(policy.Push("실로펀채를 들어", 1, 1).MatchedTarget, Is.EqualTo("실로펀채를"));
         }
 
         [TestCase("이건 사과인 거 같아요", true)]

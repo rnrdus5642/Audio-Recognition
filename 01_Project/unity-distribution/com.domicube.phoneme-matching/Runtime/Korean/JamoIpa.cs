@@ -6,14 +6,9 @@ namespace DomiCube.PhonemeMatching.Korean
     /// <summary>
     /// Hangul -> IPA, mirroring python/build/g2p/ko/jamo_ipa.py.
     ///
-    /// This is the RUNTIME path and it deliberately applies no
-    /// phonological rules. The build pipeline runs g2pkk offline when it
-    /// produces targets.json; doing the same on device would mean porting
-    /// a mecab-backed rule engine. Measured against the golden set, the
-    /// rules change 3 of 18 target words and cost 1.4 points of negative
-    /// rejection (91.7% -> 90.3%) with positives unchanged, because the
-    /// three differences (r/l, k/k-unreleased, k/k-tense) are pairs the
-    /// confusion matrix already treats as near-free.
+    /// Maps syllables and incomplete modern conjoining jamo to their sounds.
+    /// No phonological rules are applied here; the orthographic word policy
+    /// calls Rules.Apply first, matching the current web KoreanG2P path.
     /// </summary>
     public static class JamoIpa
     {
@@ -156,8 +151,8 @@ namespace DomiCube.PhonemeMatching.Korean
         }
 
         /// <summary>
-        /// Convert Hangul text to an IPA phoneme list. Non-Hangul
-        /// characters (spaces, punctuation, latin, digits) are skipped.
+        /// Convert Hangul syllables and modern conjoining jamo to IPA.
+        /// Other characters (spaces, punctuation, latin, digits) are skipped.
         /// </summary>
         public static List<string> ToPhonemes(string text)
         {
@@ -172,6 +167,14 @@ namespace DomiCube.PhonemeMatching.Korean
                 if (!TryDecompose(ch, out var initial, out var medial,
                         out var final))
                 {
+                    // Partial CTC output is evidence, not text to discard.
+                    // Extra/missing sounds must reach the distance calculation.
+                    if (ch >= 0x1100 && ch <= 0x1112)
+                        result.AddRange(Onset[Initials[ch - 0x1100]]);
+                    else if (ch >= 0x1161 && ch <= 0x1175)
+                        result.AddRange(Nucleus[Medials[ch - 0x1161]]);
+                    else if (ch >= 0x11A8 && ch <= 0x11C2)
+                        result.AddRange(Coda[Finals[ch - 0x11A7]]);
                     continue;
                 }
 

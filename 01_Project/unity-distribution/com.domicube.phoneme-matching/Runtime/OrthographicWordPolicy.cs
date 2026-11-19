@@ -17,6 +17,8 @@ namespace DomiCube.PhonemeMatching
         public string BlockedBy;
         public int? MatchStart;
         public int? MatchEnd;
+        public string MatchSuffix = "";
+        public bool UncomposedJamo;
         public bool ExactSpelling;
     }
 
@@ -47,13 +49,13 @@ namespace DomiCube.PhonemeMatching
     }
 
     /// <summary>
-    /// Deterministic port of the web's orthographic-word-context-v5 policy.
+    /// Deterministic port of the web's single-word orthographic-word-context-v7 policy.
     /// Recognised spelling in, candidate scores and confirmation out. Never
     /// rewrites the raw text, supplies targets to ASR, or loads an acoustic model.
     /// </summary>
     public sealed class OrthographicWordPolicy
     {
-        public const string Version = "orthographic-word-context-v5";
+        public const string Version = "orthographic-word-context-v7";
         public const double WindowSeconds = 2.5;
         public const double HopSeconds = 0.5;
         public const int SampleRate = 16000;
@@ -148,6 +150,8 @@ namespace DomiCube.PhonemeMatching
                             item.Normalization = span.Normalization;
                             item.MatchStart = span.Start;
                             item.MatchEnd = span.End;
+                            item.MatchSuffix = span.Suffix;
+                            item.UncomposedJamo = ContainsJamo(span.Compared);
                         }
                     }
                 }
@@ -267,6 +271,7 @@ namespace DomiCube.PhonemeMatching
         private sealed class Span
         {
             public string Raw, Compared, Normalization, Owner;
+            public string Suffix = "";
             public bool AtEnd;
             public int Start, End;
         }
@@ -297,7 +302,7 @@ namespace DomiCube.PhonemeMatching
                 if (FollowingNegation(tokens, end)) continue;
                 for (int start = end - 1; start >= 0; start--)
                 {
-                    if (!HangulOnly(tokens[start])) break;
+                    if (!HangulToken(tokens[start])) break;
                     string raw = string.Join(" ", tokens, start, end - start);
                     string joined = Compact(raw);
                     bool atEnd = end == tokens.Length;
@@ -318,6 +323,7 @@ namespace DomiCube.PhonemeMatching
                     }
                     string canonical = SpellingKey(joined);
                     int longest = 0;
+                    bool hasExactOwner = false;
                     var owners = new List<Span>();
                     foreach (var target in _targets)
                     {
@@ -332,13 +338,32 @@ namespace DomiCube.PhonemeMatching
                                 (isAction || !(Particles.Contains(ending) || Copulas.Contains(ending) || AttachedGuess.IsMatch(ending))))
                                 continue;
                             longest = Math.Max(longest, prefix.Length);
+                            hasExactOwner = true;
                             if (ending.Length > 0)
                                 owners.Add(new Span { Raw = raw, Compared = target, Owner = target, AtEnd = atEnd,
-                                    Normalization = "listed_word_affix", Start = start, End = end });
+                                    Normalization = "listed_word_affix", Start = start, End = end, Suffix = ending });
                         }
                     }
                     foreach (var span in owners)
                         if (span.Owner.Length == longest) result.Add(span);
+                    // An intact listed reading takes precedence. Otherwise a
+                    // long noun may have an ASR error before an intact particle.
+                    // Preserve all sounds in an equally long root, including
+                    // incomplete jamo; do not cut arbitrary inner substrings.
+                    if (!hasExactOwner)
+                    {
+                        var units = SyllableUnits(joined);
+                        foreach (var target in _targets)
+                        {
+                            if (target.Length < 3 || units.Count <= target.Length ||
+                                _families.ContainsKey(SpellingKey(target))) continue;
+                            string ending = string.Concat(units.GetRange(target.Length, units.Count - target.Length));
+                            if (!Particles.Contains(ending)) continue;
+                            string root = string.Concat(units.GetRange(0, target.Length));
+                            result.Add(new Span { Raw = raw, Compared = root, Owner = target, AtEnd = atEnd,
+                                Normalization = "noun_particle", Start = start, End = end, Suffix = ending });
+                        }
+                    }
                 }
             }
             return result;
@@ -350,6 +375,42 @@ namespace DomiCube.PhonemeMatching
             if (tokens[end] == "은" || tokens[end] == "는" || tokens[end] == "이" || tokens[end] == "가") end++;
             return end < tokens.Length && (tokens[end].StartsWith("아니", StringComparison.Ordinal) ||
                 tokens[end].StartsWith("말고", StringComparison.Ordinal));
+        }
+
+        // Targets still require complete syllables. Only recognised input may
+        // contain modern conjoining jamo emitted by the orthographic CTC model.
+        private static bool HangulToken(string text)
+        {
+            if (text.Length == 0) return false;
+            foreach (char ch in text)
+                if (!(ch >= 0xAC00 && ch <= 0xD7A3) &&
+                    !(ch >= 0x1100 && ch <= 0x1112) &&
+                    !(ch >= 0x1161 && ch <= 0x1175) &&
+                    !(ch >= 0x11A8 && ch <= 0x11C2)) return false;
+            return true;
+        }
+
+        private static List<string> SyllableUnits(string text)
+        {
+            // NFC has already composed complete onset/vowel/coda sequences.
+            // Group remaining partial syllables without adding missing sounds.
+            var units = new List<string>();
+            for (int i = 0; i < text.Length;)
+            {
+                int start = i;
+                char ch = text[i++];
+                if (ch >= 0x1100 && ch <= 0x1112)
+                {
+                    if (i < text.Length && text[i] >= 0x1161 && text[i] <= 0x1175) i++;
+                    if (i < text.Length && text[i] >= 0x11A8 && text[i] <= 0x11C2) i++;
+                }
+                else if (ch >= 0x1161 && ch <= 0x1175)
+                {
+                    if (i < text.Length && text[i] >= 0x11A8 && text[i] <= 0x11C2) i++;
+                }
+                units.Add(text.Substring(start, i - start));
+            }
+            return units;
         }
 
         private static bool SamePhonemes(List<string> first, List<string> second)

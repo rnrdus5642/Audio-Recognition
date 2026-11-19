@@ -8,10 +8,18 @@ namespace DomiCube.PhonemeMatching.Tests
 {
     public sealed class MusicWebProfileTests
     {
+        private static MusicPresentationProfile PackagedMusicProfile()
+        {
+            string Read(string name) => UnityEngine.Resources.Load<UnityEngine.TextAsset>(
+                MusicWebPresentation.ResourceFolder + name).text;
+            return MusicPresentationProfile.FromJson(Read("ko_child_v2"), Read("targets_music_web_v4"),
+                Read("hubert_ko_child_jamo_vocab"));
+        }
+
         [Test]
         public void ProfileKeepsAll82ExpressionsInTheirRequestedStages()
         {
-            var p = MusicWebPresentation.Load();
+            var p = PackagedMusicProfile();
             Assert.That(p.UsesOrthographicWordPolicy, Is.True);
             Assert.That(p.Stages.Select(s => s.Answers.Count), Is.EqualTo(new[] {10,9,9,9,9,9,8,10,9}));
             Assert.That(p.Catalog.Answers.Count, Is.EqualTo(47));
@@ -25,7 +33,7 @@ namespace DomiCube.PhonemeMatching.Tests
         [Test]
         public void All82ExactWordsConfirmAfterAnUnrelatedPrefix()
         {
-            var p = MusicWebPresentation.Load();
+            var p = PackagedMusicProfile();
             foreach (var stage in p.Stages)
             foreach (var word in stage.Answers)
             {
@@ -39,13 +47,14 @@ namespace DomiCube.PhonemeMatching.Tests
             }
         }
 
-        [Test]
-        public void ExistingV4ProjectAnswerDataUsesCurrentPolicyWithoutRewritingAnswers()
+        [TestCase("orthographic-word-preview-v4")]
+        [TestCase("orthographic-word-context-v5")]
+        public void ExistingProjectAnswerDataUsesCurrentPolicyWithoutRewritingAnswers(string previousPolicy)
         {
             string Read(string name) => UnityEngine.Resources.Load<UnityEngine.TextAsset>(
                 MusicWebPresentation.ResourceFolder + name).text;
             var targets = Read("targets_music_web_v4").Replace(OrthographicWordPolicy.Version,
-                "orthographic-word-preview-v4");
+                previousPolicy);
             var profile = MusicPresentationProfile.FromJson(Read("ko_child_v2"), targets,
                 Read("hubert_ko_child_jamo_vocab"));
             Assert.That(profile.UsesOrthographicWordPolicy, Is.True);
@@ -59,15 +68,16 @@ namespace DomiCube.PhonemeMatching.Tests
             var go = new UnityEngine.GameObject("MusicWebProfileTest");
             try
             {
+                var project = MusicWebPresentation.Load();
                 var listener = go.AddComponent<PronunciationListener>();
                 MusicWebPresentation.ApplyTo(listener, 1);
                 Assert.That(listener.UseOrthographicWordPolicy, Is.True);
-                Assert.That(listener.TargetWords.Length, Is.EqualTo(10));
+                Assert.That(listener.TargetWords, Is.EqualTo(project.GetStage(1).Answers));
                 Assert.That(listener.WindowSeconds, Is.EqualTo(2.5f));
                 Assert.That(listener.HopSeconds, Is.EqualTo(.5f));
                 Assert.That(listener.WordThreshold, Is.EqualTo(.85f));
                 MusicWebPresentation.ApplyTo(listener, 7);
-                Assert.That(listener.TargetWords.Length, Is.EqualTo(8));
+                Assert.That(listener.TargetWords, Is.EqualTo(project.GetStage(7).Answers));
                 Assert.That(listener.IsListening, Is.False);
             }
             finally { UnityEngine.Object.DestroyImmediate(go); }
